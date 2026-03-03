@@ -309,6 +309,11 @@
                     <a href="{{ route('staff.notification.index', ['filter' => 'unread']) }}" class="sub-link">Belum Dibaca</a>
                 </div>
             </div>
+            <div class="nav-item">
+                <a href="{{ route('staff.panduan.index') }}" class="nav-link {{ request()->routeIs('staff.panduan.*') ? 'active' : '' }}">
+                    <i class="bi bi-book icon"></i> <span>Panduan</span>
+                </a>
+            </div>
             <div class="nav-item {{ request()->routeIs('staff.profile.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.profile.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-person-gear icon"></i> <span>Akun Saya</span> <i class="bi bi-chevron-right arrow"></i>

@@ -128,6 +128,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/reminder', [Admin\ReminderController::class, 'store'])->name('reminder.store');
     Route::patch('/reminder/{reminder}/toggle', [Admin\ReminderController::class, 'toggleComplete'])->name('reminder.toggle');
     Route::delete('/reminder/{reminder}', [Admin\ReminderController::class, 'destroy'])->name('reminder.destroy');
+
+    // Panduan
+    Route::get('/panduan', [Admin\PanduanController::class, 'index'])->name('panduan.index');
 });
 
 /*
@@ -213,4 +216,7 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
     Route::get('/profile', [Staff\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [Staff\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [Staff\ProfileController::class, 'changePassword'])->name('profile.password');
+
+    // Panduan
+    Route::get('/panduan', [Staff\PanduanController::class, 'index'])->name('panduan.index');
 });

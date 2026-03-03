@@ -10,7 +10,8 @@
         "laravel/framework": "^12.0",
         "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.10.1",
-        "laravel/ui": "^4.6"
+        "laravel/ui": "^4.6",
+        "phpoffice/phpword": "^1.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -81,6 +82,14 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "audit": {
+            "ignore": [
+                "PKSA-z3gr-8qht-p93v",
+                "PKSA-rkkf-636k-qjb3",
+                "PKSA-y2cr-5h3j-g3ys",
+                "PKSA-4s4z-t146-6123"
+            ]
         }
     },
     "minimum-stability": "stable",

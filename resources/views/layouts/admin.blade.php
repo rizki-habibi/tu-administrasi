@@ -373,6 +373,11 @@
                     <a href="{{ route('admin.reminder.create') }}" class="sub-link {{ request()->routeIs('admin.reminder.create') ? 'active' : '' }}">Buat Pengingat</a>
                 </div>
             </div>
+            <div class="nav-item">
+                <a href="{{ route('admin.panduan.index') }}" class="nav-link {{ request()->routeIs('admin.panduan.*') ? 'active' : '' }}">
+                    <i class="bi bi-book icon"></i> <span>Panduan</span>
+                </a>
+            </div>
             <div class="nav-item {{ request()->routeIs('admin.attendance.settings') ? 'open' : '' }}">
                 <a class="nav-link" data-toggle="submenu">
                     <i class="bi bi-gear-fill icon"></i> <span>Pengaturan</span> <i class="bi bi-chevron-right arrow"></i>
