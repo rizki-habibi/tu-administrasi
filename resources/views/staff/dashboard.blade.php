@@ -1,5 +1,5 @@
 @extends('layouts.staff')
-@section('title', 'Dashboard')
+@section('title', 'Beranda')
 
 @section('content')
 @php
@@ -86,12 +86,28 @@
 </div>
 
 <!-- Chart: Kehadiran Bulanan -->
-<div class="card mb-4">
-    <div class="card-header bg-white py-3">
-        <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-graph-up text-primary me-2"></i>Ringkasan Kehadiran Bulan Ini</h6>
+<div class="row mb-4">
+    <div class="col-lg-7">
+        <div class="card h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-bar-chart text-primary me-2"></i>Ringkasan Kehadiran Bulan Ini</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="myAttendanceBar" height="220"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <canvas id="myAttendanceChart" height="150"></canvas>
+    <div class="col-lg-5">
+        <div class="card h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-pie-chart text-info me-2"></i>Distribusi Kehadiran</h6>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <div style="max-width:260px;max-height:260px;width:100%;">
+                    <canvas id="myAttendanceChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -147,6 +163,26 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+// Bar chart
+new Chart(document.getElementById('myAttendanceBar'), {
+    type: 'bar',
+    data: {
+        labels: ['Hadir', 'Terlambat', 'Izin/Sakit', 'Alpha'],
+        datasets: [{
+            label: 'Jumlah',
+            data: [{{ $hadir }}, {{ $terlambat }}, {{ $izin }}, {{ $alpha }}],
+            backgroundColor: ['#10b981', '#f59e0b', '#6366f1', '#ef4444'],
+            borderRadius: 6, barThickness: 40
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } }
+    }
+});
+
+// Doughnut chart (properly sized)
 new Chart(document.getElementById('myAttendanceChart'), {
     type: 'doughnut',
     data: {
@@ -158,8 +194,8 @@ new Chart(document.getElementById('myAttendanceChart'), {
         }]
     },
     options: {
-        responsive: true,
-        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 15 } } },
+        responsive: true, maintainAspectRatio: true,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } } },
         cutout: '55%'
     }
 });

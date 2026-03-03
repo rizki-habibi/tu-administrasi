@@ -20,6 +20,31 @@ class NotificationController extends Controller
         return view('staff.notification.index', compact('notifications'));
     }
 
+    public function json()
+    {
+        $notifications = Notification::where('user_id', auth()->id())
+            ->where('is_read', false)
+            ->latest()
+            ->take(10)
+            ->get(['id', 'title', 'message', 'type', 'is_read', 'created_at']);
+
+        $unreadCount = Notification::where('user_id', auth()->id())->where('is_read', false)->count();
+
+        return response()->json([
+            'notifications' => $notifications->map(function ($n) {
+                return [
+                    'id' => $n->id,
+                    'title' => $n->title,
+                    'message' => \Str::limit($n->message, 60),
+                    'type' => $n->type,
+                    'time' => $n->created_at->diffForHumans(),
+                    'read_url' => route('staff.notification.read', $n->id),
+                ];
+            }),
+            'unread_count' => $unreadCount,
+        ]);
+    }
+
     public function markAsRead(Notification $notification)
     {
         if ($notification->user_id !== auth()->id()) {

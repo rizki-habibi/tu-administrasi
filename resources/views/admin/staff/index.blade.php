@@ -12,10 +12,11 @@
         <div class="dropdown">
             <button class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('admin.staff.export', ['format'=>'csv']) }}"><i class="bi bi-filetype-csv me-2"></i>CSV / Excel</a></li>
+                <li><a class="dropdown-item export-btn" href="{{ route('admin.staff.export', ['format'=>'csv']) }}" data-format="csv"><i class="bi bi-filetype-csv me-2"></i>CSV / Excel</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.staff.export', ['format'=>'pdf']) }}" target="_blank"><i class="bi bi-printer me-2"></i>Print / PDF</a></li>
             </ul>
         </div>
+        <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bi bi-upload me-1"></i>Import</button>
         <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>Tambah Staff</a>
     </div>
 </div>
@@ -166,5 +167,106 @@ function showDetail(id, name, email, position, phone, address, status, date) {
     document.getElementById('mdViewBtn').href = '/admin/staff/' + id;
     new bootstrap.Modal(document.getElementById('detailModal')).show();
 }
+
+// Real-time Export with progress
+document.querySelectorAll('.export-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = this.href;
+        Swal.fire({
+            title: 'Mengekspor Data...', html: '<div class="mb-2">Sedang memproses file export</div><div class="progress" style="height:6px;border-radius:4px;"><div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:0%"></div></div>',
+            allowOutsideClick: false, showConfirmButton: false, didOpen: () => {
+                const bar = Swal.getHtmlContainer().querySelector('.progress-bar');
+                let w = 0;
+                const interval = setInterval(() => { w = Math.min(w + Math.random() * 15, 90); bar.style.width = w + '%'; }, 200);
+                fetch(url).then(r => r.blob()).then(blob => {
+                    clearInterval(interval); bar.style.width = '100%';
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                    a.download = url.includes('csv') ? 'data_staff.csv' : 'data_staff';
+                    document.body.appendChild(a); a.click(); a.remove();
+                    Swal.fire({ icon: 'success', title: 'Export Berhasil!', text: 'File telah diunduh', timer: 2000, showConfirmButton: false });
+                }).catch(() => { clearInterval(interval); Swal.fire({ icon: 'error', title: 'Gagal Export', text: 'Terjadi kesalahan saat mengekspor data' }); });
+            }
+        });
+    });
+});
+</script>
+
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;">
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold"><i class="bi bi-upload text-primary me-2"></i>Import Data Staff</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.staff.import') }}" method="POST" enctype="multipart/form-data" id="importForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">File CSV</label>
+                        <input type="file" name="file" class="form-control" accept=".csv,.xlsx,.xls" required id="importFile">
+                        <small class="text-muted">Format: CSV/Excel. Kolom: Nama, Email, Password, Jabatan, Telepon, Alamat</small>
+                    </div>
+                    <div class="mb-3">
+                        <a href="{{ route('admin.staff.export', ['format'=>'csv']) }}" class="text-primary text-decoration-none" style="font-size:.8rem;">
+                            <i class="bi bi-download me-1"></i>Download template CSV
+                        </a>
+                    </div>
+                    <div id="importProgress" class="d-none mb-3">
+                        <div class="progress" style="height:6px;border-radius:4px;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width:0%"></div>
+                        </div>
+                        <small class="text-muted mt-1 d-block" id="importStatus">Memproses...</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="importBtn">
+                        <i class="bi bi-upload me-1"></i>Import Data
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('importForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const btn = document.getElementById('importBtn');
+    const progress = document.getElementById('importProgress');
+    const bar = progress.querySelector('.progress-bar');
+    const status = document.getElementById('importStatus');
+    const file = document.getElementById('importFile');
+
+    if (!file.files.length) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner-border spinner-border-sm me-1"></div> Memproses...';
+    progress.classList.remove('d-none');
+
+    const formData = new FormData(form);
+    let w = 0;
+    const interval = setInterval(() => { w = Math.min(w + Math.random() * 10, 90); bar.style.width = w + '%'; }, 300);
+
+    fetch(form.action, {
+        method: 'POST', body: formData,
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+    }).then(r => r.json()).then(data => {
+        clearInterval(interval); bar.style.width = '100%';
+        bootstrap.Modal.getInstance(document.getElementById('importModal')).hide();
+        if (data.success) {
+            Swal.fire({ icon: 'success', title: 'Import Berhasil!', text: data.message || 'Data berhasil diimport', confirmButtonColor: '#6366f1' }).then(() => location.reload());
+        } else {
+            Swal.fire({ icon: 'error', title: 'Gagal Import', text: data.message || 'Terjadi kesalahan', confirmButtonColor: '#6366f1' });
+        }
+    }).catch(() => {
+        clearInterval(interval);
+        bootstrap.Modal.getInstance(document.getElementById('importModal')).hide();
+        Swal.fire({ icon: 'error', title: 'Gagal Import', text: 'Terjadi kesalahan saat memproses file' });
+    }).finally(() => {
+        btn.disabled = false; btn.innerHTML = '<i class="bi bi-upload me-1"></i>Import Data';
+        progress.classList.add('d-none'); bar.style.width = '0%';
+    });
+});
 </script>
 @endpush

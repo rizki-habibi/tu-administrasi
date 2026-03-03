@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') - TU Staff</title>
+    <title>@yield('title', 'Beranda') - TU Staff</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -180,7 +180,7 @@
             <div class="nav-label">Menu Utama</div>
             <div class="nav-item">
                 <a href="{{ route('staff.dashboard') }}" class="nav-link {{ request()->routeIs('staff.dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-grid-1x2-fill icon"></i> <span>Dashboard</span>
+                    <i class="bi bi-grid-1x2-fill icon"></i> <span>Beranda</span>
                 </a>
             </div>
 
@@ -331,13 +331,34 @@
     <div class="main-content" id="mainContent">
         <header class="top-header">
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
-            <span class="header-title">@yield('title', 'Dashboard')</span>
+            <span class="header-title">@yield('title', 'Beranda')</span>
             <div class="header-right">
                 <span class="header-date d-none d-md-block"><i class="bi bi-calendar3"></i> {{ now()->translatedFormat('d F Y') }}</span>
-                <button class="notif-btn" onclick="location.href='{{ route('staff.notification.index') }}'">
-                    <i class="bi bi-bell"></i>
-                    @if($unread > 0)<span class="notif-badge"></span>@endif
-                </button>
+                <div class="dropdown" id="notifDropdown">
+                    <button class="notif-btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" id="notifToggle">
+                        <i class="bi bi-bell"></i>
+                        @if($unread > 0)<span class="notif-badge" id="notifBadge"></span>@endif
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-0" style="width:360px;max-height:440px;border-radius:14px!important;overflow:hidden;">
+                        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom" style="background:#f8fafc;">
+                            <h6 class="mb-0 fw-bold" style="font-size:.85rem;">Notifikasi</h6>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-danger" id="notifCount" style="font-size:.65rem;">{{ $unread }}</span>
+                                <form action="{{ route('staff.notification.read-all') }}" method="POST" class="d-inline">@csrf @method('PATCH')
+                                    <button type="submit" class="btn btn-link btn-sm p-0 text-primary text-decoration-none" style="font-size:.72rem;">Tandai semua</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="notifList" style="max-height:320px;overflow-y:auto;">
+                            <div class="text-center py-4 text-muted" style="font-size:.8rem;" id="notifLoading">
+                                <div class="spinner-border spinner-border-sm text-primary me-1"></div> Memuat...
+                            </div>
+                        </div>
+                        <div class="border-top text-center py-2" style="background:#f8fafc;">
+                            <a href="{{ route('staff.notification.index') }}" class="text-primary text-decoration-none fw-semibold" style="font-size:.78rem;">Lihat Semua Notifikasi <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <button type="button" class="header-profile" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
@@ -400,6 +421,50 @@
             .then(r => { if (r.isConfirmed) { const f = btn.closest('form'); if (f) f.submit(); else location.href = btn.href; } });
         });
         setTimeout(() => { document.querySelectorAll('.alert').forEach(a => { try { new bootstrap.Alert(a).close(); } catch(e){} }); }, 4000);
+
+        // Notification dropdown AJAX
+        const notifToggle = document.getElementById('notifToggle');
+        if (notifToggle) {
+            notifToggle.addEventListener('show.bs.dropdown', loadNotifications);
+        }
+        function loadNotifications() {
+            const list = document.getElementById('notifList');
+            list.innerHTML = '<div class="text-center py-4 text-muted" style="font-size:.8rem;"><div class="spinner-border spinner-border-sm text-primary me-1"></div> Memuat...</div>';
+            fetch('{{ route("staff.notification.json") }}', { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } })
+                .then(r => r.json())
+                .then(data => {
+                    const badge = document.getElementById('notifBadge');
+                    const count = document.getElementById('notifCount');
+                    if (count) count.textContent = data.unread_count;
+                    if (badge) badge.style.display = data.unread_count > 0 ? '' : 'none';
+                    if (data.notifications.length === 0) {
+                        list.innerHTML = '<div class="text-center py-4 text-muted" style="font-size:.82rem;"><i class="bi bi-bell-slash" style="font-size:1.5rem;"></i><p class="mb-0 mt-1">Tidak ada notifikasi baru</p></div>';
+                        return;
+                    }
+                    const icons = { info: 'bi-info-circle text-primary', warning: 'bi-exclamation-triangle text-warning', success: 'bi-check-circle text-success', danger: 'bi-x-circle text-danger' };
+                    list.innerHTML = data.notifications.map(n => `
+                        <a href="${n.read_url}" class="d-flex gap-2 px-3 py-2 text-decoration-none border-bottom notif-item" style="transition:.15s;cursor:pointer;">
+                            <div class="flex-shrink-0 mt-1"><i class="bi ${icons[n.type] || icons.info}" style="font-size:1rem;"></i></div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-semibold text-dark" style="font-size:.82rem;">${n.title}</div>
+                                <div class="text-muted" style="font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.message}</div>
+                                <small class="text-muted" style="font-size:.68rem;">${n.time}</small>
+                            </div>
+                        </a>
+                    `).join('');
+                })
+                .catch(() => { list.innerHTML = '<div class="text-center py-4 text-muted" style="font-size:.82rem;">Gagal memuat notifikasi</div>'; });
+        }
+        // Auto-refresh notification count every 30s
+        setInterval(() => {
+            fetch('{{ route("staff.notification.json") }}', { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } })
+                .then(r => r.json()).then(data => {
+                    const badge = document.getElementById('notifBadge');
+                    const count = document.getElementById('notifCount');
+                    if (count) count.textContent = data.unread_count;
+                    if (badge) badge.style.display = data.unread_count > 0 ? '' : 'none';
+                }).catch(() => {});
+        }, 30000);
     </script>
     @stack('scripts')
 </body>

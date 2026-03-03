@@ -21,6 +21,29 @@ class NotificationController extends Controller
         return view('admin.notification.index', compact('notifications'));
     }
 
+    public function json()
+    {
+        $notifications = Notification::where('is_read', false)
+            ->latest()
+            ->take(10)
+            ->get(['id', 'title', 'message', 'type', 'user_id', 'is_read', 'created_at']);
+
+        $unreadCount = Notification::where('is_read', false)->count();
+
+        return response()->json([
+            'notifications' => $notifications->map(function ($n) {
+                return [
+                    'id' => $n->id,
+                    'title' => $n->title,
+                    'message' => \Str::limit($n->message, 60),
+                    'type' => $n->type,
+                    'time' => $n->created_at->diffForHumans(),
+                ];
+            }),
+            'unread_count' => $unreadCount,
+        ]);
+    }
+
     public function create()
     {
         $staffs = User::where('role', 'staff')->where('is_active', true)->get();

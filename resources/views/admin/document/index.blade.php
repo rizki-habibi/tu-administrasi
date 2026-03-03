@@ -11,7 +11,7 @@
         <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
             <ul class="dropdown-menu shadow-sm border-0">
-                <li><a class="dropdown-item" href="{{ route('admin.document.export', ['format' => 'csv']) }}"><i class="bi bi-file-earmark-spreadsheet me-2 text-success"></i>CSV / Excel</a></li>
+                <li><a class="dropdown-item export-btn" href="{{ route('admin.document.export', ['format' => 'csv']) }}" data-format="csv"><i class="bi bi-file-earmark-spreadsheet me-2 text-success"></i>CSV / Excel</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.document.export', ['format' => 'pdf']) }}" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>PDF / Print</a></li>
             </ul>
         </div>
@@ -95,3 +95,29 @@
 </div>
 <div class="mt-3">{{ $documents->links() }}</div>
 @endsection
+
+@push('scripts')
+<script>
+// Real-time Export with progress
+document.querySelectorAll('.export-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = this.href;
+        Swal.fire({
+            title: 'Mengekspor Data...', html: '<div class="mb-2">Sedang memproses file export</div><div class="progress" style="height:6px;border-radius:4px;"><div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" style="width:0%"></div></div>',
+            allowOutsideClick: false, showConfirmButton: false, didOpen: () => {
+                const bar = Swal.getHtmlContainer().querySelector('.progress-bar');
+                let w = 0;
+                const interval = setInterval(() => { w = Math.min(w + Math.random() * 15, 90); bar.style.width = w + '%'; }, 200);
+                fetch(url).then(r => r.blob()).then(blob => {
+                    clearInterval(interval); bar.style.width = '100%';
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                    a.download = 'dokumen.csv'; document.body.appendChild(a); a.click(); a.remove();
+                    Swal.fire({ icon: 'success', title: 'Export Berhasil!', text: 'File telah diunduh', timer: 2000, showConfirmButton: false });
+                }).catch(() => { clearInterval(interval); Swal.fire({ icon: 'error', title: 'Gagal Export', text: 'Terjadi kesalahan' }); });
+            }
+        });
+    });
+});
+</script>
+@endpush

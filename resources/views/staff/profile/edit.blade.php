@@ -20,14 +20,17 @@
     </div>
     <div class="card-body position-relative" style="margin-top: -70px;">
         <div class="d-flex flex-column flex-md-row align-items-center align-items-md-end gap-3">
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 position-relative" id="profileAvatarWrapper">
                 @if($user->photo)
-                    <img src="{{ asset('storage/' . $user->photo) }}" class="rounded-circle border border-4 border-white shadow" width="130" height="130" style="object-fit:cover;" alt="Foto">
+                    <img src="{{ asset('storage/' . $user->photo) }}" class="rounded-circle border border-4 border-white shadow" width="130" height="130" style="object-fit:cover;" alt="Foto" id="profileAvatarImg">
                 @else
-                    <div class="rounded-circle border border-4 border-white shadow d-inline-flex align-items-center justify-content-center" style="width:130px;height:130px;font-size:2.8rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;">
+                    <div class="rounded-circle border border-4 border-white shadow d-inline-flex align-items-center justify-content-center" style="width:130px;height:130px;font-size:2.8rem;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;" id="profileAvatarInitials">
                         {{ strtoupper(substr($user->name, 0, 2)) }}
                     </div>
                 @endif
+                <button type="button" class="btn btn-primary btn-sm rounded-circle position-absolute shadow" style="width:36px;height:36px;bottom:0;right:0;padding:0;" data-bs-toggle="modal" data-bs-target="#changePhotoModal" title="Ganti Foto">
+                    <i class="bi bi-camera-fill"></i>
+                </button>
             </div>
             <div class="text-center text-md-start flex-grow-1 pb-1">
                 <h4 class="fw-bold mb-1">{{ $user->name }}</h4>
@@ -154,8 +157,14 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Foto Profil</label>
-                            <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
-                            <small class="text-muted">Format: JPG, PNG. Maks 2MB</small>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changePhotoModal">
+                                    <i class="bi bi-camera me-1"></i>Ganti Foto Profil
+                                </button>
+                            </div>
+                            <input type="file" name="photo" id="photoFileInput" class="d-none" accept="image/*">
+                            <input type="hidden" name="photo_base64" id="photoBase64Input">
+                            <small class="text-muted d-block mt-1">Bisa via kamera/webcam atau unggah file</small>
                             @error('photo') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                     </div>
@@ -302,4 +311,290 @@
         </div>
     </div>
 </div>
+
+<!-- Change Photo Modal -->
+<div class="modal fade" id="changePhotoModal" tabindex="-1" aria-labelledby="changePhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;">
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold" id="changePhotoModalLabel"><i class="bi bi-camera text-primary me-2"></i>Ganti Foto Profil</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Tab navigation -->
+                <ul class="nav nav-pills nav-fill mb-3" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-camera" type="button" role="tab">
+                            <i class="bi bi-webcam me-1"></i>Kamera
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-upload" type="button" role="tab">
+                            <i class="bi bi-upload me-1"></i>Unggah File
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <!-- Camera Tab -->
+                    <div class="tab-pane fade show active" id="tab-camera" role="tabpanel">
+                        <div class="text-center">
+                            <div class="position-relative d-inline-block mb-3" style="border-radius:14px;overflow:hidden;background:#1e293b;">
+                                <video id="cameraVideo" width="320" height="240" autoplay playsinline style="display:block;border-radius:14px;transform:scaleX(-1);"></video>
+                                <canvas id="cameraCanvas" width="320" height="240" style="display:none;"></canvas>
+                                <img id="cameraPreview" style="display:none;width:320px;height:240px;object-fit:cover;border-radius:14px;" alt="Preview">
+                            </div>
+                            <div id="cameraNotSupported" class="d-none text-center py-4 text-muted">
+                                <i class="bi bi-camera-video-off" style="font-size:2rem;"></i>
+                                <p class="mt-2 small">Kamera tidak tersedia di perangkat ini.<br>Silakan gunakan tab "Unggah File".</p>
+                            </div>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnStartCamera">
+                                    <i class="bi bi-camera-video me-1"></i>Mulai Kamera
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm d-none" id="btnCapture">
+                                    <i class="bi bi-camera me-1"></i>Ambil Foto
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm d-none" id="btnRetake">
+                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Ulangi
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm d-none" id="btnUseCapture">
+                                    <i class="bi bi-check-lg me-1"></i>Gunakan Foto Ini
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Tab -->
+                    <div class="tab-pane fade" id="tab-upload" role="tabpanel">
+                        <div class="text-center">
+                            <div id="uploadPreviewWrapper" class="mb-3">
+                                <div class="border-2 border-dashed rounded-3 p-4" id="dropZone" style="border:2px dashed #cbd5e1;cursor:pointer;transition:.2s;">
+                                    <i class="bi bi-cloud-arrow-up text-primary" style="font-size:2.5rem;"></i>
+                                    <p class="mb-1 fw-medium mt-2" style="font-size:.85rem;">Drag & drop foto di sini</p>
+                                    <p class="text-muted small mb-0">atau klik untuk memilih file</p>
+                                    <small class="text-muted">Format: JPG, PNG. Maks 2MB</small>
+                                </div>
+                                <img id="uploadPreview" style="display:none;max-width:240px;max-height:240px;object-fit:cover;border-radius:14px;" alt="Preview" class="mt-2">
+                            </div>
+                            <input type="file" id="modalFileInput" accept="image/jpeg,image/png,image/jpg" class="d-none">
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="btnChooseFile">
+                                    <i class="bi bi-folder2-open me-1"></i>Pilih File
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm d-none" id="btnUseUpload">
+                                    <i class="bi bi-check-lg me-1"></i>Gunakan Foto Ini
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let cameraStream = null;
+    let capturedBlob = null;
+    const video = document.getElementById('cameraVideo');
+    const canvas = document.getElementById('cameraCanvas');
+    const preview = document.getElementById('cameraPreview');
+    const btnStart = document.getElementById('btnStartCamera');
+    const btnCapture = document.getElementById('btnCapture');
+    const btnRetake = document.getElementById('btnRetake');
+    const btnUseCapture = document.getElementById('btnUseCapture');
+    const notSupported = document.getElementById('cameraNotSupported');
+    const modalFileInput = document.getElementById('modalFileInput');
+    const uploadPreview = document.getElementById('uploadPreview');
+    const dropZone = document.getElementById('dropZone');
+    const btnChooseFile = document.getElementById('btnChooseFile');
+    const btnUseUpload = document.getElementById('btnUseUpload');
+    const photoFileInput = document.getElementById('photoFileInput');
+    const photoBase64Input = document.getElementById('photoBase64Input');
+
+    // Camera functions
+    btnStart.addEventListener('click', async function() {
+        try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+                video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+                audio: false
+            });
+            video.srcObject = cameraStream;
+            video.style.display = 'block';
+            preview.style.display = 'none';
+            btnStart.classList.add('d-none');
+            btnCapture.classList.remove('d-none');
+            btnRetake.classList.add('d-none');
+            btnUseCapture.classList.add('d-none');
+            notSupported.classList.add('d-none');
+        } catch (err) {
+            notSupported.classList.remove('d-none');
+            video.style.display = 'none';
+            btnStart.classList.add('d-none');
+        }
+    });
+
+    btnCapture.addEventListener('click', function() {
+        canvas.width = video.videoWidth || 320;
+        canvas.height = video.videoHeight || 240;
+        const ctx = canvas.getContext('2d');
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+        ctx.restore();
+
+        canvas.toBlob(function(blob) {
+            capturedBlob = blob;
+            const url = URL.createObjectURL(blob);
+            preview.src = url;
+            preview.style.display = 'block';
+            video.style.display = 'none';
+
+            btnCapture.classList.add('d-none');
+            btnRetake.classList.remove('d-none');
+            btnUseCapture.classList.remove('d-none');
+        }, 'image/jpeg', 0.9);
+    });
+
+    btnRetake.addEventListener('click', function() {
+        preview.style.display = 'none';
+        video.style.display = 'block';
+        btnCapture.classList.remove('d-none');
+        btnRetake.classList.add('d-none');
+        btnUseCapture.classList.add('d-none');
+        capturedBlob = null;
+    });
+
+    btnUseCapture.addEventListener('click', function() {
+        if (!capturedBlob) return;
+        // Convert blob to file and set it on the hidden file input
+        const file = new File([capturedBlob], 'camera_photo.jpg', { type: 'image/jpeg' });
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        photoFileInput.files = dt.files;
+        photoBase64Input.value = '';
+
+        // Update the profile avatar preview
+        updateAvatarPreview(URL.createObjectURL(capturedBlob));
+
+        // Close modal and stop camera
+        stopCamera();
+        bootstrap.Modal.getInstance(document.getElementById('changePhotoModal')).hide();
+
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Foto dari kamera siap disimpan', showConfirmButton: false, timer: 2000 });
+    });
+
+    // Upload functions
+    btnChooseFile.addEventListener('click', () => modalFileInput.click());
+    dropZone.addEventListener('click', () => modalFileInput.click());
+
+    dropZone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropZone.style.borderColor = '#6366f1';
+        dropZone.style.background = 'rgba(99,102,241,.05)';
+    });
+    dropZone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropZone.style.borderColor = '#cbd5e1';
+        dropZone.style.background = '';
+    });
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropZone.style.borderColor = '#cbd5e1';
+        dropZone.style.background = '';
+        if (e.dataTransfer.files.length > 0) {
+            handleUploadFile(e.dataTransfer.files[0]);
+        }
+    });
+
+    modalFileInput.addEventListener('change', function() {
+        if (this.files.length > 0) handleUploadFile(this.files[0]);
+    });
+
+    function handleUploadFile(file) {
+        if (!file.type.match(/^image\/(jpeg|png|jpg)$/)) {
+            Swal.fire({ icon: 'error', title: 'Format tidak didukung', text: 'Gunakan file JPG atau PNG', confirmButtonColor: '#6366f1' });
+            return;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+            Swal.fire({ icon: 'error', title: 'File terlalu besar', text: 'Maksimal 2MB', confirmButtonColor: '#6366f1' });
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadPreview.src = e.target.result;
+            uploadPreview.style.display = 'inline-block';
+            dropZone.style.display = 'none';
+            btnUseUpload.classList.remove('d-none');
+        };
+        reader.readAsDataURL(file);
+
+        // Store the file
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        modalFileInput._selectedFile = file;
+    }
+
+    btnUseUpload.addEventListener('click', function() {
+        const file = modalFileInput._selectedFile || (modalFileInput.files.length > 0 ? modalFileInput.files[0] : null);
+        if (!file) return;
+
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        photoFileInput.files = dt.files;
+        photoBase64Input.value = '';
+
+        updateAvatarPreview(URL.createObjectURL(file));
+
+        bootstrap.Modal.getInstance(document.getElementById('changePhotoModal')).hide();
+
+        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Foto profil siap disimpan', showConfirmButton: false, timer: 2000 });
+    });
+
+    function updateAvatarPreview(url) {
+        const wrapper = document.getElementById('profileAvatarWrapper');
+        const existingImg = document.getElementById('profileAvatarImg');
+        const initials = document.getElementById('profileAvatarInitials');
+
+        if (existingImg) {
+            existingImg.src = url;
+        } else if (initials) {
+            const img = document.createElement('img');
+            img.id = 'profileAvatarImg';
+            img.src = url;
+            img.className = 'rounded-circle border border-4 border-white shadow';
+            img.width = 130; img.height = 130;
+            img.style.objectFit = 'cover';
+            initials.replaceWith(img);
+        }
+    }
+
+    function stopCamera() {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(t => t.stop());
+            cameraStream = null;
+        }
+        video.style.display = 'block';
+        preview.style.display = 'none';
+        btnStart.classList.remove('d-none');
+        btnCapture.classList.add('d-none');
+        btnRetake.classList.add('d-none');
+        btnUseCapture.classList.add('d-none');
+    }
+
+    // Stop camera when modal closes
+    document.getElementById('changePhotoModal').addEventListener('hidden.bs.modal', function() {
+        stopCamera();
+        // Reset upload tab
+        uploadPreview.style.display = 'none';
+        dropZone.style.display = '';
+        btnUseUpload.classList.add('d-none');
+    });
+});
+</script>
+@endpush

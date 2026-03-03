@@ -49,6 +49,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Notification Management
     Route::get('/notification', [Admin\NotificationController::class, 'index'])->name('notification.index');
+    Route::get('/notification/json', [Admin\NotificationController::class, 'json'])->name('notification.json');
     Route::get('/notification/create', [Admin\NotificationController::class, 'create'])->name('notification.create');
     Route::post('/notification', [Admin\NotificationController::class, 'store'])->name('notification.store');
     Route::delete('/notification/{notification}', [Admin\NotificationController::class, 'destroy'])->name('notification.destroy');
@@ -63,6 +64,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Export routes
     Route::get('/staff-export', [Admin\StaffController::class, 'export'])->name('staff.export');
+    Route::post('/staff-import', [Admin\StaffController::class, 'import'])->name('staff.import');
     Route::get('/attendance-export', [Admin\AttendanceController::class, 'export'])->name('attendance.export');
 
     // ============================================================
@@ -160,6 +162,7 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
 
     // Notification
     Route::get('/notification', [Staff\NotificationController::class, 'index'])->name('notification.index');
+    Route::get('/notification/json', [Staff\NotificationController::class, 'json'])->name('notification.json');
     Route::patch('/notification/{notification}/read', [Staff\NotificationController::class, 'markAsRead'])->name('notification.read');
     Route::patch('/notification/read-all', [Staff\NotificationController::class, 'markAllAsRead'])->name('notification.read-all');
 

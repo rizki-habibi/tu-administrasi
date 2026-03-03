@@ -163,4 +163,65 @@ class StaffController extends Controller
         }
         return view('admin.staff.print', compact('staffs'));
     }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,txt,xlsx,xls|max:5120',
+        ]);
+
+        try {
+            $file = $request->file('file');
+            $handle = fopen($file->getRealPath(), 'r');
+
+            // Skip header row
+            $header = fgetcsv($handle);
+            $imported = 0;
+            $skipped = 0;
+
+            while (($row = fgetcsv($handle)) !== false) {
+                // Expected: Nama, Email, Password, Jabatan, Telepon, Alamat
+                if (count($row) < 2) continue;
+
+                $name = trim($row[0] ?? '');
+                $email = trim($row[1] ?? '');
+                $password = trim($row[2] ?? 'password123');
+                $position = trim($row[3] ?? '');
+                $phone = trim($row[4] ?? '');
+                $address = trim($row[5] ?? '');
+
+                if (empty($name) || empty($email)) { $skipped++; continue; }
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { $skipped++; continue; }
+                if (User::where('email', $email)->exists()) { $skipped++; continue; }
+
+                User::create([
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => \Hash::make($password ?: 'password123'),
+                    'role' => 'staff',
+                    'position' => $position ?: null,
+                    'phone' => $phone ?: null,
+                    'address' => $address ?: null,
+                    'is_active' => true,
+                ]);
+                $imported++;
+            }
+
+            fclose($handle);
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => "Berhasil import {$imported} staff." . ($skipped > 0 ? " {$skipped} data dilewati." : ''),
+                ]);
+            }
+
+            return redirect()->route('admin.staff.index')->with('success', "Berhasil import {$imported} staff." . ($skipped > 0 ? " {$skipped} data dilewati." : ''));
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Gagal memproses file: ' . $e->getMessage()], 422);
+            }
+            return redirect()->back()->with('error', 'Gagal import: ' . $e->getMessage());
+        }
+    }
 }

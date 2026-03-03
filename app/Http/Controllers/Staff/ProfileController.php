@@ -26,6 +26,7 @@ class ProfileController extends Controller
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'photo_base64' => 'nullable|string',
         ]);
 
         $data = $request->only('name', 'email', 'phone', 'address');
@@ -35,6 +36,20 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($user->photo);
             }
             $data['photo'] = $request->file('photo')->store('staff-photos', 'public');
+        } elseif ($request->filled('photo_base64')) {
+            // Handle base64 camera capture
+            $base64 = $request->photo_base64;
+            if (preg_match('/^data:image\/(jpeg|png|jpg);base64,/', $base64, $matches)) {
+                $ext = $matches[1] === 'jpeg' ? 'jpg' : $matches[1];
+                $base64 = preg_replace('/^data:image\/\w+;base64,/', '', $base64);
+                $imageData = base64_decode($base64);
+                $filename = 'staff-photos/' . uniqid('cam_') . '.' . $ext;
+                Storage::disk('public')->put($filename, $imageData);
+                if ($user->photo) {
+                    Storage::disk('public')->delete($user->photo);
+                }
+                $data['photo'] = $filename;
+            }
         }
 
         $user->update($data);

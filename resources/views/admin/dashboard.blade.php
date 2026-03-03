@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Dashboard')
+@section('title', 'Beranda')
 
 @section('content')
 <!-- Greeting -->
@@ -80,7 +80,9 @@
                 <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-pie-chart text-info me-2"></i>Status Kehadiran Bulan Ini</h6>
             </div>
             <div class="card-body d-flex align-items-center justify-content-center">
-                <canvas id="statusChart" height="200"></canvas>
+                <div style="max-width:240px;max-height:240px;width:100%;">
+                    <canvas id="statusChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
