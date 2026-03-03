@@ -234,6 +234,46 @@
                 </div>
             </div>
 
+            <div class="nav-label">Akademik & Data</div>
+            <div class="nav-item {{ request()->routeIs('staff.kurikulum.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.kurikulum.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-book-half icon"></i> <span>Kurikulum</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.kurikulum.index') }}" class="sub-link {{ request()->routeIs('staff.kurikulum.index') ? 'active' : '' }}">Dokumen Kurikulum</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('staff.kesiswaan.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.kesiswaan.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-mortarboard-fill icon"></i> <span>Kesiswaan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.kesiswaan.index') }}" class="sub-link {{ request()->routeIs('staff.kesiswaan.index') ? 'active' : '' }}">Data Siswa</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('staff.inventaris.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.inventaris.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-box-seam-fill icon"></i> <span>Inventaris</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.inventaris.index') }}" class="sub-link {{ request()->routeIs('staff.inventaris.index') ? 'active' : '' }}">Daftar Inventaris</a>
+                </div>
+            </div>
+
+            <div class="nav-label">Evaluasi & Penilaian</div>
+            <div class="nav-item {{ request()->routeIs('staff.evaluasi.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.evaluasi.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-clipboard2-data-fill icon"></i> <span>Evaluasi</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.evaluasi.pkg') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.pkg*') ? 'active' : '' }}">PKG / BKD Saya</a>
+                    <a href="{{ route('staff.evaluasi.p5') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.p5*') ? 'active' : '' }}">Asesmen P5</a>
+                    <a href="{{ route('staff.evaluasi.star') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.star*') ? 'active' : '' }}">Metode STAR</a>
+                    <a href="{{ route('staff.evaluasi.bukti-fisik') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.bukti-fisik*') ? 'active' : '' }}">Bukti Fisik</a>
+                    <a href="{{ route('staff.evaluasi.learning') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.learning*') ? 'active' : '' }}">Model Pembelajaran</a>
+                </div>
+            </div>
+
             <div class="nav-label">Kegiatan</div>
             <div class="nav-item {{ request()->routeIs('staff.event.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.event.*') ? 'active' : '' }}" data-toggle="submenu">
@@ -247,6 +287,17 @@
             </div>
 
             <div class="nav-label">Informasi</div>
+            <div class="nav-item {{ request()->routeIs('staff.reminder.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.reminder.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-alarm-fill icon"></i> <span>Pengingat</span>
+                    @php $myReminders = \App\Models\Reminder::where(function($q){ $q->where('target', 'all')->orWhere('target_user_id', Auth::id()); })->where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
+                    @if($myReminders > 0)<span class="badge bg-warning text-dark">{{ $myReminders }}</span>@endif
+                    <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.reminder.index') }}" class="sub-link {{ request()->routeIs('staff.reminder.index') ? 'active' : '' }}">Pengingat Saya</a>
+                </div>
+            </div>
             <div class="nav-item {{ request()->routeIs('staff.notification.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.notification.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-bell-fill icon"></i> <span>Notifikasi</span>

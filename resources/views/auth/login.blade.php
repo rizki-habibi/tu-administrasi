@@ -144,9 +144,14 @@
                     @error('password') <div class="error-msg">{{ $message }}</div> @enderror
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="remember">Ingat saya</label>
+                <div class="d-flex justify-content-between align-items-center" style="margin-bottom:20px;">
+                    <div class="form-check mb-0">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="remember" style="font-size:.8rem;color:#64748b;">Ingat saya</label>
+                    </div>
+                    @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" style="font-size:.8rem;color:#6366f1;text-decoration:none;font-weight:500;">Lupa kata sandi?</a>
+                    @endif
                 </div>
 
                 <button type="submit" class="btn-login">

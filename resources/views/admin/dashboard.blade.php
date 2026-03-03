@@ -61,6 +61,32 @@
 </div>
 
 <div class="row g-3">
+    <!-- Chart: Kehadiran 7 Hari Terakhir -->
+    <div class="col-lg-8">
+        <div class="card mb-3">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-bar-chart text-primary me-2"></i>Grafik Kehadiran 7 Hari Terakhir</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="weeklyChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart: Distribusi Status Bulan Ini -->
+    <div class="col-lg-4">
+        <div class="card mb-3">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-pie-chart text-info me-2"></i>Status Kehadiran Bulan Ini</h6>
+            </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <canvas id="statusChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
     <!-- Kehadiran Hari Ini -->
     <div class="col-lg-8">
         <div class="card">
@@ -137,3 +163,44 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Weekly Attendance Chart
+new Chart(document.getElementById('weeklyChart'), {
+    type: 'bar',
+    data: {
+        labels: @json($weeklyLabels),
+        datasets: [
+            { label: 'Hadir', data: @json($weeklyHadir), backgroundColor: '#10b981', borderRadius: 4 },
+            { label: 'Terlambat', data: @json($weeklyTerlambat), backgroundColor: '#f59e0b', borderRadius: 4 },
+            { label: 'Alpha', data: @json($weeklyAlpha), backgroundColor: '#ef4444', borderRadius: 4 }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 15 } } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } }
+    }
+});
+
+// Status Distribution Doughnut
+new Chart(document.getElementById('statusChart'), {
+    type: 'doughnut',
+    data: {
+        labels: @json(array_keys($statusDistribution)),
+        datasets: [{
+            data: @json(array_values($statusDistribution)),
+            backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ef4444'],
+            borderWidth: 0, hoverOffset: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } } },
+        cutout: '60%'
+    }
+});
+</script>
+@endpush

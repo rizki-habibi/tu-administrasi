@@ -85,6 +85,16 @@
     </div>
 </div>
 
+<!-- Chart: Kehadiran Bulanan -->
+<div class="card mb-4">
+    <div class="card-header bg-white py-3">
+        <h6 class="mb-0 fw-bold" style="font-size:.9rem;"><i class="bi bi-graph-up text-primary me-2"></i>Ringkasan Kehadiran Bulan Ini</h6>
+    </div>
+    <div class="card-body">
+        <canvas id="myAttendanceChart" height="150"></canvas>
+    </div>
+</div>
+
 <div class="row g-3">
     <!-- Events -->
     <div class="col-lg-6">
@@ -133,3 +143,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById('myAttendanceChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Hadir', 'Terlambat', 'Izin/Sakit', 'Alpha'],
+        datasets: [{
+            data: [{{ $hadir }}, {{ $terlambat }}, {{ $izin }}, {{ $alpha }}],
+            backgroundColor: ['#10b981', '#f59e0b', '#6366f1', '#ef4444'],
+            borderWidth: 0, hoverOffset: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 15 } } },
+        cutout: '55%'
+    }
+});
+</script>
+@endpush

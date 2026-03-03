@@ -271,6 +271,75 @@
                 </div>
             </div>
 
+            <div class="nav-label">Akademik & Kurikulum</div>
+            <div class="nav-item {{ request()->routeIs('admin.kurikulum.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.kurikulum.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-book-half icon"></i> <span>Kurikulum</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.kurikulum.index') }}" class="sub-link {{ request()->routeIs('admin.kurikulum.index') ? 'active' : '' }}">Semua Dokumen</a>
+                    <a href="{{ route('admin.kurikulum.create') }}" class="sub-link {{ request()->routeIs('admin.kurikulum.create') ? 'active' : '' }}">Tambah Dokumen</a>
+                    <a href="{{ route('admin.kurikulum.index', ['type'=>'rpp']) }}" class="sub-link">RPP / Modul Ajar</a>
+                    <a href="{{ route('admin.kurikulum.index', ['type'=>'silabus']) }}" class="sub-link">Silabus / ATP</a>
+                    <a href="{{ route('admin.kurikulum.index', ['type'=>'jadwal']) }}" class="sub-link">Jadwal Pelajaran</a>
+                    <a href="{{ route('admin.kurikulum.index', ['type'=>'kalender']) }}" class="sub-link">Kalender Pendidikan</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('admin.kesiswaan.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.kesiswaan.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-mortarboard-fill icon"></i> <span>Kesiswaan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.kesiswaan.index') }}" class="sub-link {{ request()->routeIs('admin.kesiswaan.index') ? 'active' : '' }}">Data Siswa</a>
+                    <a href="{{ route('admin.kesiswaan.create') }}" class="sub-link {{ request()->routeIs('admin.kesiswaan.create') ? 'active' : '' }}">Tambah Siswa</a>
+                </div>
+            </div>
+
+            <div class="nav-label">Sarana & Keuangan</div>
+            <div class="nav-item {{ request()->routeIs('admin.inventaris.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.inventaris.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-box-seam-fill icon"></i> <span>Inventaris / Sarpras</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.inventaris.index') }}" class="sub-link {{ request()->routeIs('admin.inventaris.index') ? 'active' : '' }}">Daftar Inventaris</a>
+                    <a href="{{ route('admin.inventaris.create') }}" class="sub-link {{ request()->routeIs('admin.inventaris.create') ? 'active' : '' }}">Tambah Barang</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('admin.keuangan.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.keuangan.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-cash-coin icon"></i> <span>Keuangan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.keuangan.index') }}" class="sub-link {{ request()->routeIs('admin.keuangan.index') ? 'active' : '' }}">Transaksi</a>
+                    <a href="{{ route('admin.keuangan.create') }}" class="sub-link {{ request()->routeIs('admin.keuangan.create') ? 'active' : '' }}">Tambah Transaksi</a>
+                    <a href="{{ route('admin.keuangan.budget') }}" class="sub-link {{ request()->routeIs('admin.keuangan.budget') ? 'active' : '' }}">RKAS / Anggaran</a>
+                </div>
+            </div>
+
+            <div class="nav-label">Evaluasi & Penilaian</div>
+            <div class="nav-item {{ request()->routeIs('admin.evaluasi.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.evaluasi.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-clipboard2-data-fill icon"></i> <span>Evaluasi Kinerja</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.evaluasi.pkg') }}" class="sub-link {{ request()->routeIs('admin.evaluasi.pkg*') ? 'active' : '' }}">PKG / BKD / SKP</a>
+                    <a href="{{ route('admin.evaluasi.p5') }}" class="sub-link {{ request()->routeIs('admin.evaluasi.p5*') ? 'active' : '' }}">Asesmen P5</a>
+                    <a href="{{ route('admin.evaluasi.star') }}" class="sub-link {{ request()->routeIs('admin.evaluasi.star*') ? 'active' : '' }}">Metode STAR</a>
+                    <a href="{{ route('admin.evaluasi.bukti-fisik') }}" class="sub-link {{ request()->routeIs('admin.evaluasi.bukti-fisik*') ? 'active' : '' }}">Bukti Fisik</a>
+                    <a href="{{ route('admin.evaluasi.learning') }}" class="sub-link {{ request()->routeIs('admin.evaluasi.learning*') ? 'active' : '' }}">Model Pembelajaran</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('admin.akreditasi.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.akreditasi.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-award-fill icon"></i> <span>Akreditasi</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.akreditasi.index') }}" class="sub-link {{ request()->routeIs('admin.akreditasi.index') ? 'active' : '' }}">Dokumen Akreditasi</a>
+                    <a href="{{ route('admin.akreditasi.create') }}" class="sub-link {{ request()->routeIs('admin.akreditasi.create') ? 'active' : '' }}">Tambah Dokumen</a>
+                    <a href="{{ route('admin.akreditasi.eds') }}" class="sub-link {{ request()->routeIs('admin.akreditasi.eds*') ? 'active' : '' }}">Evaluasi Diri (EDS)</a>
+                </div>
+            </div>
+
             <div class="nav-label">Kegiatan & Komunikasi</div>
             <div class="nav-item {{ request()->routeIs('admin.event.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('admin.event.*') ? 'active' : '' }}" data-toggle="submenu">
@@ -292,6 +361,18 @@
             </div>
 
             <div class="nav-label">Sistem</div>
+            <div class="nav-item {{ request()->routeIs('admin.reminder.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.reminder.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-bell-fill icon"></i> <span>Pengingat</span>
+                    @php $overdueReminders = \App\Models\Reminder::where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
+                    @if($overdueReminders > 0)<span class="badge bg-warning text-dark" style="font-size:.6rem;">{{ $overdueReminders }}</span>@endif
+                    <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('admin.reminder.index') }}" class="sub-link {{ request()->routeIs('admin.reminder.index') ? 'active' : '' }}">Semua Pengingat</a>
+                    <a href="{{ route('admin.reminder.create') }}" class="sub-link {{ request()->routeIs('admin.reminder.create') ? 'active' : '' }}">Buat Pengingat</a>
+                </div>
+            </div>
             <div class="nav-item {{ request()->routeIs('admin.attendance.settings') ? 'open' : '' }}">
                 <a class="nav-link" data-toggle="submenu">
                     <i class="bi bi-gear-fill icon"></i> <span>Pengaturan</span> <i class="bi bi-chevron-right arrow"></i>

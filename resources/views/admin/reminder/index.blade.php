@@ -1,0 +1,106 @@
+@extends('layouts.admin')
+@section('title', 'Pengingat')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1" style="color:#1e293b;">Pengingat / Reminder</h4>
+        <p class="text-muted mb-0" style="font-size:.85rem;">Kelola pengingat deadline dan tugas</p>
+    </div>
+    <a href="{{ route('admin.reminder.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Buat Pengingat</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">
+            <div class="icon-box"><i class="bi bi-exclamation-triangle-fill"></i></div>
+            <h3>{{ $overdueCount ?? 0 }}</h3><p>Terlambat / Overdue</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background:linear-gradient(135deg,#6366f1,#818cf8)">
+            <div class="icon-box"><i class="bi bi-hourglass-split"></i></div>
+            <h3>{{ $activeCount ?? 0 }}</h3><p>Aktif</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background:linear-gradient(135deg,#10b981,#34d399)">
+            <div class="icon-box"><i class="bi bi-check-circle-fill"></i></div>
+            <h3>{{ $completedCount ?? 0 }}</h3><p>Selesai</p>
+        </div>
+    </div>
+</div>
+
+<!-- Active Reminders -->
+<div class="card mb-4">
+    <div class="card-header bg-transparent"><h6 class="mb-0 fw-semibold"><i class="bi bi-bell me-1 text-warning"></i> Pengingat Aktif</h6></div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>#</th><th>Judul</th><th>Deskripsi</th><th>Target</th><th>Prioritas</th><th>Deadline</th><th>Aksi</th></tr></thead>
+                <tbody>
+                    @forelse($reminders as $r)
+                    @php $isOverdue = \Carbon\Carbon::parse($r->due_date)->isPast(); @endphp
+                    <tr class="{{ $isOverdue ? 'table-warning' : '' }}">
+                        <td>{{ $loop->iteration + ($reminders->currentPage()-1)*$reminders->perPage() }}</td>
+                        <td class="fw-semibold">
+                            {{ $r->title }}
+                            @if($isOverdue)<span class="badge bg-danger ms-1">Terlambat!</span>@endif
+                        </td>
+                        <td>{{ Str::limit($r->description, 50) }}</td>
+                        <td>
+                            @if($r->target == 'all')<span class="badge bg-info">Semua Staff</span>
+                            @else<span class="badge bg-primary">{{ $r->targetUser->name ?? 'Spesifik' }}</span>@endif
+                        </td>
+                        <td>
+                            @if($r->priority == 'high')<span class="badge bg-danger">Tinggi</span>
+                            @elseif($r->priority == 'medium')<span class="badge bg-warning text-dark">Sedang</span>
+                            @else<span class="badge bg-success">Rendah</span>@endif
+                        </td>
+                        <td>{{ \Carbon\Carbon::parse($r->due_date)->format('d/m/Y H:i') }}</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <form action="{{ route('admin.reminder.toggle', $r) }}" method="POST">@csrf @method('PATCH')
+                                    <button class="btn btn-sm btn-outline-success" title="Tandai selesai"><i class="bi bi-check-lg"></i></button>
+                                </form>
+                                <form action="{{ route('admin.reminder.destroy', $r) }}" method="POST">@csrf @method('DELETE')
+                                    <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus pengingat ini?"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="7" class="text-center py-4 text-muted">Tidak ada pengingat aktif</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if($reminders->hasPages())
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-center py-3">{{ $reminders->withQueryString()->links() }}</div>
+    @endif
+</div>
+
+<!-- Completed Reminders -->
+@if(isset($completed) && $completed->count() > 0)
+<div class="card">
+    <div class="card-header bg-transparent"><h6 class="mb-0 fw-semibold"><i class="bi bi-check-circle me-1 text-success"></i> Selesai (Terakhir)</h6></div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead><tr><th>Judul</th><th>Deadline</th><th>Selesai</th></tr></thead>
+                <tbody>
+                    @foreach($completed as $c)
+                    <tr class="text-muted">
+                        <td><s>{{ $c->title }}</s></td>
+                        <td>{{ \Carbon\Carbon::parse($c->due_date)->format('d/m/Y') }}</td>
+                        <td>{{ $c->completed_at ? \Carbon\Carbon::parse($c->completed_at)->format('d/m/Y H:i') : '-' }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endif
+@endsection

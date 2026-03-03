@@ -64,6 +64,68 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Export routes
     Route::get('/staff-export', [Admin\StaffController::class, 'export'])->name('staff.export');
     Route::get('/attendance-export', [Admin\AttendanceController::class, 'export'])->name('attendance.export');
+
+    // ============================================================
+    // NEW FEATURES - Kurikulum & Akademik
+    // ============================================================
+    Route::resource('kurikulum', Admin\CurriculumController::class);
+
+    // Kesiswaan (Data Siswa)
+    Route::resource('kesiswaan', Admin\StudentController::class);
+
+    // Inventaris / Sarana Prasarana
+    Route::resource('inventaris', Admin\InventarisController::class);
+
+    // Keuangan
+    Route::get('/keuangan', [Admin\FinanceController::class, 'index'])->name('keuangan.index');
+    Route::get('/keuangan/create', [Admin\FinanceController::class, 'create'])->name('keuangan.create');
+    Route::post('/keuangan', [Admin\FinanceController::class, 'store'])->name('keuangan.store');
+    Route::get('/keuangan/budget', [Admin\FinanceController::class, 'budgetIndex'])->name('keuangan.budget');
+    Route::post('/keuangan/budget', [Admin\FinanceController::class, 'budgetStore'])->name('keuangan.budget.store');
+    Route::get('/keuangan/{keuangan}', [Admin\FinanceController::class, 'show'])->name('keuangan.show');
+    Route::patch('/keuangan/{keuangan}/verify', [Admin\FinanceController::class, 'verify'])->name('keuangan.verify');
+    Route::delete('/keuangan/{keuangan}', [Admin\FinanceController::class, 'destroy'])->name('keuangan.destroy');
+
+    // Evaluasi Kinerja / PKG / BKD
+    Route::get('/evaluasi/pkg', [Admin\EvaluasiController::class, 'pkgIndex'])->name('evaluasi.pkg');
+    Route::get('/evaluasi/pkg/create', [Admin\EvaluasiController::class, 'pkgCreate'])->name('evaluasi.pkg.create');
+    Route::post('/evaluasi/pkg', [Admin\EvaluasiController::class, 'pkgStore'])->name('evaluasi.pkg.store');
+
+    // Asesmen P5 (Projek Penguatan Profil Pelajar Pancasila)
+    Route::get('/evaluasi/p5', [Admin\EvaluasiController::class, 'p5Index'])->name('evaluasi.p5');
+    Route::get('/evaluasi/p5/create', [Admin\EvaluasiController::class, 'p5Create'])->name('evaluasi.p5.create');
+    Route::post('/evaluasi/p5', [Admin\EvaluasiController::class, 'p5Store'])->name('evaluasi.p5.store');
+
+    // Metode STAR Analysis
+    Route::get('/evaluasi/star', [Admin\EvaluasiController::class, 'starIndex'])->name('evaluasi.star');
+    Route::get('/evaluasi/star/create', [Admin\EvaluasiController::class, 'starCreate'])->name('evaluasi.star.create');
+    Route::post('/evaluasi/star', [Admin\EvaluasiController::class, 'starStore'])->name('evaluasi.star.store');
+
+    // Bukti Fisik
+    Route::get('/evaluasi/bukti-fisik', [Admin\EvaluasiController::class, 'buktiFisikIndex'])->name('evaluasi.bukti-fisik');
+    Route::post('/evaluasi/bukti-fisik', [Admin\EvaluasiController::class, 'buktiFisikStore'])->name('evaluasi.bukti-fisik.store');
+    Route::delete('/evaluasi/bukti-fisik/{evidence}', [Admin\EvaluasiController::class, 'buktiFisikDestroy'])->name('evaluasi.bukti-fisik.destroy');
+
+    // Model Pembelajaran / Metode Teknologi
+    Route::get('/evaluasi/learning', [Admin\EvaluasiController::class, 'learningIndex'])->name('evaluasi.learning');
+    Route::get('/evaluasi/learning/create', [Admin\EvaluasiController::class, 'learningCreate'])->name('evaluasi.learning.create');
+    Route::post('/evaluasi/learning', [Admin\EvaluasiController::class, 'learningStore'])->name('evaluasi.learning.store');
+
+    // Akreditasi
+    Route::get('/akreditasi', [Admin\AccreditationController::class, 'index'])->name('akreditasi.index');
+    Route::get('/akreditasi/create', [Admin\AccreditationController::class, 'create'])->name('akreditasi.create');
+    Route::post('/akreditasi', [Admin\AccreditationController::class, 'store'])->name('akreditasi.store');
+    Route::get('/akreditasi/eds', [Admin\AccreditationController::class, 'edsIndex'])->name('akreditasi.eds');
+    Route::post('/akreditasi/eds', [Admin\AccreditationController::class, 'edsStore'])->name('akreditasi.eds.store');
+    Route::get('/akreditasi/{akreditasi}', [Admin\AccreditationController::class, 'show'])->name('akreditasi.show');
+    Route::delete('/akreditasi/{akreditasi}', [Admin\AccreditationController::class, 'destroy'])->name('akreditasi.destroy');
+
+    // Pengingat / Reminder
+    Route::get('/reminder', [Admin\ReminderController::class, 'index'])->name('reminder.index');
+    Route::get('/reminder/create', [Admin\ReminderController::class, 'create'])->name('reminder.create');
+    Route::post('/reminder', [Admin\ReminderController::class, 'store'])->name('reminder.store');
+    Route::patch('/reminder/{reminder}/toggle', [Admin\ReminderController::class, 'toggleComplete'])->name('reminder.toggle');
+    Route::delete('/reminder/{reminder}', [Admin\ReminderController::class, 'destroy'])->name('reminder.destroy');
 });
 
 /*
@@ -111,6 +173,38 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
     Route::get('/document', [Staff\DocumentController::class, 'index'])->name('document.index');
     Route::get('/document/{document}', [Staff\DocumentController::class, 'show'])->name('document.show');
     Route::post('/document', [Staff\DocumentController::class, 'upload'])->name('document.upload');
+
+    // ============================================================
+    // NEW FEATURES for Staff
+    // ============================================================
+
+    // Kurikulum (read-only for staff)
+    Route::get('/kurikulum', [Staff\CurriculumController::class, 'index'])->name('kurikulum.index');
+    Route::get('/kurikulum/{kurikulum}', [Staff\CurriculumController::class, 'show'])->name('kurikulum.show');
+    Route::post('/kurikulum', [Staff\CurriculumController::class, 'store'])->name('kurikulum.store');
+
+    // Kesiswaan (staff can view/add)
+    Route::get('/kesiswaan', [Staff\StudentController::class, 'index'])->name('kesiswaan.index');
+    Route::get('/kesiswaan/{kesiswaan}', [Staff\StudentController::class, 'show'])->name('kesiswaan.show');
+
+    // Inventaris (view & report damage)
+    Route::get('/inventaris', [Staff\InventarisController::class, 'index'])->name('inventaris.index');
+    Route::get('/inventaris/{inventaris}', [Staff\InventarisController::class, 'show'])->name('inventaris.show');
+    Route::post('/inventaris/damage', [Staff\InventarisController::class, 'reportDamage'])->name('inventaris.damage');
+
+    // Evaluasi - PKG/BKD (staff can view their own)
+    Route::get('/evaluasi/pkg', [Staff\EvaluasiController::class, 'pkgIndex'])->name('evaluasi.pkg');
+    Route::get('/evaluasi/p5', [Staff\EvaluasiController::class, 'p5Index'])->name('evaluasi.p5');
+    Route::get('/evaluasi/star', [Staff\EvaluasiController::class, 'starIndex'])->name('evaluasi.star');
+    Route::post('/evaluasi/star', [Staff\EvaluasiController::class, 'starStore'])->name('evaluasi.star.store');
+    Route::get('/evaluasi/bukti-fisik', [Staff\EvaluasiController::class, 'buktiFisikIndex'])->name('evaluasi.bukti-fisik');
+    Route::post('/evaluasi/bukti-fisik', [Staff\EvaluasiController::class, 'buktiFisikStore'])->name('evaluasi.bukti-fisik.store');
+    Route::get('/evaluasi/learning', [Staff\EvaluasiController::class, 'learningIndex'])->name('evaluasi.learning');
+    Route::post('/evaluasi/learning', [Staff\EvaluasiController::class, 'learningStore'])->name('evaluasi.learning.store');
+
+    // Reminder (staff can view their reminders)
+    Route::get('/reminder', [Staff\ReminderController::class, 'index'])->name('reminder.index');
+    Route::patch('/reminder/{reminder}/complete', [Staff\ReminderController::class, 'markComplete'])->name('reminder.complete');
 
     // Profile
     Route::get('/profile', [Staff\ProfileController::class, 'edit'])->name('profile.edit');
