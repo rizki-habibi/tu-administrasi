@@ -12,45 +12,39 @@
         <form action="{{ route('admin.akreditasi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row g-3">
-                <div class="col-md-8">
-                    <label class="form-label">Judul Dokumen <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
-                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label class="form-label">Standar <span class="text-danger">*</span></label>
                     <select name="standar" class="form-select @error('standar') is-invalid @enderror" required>
                         <option value="">Pilih Standar</option>
-                        @for($i=1;$i<=8;$i++)
-                        <option value="Standar {{ $i }}" {{ old('standar')=="Standar $i"?'selected':'' }}>Standar {{ $i }}</option>
-                        @endfor
+                        @php $standarOptions = ['standar_isi'=>'Standar Isi','standar_proses'=>'Standar Proses','standar_kompetensi_lulusan'=>'Standar Kompetensi Lulusan','standar_pendidik'=>'Standar Pendidik','standar_sarpras'=>'Standar Sarpras','standar_pengelolaan'=>'Standar Pengelolaan','standar_pembiayaan'=>'Standar Pembiayaan','standar_penilaian'=>'Standar Penilaian']; @endphp
+                        @foreach($standarOptions as $val => $label)
+                        <option value="{{ $val }}" {{ old('standar')==$val?'selected':'' }}>{{ $label }}</option>
+                        @endforeach
                     </select>
                     @error('standar')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Tahun</label>
-                    <input type="text" name="year" class="form-control" value="{{ old('year', date('Y')) }}">
+                <div class="col-md-6">
+                    <label class="form-label">Komponen <span class="text-danger">*</span></label>
+                    <input type="text" name="komponen" class="form-control @error('komponen') is-invalid @enderror" value="{{ old('komponen') }}" placeholder="Sub komponen standar" required>
+                    @error('komponen')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Status</label>
-                    <select name="status" class="form-select">
-                        <option value="draft">Draft</option>
-                        <option value="final">Final</option>
-                        <option value="terverifikasi">Terverifikasi</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Komponen</label>
-                    <input type="text" name="component" class="form-control" value="{{ old('component') }}" placeholder="Sub komponen standar">
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
+                <div class="col-md-6">
+                    <label class="form-label">Indikator <span class="text-danger">*</span></label>
+                    <input type="text" name="indikator" class="form-control @error('indikator') is-invalid @enderror" value="{{ old('indikator') }}" required>
+                    @error('indikator')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">File Dokumen</label>
                     <input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png">
-                    <small class="text-muted">Maks 10MB</small>
+                    <small class="text-muted">Maks 10MB. Upload file → status otomatis "Lengkap"</small>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Deskripsi</label>
+                    <textarea name="deskripsi" class="form-control" rows="3">{{ old('deskripsi') }}</textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Catatan</label>
+                    <textarea name="catatan" class="form-control" rows="2">{{ old('catatan') }}</textarea>
                 </div>
             </div>
             <hr class="my-4">

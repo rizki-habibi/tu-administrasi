@@ -25,7 +25,7 @@
 @forelse($analyses ?? [] as $a)
 <div class="card mb-3">
     <div class="card-header bg-transparent d-flex justify-content-between">
-        <h6 class="mb-0 fw-semibold">{{ $a->title }}</h6>
+        <h6 class="mb-0 fw-semibold">{{ $a->judul }}</h6>
         <small class="text-muted">{{ $a->created_at->translatedFormat('d F Y') }}</small>
     </div>
     <div class="card-body">
@@ -50,11 +50,19 @@
                 <div class="modal-header"><h5 class="modal-title">Tambah Analisis STAR</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">
                     <div class="mb-3"><label class="form-label">Judul <span class="text-danger">*</span></label><input type="text" name="title" class="form-control" required></div>
+                    <div class="mb-3"><label class="form-label">Kategori</label>
+                        <select name="kategori" class="form-select">
+                            <option value="pembelajaran">Pembelajaran</option>
+                            <option value="administrasi">Administrasi</option>
+                            <option value="manajemen">Manajemen</option>
+                        </select>
+                    </div>
                     <div class="mb-3"><label class="form-label"><span class="badge bg-primary me-1">S</span> Situation <span class="text-danger">*</span></label><textarea name="situation" class="form-control" rows="2" required placeholder="Jelaskan situasi atau konteks..."></textarea></div>
                     <div class="mb-3"><label class="form-label"><span class="badge bg-warning text-dark me-1">T</span> Task <span class="text-danger">*</span></label><textarea name="task" class="form-control" rows="2" required placeholder="Tugas atau tantangan yang dihadapi..."></textarea></div>
                     <div class="mb-3"><label class="form-label"><span class="badge bg-success me-1">A</span> Action <span class="text-danger">*</span></label><textarea name="action" class="form-control" rows="2" required placeholder="Tindakan yang diambil..."></textarea></div>
                     <div class="mb-3"><label class="form-label"><span class="badge bg-danger me-1">R</span> Result <span class="text-danger">*</span></label><textarea name="result" class="form-control" rows="2" required placeholder="Hasil atau dampak..."></textarea></div>
                     <div class="mb-3"><label class="form-label">Refleksi</label><textarea name="reflection" class="form-control" rows="2"></textarea></div>
+                    <div class="mb-3"><label class="form-label">Tindak Lanjut</label><textarea name="tindak_lanjut" class="form-control" rows="2"></textarea></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>

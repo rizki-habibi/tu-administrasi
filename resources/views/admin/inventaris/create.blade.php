@@ -21,7 +21,7 @@
                     <label class="form-label">Kategori <span class="text-danger">*</span></label>
                     <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
                         <option value="">Pilih</option>
-                        @foreach(['mebeler','elektronik','alat_peraga','olahraga','laboratorium','kantor','lainnya'] as $kat)
+                        @foreach(['mebeulair','elektronik','buku','alat_lab','olahraga','lainnya'] as $kat)
                         <option value="{{ $kat }}" {{ old('kategori')==$kat?'selected':'' }}>{{ ucfirst(str_replace('_',' ',$kat)) }}</option>
                         @endforeach
                     </select>
@@ -39,33 +39,33 @@
                     <label class="form-label">Lokasi</label>
                     <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi') }}" placeholder="Contoh: Ruang Guru, Lab IPA">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label class="form-label">Jumlah <span class="text-danger">*</span></label>
                     <input type="number" name="jumlah" class="form-control" value="{{ old('jumlah', 1) }}" min="0" required>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Satuan</label>
-                    <input type="text" name="satuan" class="form-control" value="{{ old('satuan', 'pcs') }}" placeholder="pcs, unit">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Sumber Dana</label>
                     <input type="text" name="sumber_dana" class="form-control" value="{{ old('sumber_dana') }}" placeholder="BOS, APBD, dll">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Tahun Pengadaan</label>
-                    <input type="text" name="tahun_pengadaan" class="form-control" value="{{ old('tahun_pengadaan', date('Y')) }}">
+                    <label class="form-label">Tanggal Perolehan</label>
+                    <input type="date" name="tanggal_perolehan" class="form-control" value="{{ old('tanggal_perolehan') }}">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Harga Satuan (Rp)</label>
-                    <input type="number" name="harga_satuan" class="form-control" value="{{ old('harga_satuan') }}" min="0">
+                    <label class="form-label">Harga Perolehan (Rp)</label>
+                    <input type="number" name="harga_perolehan" class="form-control" value="{{ old('harga_perolehan') }}" min="0">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Foto Barang</label>
-                    <input type="file" name="photo" class="form-control" accept="image/*">
+                    <input type="file" name="foto" class="form-control" accept="image/*">
                 </div>
                 <div class="col-12">
-                    <label class="form-label">Keterangan</label>
-                    <textarea name="keterangan" class="form-control" rows="2">{{ old('keterangan') }}</textarea>
+                    <label class="form-label">Deskripsi</label>
+                    <textarea name="deskripsi" class="form-control" rows="2">{{ old('deskripsi') }}</textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Catatan</label>
+                    <textarea name="catatan" class="form-control" rows="2">{{ old('catatan') }}</textarea>
                 </div>
             </div>
             <hr class="my-4">

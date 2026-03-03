@@ -49,7 +49,7 @@
                 <tr>
                     <th>Judul</th>
                     <th>Deskripsi</th>
-                    <th>Prioritas</th>
+                    <th>Tipe</th>
                     <th>Deadline</th>
                     <th>Status</th>
                     <th class="text-center">Aksi</th>
@@ -60,15 +60,7 @@
                 <tr>
                     <td class="fw-semibold">{{ $r->title }}</td>
                     <td><small class="text-muted">{{ Str::limit($r->description, 50) }}</small></td>
-                    <td>
-                        @if($r->priority == 'high')
-                        <span class="badge bg-danger">Tinggi</span>
-                        @elseif($r->priority == 'medium')
-                        <span class="badge bg-warning text-dark">Sedang</span>
-                        @else
-                        <span class="badge bg-secondary">Rendah</span>
-                        @endif
-                    </td>
+                    <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucwords(str_replace('_', ' ', $r->type ?? '-')) }}</span></td>
                     <td>
                         @php $isOverdue = $r->due_date && \Carbon\Carbon::parse($r->due_date)->isPast(); @endphp
                         <span class="{{ $isOverdue ? 'text-danger fw-bold' : '' }}">

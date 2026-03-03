@@ -62,10 +62,10 @@
                     <td><span class="badge bg-light text-dark">{{ ucfirst($doc->type ?? '-') }}</span></td>
                     <td>{{ $doc->subject ?? '-' }}</td>
                     <td>
-                        @if($doc->status == 'final')
-                        <span class="badge bg-success">Final</span>
-                        @elseif($doc->status == 'review')
-                        <span class="badge bg-warning text-dark">Review</span>
+                        @if($doc->status == 'active')
+                        <span class="badge bg-success">Aktif</span>
+                        @elseif($doc->status == 'archived')
+                        <span class="badge bg-warning text-dark">Diarsipkan</span>
                         @else
                         <span class="badge bg-secondary">Draft</span>
                         @endif

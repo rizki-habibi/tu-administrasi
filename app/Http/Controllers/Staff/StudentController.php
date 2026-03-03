@@ -14,20 +14,20 @@ class StudentController extends Controller
 
         if ($request->search) {
             $query->where(function($q) use ($request) {
-                $q->where('nama', 'like', "%{$request->search}%")
+                $q->where('name', 'like', "%{$request->search}%")
                   ->orWhere('nis', 'like', "%{$request->search}%")
                   ->orWhere('nisn', 'like', "%{$request->search}%");
             });
         }
-        if ($request->kelas) {
-            $query->where('kelas', $request->kelas);
+        if ($request->class) {
+            $query->where('class', $request->class);
         }
         if ($request->status) {
             $query->where('status', $request->status);
         }
 
-        $students = $query->orderBy('kelas')->orderBy('nama')->paginate(20);
-        $kelasList = StudentRecord::select('kelas')->distinct()->orderBy('kelas')->pluck('kelas');
+        $students = $query->orderBy('class')->orderBy('name')->paginate(20);
+        $kelasList = StudentRecord::select('class')->distinct()->orderBy('class')->pluck('class');
 
         return view('staff.kesiswaan.index', compact('students', 'kelasList'));
     }

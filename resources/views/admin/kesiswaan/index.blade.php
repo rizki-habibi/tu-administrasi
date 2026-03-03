@@ -48,10 +48,10 @@
                 <input type="text" name="search" class="form-control" placeholder="Cari nama / NIS / NISN..." value="{{ request('search') }}">
             </div>
             <div class="col-md-2">
-                <select name="kelas" class="form-select">
+                <select name="class" class="form-select">
                     <option value="">Semua Kelas</option>
                     @foreach($kelasList as $k)
-                    <option value="{{ $k }}" {{ request('kelas')==$k?'selected':'' }}>{{ $k }}</option>
+                    <option value="{{ $k }}" {{ request('class')==$k?'selected':'' }}>{{ $k }}</option>
                     @endforeach
                 </select>
             </div>
@@ -59,7 +59,8 @@
                 <select name="status" class="form-select">
                     <option value="">Semua Status</option>
                     <option value="aktif" {{ request('status')=='aktif'?'selected':'' }}>Aktif</option>
-                    <option value="mutasi" {{ request('status')=='mutasi'?'selected':'' }}>Mutasi</option>
+                    <option value="mutasi_masuk" {{ request('status')=='mutasi_masuk'?'selected':'' }}>Mutasi Masuk</option>
+                    <option value="mutasi_keluar" {{ request('status')=='mutasi_keluar'?'selected':'' }}>Mutasi Keluar</option>
                     <option value="lulus" {{ request('status')=='lulus'?'selected':'' }}>Lulus</option>
                     <option value="do" {{ request('status')=='do'?'selected':'' }}>Drop Out</option>
                 </select>
@@ -97,18 +98,18 @@
                                 @if($s->photo)
                                     <img src="{{ asset('storage/'.$s->photo) }}" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
                                 @else
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:#e0e7ff;color:#6366f1;font-size:.75rem;font-weight:600;">{{ strtoupper(substr($s->nama,0,2)) }}</div>
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:#e0e7ff;color:#6366f1;font-size:.75rem;font-weight:600;">{{ strtoupper(substr($s->name,0,2)) }}</div>
                                 @endif
-                                <span class="fw-semibold">{{ $s->nama }}</span>
+                                <span class="fw-semibold">{{ $s->name }}</span>
                             </div>
                         </td>
                         <td>{{ $s->nis }}</td>
                         <td>{{ $s->nisn ?? '-' }}</td>
-                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ $s->kelas }}</span></td>
-                        <td>{{ $s->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ $s->class }}</span></td>
+                        <td>{{ $s->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                         <td>
                             @if($s->status == 'aktif')<span class="badge bg-success">Aktif</span>
-                            @elseif($s->status == 'mutasi')<span class="badge bg-warning text-dark">Mutasi</span>
+                            @elseif(in_array($s->status, ['mutasi_masuk','mutasi_keluar']))<span class="badge bg-warning text-dark">{{ $s->status == 'mutasi_masuk' ? 'Mutasi Masuk' : 'Mutasi Keluar' }}</span>
                             @elseif($s->status == 'lulus')<span class="badge bg-primary">Lulus</span>
                             @else<span class="badge bg-danger">Drop Out</span>
                             @endif
@@ -119,7 +120,7 @@
                                 <a href="{{ route('admin.kesiswaan.edit', $s) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
                                 <form action="{{ route('admin.kesiswaan.destroy', $s) }}" method="POST">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Hapus data siswa {{ $s->nama }}?"><i class="bi bi-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Hapus data siswa {{ $s->name }}?"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
                         </td>

@@ -43,10 +43,10 @@
                     @forelse($assessments as $a)
                     <tr>
                         <td>{{ $loop->iteration + ($assessments->currentPage()-1)*$assessments->perPage() }}</td>
-                        <td class="fw-semibold">{{ $a->title }}</td>
-                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ $a->dimension ?? '-' }}</span></td>
-                        <td>{{ $a->class_level ?? '-' }}</td>
-                        <td>{{ $a->theme ?? '-' }}</td>
+                        <td class="fw-semibold">{{ $a->judul_projek }}</td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucwords(str_replace('_', ' ', $a->dimensi ?? '-')) }}</span></td>
+                        <td>{{ $a->kelas ?? '-' }}</td>
+                        <td>{{ $a->tema ?? '-' }}</td>
                         <td>{{ $a->created_at->format('d/m/Y') }}</td>
                         <td><a href="{{ route('admin.evaluasi.p5') }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
                     </tr>

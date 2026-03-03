@@ -27,14 +27,12 @@ class StudentController extends Controller
 
         $students = $query->paginate(20)->withQueryString();
 
-        $stats = [
-            'total' => StudentRecord::count(),
-            'aktif' => StudentRecord::where('status', 'aktif')->count(),
-            'laki' => StudentRecord::where('gender', 'L')->where('status', 'aktif')->count(),
-            'perempuan' => StudentRecord::where('gender', 'P')->where('status', 'aktif')->count(),
-        ];
+        $aktifCount = StudentRecord::where('status', 'aktif')->count();
+        $lakiCount = StudentRecord::where('gender', 'L')->where('status', 'aktif')->count();
+        $perempuanCount = StudentRecord::where('gender', 'P')->where('status', 'aktif')->count();
+        $kelasList = StudentRecord::select('class')->distinct()->orderBy('class')->pluck('class');
 
-        return view('admin.kesiswaan.index', compact('students', 'stats'));
+        return view('admin.kesiswaan.index', compact('students', 'aktifCount', 'lakiCount', 'perempuanCount', 'kelasList'));
     }
 
     public function create()

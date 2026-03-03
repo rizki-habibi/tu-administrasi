@@ -10,7 +10,7 @@ class CurriculumController extends Controller
 {
     public function index(Request $request)
     {
-        $query = CurriculumDocument::where('status', 'final');
+        $query = CurriculumDocument::where('status', 'active');
 
         if ($request->type) {
             $query->where('type', $request->type);

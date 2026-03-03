@@ -21,10 +21,10 @@
                         @elseif($inventaris->kondisi=='rusak_ringan')<span class="badge bg-warning text-dark">Rusak Ringan</span>
                         @else<span class="badge bg-danger">Rusak Berat</span>@endif
                     </p></div>
-                    <div class="col-md-4"><label class="form-label text-muted">Jumlah</label><p>{{ $inventaris->jumlah }} {{ $inventaris->satuan ?? 'pcs' }}</p></div>
-                    <div class="col-md-4"><label class="form-label text-muted">Tahun Pengadaan</label><p>{{ $inventaris->tahun_pengadaan ?? '-' }}</p></div>
-                    <div class="col-md-4"><label class="form-label text-muted">Harga Satuan</label><p>{{ $inventaris->harga_satuan ? 'Rp '.number_format($inventaris->harga_satuan,0,',','.') : '-' }}</p></div>
-                    @if($inventaris->keterangan)<div class="col-12"><label class="form-label text-muted">Keterangan</label><p>{{ $inventaris->keterangan }}</p></div>@endif
+                    <div class="col-md-4"><label class="form-label text-muted">Jumlah</label><p>{{ $inventaris->jumlah }}</p></div>
+                    <div class="col-md-4"><label class="form-label text-muted">Tanggal Perolehan</label><p>{{ $inventaris->tanggal_perolehan ? \Carbon\Carbon::parse($inventaris->tanggal_perolehan)->format('d/m/Y') : '-' }}</p></div>
+                    <div class="col-md-4"><label class="form-label text-muted">Harga Perolehan</label><p>{{ $inventaris->harga_perolehan ? 'Rp '.number_format($inventaris->harga_perolehan,0,',','.') : '-' }}</p></div>
+                    @if($inventaris->catatan)<div class="col-12"><label class="form-label text-muted">Catatan</label><p>{{ $inventaris->catatan }}</p></div>@endif
                 </div>
                 <hr class="my-3">
                 <div class="d-flex gap-2">
@@ -37,9 +37,9 @@
         </div>
     </div>
     <div class="col-lg-4">
-        @if($inventaris->photo)
+        @if($inventaris->foto)
         <div class="card mb-3">
-            <img src="{{ asset('storage/'.$inventaris->photo) }}" class="card-img-top" style="border-radius:14px 14px 0 0;max-height:250px;object-fit:cover;">
+            <img src="{{ asset('storage/'.$inventaris->foto) }}" class="card-img-top" style="border-radius:14px 14px 0 0;max-height:250px;object-fit:cover;">
         </div>
         @endif
         <div class="card">
@@ -49,7 +49,7 @@
                     <table class="table table-sm mb-0">
                         <tbody>
                         @forelse($inventaris->damageReports ?? [] as $dr)
-                            <tr><td><small class="text-muted">{{ $dr->created_at->format('d/m/Y') }}</small><br>{{ $dr->description }}<br><span class="badge bg-{{ $dr->status=='selesai'?'success':'warning' }} bg-opacity-75">{{ ucfirst($dr->status) }}</span></td></tr>
+                            <tr><td><small class="text-muted">{{ $dr->created_at->format('d/m/Y') }}</small><br>{{ $dr->deskripsi_kerusakan }}<br><span class="badge bg-{{ $dr->status=='selesai'?'success':'warning' }} bg-opacity-75">{{ ucfirst($dr->status) }}</span></td></tr>
                         @empty
                             <tr><td class="text-center text-muted py-3"><small>Tidak ada laporan</small></td></tr>
                         @endforelse

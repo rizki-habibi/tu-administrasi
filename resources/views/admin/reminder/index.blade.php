@@ -37,7 +37,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Deskripsi</th><th>Target</th><th>Prioritas</th><th>Deadline</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>#</th><th>Judul</th><th>Deskripsi</th><th>Tipe</th><th>Untuk</th><th>Deadline</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($reminders as $r)
                     @php $isOverdue = \Carbon\Carbon::parse($r->due_date)->isPast(); @endphp
@@ -48,15 +48,8 @@
                             @if($isOverdue)<span class="badge bg-danger ms-1">Terlambat!</span>@endif
                         </td>
                         <td>{{ Str::limit($r->description, 50) }}</td>
-                        <td>
-                            @if($r->target == 'all')<span class="badge bg-info">Semua Staff</span>
-                            @else<span class="badge bg-primary">{{ $r->targetUser->name ?? 'Spesifik' }}</span>@endif
-                        </td>
-                        <td>
-                            @if($r->priority == 'high')<span class="badge bg-danger">Tinggi</span>
-                            @elseif($r->priority == 'medium')<span class="badge bg-warning text-dark">Sedang</span>
-                            @else<span class="badge bg-success">Rendah</span>@endif
-                        </td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucwords(str_replace('_', ' ', $r->type ?? '-')) }}</span></td>
+                        <td><span class="badge bg-primary">{{ $r->user->name ?? '-' }}</span></td>
                         <td>{{ \Carbon\Carbon::parse($r->due_date)->format('d/m/Y H:i') }}</td>
                         <td>
                             <div class="d-flex gap-1">
@@ -94,7 +87,7 @@
                     <tr class="text-muted">
                         <td><s>{{ $c->title }}</s></td>
                         <td>{{ \Carbon\Carbon::parse($c->due_date)->format('d/m/Y') }}</td>
-                        <td>{{ $c->completed_at ? \Carbon\Carbon::parse($c->completed_at)->format('d/m/Y H:i') : '-' }}</td>
+                        <td>{{ $c->updated_at ? $c->updated_at->format('d/m/Y H:i') : '-' }}</td>
                     </tr>
                     @endforeach
                 </tbody>

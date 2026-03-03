@@ -27,16 +27,16 @@
                     <tr><td class="text-muted">Lokasi</td><td>{{ $item->lokasi ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Jumlah</td><td>{{ $item->jumlah ?? 0 }} unit</td></tr>
                     <tr><td class="text-muted">Sumber Dana</td><td>{{ $item->sumber_dana ?? '-' }}</td></tr>
-                    <tr><td class="text-muted">Tahun Pengadaan</td><td>{{ $item->tahun_pengadaan ?? '-' }}</td></tr>
-                    <tr><td class="text-muted">Harga Satuan</td><td>Rp {{ number_format($item->harga ?? 0, 0, ',', '.') }}</td></tr>
+                    <tr><td class="text-muted">Tanggal Perolehan</td><td>{{ $item->tanggal_perolehan ? \Carbon\Carbon::parse($item->tanggal_perolehan)->format('d/m/Y') : '-' }}</td></tr>
+                    <tr><td class="text-muted">Harga Perolehan</td><td>Rp {{ number_format($item->harga_perolehan ?? 0, 0, ',', '.') }}</td></tr>
                 </table>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        @if($item->photo)
+        @if($item->foto)
         <div class="card mb-3">
-            <img src="{{ Storage::url($item->photo) }}" class="card-img-top" alt="Foto Barang">
+            <img src="{{ Storage::url($item->foto) }}" class="card-img-top" alt="Foto Barang">
         </div>
         @endif
         <div class="card">
@@ -45,7 +45,7 @@
                 @forelse($item->damageReports ?? [] as $r)
                 <div class="border-bottom pb-2 mb-2">
                     <small class="text-muted">{{ $r->created_at->format('d/m/Y') }}</small>
-                    <p class="mb-0 small">{{ $r->description }}</p>
+                    <p class="mb-0 small">{{ $r->deskripsi_kerusakan }}</p>
                     <small class="text-muted">Pelapor: {{ $r->reporter->name ?? '-' }}</small>
                 </div>
                 @empty

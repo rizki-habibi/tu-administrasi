@@ -14,42 +14,61 @@
             <div class="row g-3">
                 <div class="col-md-8">
                     <label class="form-label">Judul Projek <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
-                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="judul_projek" class="form-control @error('judul_projek') is-invalid @enderror" value="{{ old('judul_projek') }}" required>
+                    @error('judul_projek')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Dimensi <span class="text-danger">*</span></label>
-                    <select name="dimension" class="form-select @error('dimension') is-invalid @enderror" required>
+                    <select name="dimensi" class="form-select @error('dimensi') is-invalid @enderror" required>
                         <option value="">Pilih Dimensi</option>
-                        <option value="Beriman & Bertaqwa" {{ old('dimension')=='Beriman & Bertaqwa'?'selected':'' }}>Beriman & Bertaqwa</option>
-                        <option value="Berkebhinekaan Global" {{ old('dimension')=='Berkebhinekaan Global'?'selected':'' }}>Berkebhinekaan Global</option>
-                        <option value="Bergotong Royong" {{ old('dimension')=='Bergotong Royong'?'selected':'' }}>Bergotong Royong</option>
-                        <option value="Mandiri" {{ old('dimension')=='Mandiri'?'selected':'' }}>Mandiri</option>
-                        <option value="Bernalar Kritis" {{ old('dimension')=='Bernalar Kritis'?'selected':'' }}>Bernalar Kritis</option>
-                        <option value="Kreatif" {{ old('dimension')=='Kreatif'?'selected':'' }}>Kreatif</option>
+                        <option value="beriman" {{ old('dimensi')=='beriman'?'selected':'' }}>Beriman & Bertaqwa</option>
+                        <option value="berkebinekaan" {{ old('dimensi')=='berkebinekaan'?'selected':'' }}>Berkebhinekaan Global</option>
+                        <option value="gotong_royong" {{ old('dimensi')=='gotong_royong'?'selected':'' }}>Bergotong Royong</option>
+                        <option value="mandiri" {{ old('dimensi')=='mandiri'?'selected':'' }}>Mandiri</option>
+                        <option value="bernalar_kritis" {{ old('dimensi')=='bernalar_kritis'?'selected':'' }}>Bernalar Kritis</option>
+                        <option value="kreatif" {{ old('dimensi')=='kreatif'?'selected':'' }}>Kreatif</option>
                     </select>
-                    @error('dimension')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    @error('dimensi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Tema</label>
-                    <input type="text" name="theme" class="form-control" value="{{ old('theme') }}">
+                    <label class="form-label">Tema <span class="text-danger">*</span></label>
+                    <input type="text" name="tema" class="form-control @error('tema') is-invalid @enderror" value="{{ old('tema') }}" required>
+                    @error('tema')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Kelas</label>
-                    <input type="text" name="class_level" class="form-control" value="{{ old('class_level') }}" placeholder="X, XI, XII">
+                <div class="col-md-2">
+                    <label class="form-label">Kelas <span class="text-danger">*</span></label>
+                    <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}" placeholder="X, XI, XII" required>
+                    @error('kelas')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label">Periode</label>
-                    <input type="text" name="period" class="form-control" value="{{ old('period') }}" placeholder="Semester 1 2025/2026">
+                <div class="col-md-2">
+                    <label class="form-label">Fase <span class="text-danger">*</span></label>
+                    <select name="fase" class="form-select @error('fase') is-invalid @enderror" required>
+                        <option value="E" {{ old('fase')=='E'?'selected':'' }}>Fase E</option>
+                        <option value="F" {{ old('fase')=='F'?'selected':'' }}>Fase F</option>
+                    </select>
+                    @error('fase')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Tahun Ajaran <span class="text-danger">*</span></label>
+                    <input type="text" name="academic_year" class="form-control @error('academic_year') is-invalid @enderror" value="{{ old('academic_year') }}" placeholder="2025/2026" required>
+                    @error('academic_year')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Semester <span class="text-danger">*</span></label>
+                    <select name="semester" class="form-select @error('semester') is-invalid @enderror" required>
+                        <option value="ganjil" {{ old('semester')=='ganjil'?'selected':'' }}>Ganjil</option>
+                        <option value="genap" {{ old('semester')=='genap'?'selected':'' }}>Genap</option>
+                    </select>
+                    @error('semester')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi Projek <span class="text-danger">*</span></label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="4" required>{{ old('description') }}</textarea>
-                    @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" rows="4" required>{{ old('deskripsi') }}</textarea>
+                    @error('deskripsi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-12">
                     <label class="form-label">Target Capaian</label>
-                    <textarea name="target" class="form-control" rows="2">{{ old('target') }}</textarea>
+                    <textarea name="target_capaian" class="form-control" rows="2">{{ old('target_capaian') }}</textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">File Pendukung</label>

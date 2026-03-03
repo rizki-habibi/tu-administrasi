@@ -25,12 +25,11 @@
                     <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
                         <option value="">Pilih Kategori</option>
                         <option value="bos" {{ old('kategori')=='bos'?'selected':'' }}>Dana BOS</option>
+                        <option value="apbd" {{ old('kategori')=='apbd'?'selected':'' }}>APBD</option>
                         <option value="spp" {{ old('kategori')=='spp'?'selected':'' }}>SPP</option>
-                        <option value="gaji" {{ old('kategori')=='gaji'?'selected':'' }}>Gaji</option>
                         <option value="operasional" {{ old('kategori')=='operasional'?'selected':'' }}>Operasional</option>
+                        <option value="gaji" {{ old('kategori')=='gaji'?'selected':'' }}>Gaji</option>
                         <option value="pengadaan" {{ old('kategori')=='pengadaan'?'selected':'' }}>Pengadaan Barang</option>
-                        <option value="pemeliharaan" {{ old('kategori')=='pemeliharaan'?'selected':'' }}>Pemeliharaan</option>
-                        <option value="kegiatan" {{ old('kategori')=='kegiatan'?'selected':'' }}>Kegiatan</option>
                         <option value="lainnya" {{ old('kategori')=='lainnya'?'selected':'' }}>Lainnya</option>
                     </select>
                     @error('kategori')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -40,19 +39,19 @@
                     <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal', date('Y-m-d')) }}" required>
                     @error('tanggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label">Jumlah (Rp) <span class="text-danger">*</span></label>
                     <input type="number" name="jumlah" class="form-control @error('jumlah') is-invalid @enderror" value="{{ old('jumlah') }}" min="0" required>
                     @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Sumber Dana</label>
-                    <input type="text" name="sumber_dana" class="form-control" value="{{ old('sumber_dana') }}" placeholder="BOS, APBD, Komite, dll">
-                </div>
                 <div class="col-12">
-                    <label class="form-label">Keterangan <span class="text-danger">*</span></label>
-                    <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" rows="3" required>{{ old('keterangan') }}</textarea>
-                    @error('keterangan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <label class="form-label">Uraian <span class="text-danger">*</span></label>
+                    <textarea name="uraian" class="form-control @error('uraian') is-invalid @enderror" rows="3" required>{{ old('uraian') }}</textarea>
+                    @error('uraian')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Keterangan / Catatan</label>
+                    <textarea name="keterangan" class="form-control" rows="2">{{ old('keterangan') }}</textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Bukti / Kuitansi</label>

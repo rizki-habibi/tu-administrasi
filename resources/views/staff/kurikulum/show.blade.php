@@ -13,10 +13,10 @@
             <div class="card-body p-4">
                 <div class="mb-3">
                     <span class="badge bg-light text-dark me-1">{{ ucfirst($document->type ?? '-') }}</span>
-                    @if($document->status == 'final')
-                    <span class="badge bg-success">Final</span>
-                    @elseif($document->status == 'review')
-                    <span class="badge bg-warning text-dark">Review</span>
+                    @if($document->status == 'active')
+                    <span class="badge bg-success">Aktif</span>
+                    @elseif($document->status == 'archived')
+                    <span class="badge bg-warning text-dark">Diarsipkan</span>
                     @else
                     <span class="badge bg-secondary">Draft</span>
                     @endif
@@ -42,10 +42,10 @@
         <div class="card">
             <div class="card-header bg-transparent"><h6 class="mb-0"><i class="bi bi-file-earmark me-1"></i> File</h6></div>
             <div class="card-body text-center">
-                @if($document->file)
+                @if($document->file_path)
                 <i class="bi bi-file-earmark-pdf" style="font-size:3rem; color:#dc3545;"></i>
-                <p class="mt-2 mb-2 text-muted small">{{ basename($document->file) }}</p>
-                <a href="{{ Storage::url($document->file) }}" class="btn btn-outline-primary w-100" target="_blank"><i class="bi bi-download me-1"></i> Unduh</a>
+                <p class="mt-2 mb-2 text-muted small">{{ $document->file_name ?? basename($document->file_path) }}</p>
+                <a href="{{ Storage::url($document->file_path) }}" class="btn btn-outline-primary w-100" target="_blank"><i class="bi bi-download me-1"></i> Unduh</a>
                 @else
                 <p class="text-muted mb-0">Tidak ada file</p>
                 @endif

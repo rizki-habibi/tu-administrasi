@@ -30,7 +30,7 @@ class EvaluasiController extends Controller
     // STAR Analysis - view/create own
     public function starIndex()
     {
-        $analyses = StarAnalysis::where('user_id', auth()->id())
+        $analyses = StarAnalysis::where('created_by', auth()->id())
             ->latest()->paginate(15);
         return view('staff.evaluasi.star', compact('analyses'));
     }
@@ -45,10 +45,17 @@ class EvaluasiController extends Controller
             'result' => 'required|string',
         ]);
 
-        $data = $request->only(['title', 'situation', 'task', 'action', 'result', 'period', 'reflection']);
-        $data['user_id'] = auth()->id();
+        StarAnalysis::create([
+            'judul' => $request->title,
+            'kategori' => $request->kategori ?? 'pembelajaran',
+            'situation' => $request->situation,
+            'task' => $request->task,
+            'action' => $request->action,
+            'result' => $request->result,
+            'refleksi' => $request->reflection,
+            'created_by' => auth()->id(),
+        ]);
 
-        StarAnalysis::create($data);
         return redirect()->route('staff.evaluasi.star')->with('success', 'Analisis STAR berhasil disimpan.');
     }
 
@@ -68,12 +75,18 @@ class EvaluasiController extends Controller
             'file' => 'required|file|max:10240',
         ]);
 
-        $data = $request->only(['title', 'category', 'description', 'standar']);
-        $data['uploaded_by'] = auth()->id();
+        $data = [
+            'judul' => $request->title,
+            'kategori' => $request->category,
+            'deskripsi' => $request->description,
+            'terkait' => $request->standar,
+            'uploaded_by' => auth()->id(),
+        ];
 
         if ($request->hasFile('file')) {
             $data['file_path'] = $request->file('file')->store('bukti-fisik', 'public');
             $data['file_name'] = $request->file('file')->getClientOriginalName();
+            $data['file_type'] = $request->file('file')->getClientMimeType();
             $data['file_size'] = $request->file('file')->getSize();
         }
 
@@ -97,10 +110,16 @@ class EvaluasiController extends Controller
             'description' => 'required|string',
         ]);
 
-        $data = $request->only(['name', 'type', 'description', 'subject', 'class_level', 'tools_used', 'benefits', 'challenges']);
-        $data['created_by'] = auth()->id();
+        LearningMethod::create([
+            'nama_metode' => $request->name,
+            'jenis' => $request->type,
+            'deskripsi' => $request->description,
+            'mata_pelajaran' => $request->subject,
+            'kelebihan' => $request->benefits,
+            'kekurangan' => $request->challenges,
+            'created_by' => auth()->id(),
+        ]);
 
-        LearningMethod::create($data);
         return redirect()->route('staff.evaluasi.learning')->with('success', 'Model pembelajaran berhasil disimpan.');
     }
 }

@@ -82,7 +82,7 @@
                         <td class="fw-semibold">{{ $item->nama_barang }}</td>
                         <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ ucfirst(str_replace('_',' ',$item->kategori)) }}</span></td>
                         <td>{{ $item->lokasi ?? '-' }}</td>
-                        <td>{{ $item->jumlah }} {{ $item->satuan ?? 'pcs' }}</td>
+                        <td>{{ $item->jumlah }}</td>
                         <td>
                             @if($item->kondisi=='baik')<span class="badge bg-success">Baik</span>
                             @elseif($item->kondisi=='rusak_ringan')<span class="badge bg-warning text-dark">Rusak Ringan</span>

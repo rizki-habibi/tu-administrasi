@@ -14,20 +14,20 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Standar</th><th>Komponen</th><th>Kondisi Saat Ini</th><th>Target</th><th>Nilai</th><th>Tahun</th></tr></thead>
+                <thead><tr><th>#</th><th>Aspek</th><th>Kondisi Saat Ini</th><th>Target</th><th>Program Tindak Lanjut</th><th>Tahun</th><th>Status</th></tr></thead>
                 <tbody>
                     @forelse($evaluations ?? [] as $ev)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ $ev->standar }}</span></td>
-                        <td class="fw-semibold">{{ $ev->component ?? '-' }}</td>
-                        <td>{{ Str::limit($ev->current_condition, 60) }}</td>
+                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ $ev->aspek }}</span></td>
+                        <td>{{ Str::limit($ev->kondisi_saat_ini, 60) }}</td>
                         <td>{{ Str::limit($ev->target, 60) }}</td>
+                        <td>{{ Str::limit($ev->program_tindak_lanjut, 60) }}</td>
+                        <td>{{ $ev->tahun ?? '-' }}</td>
                         <td>
-                            @php $score = $ev->score ?? 0; @endphp
-                            <span class="badge {{ $score >= 80 ? 'bg-success' : ($score >= 60 ? 'bg-warning text-dark' : 'bg-danger') }}">{{ $score }}</span>
+                            @if($ev->status=='final')<span class="badge bg-success">Final</span>
+                            @else<span class="badge bg-warning text-dark">Draft</span>@endif
                         </td>
-                        <td>{{ $ev->year ?? '-' }}</td>
                     </tr>
                     @empty
                     <tr><td colspan="7" class="text-center py-4 text-muted"><i class="bi bi-inbox" style="font-size:2rem;"></i><br>Belum ada data EDS</td></tr>
@@ -47,15 +47,13 @@
                 <div class="modal-header"><h5 class="modal-title">Tambah Evaluasi Diri</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Standar <span class="text-danger">*</span></label>
-                            <select name="standar" class="form-select" required><option value="">Pilih</option>@for($i=1;$i<=8;$i++)<option value="Standar {{ $i }}">Standar {{ $i }}</option>@endfor</select>
+                        <div class="col-md-6"><label class="form-label">Aspek <span class="text-danger">*</span></label>
+                            <input name="aspek" class="form-control" placeholder="Aspek yang dievaluasi" required>
                         </div>
-                        <div class="col-md-6"><label class="form-label">Komponen</label><input name="component" class="form-control"></div>
-                        <div class="col-12"><label class="form-label">Kondisi Saat Ini <span class="text-danger">*</span></label><textarea name="current_condition" class="form-control" rows="3" required></textarea></div>
+                        <div class="col-md-6"><label class="form-label">Tahun <span class="text-danger">*</span></label><input name="tahun" class="form-control" value="{{ date('Y') }}" required></div>
+                        <div class="col-12"><label class="form-label">Kondisi Saat Ini</label><textarea name="kondisi_saat_ini" class="form-control" rows="3"></textarea></div>
                         <div class="col-12"><label class="form-label">Target/Harapan</label><textarea name="target" class="form-control" rows="2"></textarea></div>
-                        <div class="col-md-4"><label class="form-label">Nilai (0-100)</label><input type="number" name="score" class="form-control" min="0" max="100"></div>
-                        <div class="col-md-4"><label class="form-label">Tahun</label><input name="year" class="form-control" value="{{ date('Y') }}"></div>
-                        <div class="col-12"><label class="form-label">Rekomendasi Tindak Lanjut</label><textarea name="recommendation" class="form-control" rows="2"></textarea></div>
+                        <div class="col-12"><label class="form-label">Program Tindak Lanjut</label><textarea name="program_tindak_lanjut" class="form-control" rows="2"></textarea></div>
                     </div>
                 </div>
                 <div class="modal-footer">

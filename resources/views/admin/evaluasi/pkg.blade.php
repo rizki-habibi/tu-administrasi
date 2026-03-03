@@ -22,14 +22,14 @@
                     <tr>
                         <td>{{ $loop->iteration + ($evaluations->currentPage()-1)*$evaluations->perPage() }}</td>
                         <td class="fw-semibold">{{ $e->user->name ?? 'N/A' }}</td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ strtoupper($e->type) }}</span></td>
-                        <td>{{ $e->period ?? '-' }}</td>
-                        <td class="fw-bold">{{ $e->score ?? '-' }}</td>
+                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ strtoupper($e->jenis) }}</span></td>
+                        <td>{{ $e->periode ?? '-' }}</td>
+                        <td class="fw-bold">{{ $e->nilai ?? '-' }}</td>
                         <td>
-                            @if($e->grade == 'Amat Baik')<span class="badge bg-success">Amat Baik</span>
-                            @elseif($e->grade == 'Baik')<span class="badge bg-info">Baik</span>
-                            @elseif($e->grade == 'Cukup')<span class="badge bg-warning text-dark">Cukup</span>
-                            @else<span class="badge bg-danger">{{ $e->grade ?? '-' }}</span>@endif
+                            @if($e->predikat == 'amat_baik')<span class="badge bg-success">Amat Baik</span>
+                            @elseif($e->predikat == 'baik')<span class="badge bg-info">Baik</span>
+                            @elseif($e->predikat == 'cukup')<span class="badge bg-warning text-dark">Cukup</span>
+                            @else<span class="badge bg-danger">{{ ucwords(str_replace('_', ' ', $e->predikat ?? '-')) }}</span>@endif
                         </td>
                         <td>{{ $e->created_at->format('d/m/Y') }}</td>
                         <td>

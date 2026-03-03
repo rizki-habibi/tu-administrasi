@@ -52,13 +52,13 @@
                 <tr>
                     <td>{{ $i + 1 }}</td>
                     <td>
-                        <div class="fw-semibold">{{ $a->title }}</div>
-                        <small class="text-muted">{{ Str::limit($a->description, 50) }}</small>
+                        <div class="fw-semibold">{{ $a->judul_projek }}</div>
+                        <small class="text-muted">{{ Str::limit($a->deskripsi, 50) }}</small>
                     </td>
-                    <td><span class="badge bg-primary">{{ $a->dimension ?? '-' }}</span></td>
-                    <td>{{ $a->theme ?? '-' }}</td>
-                    <td>{{ $a->class_level ?? '-' }}</td>
-                    <td>{{ $a->period ?? '-' }}</td>
+                    <td><span class="badge bg-primary">{{ ucwords(str_replace('_', ' ', $a->dimensi ?? '-')) }}</span></td>
+                    <td>{{ $a->tema ?? '-' }}</td>
+                    <td>{{ $a->kelas ?? '-' }}</td>
+                    <td>{{ $a->academic_year ?? '-' }}</td>
                 </tr>
                 @empty
                 <tr><td colspan="6" class="text-center py-4 text-muted"><i class="bi bi-star" style="font-size:2rem;"></i><p class="mt-2 mb-0">Belum ada projek P5</p></td></tr>

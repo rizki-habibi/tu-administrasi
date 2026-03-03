@@ -17,22 +17,22 @@
 <div class="row g-3 mb-4">
     @php
     $standards = [
-        ['1. Standar Isi', 'bi-book', '#6366f1'],
-        ['2. Standar Proses', 'bi-gear', '#8b5cf6'],
-        ['3. Standar Kompetensi Lulusan', 'bi-mortarboard', '#06b6d4'],
-        ['4. Standar Pendidik', 'bi-person-workspace', '#10b981'],
-        ['5. Standar Sarpras', 'bi-building', '#f59e0b'],
-        ['6. Standar Pengelolaan', 'bi-diagram-3', '#ec4899'],
-        ['7. Standar Pembiayaan', 'bi-cash-coin', '#ef4444'],
-        ['8. Standar Penilaian', 'bi-clipboard-check', '#0ea5e9'],
+        ['standar_isi', 'Standar Isi', 'bi-book', '#6366f1'],
+        ['standar_proses', 'Standar Proses', 'bi-gear', '#8b5cf6'],
+        ['standar_kompetensi_lulusan', 'Standar Kompetensi Lulusan', 'bi-mortarboard', '#06b6d4'],
+        ['standar_pendidik', 'Standar Pendidik', 'bi-person-workspace', '#10b981'],
+        ['standar_sarpras', 'Standar Sarpras', 'bi-building', '#f59e0b'],
+        ['standar_pengelolaan', 'Standar Pengelolaan', 'bi-diagram-3', '#ec4899'],
+        ['standar_pembiayaan', 'Standar Pembiayaan', 'bi-cash-coin', '#ef4444'],
+        ['standar_penilaian', 'Standar Penilaian', 'bi-clipboard-check', '#0ea5e9'],
     ];
     @endphp
-    @foreach($standards as $idx => $std)
+    @foreach($standards as $std)
     <div class="col-6 col-lg-3">
         <div class="card text-center py-3 px-2 h-100">
-            <i class="bi {{ $std[1] }}" style="font-size:1.5rem;color:{{ $std[2] }};"></i>
-            <small class="fw-semibold mt-2" style="font-size:.72rem;line-height:1.2;">{{ $std[0] }}</small>
-            @php $count = ($documents ?? collect())->where('standar', 'Standar '.($idx+1))->count(); @endphp
+            <i class="bi {{ $std[2] }}" style="font-size:1.5rem;color:{{ $std[3] }};"></i>
+            <small class="fw-semibold mt-2" style="font-size:.72rem;line-height:1.2;">{{ $std[1] }}</small>
+            @php $count = ($documents ?? collect())->where('standar', $std[0])->count(); @endphp
             <span class="badge bg-light text-dark mt-1" style="font-size:.7rem;">{{ $count }} dokumen</span>
         </div>
     </div>
@@ -48,17 +48,18 @@
             <div class="col-md-3">
                 <select name="standar" class="form-select">
                     <option value="">Semua Standar</option>
-                    @for($i=1;$i<=8;$i++)
-                    <option value="Standar {{ $i }}" {{ request('standar')=="Standar $i"?'selected':'' }}>Standar {{ $i }}</option>
-                    @endfor
+                    @php $standarOpts = ['standar_isi'=>'Standar Isi','standar_proses'=>'Standar Proses','standar_kompetensi_lulusan'=>'Standar Kompetensi Lulusan','standar_pendidik'=>'Standar Pendidik','standar_sarpras'=>'Standar Sarpras','standar_pengelolaan'=>'Standar Pengelolaan','standar_pembiayaan'=>'Standar Pembiayaan','standar_penilaian'=>'Standar Penilaian']; @endphp
+                    @foreach($standarOpts as $val => $label)
+                    <option value="{{ $val }}" {{ request('standar')==$val?'selected':'' }}>{{ $label }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
                 <select name="status" class="form-select">
                     <option value="">Semua Status</option>
-                    <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draft</option>
-                    <option value="final" {{ request('status')=='final'?'selected':'' }}>Final</option>
-                    <option value="terverifikasi" {{ request('status')=='terverifikasi'?'selected':'' }}>Terverifikasi</option>
+                    <option value="belum_lengkap" {{ request('status')=='belum_lengkap'?'selected':'' }}>Belum Lengkap</option>
+                    <option value="lengkap" {{ request('status')=='lengkap'?'selected':'' }}>Lengkap</option>
+                    <option value="diverifikasi" {{ request('status')=='diverifikasi'?'selected':'' }}>Diverifikasi</option>
                 </select>
             </div>
             <div class="col-md-3 d-flex gap-2">
@@ -73,17 +74,17 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Standar</th><th>Status</th><th>File</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>#</th><th>Komponen</th><th>Standar</th><th>Status</th><th>File</th><th>Tanggal</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($documents as $d)
                     <tr>
                         <td>{{ $loop->iteration + ($documents->currentPage()-1)*$documents->perPage() }}</td>
-                        <td class="fw-semibold">{{ $d->title }}</td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ $d->standar }}</span></td>
+                        <td class="fw-semibold">{{ $d->komponen }}</td>
+                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ ucwords(str_replace('_', ' ', $d->standar)) }}</span></td>
                         <td>
-                            @if($d->status=='terverifikasi')<span class="badge bg-success">Terverifikasi</span>
-                            @elseif($d->status=='final')<span class="badge bg-info">Final</span>
-                            @else<span class="badge bg-warning text-dark">Draft</span>@endif
+                            @if($d->status=='diverifikasi')<span class="badge bg-success">Diverifikasi</span>
+                            @elseif($d->status=='lengkap')<span class="badge bg-info">Lengkap</span>
+                            @else<span class="badge bg-warning text-dark">Belum Lengkap</span>@endif
                         </td>
                         <td>@if($d->file_path)<a href="{{ asset('storage/'.$d->file_path) }}" target="_blank"><i class="bi bi-file-earmark-arrow-down text-primary"></i></a>@else - @endif</td>
                         <td>{{ $d->created_at->format('d/m/Y') }}</td>

@@ -290,7 +290,7 @@
             <div class="nav-item {{ request()->routeIs('staff.reminder.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.reminder.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-alarm-fill icon"></i> <span>Pengingat</span>
-                    @php $myReminders = \App\Models\Reminder::where(function($q){ $q->where('target', 'all')->orWhere('target_user_id', Auth::id()); })->where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
+                    @php $myReminders = \App\Models\Reminder::where('user_id', Auth::id())->where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
                     @if($myReminders > 0)<span class="badge bg-warning text-dark">{{ $myReminders }}</span>@endif
                     <i class="bi bi-chevron-right arrow"></i>
                 </a>

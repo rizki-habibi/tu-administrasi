@@ -33,14 +33,14 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Guru</th><th>Periode</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>#</th><th>Judul</th><th>Kategori</th><th>Pembuat</th><th>Tanggal</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($analyses as $a)
                     <tr>
                         <td>{{ $loop->iteration + ($analyses->currentPage()-1)*$analyses->perPage() }}</td>
-                        <td class="fw-semibold">{{ $a->title }}</td>
-                        <td>{{ $a->user->name ?? 'N/A' }}</td>
-                        <td>{{ $a->period ?? '-' }}</td>
+                        <td class="fw-semibold">{{ $a->judul }}</td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($a->kategori ?? '-') }}</span></td>
+                        <td>{{ $a->creator->name ?? 'N/A' }}</td>
                         <td>{{ $a->created_at->format('d/m/Y') }}</td>
                         <td><a href="{{ route('admin.evaluasi.star') }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
                     </tr>

@@ -44,12 +44,17 @@ class InventarisController extends Controller
             'photo' => 'nullable|image|max:5120',
         ]);
 
-        $data = $request->only(['inventaris_id', 'description']);
-        $data['reported_by'] = auth()->id();
-        $data['status'] = 'dilaporkan';
+        $data = [
+            'inventaris_id' => $request->inventaris_id,
+            'deskripsi_kerusakan' => $request->description,
+            'tingkat_kerusakan' => $request->tingkat_kerusakan ?? 'ringan',
+            'tanggal_laporan' => now()->toDateString(),
+            'reported_by' => auth()->id(),
+            'status' => 'dilaporkan',
+        ];
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('damage-reports', 'public');
+            $data['foto'] = $request->file('photo')->store('damage-reports', 'public');
         }
 
         DamageReport::create($data);

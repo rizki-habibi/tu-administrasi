@@ -11,17 +11,17 @@ class ReminderController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Reminder::with('user', 'creator')->latest();
+        $query = Reminder::with('user', 'creator')->where('is_completed', false)->latest();
 
         if ($request->filled('type')) $query->where('type', $request->type);
-        if ($request->input('filter') === 'overdue') $query->overdue();
-        if ($request->input('filter') === 'upcoming') $query->upcoming();
 
         $reminders = $query->paginate(20)->withQueryString();
-        $overdueCount = Reminder::overdue()->count();
-        $upcomingCount = Reminder::upcoming()->count();
+        $overdueCount = Reminder::where('is_completed', false)->where('due_date', '<', now())->count();
+        $activeCount = Reminder::where('is_completed', false)->count();
+        $completedCount = Reminder::where('is_completed', true)->count();
+        $completed = Reminder::where('is_completed', true)->latest('updated_at')->take(10)->get();
 
-        return view('admin.reminder.index', compact('reminders', 'overdueCount', 'upcomingCount'));
+        return view('admin.reminder.index', compact('reminders', 'overdueCount', 'activeCount', 'completedCount', 'completed'));
     }
 
     public function create()

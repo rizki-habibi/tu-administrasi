@@ -19,15 +19,15 @@
                 </thead>
                 <tbody>
                     @forelse($budgets as $b)
-                    @php $pct = $b->total > 0 ? round($b->terpakai / $b->total * 100) : 0; @endphp
+                    @php $pct = $b->total_anggaran > 0 ? round($b->terpakai / $b->total_anggaran * 100) : 0; @endphp
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td class="fw-semibold">{{ $b->nama_anggaran }}</td>
                         <td>{{ $b->sumber_dana ?? '-' }}</td>
                         <td>{{ $b->tahun_anggaran ?? '-' }}</td>
-                        <td class="text-end">Rp {{ number_format($b->total, 0, ',', '.') }}</td>
+                        <td class="text-end">Rp {{ number_format($b->total_anggaran, 0, ',', '.') }}</td>
                         <td class="text-end text-danger">Rp {{ number_format($b->terpakai, 0, ',', '.') }}</td>
-                        <td class="text-end text-success">Rp {{ number_format($b->total - $b->terpakai, 0, ',', '.') }}</td>
+                        <td class="text-end text-success">Rp {{ number_format($b->total_anggaran - $b->terpakai, 0, ',', '.') }}</td>
                         <td style="min-width:120px;">
                             <div class="progress" style="height:8px;border-radius:4px;">
                                 <div class="progress-bar {{ $pct > 90 ? 'bg-danger' : ($pct > 70 ? 'bg-warning' : 'bg-success') }}" style="width:{{ $pct }}%"></div>
@@ -55,7 +55,7 @@
                     <div class="mb-3"><label class="form-label">Nama Anggaran <span class="text-danger">*</span></label><input name="nama_anggaran" class="form-control" required></div>
                     <div class="mb-3"><label class="form-label">Sumber Dana</label><input name="sumber_dana" class="form-control" placeholder="BOS, APBD, Komite"></div>
                     <div class="mb-3"><label class="form-label">Tahun Anggaran</label><input name="tahun_anggaran" class="form-control" value="{{ date('Y') }}"></div>
-                    <div class="mb-3"><label class="form-label">Total Anggaran (Rp) <span class="text-danger">*</span></label><input type="number" name="total" class="form-control" min="0" required></div>
+                    <div class="mb-3"><label class="form-label">Total Anggaran (Rp) <span class="text-danger">*</span></label><input type="number" name="total_anggaran" class="form-control" min="0" required></div>
                     <div class="mb-3"><label class="form-label">Keterangan</label><textarea name="keterangan" class="form-control" rows="2"></textarea></div>
                 </div>
                 <div class="modal-footer">

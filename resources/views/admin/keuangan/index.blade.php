@@ -58,6 +58,7 @@
                     <option value="">Semua Status</option>
                     <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draft</option>
                     <option value="verified" {{ request('status')=='verified'?'selected':'' }}>Terverifikasi</option>
+                    <option value="approved" {{ request('status')=='approved'?'selected':'' }}>Disetujui</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -84,7 +85,7 @@
                         <td>{{ $loop->iteration + ($transactions->currentPage()-1)*$transactions->perPage() }}</td>
                         <td><code>{{ $t->kode_transaksi }}</code></td>
                         <td>{{ $t->tanggal ? \Carbon\Carbon::parse($t->tanggal)->format('d/m/Y') : '-' }}</td>
-                        <td class="fw-semibold">{{ Str::limit($t->keterangan, 40) }}</td>
+                        <td class="fw-semibold">{{ Str::limit($t->uraian, 40) }}</td>
                         <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($t->kategori ?? '-') }}</span></td>
                         <td>
                             @if($t->jenis == 'pemasukan')<span class="badge bg-success"><i class="bi bi-arrow-down"></i> Masuk</span>
@@ -92,13 +93,14 @@
                         </td>
                         <td class="text-end fw-semibold {{ $t->jenis=='pemasukan' ? 'text-success' : 'text-danger' }}">Rp {{ number_format($t->jumlah, 0, ',', '.') }}</td>
                         <td>
-                            @if($t->status == 'verified')<span class="badge bg-success">Terverifikasi</span>
+                            @if($t->status == 'approved')<span class="badge bg-success">Disetujui</span>
+                            @elseif($t->status == 'verified')<span class="badge bg-info">Terverifikasi</span>
                             @else<span class="badge bg-warning text-dark">Draft</span>@endif
                         </td>
                         <td>
                             <div class="d-flex gap-1">
                                 <a href="{{ route('admin.keuangan.show', $t) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
-                                @if($t->status != 'verified')
+                                @if($t->status == 'draft')
                                 <form action="{{ route('admin.keuangan.verify', $t) }}" method="POST">@csrf @method('PATCH')
                                     <button type="submit" class="btn btn-sm btn-outline-success" data-confirm="Verifikasi transaksi ini?"><i class="bi bi-check-lg"></i></button>
                                 </form>

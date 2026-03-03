@@ -20,14 +20,12 @@
                         <i class="bi bi-lightbulb"></i>
                     </div>
                     <div>
-                        <h6 class="fw-bold mb-0">{{ $m->name }}</h6>
-                        <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $m->type)) }}</small>
+                        <h6 class="fw-bold mb-0">{{ $m->nama_metode }}</h6>
+                        <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $m->jenis)) }}</small>
                     </div>
                 </div>
-                <p class="text-muted mb-2" style="font-size:.82rem;">{{ Str::limit($m->description, 100) }}</p>
-                @if($m->subject)<small class="badge bg-info bg-opacity-10 text-info me-1">{{ $m->subject }}</small>@endif
-                @if($m->class_level)<small class="badge bg-primary bg-opacity-10 text-primary">{{ $m->class_level }}</small>@endif
-                @if($m->tools_used)<p class="mt-2 mb-0"><small class="text-muted"><i class="bi bi-tools me-1"></i>{{ $m->tools_used }}</small></p>@endif
+                <p class="text-muted mb-2" style="font-size:.82rem;">{{ Str::limit($m->deskripsi, 100) }}</p>
+                @if($m->mata_pelajaran)<small class="badge bg-info bg-opacity-10 text-info me-1">{{ $m->mata_pelajaran }}</small>@endif
             </div>
             <div class="card-footer bg-transparent border-top-0 pt-0 px-4 pb-3">
                 <small class="text-muted"><i class="bi bi-person me-1"></i>{{ $m->creator->name ?? '-' }} &bull; {{ $m->created_at->format('d/m/Y') }}</small>

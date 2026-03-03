@@ -10,34 +10,31 @@ class ReminderController extends Controller
 {
     public function index()
     {
-        $reminders = Reminder::where(function($query) {
-                $query->where('target', 'all')
-                      ->orWhere('target_user_id', auth()->id());
-            })
+        $activeReminders = Reminder::where('user_id', auth()->id())
             ->where('is_completed', false)
             ->orderBy('due_date')
-            ->paginate(15);
+            ->get();
 
-        $completed = Reminder::where(function($query) {
-                $query->where('target', 'all')
-                      ->orWhere('target_user_id', auth()->id());
-            })
+        $completedReminders = Reminder::where('user_id', auth()->id())
             ->where('is_completed', true)
             ->latest()
             ->take(10)
             ->get();
 
-        return view('staff.reminder.index', compact('reminders', 'completed'));
+        $overdueCount = $activeReminders->filter(fn($r) => $r->due_date->isPast())->count();
+        $activeCount = $activeReminders->count();
+        $completedCount = Reminder::where('user_id', auth()->id())->where('is_completed', true)->count();
+
+        return view('staff.reminder.index', compact('activeReminders', 'completedReminders', 'overdueCount', 'activeCount', 'completedCount'));
     }
 
     public function markComplete(Reminder $reminder)
     {
-        // Only mark if this reminder is targeted to this user
-        if ($reminder->target_user_id == auth()->id() || $reminder->target == 'all') {
-            $reminder->update(['is_completed' => true, 'completed_at' => now()]);
-            return back()->with('success', 'Pengingat ditandai selesai.');
+        if ($reminder->user_id != auth()->id()) {
+            return back()->with('error', 'Anda tidak memiliki akses.');
         }
 
-        return back()->with('error', 'Anda tidak memiliki akses.');
+        $reminder->update(['is_completed' => true]);
+        return back()->with('success', 'Pengingat ditandai selesai.');
     }
 }

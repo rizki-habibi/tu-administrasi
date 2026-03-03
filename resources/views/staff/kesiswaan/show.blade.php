@@ -31,11 +31,11 @@
                     <tr><td class="text-muted">NIS / NISN</td><td>{{ $student->nis ?? '-' }} / {{ $student->nisn ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Kelas</td><td>{{ $student->class ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Jenis Kelamin</td><td>{{ $student->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td></tr>
-                    <tr><td class="text-muted">Tempat, Tanggal Lahir</td><td>{{ $student->birth_place ?? '-' }}, {{ $student->birth_date ? \Carbon\Carbon::parse($student->birth_date)->translatedFormat('d F Y') : '-' }}</td></tr>
+                    <tr><td class="text-muted">Tempat, Tanggal Lahir</td><td>{{ $student->place_of_birth ?? '-' }}, {{ $student->date_of_birth ? \Carbon\Carbon::parse($student->date_of_birth)->translatedFormat('d F Y') : '-' }}</td></tr>
                     <tr><td class="text-muted">Alamat</td><td>{{ $student->address ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Nama Orang Tua/Wali</td><td>{{ $student->parent_name ?? '-' }}</td></tr>
                     <tr><td class="text-muted">No. Telepon Ortu</td><td>{{ $student->parent_phone ?? '-' }}</td></tr>
-                    <tr><td class="text-muted">Tahun Masuk</td><td>{{ $student->entry_year ?? '-' }}</td></tr>
+                    <tr><td class="text-muted">Tahun Masuk</td><td>{{ $student->entry_date ? \Carbon\Carbon::parse($student->entry_date)->format('Y') : '-' }}</td></tr>
                 </table>
             </div>
         </div>

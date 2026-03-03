@@ -14,14 +14,14 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Kategori</th><th>Standar</th><th>File</th><th>Pengunggah</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>#</th><th>Judul</th><th>Kategori</th><th>Terkait</th><th>File</th><th>Pengunggah</th><th>Tanggal</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($evidences as $ev)
                     <tr>
                         <td>{{ $loop->iteration + ($evidences->currentPage()-1)*$evidences->perPage() }}</td>
-                        <td class="fw-semibold">{{ $ev->title }}</td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ ucfirst($ev->category ?? '-') }}</span></td>
-                        <td>{{ $ev->standar ?? '-' }}</td>
+                        <td class="fw-semibold">{{ $ev->judul }}</td>
+                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ ucfirst(str_replace('_', ' ', $ev->kategori ?? '-')) }}</span></td>
+                        <td>{{ strtoupper($ev->terkait ?? '-') }}</td>
                         <td>
                             @if($ev->file_path)
                             <a href="{{ asset('storage/'.$ev->file_path) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>{{ Str::limit($ev->file_name, 20) }}</a>
@@ -55,23 +55,26 @@
                 @csrf
                 <div class="modal-header"><h5 class="modal-title">Upload Bukti Fisik</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">
-                    <div class="mb-3"><label class="form-label">Judul <span class="text-danger">*</span></label><input name="title" class="form-control" required></div>
+                    <div class="mb-3"><label class="form-label">Judul <span class="text-danger">*</span></label><input name="judul" class="form-control" required></div>
                     <div class="mb-3"><label class="form-label">Kategori <span class="text-danger">*</span></label>
-                        <select name="category" class="form-select" required>
+                        <select name="kategori" class="form-select" required>
                             <option value="">Pilih</option>
-                            <option value="akademik">Akademik</option>
-                            <option value="non_akademik">Non Akademik</option>
-                            <option value="sarana">Sarana Prasarana</option>
+                            <option value="pembelajaran">Pembelajaran</option>
                             <option value="administrasi">Administrasi</option>
+                            <option value="kegiatan">Kegiatan</option>
+                            <option value="pengembangan_diri">Pengembangan Diri</option>
                         </select>
                     </div>
-                    <div class="mb-3"><label class="form-label">Standar</label>
-                        <select name="standar" class="form-select">
-                            <option value="">Pilih Standar (opsional)</option>
-                            @for($i=1;$i<=8;$i++)<option value="Standar {{ $i }}">Standar {{ $i }}</option>@endfor
+                    <div class="mb-3"><label class="form-label">Terkait</label>
+                        <select name="terkait" class="form-select">
+                            <option value="">Pilih (opsional)</option>
+                            <option value="pkg">PKG</option>
+                            <option value="bkd">BKD</option>
+                            <option value="akreditasi">Akreditasi</option>
+                            <option value="p5">P5</option>
                         </select>
                     </div>
-                    <div class="mb-3"><label class="form-label">Deskripsi</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+                    <div class="mb-3"><label class="form-label">Deskripsi</label><textarea name="deskripsi" class="form-control" rows="2"></textarea></div>
                     <div class="mb-3"><label class="form-label">File <span class="text-danger">*</span></label><input type="file" name="file" class="form-control" required></div>
                 </div>
                 <div class="modal-footer">

@@ -14,21 +14,18 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label">Judul <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
-                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}" required>
+                    @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label">Guru / Staff <span class="text-danger">*</span></label>
-                    <select name="user_id" class="form-select" required>
-                        <option value="">Pilih</option>
-                        @foreach($staffList ?? [] as $s)
-                        <option value="{{ $s->id }}" {{ old('user_id')==$s->id?'selected':'' }}>{{ $s->name }}</option>
-                        @endforeach
+                <div class="col-md-6">
+                    <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                    <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="pembelajaran" {{ old('kategori')=='pembelajaran'?'selected':'' }}>Pembelajaran</option>
+                        <option value="administrasi" {{ old('kategori')=='administrasi'?'selected':'' }}>Administrasi</option>
+                        <option value="manajemen" {{ old('kategori')=='manajemen'?'selected':'' }}>Manajemen</option>
                     </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Periode</label>
-                    <input type="text" name="period" class="form-control" value="{{ old('period') }}">
+                    @error('kategori')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -51,7 +48,15 @@
 
             <div class="mb-3">
                 <label class="form-label">Refleksi (Opsional)</label>
-                <textarea name="reflection" class="form-control" rows="2">{{ old('reflection') }}</textarea>
+                <textarea name="refleksi" class="form-control" rows="2">{{ old('refleksi') }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tindak Lanjut (Opsional)</label>
+                <textarea name="tindak_lanjut" class="form-control" rows="2">{{ old('tindak_lanjut') }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">File Pendukung</label>
+                <input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx">
             </div>
 
             <hr class="my-3">

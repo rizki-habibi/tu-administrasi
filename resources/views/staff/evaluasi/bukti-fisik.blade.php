@@ -30,13 +30,13 @@
                 <tr>
                     <td>{{ $i + 1 }}</td>
                     <td>
-                        <div class="fw-semibold">{{ $e->title }}</div>
-                        <small class="text-muted">{{ Str::limit($e->description, 50) }}</small>
+                        <div class="fw-semibold">{{ $e->judul }}</div>
+                        <small class="text-muted">{{ Str::limit($e->deskripsi, 50) }}</small>
                     </td>
-                    <td><span class="badge bg-light text-dark">{{ ucfirst($e->category ?? '-') }}</span></td>
+                    <td><span class="badge bg-light text-dark">{{ ucfirst(str_replace('_', ' ', $e->kategori ?? '-')) }}</span></td>
                     <td>
-                        @if($e->file)
-                        <a href="{{ Storage::url($e->file) }}" target="_blank" class="btn btn-outline-primary btn-sm"><i class="bi bi-download me-1"></i> Unduh</a>
+                        @if($e->file_path)
+                        <a href="{{ asset('storage/'.$e->file_path) }}" target="_blank" class="btn btn-outline-primary btn-sm"><i class="bi bi-download me-1"></i> Unduh</a>
                         @else
                         <small class="text-muted">-</small>
                         @endif
@@ -64,11 +64,9 @@
                         <label class="form-label">Kategori</label>
                         <select name="category" class="form-select">
                             <option value="pembelajaran">Pembelajaran</option>
-                            <option value="penilaian">Penilaian</option>
+                            <option value="administrasi">Administrasi</option>
+                            <option value="kegiatan">Kegiatan</option>
                             <option value="pengembangan_diri">Pengembangan Diri</option>
-                            <option value="publikasi">Publikasi Ilmiah</option>
-                            <option value="inovasi">Karya Inovatif</option>
-                            <option value="lainnya">Lainnya</option>
                         </select>
                     </div>
                     <div class="mb-3"><label class="form-label">Deskripsi</label><textarea name="description" class="form-control" rows="2"></textarea></div>

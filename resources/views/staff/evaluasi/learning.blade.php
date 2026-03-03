@@ -20,18 +20,16 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
                     @php
-                    $typeIcon = match($m->type ?? '') {
-                        'model' => 'bi-boxes',
-                        'metode' => 'bi-gear',
-                        'teknologi' => 'bi-laptop',
-                        'pendekatan' => 'bi-signpost-split',
+                    $typeIcon = match($m->jenis ?? '') {
+                        'model_pembelajaran' => 'bi-boxes',
+                        'teknologi_pembelajaran' => 'bi-laptop',
+                        'media_pembelajaran' => 'bi-easel',
                         default => 'bi-book'
                     };
-                    $typeColor = match($m->type ?? '') {
-                        'model' => '#6366f1',
-                        'metode' => '#10b981',
-                        'teknologi' => '#3b82f6',
-                        'pendekatan' => '#f59e0b',
+                    $typeColor = match($m->jenis ?? '') {
+                        'model_pembelajaran' => '#6366f1',
+                        'teknologi_pembelajaran' => '#3b82f6',
+                        'media_pembelajaran' => '#10b981',
                         default => '#64748b'
                     };
                     @endphp
@@ -39,16 +37,13 @@
                         <i class="bi {{ $typeIcon }}" style="color:{{ $typeColor }};"></i>
                     </div>
                     <div>
-                        <h6 class="fw-bold mb-0">{{ $m->name }}</h6>
-                        <small class="text-muted">{{ ucfirst($m->type ?? '-') }}</small>
+                        <h6 class="fw-bold mb-0">{{ $m->nama_metode }}</h6>
+                        <small class="text-muted">{{ ucfirst(str_replace('_', ' ', $m->jenis ?? '-')) }}</small>
                     </div>
                 </div>
-                <p class="small text-muted mb-2">{{ Str::limit($m->description, 100) }}</p>
-                @if($m->subject)
-                <span class="badge bg-light text-dark me-1">{{ $m->subject }}</span>
-                @endif
-                @if($m->class_level)
-                <span class="badge bg-light text-dark">Kelas {{ $m->class_level }}</span>
+                <p class="small text-muted mb-2">{{ Str::limit($m->deskripsi, 100) }}</p>
+                @if($m->mata_pelajaran)
+                <span class="badge bg-light text-dark me-1">{{ $m->mata_pelajaran }}</span>
                 @endif
             </div>
             <div class="card-footer bg-white small text-muted">
@@ -76,17 +71,18 @@
                         <div class="col-6">
                             <label class="form-label">Jenis</label>
                             <select name="type" class="form-select">
-                                <option value="model">Model</option>
-                                <option value="metode">Metode</option>
-                                <option value="teknologi">Teknologi</option>
-                                <option value="pendekatan">Pendekatan</option>
+                                <option value="model_pembelajaran">Model Pembelajaran</option>
+                                <option value="teknologi_pembelajaran">Teknologi Pembelajaran</option>
+                                <option value="media_pembelajaran">Media Pembelajaran</option>
                             </select>
                         </div>
                         <div class="col-6"><label class="form-label">Mata Pelajaran</label><input type="text" name="subject" class="form-control"></div>
                     </div>
-                    <div class="mb-3"><label class="form-label">Kelas</label><input type="text" name="class_level" class="form-control" placeholder="X, XI, XII"></div>
                     <div class="mb-3"><label class="form-label">Deskripsi <span class="text-danger">*</span></label><textarea name="description" class="form-control" rows="3" required></textarea></div>
-                    <div class="mb-3"><label class="form-label">Alat / Teknologi</label><input type="text" name="tools_used" class="form-control" placeholder="Google Classroom, Quizziz, dll"></div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6"><label class="form-label">Kelebihan</label><textarea name="benefits" class="form-control" rows="2"></textarea></div>
+                        <div class="col-6"><label class="form-label">Kekurangan</label><textarea name="challenges" class="form-control" rows="2"></textarea></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>

@@ -56,8 +56,8 @@
                 <select name="status" class="form-select">
                     <option value="">Semua Status</option>
                     <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draft</option>
-                    <option value="review" {{ request('status')=='review'?'selected':'' }}>Review</option>
-                    <option value="final" {{ request('status')=='final'?'selected':'' }}>Final</option>
+                    <option value="active" {{ request('status')=='active'?'selected':'' }}>Aktif</option>
+                    <option value="archived" {{ request('status')=='archived'?'selected':'' }}>Diarsipkan</option>
                 </select>
             </div>
             <div class="col-md-3 d-flex gap-2">

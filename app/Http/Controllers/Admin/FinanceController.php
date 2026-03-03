@@ -19,18 +19,15 @@ class FinanceController extends Controller
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('search')) $query->where('uraian', 'like', '%' . $request->search . '%');
 
-        $records = $query->paginate(20)->withQueryString();
+        $transactions = $query->paginate(20)->withQueryString();
 
-        $stats = [
-            'total_pemasukan' => FinanceRecord::where('jenis', 'pemasukan')->where('status', 'approved')->sum('jumlah'),
-            'total_pengeluaran' => FinanceRecord::where('jenis', 'pengeluaran')->where('status', 'approved')->sum('jumlah'),
-            'pending' => FinanceRecord::where('status', 'draft')->count(),
-        ];
-        $stats['saldo'] = $stats['total_pemasukan'] - $stats['total_pengeluaran'];
+        $totalPemasukan = FinanceRecord::where('jenis', 'pemasukan')->where('status', 'approved')->sum('jumlah');
+        $totalPengeluaran = FinanceRecord::where('jenis', 'pengeluaran')->where('status', 'approved')->sum('jumlah');
+        $pendingCount = FinanceRecord::where('status', 'draft')->count();
 
         $budgets = Budget::latest()->take(5)->get();
 
-        return view('admin.keuangan.index', compact('records', 'stats', 'budgets'));
+        return view('admin.keuangan.index', compact('transactions', 'totalPemasukan', 'totalPengeluaran', 'pendingCount', 'budgets'));
     }
 
     public function create()
