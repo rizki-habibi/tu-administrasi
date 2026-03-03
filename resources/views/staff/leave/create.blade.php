@@ -1,0 +1,54 @@
+@extends('layouts.staff')
+@section('title', 'Ajukan Izin')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0"><i class="bi bi-plus-lg"></i> Ajukan Izin / Cuti</h4>
+    <a href="{{ route('staff.leave.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{{ route('staff.leave.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Jenis Izin <span class="text-danger">*</span></label>
+                    <select name="type" class="form-select @error('type') is-invalid @enderror" required>
+                        <option value="">-- Pilih Jenis --</option>
+                        <option value="izin" {{ old('type') == 'izin' ? 'selected' : '' }}>Izin</option>
+                        <option value="sakit" {{ old('type') == 'sakit' ? 'selected' : '' }}>Sakit</option>
+                        <option value="cuti" {{ old('type') == 'cuti' ? 'selected' : '' }}>Cuti</option>
+                        <option value="dinas_luar" {{ old('type') == 'dinas_luar' ? 'selected' : '' }}>Dinas Luar</option>
+                    </select>
+                    @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Tanggal Mulai <span class="text-danger">*</span></label>
+                    <input type="date" name="start_date" class="form-control @error('start_date') is-invalid @enderror" value="{{ old('start_date') }}" required>
+                    @error('start_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Tanggal Selesai <span class="text-danger">*</span></label>
+                    <input type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror" value="{{ old('end_date') }}" required>
+                    @error('end_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-bold">Alasan <span class="text-danger">*</span></label>
+                    <textarea name="reason" class="form-control @error('reason') is-invalid @enderror" rows="4" required>{{ old('reason') }}</textarea>
+                    @error('reason') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Lampiran <small class="text-muted">(opsional, maks 5MB)</small></label>
+                    <input type="file" name="attachment" class="form-control @error('attachment') is-invalid @enderror" accept=".pdf,.jpg,.jpeg,.png">
+                    @error('attachment') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Ajukan</button>
+                <a href="{{ route('staff.leave.index') }}" class="btn btn-light ms-2">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
