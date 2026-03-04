@@ -5,12 +5,14 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <form class="d-flex gap-2 flex-wrap" method="GET">
-            <select name="type" class="form-select" style="width: auto;">
+            <select name="jenis" class="form-select" style="width: auto;">
                 <option value="">Semua Tipe</option>
-                <option value="info" {{ request('jenis') == 'info' ? 'selected' : '' }}>Info</option>
-                <option value="warning" {{ request('jenis') == 'warning' ? 'selected' : '' }}>Warning</option>
-                <option value="success" {{ request('jenis') == 'success' ? 'selected' : '' }}>Success</option>
-                <option value="danger" {{ request('jenis') == 'danger' ? 'selected' : '' }}>Danger</option>
+                <option value="kehadiran" {{ request('jenis') == 'kehadiran' ? 'selected' : '' }}>Kehadiran</option>
+                <option value="izin" {{ request('jenis') == 'izin' ? 'selected' : '' }}>Izin</option>
+                <option value="event" {{ request('jenis') == 'event' ? 'selected' : '' }}>Event</option>
+                <option value="laporan" {{ request('jenis') == 'laporan' ? 'selected' : '' }}>Laporan</option>
+                <option value="sistem" {{ request('jenis') == 'sistem' ? 'selected' : '' }}>Sistem</option>
+                <option value="pengumuman" {{ request('jenis') == 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
             </select>
             <button class="btn btn-primary"><i class="bi bi-search"></i> Filter</button>
         </form>
@@ -35,7 +37,7 @@
             </thead>
             <tbody>
                 @php
-                    $typeColors = ['info'=>'info','warning'=>'warning','success'=>'success','danger'=>'danger'];
+                    $typeColors = ['kehadiran'=>'success','izin'=>'info','event'=>'primary','laporan'=>'warning','sistem'=>'danger','pengumuman'=>'dark'];
                 @endphp
                 @forelse($notifications as $i => $notif)
                 <tr>

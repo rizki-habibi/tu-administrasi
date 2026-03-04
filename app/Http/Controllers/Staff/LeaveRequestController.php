@@ -33,8 +33,8 @@ class LeaveRequestController extends Controller
         $request->validate([
             'jenis' => 'required|in:izin,sakit,cuti,dinas_luar',
             'tanggal_mulai' => 'required|date|after_or_equal:today',
-            'tanggal_selesai' => 'required|date|after_or_equal:start_date',
-            'reason' => 'required|string',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'alasan' => 'required|string',
             'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
         ]);
 

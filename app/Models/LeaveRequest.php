@@ -13,7 +13,7 @@ class LeaveRequest extends Model
 
     protected $fillable = [
         'pengguna_id', 'jenis', 'tanggal_mulai', 'tanggal_selesai',
-        'reason', 'lampiran', 'status', 'disetujui_oleh', 'catatan_admin',
+        'alasan', 'lampiran', 'status', 'disetujui_oleh', 'catatan_admin',
     ];
 
     protected function casts(): array

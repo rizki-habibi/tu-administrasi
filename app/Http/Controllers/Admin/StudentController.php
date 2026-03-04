@@ -43,10 +43,10 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nis' => 'required|string|unique:student_records,nis',
-            'nisn' => 'nullable|string|unique:student_records,nisn',
+            'nis' => 'required|string|unique:data_siswa,nis',
+            'nisn' => 'nullable|string|unique:data_siswa,nisn',
             'nama' => 'required|string|max:255',
-            'class' => 'required|string',
+            'kelas' => 'required|string',
             'tahun_ajaran' => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
             'tempat_lahir' => 'nullable|string',
@@ -84,10 +84,10 @@ class StudentController extends Controller
     public function update(Request $request, StudentRecord $kesiswaan)
     {
         $request->validate([
-            'nis' => 'required|string|unique:student_records,nis,' . $kesiswaan->id,
-            'nisn' => 'nullable|string|unique:student_records,nisn,' . $kesiswaan->id,
+            'nis' => 'required|string|unique:data_siswa,nis,' . $kesiswaan->id,
+            'nisn' => 'nullable|string|unique:data_siswa,nisn,' . $kesiswaan->id,
             'nama' => 'required|string|max:255',
-            'class' => 'required|string',
+            'kelas' => 'required|string',
             'tahun_ajaran' => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
             'status' => 'required|in:aktif,mutasi_masuk,mutasi_keluar,lulus,do',

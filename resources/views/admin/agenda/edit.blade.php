@@ -19,32 +19,32 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Deskripsi</label>
-                            <textarea name="description" class="form-control @error('deskripsi') is-invalid @enderror" rows="4">{{ old('deskripsi', $event->deskripsi) }}</textarea>
+                            <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" rows="4">{{ old('deskripsi', $event->deskripsi) }}</textarea>
                             @error('deskripsi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tanggal Event <span class="text-danger">*</span></label>
-                            <input type="date" name="event_date" class="form-control @error('tanggal_acara') is-invalid @enderror" value="{{ old('tanggal_acara', $event->tanggal_acara->format('Y-m-d')) }}" required>
+                            <input type="date" name="tanggal_acara" class="form-control @error('tanggal_acara') is-invalid @enderror" value="{{ old('tanggal_acara', $event->tanggal_acara->format('Y-m-d')) }}" required>
                             @error('tanggal_acara')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Jam Mulai <span class="text-danger">*</span></label>
-                            <input type="time" name="start_time" class="form-control @error('waktu_mulai') is-invalid @enderror" value="{{ old('waktu_mulai', $event->waktu_mulai) }}" required>
+                            <input type="time" name="waktu_mulai" class="form-control @error('waktu_mulai') is-invalid @enderror" value="{{ old('waktu_mulai', $event->waktu_mulai) }}" required>
                             @error('waktu_mulai')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-3">
                             <label class="form-label">Jam Selesai <span class="text-danger">*</span></label>
-                            <input type="time" name="end_time" class="form-control @error('waktu_selesai') is-invalid @enderror" value="{{ old('waktu_selesai', $event->waktu_selesai) }}" required>
+                            <input type="time" name="waktu_selesai" class="form-control @error('waktu_selesai') is-invalid @enderror" value="{{ old('waktu_selesai', $event->waktu_selesai) }}" required>
                             @error('waktu_selesai')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Lokasi</label>
-                            <input type="text" name="location" class="form-control @error('lokasi') is-invalid @enderror" value="{{ old('lokasi', $event->lokasi) }}">
+                            <input type="text" name="lokasi" class="form-control @error('lokasi') is-invalid @enderror" value="{{ old('lokasi', $event->lokasi) }}">
                             @error('lokasi')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Tipe Event <span class="text-danger">*</span></label>
-                            <select name="type" class="form-select @error('jenis') is-invalid @enderror" required>
+                            <select name="jenis" class="form-select @error('jenis') is-invalid @enderror" required>
                                 <option value="">Pilih Tipe</option>
                                 <option value="rapat" {{ old('jenis', $event->jenis) == 'rapat' ? 'selected' : '' }}>Rapat</option>
                                 <option value="kegiatan" {{ old('jenis', $event->jenis) == 'kegiatan' ? 'selected' : '' }}>Kegiatan</option>

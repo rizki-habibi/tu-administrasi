@@ -224,7 +224,7 @@
     {{-- Brand --}}
     <div class="sidebar-brand">
         <div class="sidebar-brand-title">
-            <span class="brand-icon"><i class="fas fa-school"></i></span>
+            <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:32px;height:32px;object-fit:contain;margin-right:8px;">
             TU Administrasi
         </div>
         <div class="sidebar-brand-sub">SMA Negeri 2 Jember</div>

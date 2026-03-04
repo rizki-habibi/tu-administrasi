@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                    <select name="category" class="form-select @error('kategori') is-invalid @enderror" required>
+                    <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
                         @foreach(['kurikulum'=>'Kurikulum','administrasi'=>'Administrasi','keuangan'=>'Keuangan','kepegawaian'=>'Kepegawaian','kesiswaan'=>'Kesiswaan','surat'=>'Surat','inventaris'=>'Inventaris','lainnya'=>'Lainnya'] as $k => $v)
                             <option value="{{ $k }}" {{ old('kategori', $document->kategori) == $k ? 'selected' : '' }}>{{ $v }}</option>
                         @endforeach
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control @error('deskripsi') is-invalid @enderror" rows="3">{{ old('deskripsi', $document->deskripsi) }}</textarea>
+                    <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" rows="3">{{ old('deskripsi', $document->deskripsi) }}</textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Ganti File <small class="text-muted">(opsional)</small></label>

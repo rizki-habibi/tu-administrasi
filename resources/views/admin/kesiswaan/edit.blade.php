@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Kelas</label>
-                    <input type="text" name="class" class="form-control" value="{{ old('class', $kesiswaan->class) }}" required>
+                    <input type="text" name="kelas" class="form-control" value="{{ old('kelas', $kesiswaan->kelas) }}" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tahun Ajaran</label>

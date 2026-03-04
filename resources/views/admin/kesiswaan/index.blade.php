@@ -48,7 +48,7 @@
                 <input type="text" name="search" class="form-control" placeholder="Cari nama / NIS / NISN..." value="{{ request('search') }}">
             </div>
             <div class="col-md-2">
-                <select name="class" class="form-select">
+                <select name="kelas" class="form-select">
                     <option value="">Semua Kelas</option>
                     @foreach($kelasList as $k)
                     <option value="{{ $k }}" {{ request('class')==$k?'selected':'' }}>{{ $k }}</option>

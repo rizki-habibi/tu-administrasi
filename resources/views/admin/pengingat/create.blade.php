@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tipe <span class="text-danger">*</span></label>
-                    <select name="type" class="form-select @error('jenis') is-invalid @enderror" required>
+                    <select name="jenis" class="form-select @error('jenis') is-invalid @enderror" required>
                         <option value="deadline_laporan" {{ old('jenis')=='deadline_laporan'?'selected':'' }}>Deadline Laporan</option>
                         <option value="bkd" {{ old('jenis')=='bkd'?'selected':'' }}>BKD</option>
                         <option value="evaluasi_semester" {{ old('jenis')=='evaluasi_semester'?'selected':'' }}>Evaluasi Semester</option>
@@ -30,16 +30,16 @@
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3">{{ old('deskripsi') }}</textarea>
+                    <textarea name="deskripsi" class="form-control" rows="3">{{ old('deskripsi') }}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tanggal Deadline <span class="text-danger">*</span></label>
-                    <input type="date" name="due_date" class="form-control @error('tenggat') is-invalid @enderror" value="{{ old('tenggat') }}" required>
+                    <input type="date" name="tenggat" class="form-control @error('tenggat') is-invalid @enderror" value="{{ old('tenggat') }}" required>
                     @error('tenggat')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Waktu Pengingat</label>
-                    <input type="time" name="reminder_time" class="form-control" value="{{ old('waktu_pengingat') }}">
+                    <input type="time" name="waktu_pengingat" class="form-control" value="{{ old('waktu_pengingat') }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Target <span class="text-danger">*</span></label>

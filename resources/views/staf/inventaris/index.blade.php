@@ -110,7 +110,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Deskripsi Kerusakan <span class="text-danger">*</span></label>
-                        <textarea name="description" class="form-control" rows="3" required></textarea>
+                        <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Foto Kerusakan</label>

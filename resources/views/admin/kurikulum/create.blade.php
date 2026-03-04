@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Jenis Dokumen <span class="text-danger">*</span></label>
-                    <select name="type" class="form-select @error('jenis') is-invalid @enderror" required>
+                    <select name="jenis" class="form-select @error('jenis') is-invalid @enderror" required>
                         <option value="">Pilih Jenis</option>
                         <option value="rpp" {{ old('jenis')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
                         <option value="silabus" {{ old('jenis')=='silabus'?'selected':'' }}>Silabus / ATP</option>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026">
+                    <input type="text" name="tahun_ajaran" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Semester</label>
@@ -56,15 +56,15 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Mata Pelajaran</label>
-                    <input type="text" name="subject" class="form-control" value="{{ old('mata_pelajaran') }}" placeholder="Contoh: Matematika, Bahasa Indonesia">
+                    <input type="text" name="mata_pelajaran" class="form-control" value="{{ old('mata_pelajaran') }}" placeholder="Contoh: Matematika, Bahasa Indonesia">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Kelas / Tingkat</label>
-                    <input type="text" name="class_level" class="form-control" value="{{ old('tingkat_kelas') }}" placeholder="Contoh: X, XI IPA, XII">
+                    <input type="text" name="tingkat_kelas" class="form-control" value="{{ old('tingkat_kelas') }}" placeholder="Contoh: X, XI IPA, XII">
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3" placeholder="Keterangan dokumen...">{{ old('deskripsi') }}</textarea>
+                    <textarea name="deskripsi" class="form-control" rows="3" placeholder="Keterangan dokumen...">{{ old('deskripsi') }}</textarea>
                 </div>
                 <div class="col-12">
                     <label class="form-label">File Dokumen <span class="text-danger">*</span></label>

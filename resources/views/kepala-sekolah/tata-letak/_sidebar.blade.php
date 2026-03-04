@@ -2,7 +2,7 @@
 <aside class="sidebar" id="sidebar">
     {{-- Brand --}}
     <div class="sidebar-brand">
-        <img src="{{ asset('storage/gambar/logo.png') }}" alt="Logo" onerror="this.style.display='none'">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:42px;height:42px;object-fit:contain;" onerror="this.style.display='none'">
         <h6>Kepala Sekolah</h6>
         <small>SMA Negeri 2 Jember</small>
     </div>

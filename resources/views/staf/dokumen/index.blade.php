@@ -14,7 +14,7 @@
     <div class="card-body py-3">
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-4">
-                <select name="category" class="form-select form-select-sm">
+                <select name="kategori" class="form-select form-select-sm">
                     <option value="">Semua Kategori</option>
                     @foreach(['kurikulum','administrasi','keuangan','kepegawaian','kesiswaan','surat','inventaris','lainnya'] as $c)
                         <option value="{{ $c }}" {{ request('kategori') == $c ? 'selected' : '' }}>{{ ucfirst($c) }}</option>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                        <select name="category" class="form-select" required>
+                        <select name="kategori" class="form-select" required>
                             <option value="">-- Pilih --</option>
                             @foreach(['kurikulum'=>'Kurikulum','administrasi'=>'Administrasi','keuangan'=>'Keuangan','kepegawaian'=>'Kepegawaian','kesiswaan'=>'Kesiswaan','surat'=>'Surat','inventaris'=>'Inventaris','lainnya'=>'Lainnya'] as $k => $v)
                                 <option value="{{ $k }}">{{ $v }}</option>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Deskripsi</label>
-                        <textarea name="description" class="form-control" rows="2"></textarea>
+                        <textarea name="deskripsi" class="form-control" rows="2"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">File <span class="text-danger">*</span></label>

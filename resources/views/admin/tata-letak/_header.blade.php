@@ -117,13 +117,13 @@
                 };
 
                 list.innerHTML = data.notifications.map(n => `
-                    <div class="d-flex gap-2 px-3 py-2 border-bottom notif-item" style="transition:.15s;${!n.is_read ? 'background:#f0f4ff;' : ''}">
+                    <div class="d-flex gap-2 px-3 py-2 border-bottom notif-item" style="transition:.15s;background:#f0f4ff;">
                         <div class="flex-shrink-0 mt-1">
-                            <i class="bi ${icons[n.type] || icons.info}" style="font-size:1rem;"></i>
+                            <i class="bi ${icons[n.jenis] || icons.info}" style="font-size:1rem;"></i>
                         </div>
                         <div class="flex-grow-1 overflow-hidden">
-                            <div class="fw-semibold text-dark" style="font-size:.82rem;">${n.title}</div>
-                            <div class="text-muted" style="font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.message}</div>
+                            <div class="fw-semibold text-dark" style="font-size:.82rem;">${n.judul}</div>
+                            <div class="text-muted" style="font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.pesan}</div>
                             <small class="text-muted" style="font-size:.68rem;">${n.time}</small>
                         </div>
                     </div>

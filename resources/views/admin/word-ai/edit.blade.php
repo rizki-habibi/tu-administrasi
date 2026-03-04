@@ -103,7 +103,7 @@
                     <div id="editor" contenteditable="true" class="border rounded p-4" style="min-height:500px;max-height:700px;overflow-y:auto;font-family:'Times New Roman',serif;font-size:12pt;line-height:1.6;background:#fff;">
                         {!! $word->konten ?? '<p>Mulai menulis...</p>' !!}
                     </div>
-                    <input type="hidden" name="content" id="contentInput">
+                    <input type="hidden" name="konten" id="contentInput">
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Kategori</label>
-                        <select name="category" class="form-select">
+                        <select name="kategori" class="form-select">
                             @foreach($categories as $key => $label)
                                 <option value="{{ $key }}" {{ $word->kategori==$key ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
@@ -136,7 +136,7 @@
                         </select>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" name="is_shared" value="1" id="isShared" {{ $word->dibagikan ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" name="dibagikan" value="1" id="isShared" {{ $word->dibagikan ? 'checked' : '' }}>
                         <label class="form-check-label small" for="isShared">Bagikan ke staf</label>
                     </div>
                 </div>

@@ -62,14 +62,14 @@
                     <div class="mb-3"><label class="form-label">Judul <span class="text-danger">*</span></label><input type="text" name="judul" class="form-control" required></div>
                     <div class="mb-3">
                         <label class="form-label">Kategori</label>
-                        <select name="category" class="form-select">
+                        <select name="kategori" class="form-select">
                             <option value="pembelajaran">Pembelajaran</option>
                             <option value="administrasi">Administrasi</option>
                             <option value="kegiatan">Kegiatan</option>
                             <option value="pengembangan_diri">Pengembangan Diri</option>
                         </select>
                     </div>
-                    <div class="mb-3"><label class="form-label">Deskripsi</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+                    <div class="mb-3"><label class="form-label">Deskripsi</label><textarea name="deskripsi" class="form-control" rows="2"></textarea></div>
                     <div class="mb-3"><label class="form-label">File <span class="text-danger">*</span></label><input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required></div>
                 </div>
                 <div class="modal-footer">

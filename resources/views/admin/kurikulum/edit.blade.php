@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Jenis Dokumen <span class="text-danger">*</span></label>
-                    <select name="type" class="form-select" required>
+                    <select name="jenis" class="form-select" required>
                         <option value="rpp" {{ old('jenis',$kurikulum->jenis)=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
                         <option value="silabus" {{ old('jenis',$kurikulum->jenis)=='silabus'?'selected':'' }}>Silabus / ATP</option>
                         <option value="jadwal" {{ old('jenis',$kurikulum->jenis)=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', $kurikulum->tahun_ajaran) }}">
+                    <input type="text" name="tahun_ajaran" class="form-control" value="{{ old('tahun_ajaran', $kurikulum->tahun_ajaran) }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Semester</label>
@@ -53,15 +53,15 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Mata Pelajaran</label>
-                    <input type="text" name="subject" class="form-control" value="{{ old('mata_pelajaran', $kurikulum->mata_pelajaran) }}">
+                    <input type="text" name="mata_pelajaran" class="form-control" value="{{ old('mata_pelajaran', $kurikulum->mata_pelajaran) }}">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Kelas / Tingkat</label>
-                    <input type="text" name="class_level" class="form-control" value="{{ old('tingkat_kelas', $kurikulum->tingkat_kelas) }}">
+                    <input type="text" name="tingkat_kelas" class="form-control" value="{{ old('tingkat_kelas', $kurikulum->tingkat_kelas) }}">
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3">{{ old('deskripsi', $kurikulum->deskripsi) }}</textarea>
+                    <textarea name="deskripsi" class="form-control" rows="3">{{ old('deskripsi', $kurikulum->deskripsi) }}</textarea>
                 </div>
                 <div class="col-12">
                     <label class="form-label">Ganti File (opsional)</label>

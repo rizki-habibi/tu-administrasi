@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Kelas <span class="text-danger">*</span></label>
-                    <input type="text" name="class" class="form-control @error('class') is-invalid @enderror" value="{{ old('class') }}" placeholder="X IPA 1" required>
+                    <input type="text" name="kelas" class="form-control @error('kelas') is-invalid @enderror" value="{{ old('kelas') }}" placeholder="X IPA 1" required>
                     @error('class')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-3">

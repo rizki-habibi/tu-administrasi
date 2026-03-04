@@ -93,7 +93,7 @@
                     <div id="editor" contenteditable="true" class="border rounded p-4" style="min-height:500px;max-height:700px;overflow-y:auto;font-family:'Times New Roman',serif;font-size:12pt;line-height:1.6;background:#fff;">
                         <p>Mulai menulis dokumen Anda di sini...</p>
                     </div>
-                    <input type="hidden" name="content" id="contentInput">
+                    <input type="hidden" name="konten" id="contentInput">
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Kategori <span class="text-danger">*</span></label>
-                        <select name="category" class="form-select" required>
+                        <select name="kategori" class="form-select" required>
                             @foreach($categories as $key => $label)
                                 <option value="{{ $key }}" {{ old('kategori','umum')==$key ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
@@ -123,10 +123,10 @@
                         </select>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" name="is_shared" value="1" id="isShared">
+                        <input class="form-check-input" type="checkbox" name="dibagikan" value="1" id="isShared">
                         <label class="form-check-label small" for="isShared">Bagikan ke semua staf</label>
                     </div>
-                    <input type="hidden" name="template" value="{{ $selectedTemplate }}">
+                    <input type="hidden" name="templat" value="{{ $selectedTemplate }}">
                 </div>
             </div>
             <div class="card border-0 shadow-sm mb-3">

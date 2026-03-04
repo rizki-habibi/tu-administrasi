@@ -70,15 +70,15 @@
                     <div class="row g-2 mb-3">
                         <div class="col-6">
                             <label class="form-label">Jenis</label>
-                            <select name="type" class="form-select">
+                            <select name="jenis" class="form-select">
                                 <option value="model_pembelajaran">Model Pembelajaran</option>
                                 <option value="teknologi_pembelajaran">Teknologi Pembelajaran</option>
                                 <option value="media_pembelajaran">Media Pembelajaran</option>
                             </select>
                         </div>
-                        <div class="col-6"><label class="form-label">Mata Pelajaran</label><input type="text" name="subject" class="form-control"></div>
+                        <div class="col-6"><label class="form-label">Mata Pelajaran</label><input type="text" name="mata_pelajaran" class="form-control"></div>
                     </div>
-                    <div class="mb-3"><label class="form-label">Deskripsi <span class="text-danger">*</span></label><textarea name="description" class="form-control" rows="3" required></textarea></div>
+                    <div class="mb-3"><label class="form-label">Deskripsi <span class="text-danger">*</span></label><textarea name="deskripsi" class="form-control" rows="3" required></textarea></div>
                     <div class="row g-2 mb-3">
                         <div class="col-6"><label class="form-label">Kelebihan</label><textarea name="benefits" class="form-control" rows="2"></textarea></div>
                         <div class="col-6"><label class="form-label">Kekurangan</label><textarea name="challenges" class="form-control" rows="2"></textarea></div>

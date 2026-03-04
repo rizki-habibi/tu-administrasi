@@ -19,17 +19,19 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Pesan <span class="text-danger">*</span></label>
-                            <textarea name="message" class="form-control @error('pesan') is-invalid @enderror" rows="4" required>{{ old('pesan') }}</textarea>
+                            <textarea name="pesan" class="form-control @error('pesan') is-invalid @enderror" rows="4" required>{{ old('pesan') }}</textarea>
                             @error('pesan')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tipe <span class="text-danger">*</span></label>
-                            <select name="type" class="form-select @error('jenis') is-invalid @enderror" required>
+                            <select name="jenis" class="form-select @error('jenis') is-invalid @enderror" required>
                                 <option value="">Pilih Tipe</option>
-                                <option value="info" {{ old('jenis') == 'info' ? 'selected' : '' }}>Info</option>
-                                <option value="warning" {{ old('jenis') == 'warning' ? 'selected' : '' }}>Warning</option>
-                                <option value="success" {{ old('jenis') == 'success' ? 'selected' : '' }}>Success</option>
-                                <option value="danger" {{ old('jenis') == 'danger' ? 'selected' : '' }}>Danger</option>
+                                <option value="kehadiran" {{ old('jenis') == 'kehadiran' ? 'selected' : '' }}>Kehadiran</option>
+                                <option value="izin" {{ old('jenis') == 'izin' ? 'selected' : '' }}>Izin</option>
+                                <option value="event" {{ old('jenis') == 'event' ? 'selected' : '' }}>Event</option>
+                                <option value="laporan" {{ old('jenis') == 'laporan' ? 'selected' : '' }}>Laporan</option>
+                                <option value="sistem" {{ old('jenis') == 'sistem' ? 'selected' : '' }}>Sistem</option>
+                                <option value="pengumuman" {{ old('jenis') == 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
                             </select>
                             @error('jenis')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>

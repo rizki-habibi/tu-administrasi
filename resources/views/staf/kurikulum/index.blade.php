@@ -17,7 +17,7 @@
                 <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari dokumen..." value="{{ request('search') }}">
             </div>
             <div class="col-md-3">
-                <select name="type" class="form-select form-select-sm">
+                <select name="jenis" class="form-select form-select-sm">
                     <option value="">Semua Jenis</option>
                     <option value="rpp" {{ request('jenis')=='rpp'?'selected':'' }}>RPP/Modul Ajar</option>
                     <option value="silabus" {{ request('jenis')=='silabus'?'selected':'' }}>Silabus/ATP</option>
@@ -104,7 +104,7 @@
                     <div class="row g-2 mb-3">
                         <div class="col-6">
                             <label class="form-label">Jenis</label>
-                            <select name="type" class="form-select">
+                            <select name="jenis" class="form-select">
                                 <option value="rpp">RPP/Modul Ajar</option>
                                 <option value="silabus">Silabus/ATP</option>
                                 <option value="jadwal">Jadwal</option>
@@ -114,12 +114,12 @@
                         </div>
                         <div class="col-6">
                             <label class="form-label">Mata Pelajaran</label>
-                            <input type="text" name="subject" class="form-control">
+                            <input type="text" name="mata_pelajaran" class="form-control">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Deskripsi</label>
-                        <textarea name="description" class="form-control" rows="2"></textarea>
+                        <textarea name="deskripsi" class="form-control" rows="2"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">File <span class="text-danger">*</span></label>

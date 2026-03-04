@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login - TU Administrasi</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -105,7 +107,7 @@
     <div class="login-container">
         <div class="login-left">
             <div class="content">
-                <img src="{{ asset('storage/gambar/logo.png') }}" alt="Logo" onerror="this.style.display='none'">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
                 <h2>TU Administrasi</h2>
                 <h4>SMA Negeri 2 Jember</h4>
                 <p>Sistem Informasi Tata Usaha terintegrasi untuk pengelolaan administrasi sekolah yang efisien dan modern.</p>
