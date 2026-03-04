@@ -30,15 +30,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Build the user list HTML
     let usersHtml = '';
     birthdayUsers.forEach(function(user, index) {
-        const photoUrl = user.photo
-            ? '{{ asset("storage") }}/' + user.photo
-            : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&background=f59e0b&color=fff&size=80';
+        const photoUrl = user.foto
+            ? '{{ asset("storage") }}/' + user.foto
+            : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.nama) + '&background=f59e0b&color=fff&size=80';
 
         usersHtml += `
             <div class="birthday-user-item" style="display: flex; align-items: center; gap: 12px; padding: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.15); border-radius: 12px;">
-                <img src="${photoUrl}" alt="${user.name}" style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid #f59e0b; object-fit: cover;">
+                <img src="${photoUrl}" alt="${user.nama}" style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid #f59e0b; object-fit: cover;">
                 <div style="flex: 1; text-align: left;">
-                    <strong style="color: #1e293b; font-size: 15px;">${user.name}</strong>
+                    <strong style="color: #1e293b; font-size: 15px;">${user.nama}</strong>
                 </div>
             </div>
         `;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         greetingFormsHtml += `
             <div class="greeting-form-item" style="margin-bottom: 12px; text-align: left;">
                 <label style="font-weight: 600; color: #374151; font-size: 13px; display: block; margin-bottom: 4px;">
-                    Ucapan untuk <span style="color: #f59e0b;">${user.name}</span>:
+                    Ucapan untuk <span style="color: #f59e0b;">${user.nama}</span>:
                 </label>
                 <textarea id="pesan_${user.id}" rows="2" placeholder="Tulis ucapan selamat ulang tahun..."
                     style="width: 100%; border: 2px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; font-size: 13px; resize: none; transition: border-color 0.2s;"
