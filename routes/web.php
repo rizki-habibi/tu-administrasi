@@ -22,3 +22,16 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Dev System Scan (hanya di local)
+|--------------------------------------------------------------------------
+*/
+if (app()->environment('local')) {
+    Route::prefix('dev')->middleware(\App\Http\Middleware\LocalOnly::class)->group(function () {
+        Route::get('/system-scan', [\App\Http\Controllers\DevSystemScanController::class, 'index'])->name('dev.system-scan');
+        Route::get('/system-scan/refresh', [\App\Http\Controllers\DevSystemScanController::class, 'scan'])->name('dev.system-scan.refresh');
+        Route::post('/system-scan/clear-log', [\App\Http\Controllers\DevSystemScanController::class, 'clearLog'])->name('dev.system-scan.clear-log');
+    });
+}

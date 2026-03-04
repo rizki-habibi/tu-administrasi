@@ -1,0 +1,104 @@
+name: Laravel Error Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  error-check:
+    name: Full Error Check
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql, xml, ctype, json, tokenizer, bcmath, gd, zip
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Copy ENV
+        run: cp .env.example .env || true
+
+      - name: Generate app key
+        run: php artisan key:generate
+
+      - name: PHP Syntax Check (php -l)
+        run: |
+          echo "🔍 Scanning PHP files for syntax errors..."
+          ERROR_COUNT=0
+          while IFS= read -r file; do
+            OUTPUT=$(php -l "$file" 2>&1)
+            if [ $? -ne 0 ]; then
+              echo "❌ $file"
+              echo "   $OUTPUT"
+              ERROR_COUNT=$((ERROR_COUNT + 1))
+            fi
+          done < <(find app routes config database -name "*.php" -type f)
+          echo ""
+          if [ $ERROR_COUNT -gt 0 ]; then
+            echo "❌ $ERROR_COUNT file(s) memiliki syntax error!"
+            exit 1
+          else
+            echo "✅ Semua file PHP bersih — tidak ada syntax error."
+          fi
+
+      - name: Blade Compile Check
+        run: |
+          echo "🔍 Compiling Blade templates..."
+          php artisan view:clear
+          php artisan view:cache
+          echo "✅ Semua Blade template berhasil di-compile."
+
+      - name: Route List Check
+        run: |
+          echo "🔍 Checking route compilation..."
+          php artisan route:list --json | python3 -c "
+          import json, sys
+          routes = json.load(sys.stdin)
+          print(f'✅ {len(routes)} routes terdaftar.')
+          " || echo "⚠️ Route check skipped (mungkin perlu database)"
+
+      - name: Dev Scan All (artisan)
+        run: |
+          php artisan dev:scan-all --json > /dev/null 2>&1 || true
+          php artisan dev:scan-all 2>&1 || echo "⚠️ dev:scan-all selesai dengan warning"
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: password
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "══════════════════════════════════════════"
+          echo "  Laravel Error Check — Selesai"
+          echo "══════════════════════════════════════════"

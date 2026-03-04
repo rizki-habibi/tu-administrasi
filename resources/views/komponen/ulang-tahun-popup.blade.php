@@ -2,6 +2,15 @@
 {{-- Tampil satu-per-satu. Jika user sendiri ultah → ucapan otomatis dari sistem. --}}
 
 @if(isset($birthdayUsers) && $birthdayUsers->count() > 0)
+@php
+    $birthdayData = $birthdayUsers->map(fn($u) => [
+        'id' => $u->id,
+        'nama' => $u->nama,
+        'foto' => $u->foto,
+        'jabatan' => $u->jabatan ?? $u->peran,
+    ]);
+    $routePrefix = auth()->user()->getRoutePrefix();
+@endphp
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -9,14 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem(todayKey)) return;
 
     const currentUserId = {{ auth()->id() }};
-    const allBirthdayUsers = @json($birthdayUsers->map(function($u) {
-        return ['id' => $u->id, 'nama' => $u->nama, 'foto' => $u->foto, 'jabatan' => $u->jabatan ?? $u->peran];
-    }));
+    const allBirthdayUsers = @json($birthdayData);
 
     if (allBirthdayUsers.length === 0) return;
     localStorage.setItem(todayKey, '1');
-
-    @php $routePrefix = auth()->user()->getRoutePrefix(); @endphp
     const greetingUrl = "{{ route($routePrefix . '.ulang-tahun.ucapan') }}";
     const csrfToken = "{{ csrf_token() }}";
 
