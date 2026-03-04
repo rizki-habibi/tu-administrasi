@@ -8,6 +8,9 @@
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
 
+    {{-- Bootstrap 5 --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -127,29 +130,24 @@
 
         /* ── Stat cards ── */
         .stat-card {
-            background: var(--white);
             border-radius: var(--card-radius);
             padding: 22px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
+            border: none;
             position: relative;
             overflow: hidden;
+            color: #fff;
         }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-            border-radius: 4px 0 0 4px;
-        }
-        .stat-card .stat-icon {
+        .stat-card p { margin: 0; font-size: .82rem; opacity: .9; }
+        .stat-card h3 { margin: 4px 0; font-size: 1.6rem; font-weight: 700; }
+        .stat-card .icon-box {
             width: 48px; height: 48px;
             border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, rgba(16,185,129,.12), rgba(5,150,105,.08));
-            color: var(--primary);
-            font-size: 1.2rem;
+            background: rgba(255,255,255,.2);
+            color: #fff;
+            font-size: 1.3rem;
+        }
         }
 
         /* ── Table ── */
@@ -289,6 +287,8 @@
         </div>
     </div>
 
+    {{-- Bootstrap JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     {{-- SweetAlert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
