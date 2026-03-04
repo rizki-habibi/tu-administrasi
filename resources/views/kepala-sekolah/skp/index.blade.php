@@ -1,4 +1,4 @@
-@extends('kepala-sekolah.tata-letak.app')
+@extends('peran.kepala-sekolah.app')
 @section('judul', 'Penilaian SKP')
 
 @section('konten')
@@ -41,7 +41,7 @@
                         <td>{{ $skp->nilai_capaian ? number_format($skp->nilai_capaian, 1) : '-' }}</td>
                         <td>{!! '<span class="badge '.$skp->status_badge.'">'.ucfirst($skp->status).'</span>' !!}</td>
                         <td>
-                            <a href="{{ route('kepala-sekolah.skp.show', $skp) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-eye me-1"></i>Detail</a>
+                            <a href="{{ route('kepala-sekolah.skp.show', $skp) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye me-1"></i>Detail</a>
                         </td>
                     </tr>
                 @empty

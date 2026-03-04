@@ -1,4 +1,4 @@
-@extends('kepala-sekolah.tata-letak.app')
+@extends('peran.kepala-sekolah.app')
 @section('judul', 'Detail Permohonan Izin')
 
 @section('konten')

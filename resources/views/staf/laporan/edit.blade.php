@@ -1,4 +1,4 @@
-@extends('staf.tata-letak.app')
+@extends('peran.staf.app')
 @section('judul', 'Ubah Laporan')
 
 @section('konten')

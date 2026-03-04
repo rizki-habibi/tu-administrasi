@@ -1,4 +1,4 @@
-@extends('staf.tata-letak.app')
+@extends('peran.staf.app')
 @section('judul', 'Laporan')
 
 @section('konten')
@@ -60,7 +60,7 @@
                         <span class="badge bg-{{ $sc[$report->status] ?? 'secondary' }}">{{ ucfirst($report->status) }}</span>
                     </td>
                     <td>
-                        <a href="{{ route('staf.laporan.show', $report) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
+                        <a href="{{ route('staf.laporan.show', $report) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye"></i></a>
                         @if($report->status == 'draft')
                             <a href="{{ route('staf.laporan.edit', $report) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
                             <form action="{{ route('staf.laporan.destroy', $report) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus laporan?')">

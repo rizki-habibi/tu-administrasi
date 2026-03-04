@@ -1,4 +1,4 @@
-@extends('staf.tata-letak.app')
+@extends('peran.staf.app')
 @section('judul', 'Detail Surat - ' . $surat->nomor_surat)
 
 @section('konten')

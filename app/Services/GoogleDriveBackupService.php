@@ -96,7 +96,7 @@ class GoogleDriveBackupService
             $folderId = $this->getOrCreateFolder($driveFolderName ?? config('backup.google_drive.folder_name', 'TU_Admin_Backup'));
 
             $fileMetadata = new DriveFile([
-                'nama' => basename($localPath),
+                'name' => basename($localPath),
                 'parents' => [$folderId],
             ]);
 
@@ -107,10 +107,10 @@ class GoogleDriveBackupService
                 'data' => $content,
                 'mimeType' => $mimeType,
                 'uploadType' => 'multipart',
-                'kolom_isian' => 'id, name, size',
+                'fields' => 'id, name, size',
             ]);
 
-            Log::info("Google Drive: Uploaded {$file->nama} (ID: {$file->id})");
+            Log::info("Google Drive: Uploaded {$file->name} (ID: {$file->id})");
             return $file->id;
         } catch (\Exception $e) {
             Log::error('Google Drive upload failed: ' . $e->getMessage());
@@ -127,7 +127,7 @@ class GoogleDriveBackupService
         $response = $this->service->files->listFiles([
             'q' => "mimeType='application/vnd.google-apps.folder' and name='{$folderName}' and trashed=false",
             'spaces' => 'drive',
-            'kolom_isian' => 'files(id, name)',
+            'fields' => 'files(id, name)',
         ]);
 
         if (count($response->files) > 0) {
@@ -136,12 +136,12 @@ class GoogleDriveBackupService
 
         // Create new folder
         $folderMetadata = new DriveFile([
-            'nama' => $folderName,
+            'name' => $folderName,
             'mimeType' => 'application/vnd.google-apps.folder',
         ]);
 
         $folder = $this->service->files->create($folderMetadata, [
-            'kolom_isian' => 'id',
+            'fields' => 'id',
         ]);
 
         Log::info("Google Drive: Created folder '{$folderName}' (ID: {$folder->id})");
@@ -164,7 +164,7 @@ class GoogleDriveBackupService
             $response = $this->service->files->listFiles([
                 'q' => "'{$folderId}' in parents and trashed=false",
                 'orderBy' => 'createdTime desc',
-                'kolom_isian' => 'files(id, name, createdTime)',
+                'fields' => 'files(id, name, createdTime)',
             ]);
 
             $files = $response->files;
@@ -175,7 +175,7 @@ class GoogleDriveBackupService
                 foreach ($toDelete as $file) {
                     $this->service->files->delete($file->id);
                     $deleted++;
-                    Log::info("Google Drive: Deleted old backup {$file->nama}");
+                    Log::info("Google Drive: Deleted old backup {$file->name}");
                 }
             }
 

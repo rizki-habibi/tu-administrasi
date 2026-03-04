@@ -1,4 +1,4 @@
-@extends('admin.tata-letak.app')
+@extends('peran.admin.app')
 @section('judul', 'Inventaris / Sarana Prasarana')
 
 @section('konten')

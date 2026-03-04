@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Gemini AI (Google)
+    |--------------------------------------------------------------------------
+    | API key untuk fitur AI generate dokumen.
+    | Dapatkan di: https://aistudio.google.com/apikey
+    */
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY', ''),
+        'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
+    ],
+
 ];

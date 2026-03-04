@@ -1,4 +1,4 @@
-@extends('kepala-sekolah.tata-letak.app')
+@extends('peran.kepala-sekolah.app')
 @section('judul', 'Data Staff')
 
 @section('konten')
@@ -70,7 +70,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('kepala-sekolah.pegawai.show', $s) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-eye me-1"></i>Detail</a>
+                            <a href="{{ route('kepala-sekolah.pegawai.show', $s) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye me-1"></i>Detail</a>
                         </td>
                     </tr>
                 @empty

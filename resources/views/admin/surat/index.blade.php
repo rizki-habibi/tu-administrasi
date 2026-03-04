@@ -1,4 +1,4 @@
-@extends('admin.tata-letak.app')
+@extends('peran.admin.app')
 @section('judul', 'Manajemen Surat')
 
 @section('konten')
@@ -148,9 +148,9 @@
                         <div class="btn-group btn-group-sm">
                             <a href="{{ route('admin.surat.show', $surat) }}" class="btn btn-outline-primary" title="Detail"><i class="bi bi-eye"></i></a>
                             <a href="{{ route('admin.surat.edit', $surat) }}" class="btn btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
-                            <form action="{{ route('admin.surat.destroy', $surat) }}" method="POST" onsubmit="return confirm('Hapus surat ini?')">
+                            <form action="{{ route('admin.surat.destroy', $surat) }}" method="POST" class="d-inline">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-outline-danger btn-sm" title="Hapus"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-outline-danger" data-confirm="Hapus surat ini?" title="Hapus"><i class="bi bi-trash"></i></button>
                             </form>
                         </div>
                     </td>

@@ -183,12 +183,12 @@
 </head>
 <body>
     {{-- Sidebar --}}
-    @include('staf.tata-letak.sidebar')
+    @include('peran.staf.sidebar')
 
     {{-- Main Content --}}
     <div class="main-content" id="mainContent">
         {{-- Top Header --}}
-        @include('staf.tata-letak.header')
+        @include('peran.staf.header')
 
         {{-- Page Content --}}
         <div class="page-content fade-in">
@@ -211,7 +211,7 @@
         </div>
 
         {{-- Footer Scripts --}}
-        @include('staf.tata-letak.footer')
+        @include('peran.staf.footer')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

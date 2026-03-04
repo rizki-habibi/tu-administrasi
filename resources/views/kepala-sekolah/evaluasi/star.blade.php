@@ -1,4 +1,4 @@
-@extends('kepala-sekolah.tata-letak.app')
+@extends('peran.kepala-sekolah.app')
 @section('judul', 'Analisis STAR')
 
 @section('konten')

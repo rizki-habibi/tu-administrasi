@@ -1,4 +1,4 @@
-@extends('staf.tata-letak.app')
+@extends('peran.staf.app')
 @section('judul', 'Kurikulum & Dokumen')
 
 @section('konten')
@@ -72,7 +72,7 @@
                     </td>
                     <td>{{ $doc->created_at->format('d/m/Y') }}</td>
                     <td class="text-center">
-                        <a href="{{ route('staf.kurikulum.show', $doc->id) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i></a>
+                        <a href="{{ route('staf.kurikulum.show', $doc->id) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
                 @empty

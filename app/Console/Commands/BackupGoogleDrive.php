@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\BackupArchive;
 use App\Services\GoogleDriveBackupService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -67,8 +68,23 @@ class BackupGoogleDrive extends Command
 
         $zip->close();
 
-        $fileSize = $this->formatBytes(filesize($zipPath));
+        $fileSizeBytes = filesize($zipPath);
+        $fileSize = $this->formatBytes($fileSizeBytes);
         $this->info("📦 Backup lokal dibuat: {$zipName} ({$fileSize})");
+
+        // Tentukan jenis backup
+        $jenis = 'penuh';
+        if ($this->option('db-only')) $jenis = 'database';
+        if ($this->option('files-only')) $jenis = 'file';
+
+        // Buat record arsip di database
+        $arsip = BackupArchive::create([
+            'nama_file'      => $zipName,
+            'path_lokal'     => $zipPath,
+            'jenis'          => $jenis,
+            'ukuran_byte'    => $fileSizeBytes,
+            'status'         => 'sedang_proses',
+        ]);
 
         // 3. Upload to Google Drive
         $this->info('☁️  Mengunggah ke Google Drive...');
@@ -78,12 +94,27 @@ class BackupGoogleDrive extends Command
             $this->warn('⚠️  Google Drive tidak terkonfigurasi. Backup disimpan lokal.');
             $this->warn('   Jalankan: php artisan backup:auth untuk setup Google Drive');
             $this->info("✅ Backup lokal tersimpan di: {$zipPath}");
+            $arsip->update([
+                'status'  => 'berhasil',
+                'catatan' => 'Disimpan lokal saja — Google Drive belum dikonfigurasi.',
+            ]);
             return 0;
         }
 
-        $fileId = $driveService->uploadFile($zipPath);
+        try {
+            $fileId = $driveService->uploadFile($zipPath);
+        } catch (\Exception $e) {
+            $fileId = null;
+            Log::error("Backup upload gagal: " . $e->getMessage());
+        }
+
         if ($fileId) {
             $this->info("✅ Berhasil diunggah ke Google Drive (ID: {$fileId})");
+            $arsip->update([
+                'google_drive_id' => $fileId,
+                'status'          => 'berhasil',
+                'catatan'         => 'Berhasil diunggah ke Google Drive.',
+            ]);
 
             if (!$this->option('no-cleanup')) {
                 $keepCount = config('backup.keep_count', 5);
@@ -94,8 +125,13 @@ class BackupGoogleDrive extends Command
             }
 
             @unlink($zipPath);
+            $arsip->update(['path_lokal' => null]);
         } else {
             $this->error('❌ Gagal mengunggah ke Google Drive. Backup lokal disimpan.');
+            $arsip->update([
+                'status'  => 'gagal',
+                'catatan' => 'Upload ke Google Drive gagal. File disimpan di lokal.',
+            ]);
         }
 
         // Cleanup temp files
@@ -103,7 +139,7 @@ class BackupGoogleDrive extends Command
         foreach (glob("{$backupPath}/*.json") as $f) @unlink($f);
 
         $this->info('🎉 Proses backup selesai!');
-        Log::info("Backup completed: {$zipName} ({$fileSize})");
+        Log::info("Backup completed: {$zipName} ({$fileSize}) — status: {$arsip->fresh()->status}");
 
         return 0;
     }

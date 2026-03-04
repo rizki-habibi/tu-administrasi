@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\WordDocument;
+use App\Services\GeminiAiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\PhpWord;
@@ -187,7 +188,18 @@ class WordDocumentController extends Controller
         $prompt = $request->prompt;
         $template = $request->templat;
 
-        $content = $this->generateAiContent($prompt, $template);
+        // Coba gunakan Gemini AI terlebih dahulu
+        $gemini = new GeminiAiService();
+        $content = null;
+
+        if ($gemini->isConfigured()) {
+            $content = $gemini->generateDocument($prompt, $template);
+        }
+
+        // Fallback ke template lokal jika Gemini gagal / tidak tersedia
+        if (!$content) {
+            $content = $this->generateAiContent($prompt, $template);
+        }
 
         if ($request->document_id) {
             $doc = WordDocument::where('id', $request->document_id)->where('pengguna_id', auth()->id())->first();
@@ -196,7 +208,11 @@ class WordDocumentController extends Controller
             }
         }
 
-        return response()->json(['success' => true, 'konten' => $content]);
+        return response()->json([
+            'success' => true,
+            'konten' => $content,
+            'sumber' => $gemini->isConfigured() && $content ? 'gemini-ai' : 'template-lokal',
+        ]);
     }
 
     public function template(Request $request)

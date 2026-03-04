@@ -1,4 +1,4 @@
-@extends('admin.tata-letak.app')
+@extends('peran.admin.app')
 @section('judul', 'Kelola Staff')
 
 @section('konten')
@@ -83,20 +83,20 @@
                         </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center gap-1">
-                                <button class="btn btn-light btn-sm" title="Lihat Detail"
+                                <button class="btn btn-sm btn-outline-primary" title="Lihat Detail"
                                         onclick="showDetail({{ $staff->id }}, '{{ addslashes($staff->nama) }}', '{{ $staff->email }}', '{{ $staff->jabatan ?? '-' }}', '{{ $staff->telepon ?? '-' }}', '{{ $staff->alamat ?? '-' }}', '{{ $staff->aktif ? 'Aktif' : 'Nonaktif' }}', '{{ $staff->created_at->format('d M Y') }}')">
-                                    <i class="bi bi-eye text-primary"></i>
+                                    <i class="bi bi-eye"></i>
                                 </button>
-                                <a href="{{ route('admin.pegawai.edit', $staff) }}" class="btn btn-light btn-sm" title="Ubah"><i class="bi bi-pencil text-warning"></i></a>
+                                <a href="{{ route('admin.pegawai.edit', $staff) }}" class="btn btn-sm btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
                                 <form method="POST" action="{{ route('admin.pegawai.toggle-status', $staff) }}" class="d-inline">
                                     @csrf @method('PATCH')
-                                    <button class="btn btn-light btn-sm" title="{{ $staff->aktif ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                        <i class="bi bi-{{ $staff->aktif ? 'toggle-on text-success' : 'toggle-off text-secondary' }}"></i>
+                                    <button class="btn btn-sm btn-outline-{{ $staff->aktif ? 'success' : 'secondary' }}" title="{{ $staff->aktif ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                        <i class="bi bi-{{ $staff->aktif ? 'toggle-on' : 'toggle-off' }}"></i>
                                     </button>
                                 </form>
                                 <form method="POST" action="{{ route('admin.pegawai.destroy', $staff) }}" class="d-inline">
                                     @csrf @method('DELETE')
-                                    <button class="btn btn-light btn-sm" data-confirm="Hapus staff {{ $staff->nama }}?" title="Hapus"><i class="bi bi-trash text-danger"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus staff {{ $staff->nama }}?" title="Hapus"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
                         </td>

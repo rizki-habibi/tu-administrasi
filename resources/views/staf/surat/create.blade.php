@@ -1,4 +1,4 @@
-@extends('staf.tata-letak.app')
+@extends('peran.staf.app')
 @section('judul', $jenis == 'masuk' ? 'Catat Surat Masuk' : 'Buat Surat Keluar')
 
 @section('konten')

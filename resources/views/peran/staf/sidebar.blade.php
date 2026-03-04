@@ -71,19 +71,19 @@
              Menu Khusus Per Peran
         ═══════════════════════════════════════════ --}}
         @if($userRole === 'kepegawaian')
-            @include('staf.tata-letak.sidebar.menu-kepegawaian')
+            @include('peran.staf.menu.menu-kepegawaian')
         @elseif($userRole === 'pramu_bakti')
-            @include('staf.tata-letak.sidebar.menu-pramu-bakti')
+            @include('peran.staf.menu.menu-pramu-bakti')
         @elseif($userRole === 'keuangan')
-            @include('staf.tata-letak.sidebar.menu-keuangan')
+            @include('peran.staf.menu.menu-keuangan')
         @elseif($userRole === 'persuratan')
-            @include('staf.tata-letak.sidebar.menu-persuratan')
+            @include('peran.staf.menu.menu-persuratan')
         @elseif($userRole === 'perpustakaan')
-            @include('staf.tata-letak.sidebar.menu-perpustakaan')
+            @include('peran.staf.menu.menu-perpustakaan')
         @elseif($userRole === 'inventaris')
-            @include('staf.tata-letak.sidebar.menu-inventaris')
+            @include('peran.staf.menu.menu-inventaris')
         @elseif($userRole === 'kesiswaan_kurikulum')
-            @include('staf.tata-letak.sidebar.menu-kesiswaan-kurikulum')
+            @include('peran.staf.menu.menu-kesiswaan-kurikulum')
         @endif
 
         {{-- ═══════════════════════════════════════════
