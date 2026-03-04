@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Metode STAR')
+@extends('admin.tata-letak.app')
+@section('judul', 'Metode STAR')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Analisis Metode STAR</h4>
@@ -40,7 +40,7 @@
                         <td>{{ $loop->iteration + ($analyses->currentPage()-1)*$analyses->perPage() }}</td>
                         <td class="fw-semibold">{{ $a->judul }}</td>
                         <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($a->kategori ?? '-') }}</span></td>
-                        <td>{{ $a->creator->name ?? 'N/A' }}</td>
+                        <td>{{ $a->creator->nama ?? 'N/A' }}</td>
                         <td>{{ $a->created_at->format('d/m/Y') }}</td>
                         <td><a href="{{ route('admin.evaluasi.star') }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
                     </tr>

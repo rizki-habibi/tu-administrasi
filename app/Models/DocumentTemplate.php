@@ -9,30 +9,32 @@ class DocumentTemplate extends Model
 {
     use HasFactory;
 
+    protected $table = 'template_dokumen';
+
     protected $fillable = [
-        'name', 'code', 'category', 'content', 'fields', 'format', 'is_active', 'created_by',
+        'nama', 'kode', 'kategori', 'konten', 'kolom_isian', 'format', 'aktif', 'dibuat_oleh',
     ];
 
     protected $casts = [
-        'fields' => 'array',
-        'is_active' => 'boolean',
+        'kolom_isian' => 'array',
+        'aktif' => 'boolean',
     ];
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getCategoryLabelAttribute(): string
     {
-        return match ($this->category) {
+        return match ($this->kategori) {
             'akademik' => 'Akademik',
             'kepegawaian' => 'Kepegawaian',
             'kesiswaan' => 'Kesiswaan',
             'sarpras' => 'Sarana & Prasarana',
             'keuangan' => 'Keuangan',
             'akreditasi' => 'Akreditasi',
-            default => ucfirst($this->category),
+            default => ucfirst($this->kategori),
         };
     }
 }

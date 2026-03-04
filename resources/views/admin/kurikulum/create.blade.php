@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Tambah Dokumen Kurikulum')
+@extends('admin.tata-letak.app')
+@section('judul', 'Tambah Dokumen Kurikulum')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.kurikulum.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <div>
@@ -17,26 +17,26 @@
             <div class="row g-3">
                 <div class="col-md-8">
                     <label class="form-label">Judul Dokumen <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" required>
-                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}" required>
+                    @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Jenis Dokumen <span class="text-danger">*</span></label>
-                    <select name="type" class="form-select @error('type') is-invalid @enderror" required>
+                    <select name="type" class="form-select @error('jenis') is-invalid @enderror" required>
                         <option value="">Pilih Jenis</option>
-                        <option value="rpp" {{ old('type')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
-                        <option value="silabus" {{ old('type')=='silabus'?'selected':'' }}>Silabus / ATP</option>
-                        <option value="jadwal" {{ old('type')=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
-                        <option value="kalender" {{ old('type')=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
-                        <option value="kisi_kisi" {{ old('type')=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
-                        <option value="prota" {{ old('type')=='prota'?'selected':'' }}>Prota / Promes</option>
-                        <option value="lainnya" {{ old('type')=='lainnya'?'selected':'' }}>Lainnya</option>
+                        <option value="rpp" {{ old('jenis')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
+                        <option value="silabus" {{ old('jenis')=='silabus'?'selected':'' }}>Silabus / ATP</option>
+                        <option value="jadwal" {{ old('jenis')=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
+                        <option value="kalender" {{ old('jenis')=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
+                        <option value="kisi_kisi" {{ old('jenis')=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
+                        <option value="prota" {{ old('jenis')=='prota'?'selected':'' }}>Prota / Promes</option>
+                        <option value="lainnya" {{ old('jenis')=='lainnya'?'selected':'' }}>Lainnya</option>
                     </select>
-                    @error('type')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    @error('jenis')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('academic_year', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026">
+                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Semester</label>
@@ -56,15 +56,15 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Mata Pelajaran</label>
-                    <input type="text" name="subject" class="form-control" value="{{ old('subject') }}" placeholder="Contoh: Matematika, Bahasa Indonesia">
+                    <input type="text" name="subject" class="form-control" value="{{ old('mata_pelajaran') }}" placeholder="Contoh: Matematika, Bahasa Indonesia">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Kelas / Tingkat</label>
-                    <input type="text" name="class_level" class="form-control" value="{{ old('class_level') }}" placeholder="Contoh: X, XI IPA, XII">
+                    <input type="text" name="class_level" class="form-control" value="{{ old('tingkat_kelas') }}" placeholder="Contoh: X, XI IPA, XII">
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3" placeholder="Keterangan dokumen...">{{ old('description') }}</textarea>
+                    <textarea name="description" class="form-control" rows="3" placeholder="Keterangan dokumen...">{{ old('deskripsi') }}</textarea>
                 </div>
                 <div class="col-12">
                     <label class="form-label">File Dokumen <span class="text-danger">*</span></label>

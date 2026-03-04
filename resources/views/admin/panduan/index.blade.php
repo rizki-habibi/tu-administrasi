@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+@extends('admin.tata-letak.app')
 
-@section('title', 'Panduan Penggunaan')
+@section('judul', 'Panduan Penggunaan')
 
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-light.min.css">
@@ -51,7 +51,7 @@
 </style>
 @endpush
 
-@section('content')
+@section('konten')
 <div class="panduan-header">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div>

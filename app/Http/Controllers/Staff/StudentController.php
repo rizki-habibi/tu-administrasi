@@ -14,7 +14,7 @@ class StudentController extends Controller
 
         if ($request->search) {
             $query->where(function($q) use ($request) {
-                $q->where('name', 'like', "%{$request->search}%")
+                $q->where('nama', 'like', "%{$request->search}%")
                   ->orWhere('nis', 'like', "%{$request->search}%")
                   ->orWhere('nisn', 'like', "%{$request->search}%");
             });
@@ -26,15 +26,15 @@ class StudentController extends Controller
             $query->where('status', $request->status);
         }
 
-        $students = $query->orderBy('class')->orderBy('name')->paginate(20);
+        $students = $query->orderBy('class')->orderBy('nama')->paginate(20);
         $kelasList = StudentRecord::select('class')->distinct()->orderBy('class')->pluck('class');
 
-        return view('staff.kesiswaan.index', compact('students', 'kelasList'));
+        return view('staf.kesiswaan.index', compact('students', 'kelasList'));
     }
 
     public function show(StudentRecord $kesiswaan)
     {
         $kesiswaan->load(['achievements', 'violations']);
-        return view('staff.kesiswaan.show', compact('kesiswaan'));
+        return view('staf.kesiswaan.show', compact('kesiswaan'));
     }
 }

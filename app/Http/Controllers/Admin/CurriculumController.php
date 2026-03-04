@@ -13,16 +13,16 @@ class CurriculumController extends Controller
     {
         $query = CurriculumDocument::with('uploader')->latest();
 
-        if ($request->filled('type')) $query->where('type', $request->type);
-        if ($request->filled('academic_year')) $query->where('academic_year', $request->academic_year);
-        if ($request->filled('search')) $query->where('title', 'like', '%' . $request->search . '%');
+        if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
+        if ($request->filled('tahun_ajaran')) $query->where('tahun_ajaran', $request->tahun_ajaran);
+        if ($request->filled('search')) $query->where('judul', 'like', '%' . $request->search . '%');
 
         $documents = $query->paginate(15)->withQueryString();
 
         $stats = [
             'total' => CurriculumDocument::count(),
-            'rpp' => CurriculumDocument::where('type', 'rpp')->count(),
-            'silabus' => CurriculumDocument::where('type', 'silabus')->count(),
+            'rpp' => CurriculumDocument::where('jenis', 'rpp')->count(),
+            'silabus' => CurriculumDocument::where('jenis', 'silabus')->count(),
             'active' => CurriculumDocument::where('status', 'active')->count(),
         ];
 
@@ -37,32 +37,32 @@ class CurriculumController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|in:kalender_pendidikan,jadwal_pelajaran,rpp,silabus,modul_ajar,kisi_kisi,analisis_butir_soal,berita_acara_ujian,daftar_nilai,rekap_nilai,leger,raport',
-            'academic_year' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'jenis' => 'required|in:kalender_pendidikan,jadwal_pelajaran,rpp,silabus,modul_ajar,kisi_kisi,analisis_butir_soal,berita_acara_ujian,daftar_nilai,rekap_nilai,leger,raport',
+            'tahun_ajaran' => 'required|string',
             'semester' => 'nullable|in:ganjil,genap',
-            'subject' => 'nullable|string|max:255',
-            'class_level' => 'nullable|string|max:10',
+            'mata_pelajaran' => 'nullable|string|max:255',
+            'tingkat_kelas' => 'nullable|string|max:10',
             'file' => 'required|file|max:10240',
         ]);
 
         $file = $request->file('file');
 
         CurriculumDocument::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'type' => $request->type,
-            'academic_year' => $request->academic_year,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'jenis' => $request->jenis,
+            'tahun_ajaran' => $request->tahun_ajaran,
             'semester' => $request->semester,
-            'subject' => $request->subject,
-            'class_level' => $request->class_level,
-            'file_path' => $file->store('kurikulum', 'public'),
-            'file_name' => $file->getClientOriginalName(),
-            'file_type' => $file->getClientOriginalExtension(),
-            'file_size' => $file->getSize(),
+            'mata_pelajaran' => $request->mata_pelajaran,
+            'tingkat_kelas' => $request->tingkat_kelas,
+            'path_file' => $file->store('kurikulum', 'public'),
+            'nama_file' => $file->getClientOriginalName(),
+            'tipe_file' => $file->getClientOriginalExtension(),
+            'ukuran_file' => $file->getSize(),
             'status' => 'active',
-            'uploaded_by' => auth()->id(),
+            'diunggah_oleh' => auth()->id(),
         ]);
 
         return redirect()->route('admin.kurikulum.index')->with('success', 'Dokumen kurikulum berhasil ditambahkan.');
@@ -82,13 +82,13 @@ class CurriculumController extends Controller
     public function update(Request $request, CurriculumDocument $kurikulum)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required',
-            'academic_year' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'jenis' => 'required',
+            'tahun_ajaran' => 'required|string',
             'semester' => 'nullable|in:ganjil,genap',
-            'subject' => 'nullable|string|max:255',
-            'class_level' => 'nullable|string|max:10',
+            'mata_pelajaran' => 'nullable|string|max:255',
+            'tingkat_kelas' => 'nullable|string|max:10',
             'file' => 'nullable|file|max:10240',
             'status' => 'nullable|in:draft,active,archived',
         ]);
@@ -96,12 +96,12 @@ class CurriculumController extends Controller
         $data = $request->except('file');
 
         if ($request->hasFile('file')) {
-            if ($kurikulum->file_path) Storage::disk('public')->delete($kurikulum->file_path);
+            if ($kurikulum->path_file) Storage::disk('public')->delete($kurikulum->path_file);
             $file = $request->file('file');
-            $data['file_path'] = $file->store('kurikulum', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
-            $data['file_type'] = $file->getClientOriginalExtension();
-            $data['file_size'] = $file->getSize();
+            $data['path_file'] = $file->store('kurikulum', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
+            $data['tipe_file'] = $file->getClientOriginalExtension();
+            $data['ukuran_file'] = $file->getSize();
         }
 
         $kurikulum->update($data);
@@ -110,7 +110,7 @@ class CurriculumController extends Controller
 
     public function destroy(CurriculumDocument $kurikulum)
     {
-        if ($kurikulum->file_path) Storage::disk('public')->delete($kurikulum->file_path);
+        if ($kurikulum->path_file) Storage::disk('public')->delete($kurikulum->path_file);
         $kurikulum->delete();
         return redirect()->route('admin.kurikulum.index')->with('success', 'Dokumen kurikulum berhasil dihapus.');
     }

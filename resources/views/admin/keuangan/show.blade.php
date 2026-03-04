@@ -1,13 +1,13 @@
-@extends('layouts.admin')
-@section('title', 'Detail Transaksi Keuangan')
+@extends('admin.tata-letak.app')
+@section('judul', 'Detail Transaksi Keuangan')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.keuangan.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <h4 class="fw-bold mb-0" style="color:#1e293b;">Detail Transaksi</h4>
     <div class="ms-auto">
         @if($keuangan->status == 'draft')
-        <form action="{{ route('admin.keuangan.verify', $keuangan->id) }}" method="POST" class="d-inline">
+        <form action="{{ route('admin.keuangan.verifikasi', $keuangan->id) }}" method="POST" class="d-inline">
             @csrf @method('PATCH')
             <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-check-circle me-1"></i> Verifikasi</button>
         </form>
@@ -41,7 +41,7 @@
                     <tr><td class="text-muted">Kategori</td><td>{{ ucfirst($keuangan->kategori ?? '-') }}</td></tr>
                     <tr><td class="text-muted">Tanggal Transaksi</td><td>{{ $keuangan->tanggal ? \Carbon\Carbon::parse($keuangan->tanggal)->translatedFormat('d F Y') : '-' }}</td></tr>
                     <tr><td class="text-muted">Kode Transaksi</td><td><code>{{ $keuangan->kode_transaksi ?? '-' }}</code></td></tr>
-                    <tr><td class="text-muted">Dicatat Oleh</td><td>{{ $keuangan->creator->name ?? '-' }}</td></tr>
+                    <tr><td class="text-muted">Dicatat Oleh</td><td>{{ $keuangan->creator->nama ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Tanggal Dibuat</td><td>{{ $keuangan->created_at->translatedFormat('d F Y, H:i') }}</td></tr>
                 </table>
             </div>

@@ -6,30 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
+    protected $table = 'notifikasi';
+
     protected $fillable = [
-        'user_id', 'title', 'message', 'type', 'is_read', 'link',
+        'pengguna_id', 'judul', 'pesan', 'jenis', 'sudah_dibaca', 'tautan',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_read' => 'boolean',
+            'sudah_dibaca' => 'boolean',
         ];
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function scopeUnread($query)
     {
-        return $query->where('is_read', false);
+        return $query->where('sudah_dibaca', false);
     }
 
     public function getTypeBadgeAttribute(): string
     {
-        return match ($this->type) {
+        return match ($this->jenis) {
             'kehadiran' => 'success',
             'izin' => 'info',
             'event' => 'primary',

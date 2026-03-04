@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Edit Dokumen Kurikulum')
+@extends('admin.tata-letak.app')
+@section('judul', 'Edit Dokumen Kurikulum')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.kurikulum.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <div>
@@ -16,24 +16,24 @@
             <div class="row g-3">
                 <div class="col-md-8">
                     <label class="form-label">Judul Dokumen <span class="text-danger">*</span></label>
-                    <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title', $kurikulum->title) }}" required>
-                    @error('title')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul', $kurikulum->judul) }}" required>
+                    @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Jenis Dokumen <span class="text-danger">*</span></label>
                     <select name="type" class="form-select" required>
-                        <option value="rpp" {{ old('type',$kurikulum->type)=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
-                        <option value="silabus" {{ old('type',$kurikulum->type)=='silabus'?'selected':'' }}>Silabus / ATP</option>
-                        <option value="jadwal" {{ old('type',$kurikulum->type)=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
-                        <option value="kalender" {{ old('type',$kurikulum->type)=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
-                        <option value="kisi_kisi" {{ old('type',$kurikulum->type)=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
-                        <option value="prota" {{ old('type',$kurikulum->type)=='prota'?'selected':'' }}>Prota / Promes</option>
-                        <option value="lainnya" {{ old('type',$kurikulum->type)=='lainnya'?'selected':'' }}>Lainnya</option>
+                        <option value="rpp" {{ old('jenis',$kurikulum->jenis)=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
+                        <option value="silabus" {{ old('jenis',$kurikulum->jenis)=='silabus'?'selected':'' }}>Silabus / ATP</option>
+                        <option value="jadwal" {{ old('jenis',$kurikulum->jenis)=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
+                        <option value="kalender" {{ old('jenis',$kurikulum->jenis)=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
+                        <option value="kisi_kisi" {{ old('jenis',$kurikulum->jenis)=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
+                        <option value="prota" {{ old('jenis',$kurikulum->jenis)=='prota'?'selected':'' }}>Prota / Promes</option>
+                        <option value="lainnya" {{ old('jenis',$kurikulum->jenis)=='lainnya'?'selected':'' }}>Lainnya</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('academic_year', $kurikulum->academic_year) }}">
+                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', $kurikulum->tahun_ajaran) }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Semester</label>
@@ -53,20 +53,20 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Mata Pelajaran</label>
-                    <input type="text" name="subject" class="form-control" value="{{ old('subject', $kurikulum->subject) }}">
+                    <input type="text" name="subject" class="form-control" value="{{ old('mata_pelajaran', $kurikulum->mata_pelajaran) }}">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Kelas / Tingkat</label>
-                    <input type="text" name="class_level" class="form-control" value="{{ old('class_level', $kurikulum->class_level) }}">
+                    <input type="text" name="class_level" class="form-control" value="{{ old('tingkat_kelas', $kurikulum->tingkat_kelas) }}">
                 </div>
                 <div class="col-12">
                     <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" rows="3">{{ old('description', $kurikulum->description) }}</textarea>
+                    <textarea name="description" class="form-control" rows="3">{{ old('deskripsi', $kurikulum->deskripsi) }}</textarea>
                 </div>
                 <div class="col-12">
                     <label class="form-label">Ganti File (opsional)</label>
                     <input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx">
-                    @if($kurikulum->file_name)<small class="text-muted">File saat ini: {{ $kurikulum->file_name }}</small>@endif
+                    @if($kurikulum->nama_file)<small class="text-muted">File saat ini: {{ $kurikulum->nama_file }}</small>@endif
                 </div>
             </div>
             <hr class="my-4">

@@ -9,30 +9,33 @@ class Attendance extends Model
 {
     use HasFactory;
 
+    protected $table = 'kehadiran';
+
     protected $fillable = [
-        'user_id', 'date', 'clock_in', 'clock_out', 'status',
-        'latitude_in', 'longitude_in', 'latitude_out', 'longitude_out',
-        'photo_in', 'photo_out', 'note',
+        'pengguna_id', 'tanggal', 'jam_masuk', 'jam_pulang', 'status',
+        'lat_masuk', 'lng_masuk', 'alamat_masuk',
+        'lat_pulang', 'lng_pulang', 'alamat_pulang',
+        'foto_masuk', 'foto_pulang', 'catatan',
     ];
 
     protected function casts(): array
     {
         return [
-            'date' => 'date',
+            'tanggal' => 'date',
         ];
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function isLate(): bool
     {
         $setting = AttendanceSetting::first();
-        if (!$setting || !$this->clock_in) return false;
+        if (!$setting || !$this->jam_masuk) return false;
 
-        return $this->clock_in > $setting->clock_in_time;
+        return $this->jam_masuk > $setting->jam_masuk;
     }
 
     public function getStatusBadgeAttribute(): string

@@ -19,7 +19,7 @@ class EvaluasiController extends Controller
     {
         $query = TeacherEvaluation::with('user', 'evaluator')->latest();
         if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
-        if ($request->filled('search')) $query->whereHas('user', fn($q) => $q->where('name', 'like', '%' . $request->search . '%'));
+        if ($request->filled('search')) $query->whereHas('user', fn($q) => $q->where('nama', 'like', '%' . $request->search . '%'));
 
         $evaluations = $query->paginate(15)->withQueryString();
         return view('admin.evaluasi.pkg', compact('evaluations'));
@@ -27,14 +27,14 @@ class EvaluasiController extends Controller
 
     public function pkgCreate()
     {
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
         return view('admin.evaluasi.pkg-create', compact('staffs'));
     }
 
     public function pkgStore(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'pengguna_id' => 'required|exists:pengguna,id',
             'periode' => 'required|string',
             'jenis' => 'required|in:pkg,bkd,skp',
             'nilai' => 'nullable|numeric|min:0|max:100',
@@ -44,12 +44,12 @@ class EvaluasiController extends Controller
         ]);
 
         $data = $request->except('file');
-        $data['evaluated_by'] = auth()->id();
+        $data['dievaluasi_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('evaluasi', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('evaluasi', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         TeacherEvaluation::create($data);
@@ -80,7 +80,7 @@ class EvaluasiController extends Controller
             'deskripsi' => 'nullable|string',
             'kelas' => 'required|string',
             'fase' => 'required|in:E,F',
-            'academic_year' => 'required|string',
+            'tahun_ajaran' => 'required|string',
             'semester' => 'required|in:ganjil,genap',
             'dimensi' => 'required|in:beriman,mandiri,gotong_royong,berkebinekaan,bernalar_kritis,kreatif',
             'target_capaian' => 'nullable|string',
@@ -88,12 +88,12 @@ class EvaluasiController extends Controller
         ]);
 
         $data = $request->except('file');
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('p5', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('p5', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         P5Assessment::create($data);
@@ -120,20 +120,20 @@ class EvaluasiController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'kategori' => 'required|in:pembelajaran,administrasi,manajemen',
-            'situation' => 'required|string',
-            'task' => 'required|string',
-            'action' => 'required|string',
-            'result' => 'required|string',
+            'situasi' => 'required|string',
+            'tugas' => 'required|string',
+            'aksi' => 'required|string',
+            'hasil' => 'required|string',
             'refleksi' => 'nullable|string',
             'tindak_lanjut' => 'nullable|string',
             'file' => 'nullable|file|max:10240',
         ]);
 
         $data = $request->except('file');
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
-            $data['file_path'] = $request->file('file')->store('star', 'public');
+            $data['path_file'] = $request->file('file')->store('star', 'public');
         }
 
         StarAnalysis::create($data);
@@ -167,11 +167,11 @@ class EvaluasiController extends Controller
             'kategori' => $request->kategori,
             'deskripsi' => $request->deskripsi,
             'terkait' => $request->terkait,
-            'file_path' => $file->store('bukti-fisik', 'public'),
-            'file_name' => $file->getClientOriginalName(),
-            'file_type' => $file->getClientOriginalExtension(),
-            'file_size' => $file->getSize(),
-            'uploaded_by' => auth()->id(),
+            'path_file' => $file->store('bukti-fisik', 'public'),
+            'nama_file' => $file->getClientOriginalName(),
+            'tipe_file' => $file->getClientOriginalExtension(),
+            'ukuran_file' => $file->getSize(),
+            'diunggah_oleh' => auth()->id(),
         ]);
 
         return redirect()->route('admin.evaluasi.bukti-fisik')->with('success', 'Bukti fisik berhasil diupload.');
@@ -179,7 +179,7 @@ class EvaluasiController extends Controller
 
     public function buktiFisikDestroy(PhysicalEvidence $evidence)
     {
-        Storage::disk('public')->delete($evidence->file_path);
+        Storage::disk('public')->delete($evidence->path_file);
         $evidence->delete();
         return redirect()->back()->with('success', 'Bukti fisik berhasil dihapus.');
     }
@@ -191,12 +191,12 @@ class EvaluasiController extends Controller
         if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
 
         $methods = $query->paginate(15)->withQueryString();
-        return view('admin.evaluasi.learning', compact('methods'));
+        return view('admin.evaluasi.pembelajaran', compact('methods'));
     }
 
     public function learningCreate()
     {
-        return view('admin.evaluasi.learning-create');
+        return view('admin.evaluasi.pembelajaran-create');
     }
 
     public function learningStore(Request $request)
@@ -214,15 +214,15 @@ class EvaluasiController extends Controller
         ]);
 
         $data = $request->except('file');
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('learning', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('learning', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         LearningMethod::create($data);
-        return redirect()->route('admin.evaluasi.learning')->with('success', 'Metode pembelajaran berhasil ditambahkan.');
+        return redirect()->route('admin.evaluasi.pembelajaran')->with('success', 'Metode pembelajaran berhasil ditambahkan.');
     }
 }

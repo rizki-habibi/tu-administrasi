@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Detail Surat - ' . $surat->nomor_surat)
+@extends('admin.tata-letak.app')
+@section('judul', 'Detail Surat - ' . $surat->nomor_surat)
 
-@section('content')
+@section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h5 class="fw-bold mb-1"><i class="bi bi-envelope-paper text-primary me-2"></i>Detail Surat</h5>
@@ -74,16 +74,16 @@
                 </div>
                 @endif
 
-                @if($surat->file_path)
+                @if($surat->path_file)
                 <div class="border rounded p-3 d-flex align-items-center gap-3">
                     <div class="rounded d-flex align-items-center justify-content-center" style="width:45px;height:45px;background:rgba(239,68,68,.1);">
                         <i class="bi bi-file-earmark-pdf text-danger" style="font-size:1.2rem;"></i>
                     </div>
                     <div class="flex-grow-1">
-                        <div class="fw-semibold" style="font-size:.85rem;">{{ $surat->file_name }}</div>
+                        <div class="fw-semibold" style="font-size:.85rem;">{{ $surat->nama_file }}</div>
                         <small class="text-muted">Lampiran surat</small>
                     </div>
-                    <a href="{{ asset('storage/' . $surat->file_path) }}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-download me-1"></i>Download</a>
+                    <a href="{{ asset('storage/' . $surat->path_file) }}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-download me-1"></i>Download</a>
                 </div>
                 @endif
             </div>
@@ -119,12 +119,12 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between py-3">
                         <span class="text-muted">Dibuat oleh</span>
-                        <span class="fw-semibold">{{ $surat->creator->name ?? '-' }}</span>
+                        <span class="fw-semibold">{{ $surat->creator->nama ?? '-' }}</span>
                     </li>
                     @if($surat->approver)
                     <li class="list-group-item d-flex justify-content-between py-3">
                         <span class="text-muted">Disetujui oleh</span>
-                        <span class="fw-semibold">{{ $surat->approver->name ?? '-' }}</span>
+                        <span class="fw-semibold">{{ $surat->approver->nama ?? '-' }}</span>
                     </li>
                     @endif
                     <li class="list-group-item d-flex justify-content-between py-3">

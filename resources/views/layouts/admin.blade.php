@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Beranda') - TU Admin</title>
+    <title>@yield('judul', 'Beranda') - TU Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -68,10 +68,8 @@
             display: flex; align-items: center; padding: 7px 20px 7px 54px; color: #a5b4fc; font-size: .78rem;
             text-decoration: none; transition: all .2s; gap: 8px;
         }
-        .submenu .sub-link::before { content: ''; width: 16px; height: 2px; border-radius: 2px; background: #6366f1; flex-shrink: 0; }
         .submenu .sub-link:hover { color: #fff; background: rgba(99,102,241,.1); }
         .submenu .sub-link.active { color: #fff; font-weight: 500; }
-        .submenu .sub-link.active::before { background: var(--primary-light); box-shadow: 0 0 6px var(--primary-light); }
 
         .sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.08); }
         .sidebar-footer a { color: #ef4444; font-size: .8rem; text-decoration: none; display: flex; align-items: center; gap: 8px; }
@@ -185,15 +183,15 @@
         </div>
 
         <div class="sidebar-profile">
-            <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
+            <div class="avatar">{{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}</div>
             <div class="info">
-                <div class="name">{{ Auth::user()->name }}</div>
-                <div class="role"><i class="bi bi-shield-check"></i> Administrator</div>
+                <div class="nama">{{ Auth::user()->nama }}</div>
+                <div class="peran"><i class="bi bi-shield-check"></i> Administrator</div>
             </div>
             <div class="status" title="Online"></div>
         </div>
 
-        @php $pendingLeave = \App\Models\LeaveRequest::where('status','pending')->count(); $unreadNotif = \App\Models\Notification::where('is_read', false)->count(); @endphp
+        @php $pendingLeave = \App\Models\LeaveRequest::where('status','pending')->count(); $unreadNotif = \App\Models\Notification::where('sudah_dibaca', false)->count(); @endphp
         <nav class="sidebar-nav">
             <div class="nav-label">Menu Utama</div>
             <div class="nav-item">
@@ -255,9 +253,9 @@
                 <div class="submenu">
                     <a href="{{ route('admin.document.index') }}" class="sub-link {{ request()->routeIs('admin.document.index') ? 'active' : '' }}">Semua Dokumen</a>
                     <a href="{{ route('admin.document.create') }}" class="sub-link {{ request()->routeIs('admin.document.create') ? 'active' : '' }}">Upload Dokumen</a>
-                    <a href="{{ route('admin.document.index', ['category'=>'surat']) }}" class="sub-link">Surat Menyurat</a>
-                    <a href="{{ route('admin.document.index', ['category'=>'keuangan']) }}" class="sub-link">Keuangan</a>
-                    <a href="{{ route('admin.document.index', ['category'=>'kepegawaian']) }}" class="sub-link">Kepegawaian</a>
+                    <a href="{{ route('admin.document.index', ['kategori'=>'surat']) }}" class="sub-link">Surat Menyurat</a>
+                    <a href="{{ route('admin.document.index', ['kategori'=>'keuangan']) }}" class="sub-link">Keuangan</a>
+                    <a href="{{ route('admin.document.index', ['kategori'=>'kepegawaian']) }}" class="sub-link">Kepegawaian</a>
                 </div>
             </div>
             <div class="nav-item {{ request()->routeIs('admin.report.*') ? 'open' : '' }}">
@@ -266,8 +264,8 @@
                 </a>
                 <div class="submenu">
                     <a href="{{ route('admin.report.index') }}" class="sub-link {{ request()->routeIs('admin.report.index') ? 'active' : '' }}">Semua Laporan</a>
-                    <a href="{{ route('admin.report.index', ['category'=>'keuangan']) }}" class="sub-link">Laporan Keuangan</a>
-                    <a href="{{ route('admin.report.index', ['category'=>'inventaris']) }}" class="sub-link">Laporan Inventaris</a>
+                    <a href="{{ route('admin.report.index', ['kategori'=>'keuangan']) }}" class="sub-link">Laporan Keuangan</a>
+                    <a href="{{ route('admin.report.index', ['kategori'=>'inventaris']) }}" class="sub-link">Laporan Inventaris</a>
                 </div>
             </div>
 
@@ -279,10 +277,10 @@
                 <div class="submenu">
                     <a href="{{ route('admin.kurikulum.index') }}" class="sub-link {{ request()->routeIs('admin.kurikulum.index') ? 'active' : '' }}">Semua Dokumen</a>
                     <a href="{{ route('admin.kurikulum.create') }}" class="sub-link {{ request()->routeIs('admin.kurikulum.create') ? 'active' : '' }}">Tambah Dokumen</a>
-                    <a href="{{ route('admin.kurikulum.index', ['type'=>'rpp']) }}" class="sub-link">RPP / Modul Ajar</a>
-                    <a href="{{ route('admin.kurikulum.index', ['type'=>'silabus']) }}" class="sub-link">Silabus / ATP</a>
-                    <a href="{{ route('admin.kurikulum.index', ['type'=>'jadwal']) }}" class="sub-link">Jadwal Pelajaran</a>
-                    <a href="{{ route('admin.kurikulum.index', ['type'=>'kalender']) }}" class="sub-link">Kalender Pendidikan</a>
+                    <a href="{{ route('admin.kurikulum.index', ['jenis'=>'rpp']) }}" class="sub-link">RPP / Modul Ajar</a>
+                    <a href="{{ route('admin.kurikulum.index', ['jenis'=>'silabus']) }}" class="sub-link">Silabus / ATP</a>
+                    <a href="{{ route('admin.kurikulum.index', ['jenis'=>'jadwal']) }}" class="sub-link">Jadwal Pelajaran</a>
+                    <a href="{{ route('admin.kurikulum.index', ['jenis'=>'kalender']) }}" class="sub-link">Kalender Pendidikan</a>
                 </div>
             </div>
             <div class="nav-item {{ request()->routeIs('admin.kesiswaan.*') ? 'open' : '' }}">
@@ -364,7 +362,7 @@
             <div class="nav-item {{ request()->routeIs('admin.reminder.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('admin.reminder.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-bell-fill icon"></i> <span>Pengingat</span>
-                    @php $overdueReminders = \App\Models\Reminder::where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
+                    @php $overdueReminders = \App\Models\Reminder::where('selesai', false)->where('tenggat', '<', now())->count(); @endphp
                     @if($overdueReminders > 0)<span class="badge bg-warning text-dark" style="font-size:.6rem;">{{ $overdueReminders }}</span>@endif
                     <i class="bi bi-chevron-right arrow"></i>
                 </a>
@@ -403,7 +401,7 @@
     <div class="main-content" id="mainContent">
         <header class="top-header">
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
-            <span class="header-title">@yield('title', 'Beranda')</span>
+            <span class="header-title">@yield('judul', 'Beranda')</span>
             <div class="header-right">
                 <span class="header-date d-none d-md-block"><i class="bi bi-calendar3"></i> {{ now()->translatedFormat('d F Y') }}</span>
                 <div class="dropdown" id="notifDropdown">
@@ -428,8 +426,8 @@
                 </div>
                 <div class="dropdown">
                     <button type="button" class="header-profile" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
-                        <span class="name d-none d-md-block">{{ Auth::user()->name }}</span>
+                        <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}</div>
+                        <span class="name d-none d-md-block">{{ Auth::user()->nama }}</span>
                         <i class="bi bi-chevron-down" style="font-size:.65rem;color:#94a3b8;"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -456,7 +454,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
-            @yield('content')
+            @yield('konten')
         </div>
     </div>
 

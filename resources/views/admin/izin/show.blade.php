@@ -1,0 +1,71 @@
+@extends('admin.tata-letak.app')
+@section('judul', 'Detail Pengajuan')
+
+@section('konten')
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr><th width="180">Pengaju</th><td>{{ $leaveRequest->user->nama ?? '-' }}</td></tr>
+                    <tr><th>Jenis</th><td><span class="badge bg-info">{{ ucfirst(str_replace('_',' ',$leaveRequest->jenis)) }}</span></td></tr>
+                    <tr><th>Tanggal</th><td>{{ $leaveRequest->tanggal_mulai->format('d M Y') }} - {{ $leaveRequest->tanggal_selesai->format('d M Y') }}</td></tr>
+                    <tr><th>Durasi</th><td>{{ $leaveRequest->tanggal_mulai->diffInDays($leaveRequest->tanggal_selesai) + 1 }} hari</td></tr>
+                    <tr><th>Alasan</th><td>{{ $leaveRequest->reason }}</td></tr>
+                    <tr><th>Status</th><td>
+                        @switch($leaveRequest->status)
+                            @case('pending')<span class="badge bg-warning">Pending</span>@break
+                            @case('approved')<span class="badge bg-success">Disetujui</span>@break
+                            @case('rejected')<span class="badge bg-danger">Ditolak</span>@break
+                        @endswitch
+                    </td></tr>
+                    @if($leaveRequest->disetujui_oleh)
+                    <tr><th>Diproses Oleh</th><td>{{ $leaveRequest->approver->nama ?? '-' }}</td></tr>
+                    @endif
+                    @if($leaveRequest->catatan_admin)
+                    <tr><th>Catatan Admin</th><td>{{ $leaveRequest->catatan_admin }}</td></tr>
+                    @endif
+                    @if($leaveRequest->lampiran)
+                    <tr>
+                        <th>Lampiran</th>
+                        <td>
+                            @php $ext = pathinfo($leaveRequest->lampiran, PATHINFO_EXTENSION); @endphp
+                            @if(in_array(strtolower($ext), ['jpg','jpeg','png','gif']))
+                                <img src="{{ asset('storage/' . $leaveRequest->lampiran) }}" class="img-fluid rounded mb-2" style="max-height: 200px;"><br>
+                            @endif
+                            <a href="{{ asset('storage/' . $leaveRequest->lampiran) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download"></i> Lihat Lampiran</a>
+                        </td>
+                    </tr>
+                    @endif
+                    <tr><th>Tanggal Pengajuan</th><td>{{ $leaveRequest->created_at->format('d M Y H:i') }}</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        @if($leaveRequest->status === 'pending')
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white"><h6 class="mb-0">Tindakan</h6></div>
+            <div class="card-body">
+                <form action="{{ route('admin.izin.setujui', $leaveRequest) }}" method="POST" class="mb-3">
+                    @csrf @method('PATCH')
+                    <button class="btn btn-success w-100"><i class="bi bi-check-lg"></i> Setujui</button>
+                </form>
+                <form action="{{ route('admin.izin.tolak', $leaveRequest) }}" method="POST">
+                    @csrf @method('PATCH')
+                    <div class="mb-3">
+                        <label class="form-label">Alasan Penolakan</label>
+                        <textarea name="admin_note" class="form-control @error('catatan_admin') is-invalid @enderror" rows="3" required></textarea>
+                        @error('catatan_admin')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <button class="btn btn-danger w-100"><i class="bi bi-x-lg"></i> Tolak</button>
+                </form>
+            </div>
+        </div>
+        @endif
+    </div>
+</div>
+<div class="mt-3">
+    <a href="{{ route('admin.izin.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+@endsection

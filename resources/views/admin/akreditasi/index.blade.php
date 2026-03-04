@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Akreditasi')
+@extends('admin.tata-letak.app')
+@section('judul', 'Akreditasi')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Dokumen Akreditasi</h4>
@@ -86,7 +86,7 @@
                             @elseif($d->status=='lengkap')<span class="badge bg-info">Lengkap</span>
                             @else<span class="badge bg-warning text-dark">Belum Lengkap</span>@endif
                         </td>
-                        <td>@if($d->file_path)<a href="{{ asset('storage/'.$d->file_path) }}" target="_blank"><i class="bi bi-file-earmark-arrow-down text-primary"></i></a>@else - @endif</td>
+                        <td>@if($d->path_file)<a href="{{ asset('storage/'.$d->path_file) }}" target="_blank"><i class="bi bi-file-earmark-arrow-down text-primary"></i></a>@else - @endif</td>
                         <td>{{ $d->created_at->format('d/m/Y') }}</td>
                         <td>
                             <div class="d-flex gap-1">

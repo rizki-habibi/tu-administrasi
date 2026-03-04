@@ -9,19 +9,21 @@ class PhysicalEvidence extends Model
 {
     use HasFactory;
 
+    protected $table = 'bukti_fisik';
+
     protected $fillable = [
-        'judul', 'kategori', 'deskripsi', 'file_path', 'file_name',
-        'file_type', 'file_size', 'terkait', 'uploaded_by',
+        'judul', 'kategori', 'deskripsi', 'path_file', 'nama_file',
+        'tipe_file', 'ukuran_file', 'terkait', 'diunggah_oleh',
     ];
 
     public function uploader()
     {
-        return $this->belongsTo(User::class, 'uploaded_by');
+        return $this->belongsTo(User::class, 'diunggah_oleh');
     }
 
     public function getFileSizeFormattedAttribute(): string
     {
-        $bytes = $this->file_size;
+        $bytes = $this->ukuran_file;
         if (!$bytes) return '-';
         if ($bytes >= 1048576) return round($bytes / 1048576, 2) . ' MB';
         if ($bytes >= 1024) return round($bytes / 1024, 2) . ' KB';

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Tambah Penilaian PKG')
+@extends('admin.tata-letak.app')
+@section('judul', 'Tambah Penilaian PKG')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.evaluasi.pkg') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <h4 class="fw-bold mb-0" style="color:#1e293b;">Tambah Penilaian Kinerja</h4>
@@ -14,13 +14,13 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label">Guru / Staff <span class="text-danger">*</span></label>
-                    <select name="user_id" class="form-select @error('user_id') is-invalid @enderror" required>
+                    <select name="pengguna_id" class="form-select @error('pengguna_id') is-invalid @enderror" required>
                         <option value="">Pilih Guru/Staff</option>
                         @foreach($staffs ?? [] as $s)
-                        <option value="{{ $s->id }}" {{ old('user_id')==$s->id?'selected':'' }}>{{ $s->name }}</option>
+                        <option value="{{ $s->id }}" {{ old('pengguna_id')==$s->id?'selected':'' }}>{{ $s->nama }}</option>
                         @endforeach
                     </select>
-                    @error('user_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    @error('pengguna_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Jenis Penilaian <span class="text-danger">*</span></label>

@@ -15,87 +15,87 @@ class EventController extends Controller
     {
         $query = Event::with('creator');
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
         }
 
         if ($request->filled('month')) {
             $date = \Carbon\Carbon::parse($request->month . '-01');
-            $query->whereYear('event_date', $date->year)
-                  ->whereMonth('event_date', $date->month);
+            $query->whereYear('tanggal_acara', $date->year)
+                  ->whereMonth('tanggal_acara', $date->month);
         }
 
-        $events = $query->orderBy('event_date', 'desc')->paginate(15);
-        return view('admin.event.index', compact('events'));
+        $events = $query->orderBy('tanggal_acara', 'desc')->paginate(15);
+        return view('admin.agenda.index', compact('events'));
     }
 
     public function create()
     {
-        return view('admin.event.create');
+        return view('admin.agenda.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'event_date' => 'required|date',
-            'start_time' => 'nullable',
-            'end_time' => 'nullable',
-            'location' => 'nullable|string|max:255',
-            'type' => 'required|in:rapat,kegiatan,upacara,pelatihan,lainnya',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'tanggal_acara' => 'required|date',
+            'waktu_mulai' => 'nullable',
+            'waktu_selesai' => 'nullable',
+            'lokasi' => 'nullable|string|max:255',
+            'jenis' => 'required|in:rapat,kegiatan,upacara,pelatihan,lainnya',
         ]);
 
         $event = Event::create(array_merge($request->all(), [
-            'created_by' => auth()->id(),
+            'dibuat_oleh' => auth()->id(),
         ]));
 
         // Notify all staff
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
         foreach ($staffs as $staff) {
             Notification::create([
-                'user_id' => $staff->id,
-                'title' => 'Event Baru: ' . $event->title,
-                'message' => "Ada event baru pada {$event->event_date->format('d/m/Y')}: {$event->title}",
-                'type' => 'event',
-                'link' => route('staff.event.show', $event->id),
+                'pengguna_id' => $staff->id,
+                'judul' => 'Event Baru: ' . $event->judul,
+                'pesan' => "Ada event baru pada {$event->tanggal_acara->format('d/m/Y')}: {$event->judul}",
+                'jenis' => 'event',
+                'tautan' => route('staf.agenda.show', $event->id),
             ]);
         }
 
-        return redirect()->route('admin.event.index')->with('success', 'Event berhasil dibuat.');
+        return redirect()->route('admin.agenda.index')->with('success', 'Event berhasil dibuat.');
     }
 
     public function show(Event $event)
     {
         $event->load('creator');
-        return view('admin.event.show', compact('event'));
+        return view('admin.agenda.show', compact('event'));
     }
 
     public function edit(Event $event)
     {
-        return view('admin.event.edit', compact('event'));
+        return view('admin.agenda.edit', compact('event'));
     }
 
     public function update(Request $request, Event $event)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'event_date' => 'required|date',
-            'start_time' => 'nullable',
-            'end_time' => 'nullable',
-            'location' => 'nullable|string|max:255',
-            'type' => 'required|in:rapat,kegiatan,upacara,pelatihan,lainnya',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'tanggal_acara' => 'required|date',
+            'waktu_mulai' => 'nullable',
+            'waktu_selesai' => 'nullable',
+            'lokasi' => 'nullable|string|max:255',
+            'jenis' => 'required|in:rapat,kegiatan,upacara,pelatihan,lainnya',
             'status' => 'required|in:upcoming,ongoing,completed,cancelled',
         ]);
 
         $event->update($request->all());
-        return redirect()->route('admin.event.index')->with('success', 'Event berhasil diperbarui.');
+        return redirect()->route('admin.agenda.index')->with('success', 'Event berhasil diperbarui.');
     }
 
     public function destroy(Event $event)
     {
         $event->delete();
-        return redirect()->route('admin.event.index')->with('success', 'Event berhasil dihapus.');
+        return redirect()->route('admin.agenda.index')->with('success', 'Event berhasil dihapus.');
     }
 }

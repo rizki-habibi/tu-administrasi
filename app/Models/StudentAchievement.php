@@ -9,14 +9,16 @@ class StudentAchievement extends Model
 {
     use HasFactory;
 
+    protected $table = 'prestasi_siswa';
+
     protected $fillable = [
-        'student_id', 'title', 'level', 'type', 'date', 'organizer', 'result', 'file_path',
+        'siswa_id', 'judul', 'tingkat', 'jenis', 'tanggal', 'penyelenggara', 'hasil', 'path_file',
     ];
 
-    protected $casts = ['date' => 'date'];
+    protected $casts = ['tanggal' => 'date'];
 
     public function student()
     {
-        return $this->belongsTo(StudentRecord::class, 'student_id');
+        return $this->belongsTo(StudentRecord::class, 'siswa_id');
     }
 }

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Dokumen Kurikulum')
+@extends('admin.tata-letak.app')
+@section('judul', 'Dokumen Kurikulum')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Dokumen Kurikulum</h4>
@@ -14,10 +14,10 @@
 <div class="row g-3 mb-4">
     @php
         $stats = [
-            ['label' => 'RPP / Modul Ajar', 'count' => $documents->where('type','rpp')->count(), 'bg' => 'linear-gradient(135deg,#6366f1,#818cf8)', 'icon' => 'bi-file-earmark-text'],
-            ['label' => 'Silabus / ATP', 'count' => $documents->where('type','silabus')->count(), 'bg' => 'linear-gradient(135deg,#8b5cf6,#a78bfa)', 'icon' => 'bi-file-earmark-ruled'],
-            ['label' => 'Jadwal Pelajaran', 'count' => $documents->where('type','jadwal')->count(), 'bg' => 'linear-gradient(135deg,#06b6d4,#22d3ee)', 'icon' => 'bi-calendar-week'],
-            ['label' => 'Kalender', 'count' => $documents->where('type','kalender')->count(), 'bg' => 'linear-gradient(135deg,#10b981,#34d399)', 'icon' => 'bi-calendar-event'],
+            ['label' => 'RPP / Modul Ajar', 'count' => $documents->where('jenis','rpp')->count(), 'bg' => 'linear-gradient(135deg,#6366f1,#818cf8)', 'icon' => 'bi-file-earmark-text'],
+            ['label' => 'Silabus / ATP', 'count' => $documents->where('jenis','silabus')->count(), 'bg' => 'linear-gradient(135deg,#8b5cf6,#a78bfa)', 'icon' => 'bi-file-earmark-ruled'],
+            ['label' => 'Jadwal Pelajaran', 'count' => $documents->where('jenis','jadwal')->count(), 'bg' => 'linear-gradient(135deg,#06b6d4,#22d3ee)', 'icon' => 'bi-calendar-week'],
+            ['label' => 'Kalender', 'count' => $documents->where('jenis','kalender')->count(), 'bg' => 'linear-gradient(135deg,#10b981,#34d399)', 'icon' => 'bi-calendar-event'],
         ];
     @endphp
     @foreach($stats as $s)
@@ -43,13 +43,13 @@
             <div class="col-md-3">
                 <select name="type" class="form-select">
                     <option value="">Semua Jenis</option>
-                    <option value="rpp" {{ request('type')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
-                    <option value="silabus" {{ request('type')=='silabus'?'selected':'' }}>Silabus / ATP</option>
-                    <option value="jadwal" {{ request('type')=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
-                    <option value="kalender" {{ request('type')=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
-                    <option value="kisi_kisi" {{ request('type')=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
-                    <option value="prota" {{ request('type')=='prota'?'selected':'' }}>Prota / Promes</option>
-                    <option value="lainnya" {{ request('type')=='lainnya'?'selected':'' }}>Lainnya</option>
+                    <option value="rpp" {{ request('jenis')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
+                    <option value="silabus" {{ request('jenis')=='silabus'?'selected':'' }}>Silabus / ATP</option>
+                    <option value="jadwal" {{ request('jenis')=='jadwal'?'selected':'' }}>Jadwal Pelajaran</option>
+                    <option value="kalender" {{ request('jenis')=='kalender'?'selected':'' }}>Kalender Pendidikan</option>
+                    <option value="kisi_kisi" {{ request('jenis')=='kisi_kisi'?'selected':'' }}>Kisi-kisi</option>
+                    <option value="prota" {{ request('jenis')=='prota'?'selected':'' }}>Prota / Promes</option>
+                    <option value="lainnya" {{ request('jenis')=='lainnya'?'selected':'' }}>Lainnya</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -90,12 +90,12 @@
                     <tr>
                         <td>{{ $loop->iteration + ($documents->currentPage()-1) * $documents->perPage() }}</td>
                         <td>
-                            <div class="fw-semibold">{{ $doc->title }}</div>
-                            @if($doc->file_name)<small class="text-muted"><i class="bi bi-paperclip"></i> {{ $doc->file_name }}</small>@endif
+                            <div class="fw-semibold">{{ $doc->judul }}</div>
+                            @if($doc->nama_file)<small class="text-muted"><i class="bi bi-paperclip"></i> {{ $doc->nama_file }}</small>@endif
                         </td>
-                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ strtoupper(str_replace('_',' ',$doc->type)) }}</span></td>
-                        <td>{{ $doc->subject ?? '-' }}</td>
-                        <td>{{ $doc->class_level ?? '-' }}</td>
+                        <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ strtoupper(str_replace('_',' ',$doc->jenis)) }}</span></td>
+                        <td>{{ $doc->mata_pelajaran ?? '-' }}</td>
+                        <td>{{ $doc->tingkat_kelas ?? '-' }}</td>
                         <td>{!! $doc->status_badge !!}</td>
                         <td>{{ $doc->created_at->format('d/m/Y') }}</td>
                         <td>

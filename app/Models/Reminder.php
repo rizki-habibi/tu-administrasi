@@ -9,48 +9,50 @@ class Reminder extends Model
 {
     use HasFactory;
 
+    protected $table = 'pengingat';
+
     protected $fillable = [
-        'title', 'description', 'type', 'due_date', 'reminder_time',
-        'is_recurring', 'recurring_type', 'user_id', 'created_by',
-        'is_completed', 'is_notified',
+        'judul', 'deskripsi', 'jenis', 'tenggat', 'waktu_pengingat',
+        'berulang', 'jenis_pengulangan', 'pengguna_id', 'dibuat_oleh',
+        'selesai', 'sudah_diberitahu',
     ];
 
     protected $casts = [
-        'due_date' => 'date',
-        'is_recurring' => 'boolean',
-        'is_completed' => 'boolean',
-        'is_notified' => 'boolean',
+        'tenggat' => 'date',
+        'berulang' => 'boolean',
+        'selesai' => 'boolean',
+        'sudah_diberitahu' => 'boolean',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return match ($this->type) {
+        return match ($this->jenis) {
             'deadline_laporan' => 'Deadline Laporan',
             'bkd' => 'Pengumpulan BKD',
             'evaluasi_semester' => 'Evaluasi Semester',
             'tugas' => 'Tugas',
             'lainnya' => 'Lainnya',
-            default => ucfirst(str_replace('_', ' ', $this->type)),
+            default => ucfirst(str_replace('_', ' ', $this->jenis)),
         };
     }
 
     public function scopeUpcoming($query)
     {
-        return $query->where('due_date', '>=', today())->where('is_completed', false);
+        return $query->where('tenggat', '>=', today())->where('selesai', false);
     }
 
     public function scopeOverdue($query)
     {
-        return $query->where('due_date', '<', today())->where('is_completed', false);
+        return $query->where('tenggat', '<', today())->where('selesai', false);
     }
 }

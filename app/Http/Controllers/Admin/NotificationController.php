@@ -13,30 +13,30 @@ class NotificationController extends Controller
     {
         $query = Notification::with('user');
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
         }
 
         $notifications = $query->latest()->paginate(20);
-        return view('admin.notification.index', compact('notifications'));
+        return view('admin.notifikasi.index', compact('notifications'));
     }
 
     public function json()
     {
-        $notifications = Notification::where('is_read', false)
+        $notifications = Notification::where('sudah_dibaca', false)
             ->latest()
             ->take(10)
-            ->get(['id', 'title', 'message', 'type', 'user_id', 'is_read', 'created_at']);
+            ->get(['id', 'judul', 'pesan', 'jenis', 'pengguna_id', 'sudah_dibaca', 'created_at']);
 
-        $unreadCount = Notification::where('is_read', false)->count();
+        $unreadCount = Notification::where('sudah_dibaca', false)->count();
 
         return response()->json([
             'notifications' => $notifications->map(function ($n) {
                 return [
                     'id' => $n->id,
-                    'title' => $n->title,
-                    'message' => \Str::limit($n->message, 60),
-                    'type' => $n->type,
+                    'judul' => $n->judul,
+                    'pesan' => \Str::limit($n->pesan, 60),
+                    'jenis' => $n->jenis,
                     'time' => $n->created_at->diffForHumans(),
                 ];
             }),
@@ -46,36 +46,36 @@ class NotificationController extends Controller
 
     public function create()
     {
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
-        return view('admin.notification.create', compact('staffs'));
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
+        return view('admin.notifikasi.create', compact('staffs'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'message' => 'required|string',
-            'type' => 'required|in:kehadiran,izin,event,laporan,sistem,pengumuman',
+            'judul' => 'required|string|max:255',
+            'pesan' => 'required|string',
+            'jenis' => 'required|in:kehadiran,izin,event,laporan,sistem,pengumuman',
             'target' => 'required|in:all,specific',
             'user_ids' => 'required_if:target,specific|array',
         ]);
 
         if ($request->target === 'all') {
-            $users = User::where('role', 'staff')->where('is_active', true)->get();
+            $users = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
         } else {
             $users = User::whereIn('id', $request->user_ids)->get();
         }
 
         foreach ($users as $user) {
             Notification::create([
-                'user_id' => $user->id,
-                'title' => $request->title,
-                'message' => $request->message,
-                'type' => $request->type,
+                'pengguna_id' => $user->id,
+                'judul' => $request->judul,
+                'pesan' => $request->pesan,
+                'jenis' => $request->jenis,
             ]);
         }
 
-        return redirect()->route('admin.notification.index')->with('success', 'Notifikasi berhasil dikirim ke ' . $users->count() . ' staff.');
+        return redirect()->route('admin.notifikasi.index')->with('success', 'Notifikasi berhasil dikirim ke ' . $users->count() . ' staff.');
     }
 
     public function destroy(Notification $notification)

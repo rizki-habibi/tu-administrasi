@@ -9,19 +9,21 @@ class StudentViolation extends Model
 {
     use HasFactory;
 
+    protected $table = 'pelanggaran_siswa';
+
     protected $fillable = [
-        'student_id', 'date', 'type', 'description', 'action_taken', 'reported_by',
+        'siswa_id', 'tanggal', 'jenis', 'deskripsi', 'tindakan', 'dilaporkan_oleh',
     ];
 
-    protected $casts = ['date' => 'date'];
+    protected $casts = ['tanggal' => 'date'];
 
     public function student()
     {
-        return $this->belongsTo(StudentRecord::class, 'student_id');
+        return $this->belongsTo(StudentRecord::class, 'siswa_id');
     }
 
     public function reporter()
     {
-        return $this->belongsTo(User::class, 'reported_by');
+        return $this->belongsTo(User::class, 'dilaporkan_oleh');
     }
 }

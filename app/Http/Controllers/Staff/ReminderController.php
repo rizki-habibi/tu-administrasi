@@ -10,31 +10,31 @@ class ReminderController extends Controller
 {
     public function index()
     {
-        $activeReminders = Reminder::where('user_id', auth()->id())
-            ->where('is_completed', false)
-            ->orderBy('due_date')
+        $activeReminders = Reminder::where('pengguna_id', auth()->id())
+            ->where('selesai', false)
+            ->orderBy('tenggat')
             ->get();
 
-        $completedReminders = Reminder::where('user_id', auth()->id())
-            ->where('is_completed', true)
+        $completedReminders = Reminder::where('pengguna_id', auth()->id())
+            ->where('selesai', true)
             ->latest()
             ->take(10)
             ->get();
 
-        $overdueCount = $activeReminders->filter(fn($r) => $r->due_date->isPast())->count();
+        $overdueCount = $activeReminders->filter(fn($r) => $r->tenggat->isPast())->count();
         $activeCount = $activeReminders->count();
-        $completedCount = Reminder::where('user_id', auth()->id())->where('is_completed', true)->count();
+        $completedCount = Reminder::where('pengguna_id', auth()->id())->where('selesai', true)->count();
 
-        return view('staff.reminder.index', compact('activeReminders', 'completedReminders', 'overdueCount', 'activeCount', 'completedCount'));
+        return view('staf.pengingat.index', compact('activeReminders', 'completedReminders', 'overdueCount', 'activeCount', 'completedCount'));
     }
 
     public function markComplete(Reminder $reminder)
     {
-        if ($reminder->user_id != auth()->id()) {
+        if ($reminder->pengguna_id != auth()->id()) {
             return back()->with('error', 'Anda tidak memiliki akses.');
         }
 
-        $reminder->update(['is_completed' => true]);
+        $reminder->update(['selesai' => true]);
         return back()->with('success', 'Pengingat ditandai selesai.');
     }
 }

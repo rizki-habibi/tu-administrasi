@@ -21,18 +21,18 @@ class SuratController extends Controller
         // Staff can see all non-draft letters, plus their own drafts
         $query->where(function ($q) {
             $q->where('status', '!=', 'draft')
-              ->orWhere('created_by', auth()->id());
+              ->orWhere('dibuat_oleh', auth()->id());
         });
 
         $surats = $query->paginate(15)->withQueryString();
 
-        return view('staff.surat.index', compact('surats'));
+        return view('staf.surat.index', compact('surats'));
     }
 
     public function create(Request $request)
     {
         $jenis = $request->get('jenis', 'keluar');
-        return view('staff.surat.create', compact('jenis'));
+        return view('staf.surat.create', compact('jenis'));
     }
 
     public function store(Request $request)
@@ -54,22 +54,22 @@ class SuratController extends Controller
         $data = $request->only(['jenis', 'kategori', 'perihal', 'isi', 'tujuan', 'asal', 'tanggal_surat', 'tanggal_terima', 'sifat', 'catatan']);
         $data['nomor_surat'] = Surat::generateNomor($request->jenis, $request->kategori);
         $data['status'] = 'draft';
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('surat', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('surat', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         $surat = Surat::create($data);
 
-        return redirect()->route('staff.surat.show', $surat)->with('success', 'Surat berhasil dibuat. Menunggu persetujuan admin.');
+        return redirect()->route('staf.surat.show', $surat)->with('success', 'Surat berhasil dibuat. Menunggu persetujuan admin.');
     }
 
     public function show(Surat $surat)
     {
         $surat->load('creator', 'approver');
-        return view('staff.surat.show', compact('surat'));
+        return view('staf.surat.show', compact('surat'));
     }
 }

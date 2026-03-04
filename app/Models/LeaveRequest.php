@@ -9,27 +9,29 @@ class LeaveRequest extends Model
 {
     use HasFactory;
 
+    protected $table = 'pengajuan_izin';
+
     protected $fillable = [
-        'user_id', 'type', 'start_date', 'end_date',
-        'reason', 'attachment', 'status', 'approved_by', 'admin_note',
+        'pengguna_id', 'jenis', 'tanggal_mulai', 'tanggal_selesai',
+        'reason', 'lampiran', 'status', 'disetujui_oleh', 'catatan_admin',
     ];
 
     protected function casts(): array
     {
         return [
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'tanggal_mulai' => 'date',
+            'tanggal_selesai' => 'date',
         ];
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function approver()
     {
-        return $this->belongsTo(User::class, 'approved_by');
+        return $this->belongsTo(User::class, 'disetujui_oleh');
     }
 
     public function getStatusBadgeAttribute(): string
@@ -44,6 +46,6 @@ class LeaveRequest extends Model
 
     public function getDurationAttribute(): int
     {
-        return $this->start_date->diffInDays($this->end_date) + 1;
+        return $this->tanggal_mulai->diffInDays($this->tanggal_selesai) + 1;
     }
 }

@@ -9,17 +9,17 @@ class P5Assessment extends Model
 {
     use HasFactory;
 
-    protected $table = 'p5_assessments';
+    protected $table = 'penilaian_p5';
 
     protected $fillable = [
         'tema', 'judul_projek', 'deskripsi', 'kelas', 'fase',
-        'academic_year', 'semester', 'dimensi', 'target_capaian',
-        'file_path', 'file_name', 'status', 'created_by',
+        'tahun_ajaran', 'semester', 'dimensi', 'target_capaian',
+        'path_file', 'nama_file', 'status', 'dibuat_oleh',
     ];
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getDimensiLabelAttribute(): string

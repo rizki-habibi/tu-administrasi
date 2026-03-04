@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Detail Dokumen Akreditasi')
+@extends('admin.tata-letak.app')
+@section('judul', 'Detail Dokumen Akreditasi')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.akreditasi.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <h4 class="fw-bold mb-0" style="color:#1e293b;">Detail Dokumen Akreditasi</h4>
@@ -45,7 +45,7 @@
                         <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Belum Lengkap</span>
                         @endif
                     </td></tr>
-                    <tr><td class="text-muted">Diunggah Oleh</td><td>{{ $akreditasi->uploader->name ?? '-' }}</td></tr>
+                    <tr><td class="text-muted">Diunggah Oleh</td><td>{{ $akreditasi->uploader->nama ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Tanggal Unggah</td><td>{{ $akreditasi->created_at->translatedFormat('d F Y, H:i') }}</td></tr>
                 </table>
                 @if($akreditasi->deskripsi)
@@ -66,11 +66,11 @@
                 <h6 class="mb-0"><i class="bi bi-file-earmark me-1"></i> File Dokumen</h6>
             </div>
             <div class="card-body">
-                @if($akreditasi->file_path)
+                @if($akreditasi->path_file)
                 <div class="text-center">
                     <i class="bi bi-file-earmark-pdf" style="font-size:3rem; color:#dc3545;"></i>
-                    <p class="mt-2 mb-2 text-muted small">{{ $akreditasi->file_name }}</p>
-                    <a href="{{ asset('storage/'.$akreditasi->file_path) }}" class="btn btn-outline-primary w-100" target="_blank">
+                    <p class="mt-2 mb-2 text-muted small">{{ $akreditasi->nama_file }}</p>
+                    <a href="{{ asset('storage/'.$akreditasi->path_file) }}" class="btn btn-outline-primary w-100" target="_blank">
                         <i class="bi bi-download me-1"></i> Unduh
                     </a>
                 </div>

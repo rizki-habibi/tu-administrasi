@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AttendanceSetting extends Model
 {
+    protected $table = 'pengaturan_kehadiran';
+
     protected $fillable = [
-        'clock_in_time', 'clock_out_time', 'late_tolerance_minutes',
-        'office_latitude', 'office_longitude', 'max_distance_meters',
+        'jam_masuk', 'jam_pulang', 'toleransi_terlambat_menit',
+        'lat_kantor', 'lng_kantor', 'jarak_maksimal_meter',
     ];
 }

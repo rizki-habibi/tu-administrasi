@@ -9,15 +9,17 @@ class LearningMethod extends Model
 {
     use HasFactory;
 
+    protected $table = 'metode_pembelajaran';
+
     protected $fillable = [
         'nama_metode', 'jenis', 'deskripsi', 'langkah_pelaksanaan',
         'kelebihan', 'kekurangan', 'hasil', 'mata_pelajaran',
-        'file_path', 'file_name', 'status', 'created_by',
+        'path_file', 'nama_file', 'status', 'dibuat_oleh',
     ];
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getJenisLabelAttribute(): string

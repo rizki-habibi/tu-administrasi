@@ -9,14 +9,16 @@ class Report extends Model
 {
     use HasFactory;
 
+    protected $table = 'laporan';
+
     protected $fillable = [
-        'user_id', 'title', 'description', 'category',
-        'priority', 'status', 'attachment',
+        'pengguna_id', 'judul', 'deskripsi', 'kategori',
+        'prioritas', 'status', 'lampiran',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function getStatusBadgeAttribute(): string
@@ -32,14 +34,14 @@ class Report extends Model
 
     public function getCategoryLabelAttribute(): string
     {
-        return match ($this->category) {
+        return match ($this->kategori) {
             'surat_masuk' => 'Surat Masuk',
             'surat_keluar' => 'Surat Keluar',
             'inventaris' => 'Inventaris',
             'keuangan' => 'Keuangan',
             'kegiatan' => 'Kegiatan',
             'lainnya' => 'Lainnya',
-            default => $this->category,
+            default => $this->kategori,
         };
     }
 }

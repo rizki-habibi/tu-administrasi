@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Beranda') - TU Staff</title>
+    <title>@yield('judul', 'Beranda') - TU Staff</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -70,10 +70,8 @@
             display: flex; align-items: center; padding: 7px 20px 7px 54px; color: #64748b; font-size: .78rem;
             text-decoration: none; transition: all .2s; gap: 8px;
         }
-        .submenu .sub-link::before { content: ''; width: 16px; height: 2px; border-radius: 2px; background: #475569; flex-shrink: 0; }
         .submenu .sub-link:hover { color: #e2e8f0; background: rgba(99,102,241,.08); }
         .submenu .sub-link.active { color: #fff; font-weight: 500; }
-        .submenu .sub-link.active::before { background: var(--primary-light); box-shadow: 0 0 6px var(--primary-light); }
 
         .sidebar-footer { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,.06); }
         .sidebar-footer a { color: #ef4444; font-size: .8rem; text-decoration: none; display: flex; align-items: center; gap: 8px; }
@@ -162,20 +160,23 @@
         </div>
         <div class="sidebar-profile">
             <div class="avatar">
-                @if(Auth::user()->photo)
-                    <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="">
+                @if(Auth::user()->foto)
+                    <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="">
                 @else
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    {{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}
                 @endif
             </div>
             <div class="info">
-                <div class="name">{{ Auth::user()->name }}</div>
-                <div class="role"><i class="bi bi-person-badge"></i> {{ Auth::user()->position ?? 'Staff TU' }}</div>
+                <div class="nama">{{ Auth::user()->nama }}</div>
+                <div class="peran"><i class="bi bi-person-badge"></i> {{ Auth::user()->role_label }}</div>
             </div>
             <div class="status" title="Online"></div>
         </div>
 
-        @php $unread = Auth::user()->notifications()->where('is_read', false)->count(); @endphp
+        @php
+            $unread = Auth::user()->notifications()->where('sudah_dibaca', false)->count();
+            $userRole = Auth::user()->peran;
+        @endphp
         <nav class="sidebar-nav">
             <div class="nav-label">Menu Utama</div>
             <div class="nav-item">
@@ -204,16 +205,120 @@
                 </div>
             </div>
 
-            <div class="nav-label">Administrasi</div>
+            {{-- ======== ROLE-SPECIFIC MENUS ======== --}}
+
+            @if($userRole === 'kepegawaian')
+            <div class="nav-label">Kepegawaian</div>
+            <div class="nav-item {{ request()->routeIs('staff.skp.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.skp.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-person-lines-fill icon"></i> <span>SKP</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.skp.index') }}" class="sub-link {{ request()->routeIs('staff.skp.index') ? 'active' : '' }}">SKP Saya</a>
+                    <a href="{{ route('staff.skp.create') }}" class="sub-link {{ request()->routeIs('staff.skp.create') ? 'active' : '' }}">Buat SKP</a>
+                </div>
+            </div>
+            @endif
+
+            @if($userRole === 'keuangan')
+            <div class="nav-label">Keuangan</div>
+            <div class="nav-item {{ request()->routeIs('staff.keuangan.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.keuangan.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-cash-coin icon"></i> <span>Keuangan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.report.index', ['kategori' => 'keuangan']) }}" class="sub-link">Laporan Keuangan</a>
+                    <a href="{{ route('staff.document.index', ['kategori' => 'keuangan']) }}" class="sub-link">Dokumen Keuangan</a>
+                </div>
+            </div>
+            @endif
+
+            @if(in_array($userRole, ['persuratan']))
+            <div class="nav-label">Persuratan</div>
             <div class="nav-item {{ request()->routeIs('staff.surat.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.surat.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-envelope-paper-fill icon"></i> <span>Surat Menyurat</span> <i class="bi bi-chevron-right arrow"></i>
                 </a>
                 <div class="submenu">
                     <a href="{{ route('staff.surat.index') }}" class="sub-link {{ request()->routeIs('staff.surat.index') ? 'active' : '' }}">Semua Surat</a>
+                    <a href="{{ route('staff.surat.index', ['jenis'=>'masuk']) }}" class="sub-link">Surat Masuk</a>
+                    <a href="{{ route('staff.surat.index', ['jenis'=>'keluar']) }}" class="sub-link">Surat Keluar</a>
                     <a href="{{ route('staff.surat.create', ['jenis'=>'keluar']) }}" class="sub-link {{ request()->routeIs('staff.surat.create') ? 'active' : '' }}">Buat Surat</a>
                 </div>
             </div>
+            @endif
+
+            @if($userRole === 'perpustakaan')
+            <div class="nav-label">Perpustakaan</div>
+            <div class="nav-item {{ request()->routeIs('staff.document.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.document.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-book-half icon"></i> <span>Perpustakaan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.document.index') }}" class="sub-link {{ request()->routeIs('staff.document.index') ? 'active' : '' }}">Koleksi Buku</a>
+                    <a href="{{ route('staff.report.index') }}" class="sub-link">Laporan Perpustakaan</a>
+                </div>
+            </div>
+            @endif
+
+            @if($userRole === 'inventaris')
+            <div class="nav-label">Inventaris / Sarpras</div>
+            <div class="nav-item {{ request()->routeIs('staff.inventaris.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.inventaris.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-box-seam-fill icon"></i> <span>Inventaris</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.inventaris.index') }}" class="sub-link {{ request()->routeIs('staff.inventaris.index') ? 'active' : '' }}">Daftar Inventaris</a>
+                    <a href="{{ route('staff.report.index', ['kategori' => 'inventaris']) }}" class="sub-link">Laporan Inventaris</a>
+                </div>
+            </div>
+            @endif
+
+            @if($userRole === 'kesiswaan_kurikulum')
+            <div class="nav-label">Kesiswaan & Kurikulum</div>
+            <div class="nav-item {{ request()->routeIs('staff.kesiswaan.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.kesiswaan.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-mortarboard-fill icon"></i> <span>Kesiswaan</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.kesiswaan.index') }}" class="sub-link {{ request()->routeIs('staff.kesiswaan.index') ? 'active' : '' }}">Data Siswa</a>
+                </div>
+            </div>
+            <div class="nav-item {{ request()->routeIs('staff.kurikulum.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.kurikulum.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-book-half icon"></i> <span>Kurikulum</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.kurikulum.index') }}" class="sub-link {{ request()->routeIs('staff.kurikulum.index') ? 'active' : '' }}">Dokumen Kurikulum</a>
+                </div>
+            </div>
+            @endif
+
+            @if($userRole === 'pramu_bakti')
+            <div class="nav-label">Pramu Bakti</div>
+            <div class="nav-item">
+                <a href="{{ route('staff.report.index') }}" class="nav-link {{ request()->routeIs('staff.report.*') ? 'active' : '' }}">
+                    <i class="bi bi-journal-text icon"></i> <span>Laporan Kerja</span>
+                </a>
+            </div>
+            @endif
+
+            {{-- ======== COMMON MENUS (ALL ROLES) ======== --}}
+
+            @if(!in_array($userRole, ['persuratan']))
+            <div class="nav-label">Administrasi</div>
+            <div class="nav-item {{ request()->routeIs('staff.surat.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.surat.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-envelope-paper-fill icon"></i> <span>Surat</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.surat.index') }}" class="sub-link {{ request()->routeIs('staff.surat.index') ? 'active' : '' }}">Semua Surat</a>
+                    <a href="{{ route('staff.surat.create', ['jenis'=>'keluar']) }}" class="sub-link {{ request()->routeIs('staff.surat.create') ? 'active' : '' }}">Buat Surat</a>
+                </div>
+            </div>
+            @endif
+
+            @if(!in_array($userRole, ['pramu_bakti']))
             <div class="nav-item {{ request()->routeIs('staff.report.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.report.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-journal-text icon"></i> <span>Laporan</span> <i class="bi bi-chevron-right arrow"></i>
@@ -223,91 +328,67 @@
                     <a href="{{ route('staff.report.create') }}" class="sub-link {{ request()->routeIs('staff.report.create') ? 'active' : '' }}">Buat Laporan</a>
                 </div>
             </div>
-            <div class="nav-item {{ request()->routeIs('staff.document.*') ? 'open' : '' }}">
+            @endif
+
+            <div class="nav-item {{ request()->routeIs('staff.document.*') && $userRole !== 'perpustakaan' ? 'open' : '' }}">
+                @if($userRole !== 'perpustakaan')
                 <a class="nav-link {{ request()->routeIs('staff.document.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-archive-fill icon"></i> <span>Dokumen & Arsip</span> <i class="bi bi-chevron-right arrow"></i>
                 </a>
                 <div class="submenu">
                     <a href="{{ route('staff.document.index') }}" class="sub-link {{ request()->routeIs('staff.document.index') ? 'active' : '' }}">Semua Dokumen</a>
-                    <a href="{{ route('staff.document.index', ['category' => 'surat']) }}" class="sub-link">Surat Menyurat</a>
-                    <a href="{{ route('staff.document.index', ['category' => 'administrasi']) }}" class="sub-link">Administrasi</a>
                 </div>
+                @endif
             </div>
 
-            <div class="nav-label">Akademik & Data</div>
-            <div class="nav-item {{ request()->routeIs('staff.kurikulum.*') ? 'open' : '' }}">
-                <a class="nav-link {{ request()->routeIs('staff.kurikulum.*') ? 'active' : '' }}" data-toggle="submenu">
-                    <i class="bi bi-book-half icon"></i> <span>Kurikulum</span> <i class="bi bi-chevron-right arrow"></i>
+            {{-- SKP for all roles --}}
+            <div class="nav-label">Kinerja</div>
+            @if($userRole !== 'kepegawaian')
+            <div class="nav-item {{ request()->routeIs('staff.skp.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.skp.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-person-lines-fill icon"></i> <span>SKP</span> <i class="bi bi-chevron-right arrow"></i>
                 </a>
                 <div class="submenu">
-                    <a href="{{ route('staff.kurikulum.index') }}" class="sub-link {{ request()->routeIs('staff.kurikulum.index') ? 'active' : '' }}">Dokumen Kurikulum</a>
+                    <a href="{{ route('staff.skp.index') }}" class="sub-link {{ request()->routeIs('staff.skp.index') ? 'active' : '' }}">SKP Saya</a>
+                    <a href="{{ route('staff.skp.create') }}" class="sub-link {{ request()->routeIs('staff.skp.create') ? 'active' : '' }}">Buat SKP</a>
                 </div>
             </div>
-            <div class="nav-item {{ request()->routeIs('staff.kesiswaan.*') ? 'open' : '' }}">
-                <a class="nav-link {{ request()->routeIs('staff.kesiswaan.*') ? 'active' : '' }}" data-toggle="submenu">
-                    <i class="bi bi-mortarboard-fill icon"></i> <span>Kesiswaan</span> <i class="bi bi-chevron-right arrow"></i>
-                </a>
-                <div class="submenu">
-                    <a href="{{ route('staff.kesiswaan.index') }}" class="sub-link {{ request()->routeIs('staff.kesiswaan.index') ? 'active' : '' }}">Data Siswa</a>
-                </div>
-            </div>
-            <div class="nav-item {{ request()->routeIs('staff.inventaris.*') ? 'open' : '' }}">
-                <a class="nav-link {{ request()->routeIs('staff.inventaris.*') ? 'active' : '' }}" data-toggle="submenu">
-                    <i class="bi bi-box-seam-fill icon"></i> <span>Inventaris</span> <i class="bi bi-chevron-right arrow"></i>
-                </a>
-                <div class="submenu">
-                    <a href="{{ route('staff.inventaris.index') }}" class="sub-link {{ request()->routeIs('staff.inventaris.index') ? 'active' : '' }}">Daftar Inventaris</a>
-                </div>
-            </div>
+            @endif
 
-            <div class="nav-label">Evaluasi & Penilaian</div>
             <div class="nav-item {{ request()->routeIs('staff.evaluasi.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.evaluasi.*') ? 'active' : '' }}" data-toggle="submenu">
                     <i class="bi bi-clipboard2-data-fill icon"></i> <span>Evaluasi</span> <i class="bi bi-chevron-right arrow"></i>
                 </a>
                 <div class="submenu">
-                    <a href="{{ route('staff.evaluasi.pkg') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.pkg*') ? 'active' : '' }}">PKG / BKD Saya</a>
-                    <a href="{{ route('staff.evaluasi.p5') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.p5*') ? 'active' : '' }}">Asesmen P5</a>
+                    <a href="{{ route('staff.evaluasi.pkg') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.pkg*') ? 'active' : '' }}">PKG / BKD</a>
                     <a href="{{ route('staff.evaluasi.star') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.star*') ? 'active' : '' }}">Metode STAR</a>
                     <a href="{{ route('staff.evaluasi.bukti-fisik') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.bukti-fisik*') ? 'active' : '' }}">Bukti Fisik</a>
-                    <a href="{{ route('staff.evaluasi.learning') }}" class="sub-link {{ request()->routeIs('staff.evaluasi.learning*') ? 'active' : '' }}">Model Pembelajaran</a>
                 </div>
             </div>
 
-            <div class="nav-label">Kegiatan</div>
+            <div class="nav-label">Lainnya</div>
+            <div class="nav-item {{ request()->routeIs('staff.word.*') ? 'open' : '' }}">
+                <a class="nav-link {{ request()->routeIs('staff.word.*') ? 'active' : '' }}" data-toggle="submenu">
+                    <i class="bi bi-file-earmark-word-fill icon"></i> <span>Word & AI</span> <i class="bi bi-chevron-right arrow"></i>
+                </a>
+                <div class="submenu">
+                    <a href="{{ route('staff.word.index') }}" class="sub-link {{ request()->routeIs('staff.word.index') ? 'active' : '' }}">Semua Dokumen</a>
+                    <a href="{{ route('staff.word.create') }}" class="sub-link {{ request()->routeIs('staff.word.create') ? 'active' : '' }}">Buat Dokumen</a>
+                </div>
+            </div>
             <div class="nav-item {{ request()->routeIs('staff.event.*') ? 'open' : '' }}">
                 <a class="nav-link {{ request()->routeIs('staff.event.*') ? 'active' : '' }}" data-toggle="submenu">
-                    <i class="bi bi-calendar-event-fill icon"></i> <span>Agenda & Event</span> <i class="bi bi-chevron-right arrow"></i>
+                    <i class="bi bi-calendar-event-fill icon"></i> <span>Agenda</span> <i class="bi bi-chevron-right arrow"></i>
                 </a>
                 <div class="submenu">
                     <a href="{{ route('staff.event.index') }}" class="sub-link {{ request()->routeIs('staff.event.index') ? 'active' : '' }}">Semua Event</a>
-                    <a href="{{ route('staff.event.index', ['type' => 'rapat']) }}" class="sub-link">Rapat</a>
-                    <a href="{{ route('staff.event.index', ['type' => 'kegiatan']) }}" class="sub-link">Kegiatan</a>
                 </div>
             </div>
-
-            <div class="nav-label">Informasi</div>
-            <div class="nav-item {{ request()->routeIs('staff.reminder.*') ? 'open' : '' }}">
-                <a class="nav-link {{ request()->routeIs('staff.reminder.*') ? 'active' : '' }}" data-toggle="submenu">
-                    <i class="bi bi-alarm-fill icon"></i> <span>Pengingat</span>
-                    @php $myReminders = \App\Models\Reminder::where('user_id', Auth::id())->where('is_completed', false)->where('due_date', '<', now())->count(); @endphp
-                    @if($myReminders > 0)<span class="badge bg-warning text-dark">{{ $myReminders }}</span>@endif
-                    <i class="bi bi-chevron-right arrow"></i>
-                </a>
-                <div class="submenu">
-                    <a href="{{ route('staff.reminder.index') }}" class="sub-link {{ request()->routeIs('staff.reminder.index') ? 'active' : '' }}">Pengingat Saya</a>
-                </div>
-            </div>
-            <div class="nav-item {{ request()->routeIs('staff.notification.*') ? 'open' : '' }}">
-                <a class="nav-link {{ request()->routeIs('staff.notification.*') ? 'active' : '' }}" data-toggle="submenu">
+            <div class="nav-item">
+                <a href="{{ route('staff.notification.index') }}" class="nav-link {{ request()->routeIs('staff.notification.*') ? 'active' : '' }}">
                     <i class="bi bi-bell-fill icon"></i> <span>Notifikasi</span>
                     @if($unread > 0)<span class="badge bg-danger">{{ $unread }}</span>@endif
-                    <i class="bi bi-chevron-right arrow"></i>
                 </a>
-                <div class="submenu">
-                    <a href="{{ route('staff.notification.index') }}" class="sub-link {{ request()->routeIs('staff.notification.index') ? 'active' : '' }}">Semua Notifikasi</a>
-                    <a href="{{ route('staff.notification.index', ['filter' => 'unread']) }}" class="sub-link">Belum Dibaca</a>
-                </div>
             </div>
             <div class="nav-item">
                 <a href="{{ route('staff.panduan.index') }}" class="nav-link {{ request()->routeIs('staff.panduan.*') ? 'active' : '' }}">
@@ -336,7 +417,7 @@
     <div class="main-content" id="mainContent">
         <header class="top-header">
             <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
-            <span class="header-title">@yield('title', 'Beranda')</span>
+            <span class="header-title">@yield('judul', 'Beranda')</span>
             <div class="header-right">
                 <span class="header-date d-none d-md-block"><i class="bi bi-calendar3"></i> {{ now()->translatedFormat('d F Y') }}</span>
                 <div class="dropdown" id="notifDropdown">
@@ -366,8 +447,8 @@
                 </div>
                 <div class="dropdown">
                     <button type="button" class="header-profile" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->name, 0, 2)) }}</div>
-                        <span class="name d-none d-md-block">{{ Auth::user()->name }}</span>
+                        <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->nama, 0, 2)) }}</div>
+                        <span class="name d-none d-md-block">{{ Auth::user()->nama }}</span>
                         <i class="bi bi-chevron-down" style="font-size:.65rem;color:#94a3b8;"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -393,7 +474,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
-            @yield('content')
+            @yield('konten')
         </div>
     </div>
 

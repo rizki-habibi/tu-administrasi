@@ -9,32 +9,34 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $table = 'acara';
+
     protected $fillable = [
-        'created_by', 'title', 'description', 'event_date',
-        'start_time', 'end_time', 'location', 'type', 'status',
+        'dibuat_oleh', 'judul', 'deskripsi', 'tanggal_acara',
+        'waktu_mulai', 'waktu_selesai', 'lokasi', 'jenis', 'status',
     ];
 
     protected function casts(): array
     {
         return [
-            'event_date' => 'date',
+            'tanggal_acara' => 'date',
         ];
     }
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return match ($this->type) {
+        return match ($this->jenis) {
             'rapat' => 'Rapat',
             'kegiatan' => 'Kegiatan',
             'upacara' => 'Upacara',
             'pelatihan' => 'Pelatihan',
             'lainnya' => 'Lainnya',
-            default => $this->type,
+            default => $this->jenis,
         };
     }
 

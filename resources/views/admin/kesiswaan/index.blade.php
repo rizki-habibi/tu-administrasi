@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Data Kesiswaan')
+@extends('admin.tata-letak.app')
+@section('judul', 'Data Kesiswaan')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Data Siswa</h4>
@@ -95,18 +95,18 @@
                         <td>{{ $loop->iteration + ($students->currentPage()-1) * $students->perPage() }}</td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                @if($s->photo)
-                                    <img src="{{ asset('storage/'.$s->photo) }}" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
+                                @if($s->foto)
+                                    <img src="{{ asset('storage/'.$s->foto) }}" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
                                 @else
-                                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:#e0e7ff;color:#6366f1;font-size:.75rem;font-weight:600;">{{ strtoupper(substr($s->name,0,2)) }}</div>
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px;height:32px;background:#e0e7ff;color:#6366f1;font-size:.75rem;font-weight:600;">{{ strtoupper(substr($s->nama,0,2)) }}</div>
                                 @endif
-                                <span class="fw-semibold">{{ $s->name }}</span>
+                                <span class="fw-semibold">{{ $s->nama }}</span>
                             </div>
                         </td>
                         <td>{{ $s->nis }}</td>
                         <td>{{ $s->nisn ?? '-' }}</td>
                         <td><span class="badge bg-info bg-opacity-10 text-info">{{ $s->class }}</span></td>
-                        <td>{{ $s->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                        <td>{{ $s->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                         <td>
                             @if($s->status == 'aktif')<span class="badge bg-success">Aktif</span>
                             @elseif(in_array($s->status, ['mutasi_masuk','mutasi_keluar']))<span class="badge bg-warning text-dark">{{ $s->status == 'mutasi_masuk' ? 'Mutasi Masuk' : 'Mutasi Keluar' }}</span>
@@ -120,7 +120,7 @@
                                 <a href="{{ route('admin.kesiswaan.edit', $s) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
                                 <form action="{{ route('admin.kesiswaan.destroy', $s) }}" method="POST">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Hapus data siswa {{ $s->name }}?"><i class="bi bi-trash"></i></button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Hapus data siswa {{ $s->nama }}?"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
                         </td>

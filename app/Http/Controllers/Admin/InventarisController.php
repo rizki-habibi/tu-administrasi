@@ -58,7 +58,7 @@ class InventarisController extends Controller
 
         $data = $request->except('foto');
         $data['kode_barang'] = Inventaris::generateKode($request->kategori);
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('inventaris', 'public');

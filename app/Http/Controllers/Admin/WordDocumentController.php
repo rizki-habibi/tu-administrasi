@@ -16,86 +16,86 @@ class WordDocumentController extends Controller
     {
         $query = WordDocument::with('user')->latest();
 
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
         }
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            $query->where('judul', 'like', '%' . $request->search . '%');
         }
 
         $documents = $query->paginate(15);
         $categories = WordDocument::categories();
 
-        return view('admin.word.index', compact('documents', 'categories'));
+        return view('admin.word-ai.index', compact('documents', 'categories'));
     }
 
     public function create(Request $request)
     {
         $templates = WordDocument::templates();
         $categories = WordDocument::categories();
-        $selectedTemplate = $request->get('template', 'kosong');
+        $selectedTemplate = $request->get('templat', 'kosong');
 
-        return view('admin.word.create', compact('templates', 'categories', 'selectedTemplate'));
+        return view('admin.word-ai.create', compact('templates', 'categories', 'selectedTemplate'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|string',
-            'content' => 'nullable|string',
-            'template' => 'nullable|string',
+            'judul' => 'required|string|max:255',
+            'kategori' => 'required|string',
+            'konten' => 'nullable|string',
+            'templat' => 'nullable|string',
             'status' => 'required|in:draft,final,archived',
-            'is_shared' => 'nullable|boolean',
+            'dibagikan' => 'nullable|boolean',
         ]);
 
         $doc = WordDocument::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'category' => $request->category,
-            'content' => $request->content,
-            'template' => $request->template,
+            'pengguna_id' => auth()->id(),
+            'judul' => $request->judul,
+            'kategori' => $request->kategori,
+            'konten' => $request->konten,
+            'templat' => $request->templat,
             'status' => $request->status,
-            'is_shared' => $request->boolean('is_shared'),
+            'dibagikan' => $request->boolean('dibagikan'),
         ]);
 
-        return redirect()->route('admin.word.edit', $doc)->with('success', 'Dokumen berhasil dibuat.');
+        return redirect()->route('admin.word-ai.edit', $doc)->with('success', 'Dokumen berhasil dibuat.');
     }
 
     public function show(WordDocument $word)
     {
-        return view('admin.word.show', compact('word'));
+        return view('admin.word-ai.show', compact('word'));
     }
 
     public function edit(WordDocument $word)
     {
         $categories = WordDocument::categories();
-        return view('admin.word.edit', compact('word', 'categories'));
+        return view('admin.word-ai.edit', compact('word', 'categories'));
     }
 
     public function update(Request $request, WordDocument $word)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|string',
-            'content' => 'nullable|string',
+            'judul' => 'required|string|max:255',
+            'kategori' => 'required|string',
+            'konten' => 'nullable|string',
             'status' => 'required|in:draft,final,archived',
-            'is_shared' => 'nullable|boolean',
+            'dibagikan' => 'nullable|boolean',
         ]);
 
         $word->update([
-            'title' => $request->title,
-            'category' => $request->category,
-            'content' => $request->content,
+            'judul' => $request->judul,
+            'kategori' => $request->kategori,
+            'konten' => $request->konten,
             'status' => $request->status,
-            'is_shared' => $request->boolean('is_shared'),
+            'dibagikan' => $request->boolean('dibagikan'),
         ]);
 
         if ($request->ajax()) {
-            return response()->json(['success' => true, 'message' => 'Dokumen berhasil disimpan.']);
+            return response()->json(['success' => true, 'pesan' => 'Dokumen berhasil disimpan.']);
         }
 
         return redirect()->back()->with('success', 'Dokumen berhasil disimpan.');
@@ -103,12 +103,12 @@ class WordDocumentController extends Controller
 
     public function destroy(WordDocument $word)
     {
-        if ($word->file_path) {
-            Storage::disk('public')->delete($word->file_path);
+        if ($word->path_file) {
+            Storage::disk('public')->delete($word->path_file);
         }
         $word->delete();
 
-        return redirect()->route('admin.word.index')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.word-ai.index')->with('success', 'Dokumen berhasil dihapus.');
     }
 
     /**
@@ -119,8 +119,8 @@ class WordDocumentController extends Controller
         $phpWord = new PhpWord();
 
         // Set document properties
-        $phpWord->getDocInfo()->setCreator(auth()->user()->name);
-        $phpWord->getDocInfo()->setTitle($word->title);
+        $phpWord->getDocInfo()->setCreator(auth()->user()->nama);
+        $phpWord->getDocInfo()->setTitle($word->judul);
         $phpWord->getDocInfo()->setCompany('SMA Negeri 2 Jember');
 
         // Set default font
@@ -135,17 +135,17 @@ class WordDocumentController extends Controller
         ]);
 
         // Convert HTML content to Word
-        if ($word->content) {
-            $htmlContent = $this->cleanHtmlForWord($word->content);
+        if ($word->konten) {
+            $htmlContent = $this->cleanHtmlForWord($word->konten);
             Html::addHtml($section, $htmlContent, false, false);
         } else {
-            $section->addText($word->title, ['bold' => true, 'size' => 14]);
+            $section->addText($word->judul, ['bold' => true, 'size' => 14]);
             $section->addTextBreak(2);
             $section->addText('Dokumen ini belum memiliki konten.');
         }
 
         // Save to temp file
-        $filename = 'word-docs/' . \Str::slug($word->title) . '_' . now()->format('Ymd_His') . '.docx';
+        $filename = 'word-docs/' . \Str::slug($word->judul) . '_' . now()->format('Ymd_His') . '.docx';
         $tempPath = storage_path('app/public/' . $filename);
 
         // Ensure directory exists
@@ -157,9 +157,9 @@ class WordDocumentController extends Controller
         $writer->save($tempPath);
 
         // Update document record
-        $word->update(['file_path' => $filename]);
+        $word->update(['path_file' => $filename]);
 
-        return response()->download($tempPath, \Str::slug($word->title) . '.docx', [
+        return response()->download($tempPath, \Str::slug($word->judul) . '.docx', [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         ]);
     }
@@ -171,24 +171,24 @@ class WordDocumentController extends Controller
     {
         $request->validate([
             'prompt' => 'required|string|max:2000',
-            'template' => 'nullable|string',
+            'templat' => 'nullable|string',
             'document_id' => 'nullable|exists:word_documents,id',
         ]);
 
         $prompt = $request->prompt;
-        $template = $request->template;
+        $template = $request->templat;
 
         // Generate content based on template and prompt
         $content = $this->generateAiContent($prompt, $template);
 
         // Save prompt if document exists
         if ($request->document_id) {
-            WordDocument::where('id', $request->document_id)->update(['ai_prompt' => $prompt]);
+            WordDocument::where('id', $request->document_id)->update(['prompt_ai' => $prompt]);
         }
 
         return response()->json([
             'success' => true,
-            'content' => $content,
+            'konten' => $content,
         ]);
     }
 
@@ -197,12 +197,12 @@ class WordDocumentController extends Controller
      */
     public function template(Request $request)
     {
-        $template = $request->get('template', 'kosong');
+        $template = $request->get('templat', 'kosong');
         $content = $this->getTemplateContent($template);
 
         return response()->json([
             'success' => true,
-            'content' => $content,
+            'konten' => $content,
         ]);
     }
 
@@ -212,8 +212,8 @@ class WordDocumentController extends Controller
     public function autosave(Request $request, WordDocument $word)
     {
         $word->update([
-            'content' => $request->content,
-            'title' => $request->title ?? $word->title,
+            'konten' => $request->konten,
+            'judul' => $request->judul ?? $word->judul,
         ]);
 
         return response()->json(['success' => true, 'saved_at' => now()->format('H:i:s')]);

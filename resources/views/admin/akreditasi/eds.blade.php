@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Evaluasi Diri Sekolah')
+@extends('admin.tata-letak.app')
+@section('judul', 'Evaluasi Diri Sekolah')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Evaluasi Diri Sekolah (EDS)</h4>

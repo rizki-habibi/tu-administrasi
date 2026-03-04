@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Surat extends Model
 {
+    protected $table = 'surat';
+
     protected $fillable = [
         'nomor_surat', 'jenis', 'kategori', 'perihal', 'isi',
         'tujuan', 'asal', 'tanggal_surat', 'tanggal_terima',
-        'status', 'sifat', 'file_path', 'file_name',
-        'created_by', 'approved_by', 'catatan',
+        'status', 'sifat', 'path_file', 'nama_file',
+        'dibuat_oleh', 'disetujui_oleh', 'catatan',
     ];
 
     protected $casts = [
@@ -21,12 +23,12 @@ class Surat extends Model
     // ─── Relationships ────────────────────────
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function approver()
     {
-        return $this->belongsTo(User::class, 'approved_by');
+        return $this->belongsTo(User::class, 'disetujui_oleh');
     }
 
     // ─── Auto Number Generator ────────────────

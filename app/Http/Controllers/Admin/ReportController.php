@@ -12,8 +12,8 @@ class ReportController extends Controller
     {
         $query = Report::with('user');
 
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
         }
 
         if ($request->filled('status')) {
@@ -21,17 +21,17 @@ class ReportController extends Controller
         }
 
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            $query->where('judul', 'like', '%' . $request->search . '%');
         }
 
         $reports = $query->latest()->paginate(15);
-        return view('admin.report.index', compact('reports'));
+        return view('admin.laporan.index', compact('reports'));
     }
 
     public function show(Report $report)
     {
         $report->load('user');
-        return view('admin.report.show', compact('report'));
+        return view('admin.laporan.show', compact('report'));
     }
 
     public function updateStatus(Request $request, Report $report)

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Bukti Fisik')
+@extends('admin.tata-letak.app')
+@section('judul', 'Bukti Fisik')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Bukti Fisik</h4>
@@ -23,11 +23,11 @@
                         <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ ucfirst(str_replace('_', ' ', $ev->kategori ?? '-')) }}</span></td>
                         <td>{{ strtoupper($ev->terkait ?? '-') }}</td>
                         <td>
-                            @if($ev->file_path)
-                            <a href="{{ asset('storage/'.$ev->file_path) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>{{ Str::limit($ev->file_name, 20) }}</a>
+                            @if($ev->path_file)
+                            <a href="{{ asset('storage/'.$ev->path_file) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>{{ Str::limit($ev->nama_file, 20) }}</a>
                             @else - @endif
                         </td>
-                        <td>{{ $ev->uploader->name ?? '-' }}</td>
+                        <td>{{ $ev->uploader->nama ?? '-' }}</td>
                         <td>{{ $ev->created_at->format('d/m/Y') }}</td>
                         <td>
                             <form action="{{ route('admin.evaluasi.bukti-fisik.destroy', $ev) }}" method="POST">@csrf @method('DELETE')

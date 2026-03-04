@@ -9,44 +9,46 @@ class WordDocument extends Model
 {
     use HasFactory;
 
+    protected $table = 'dokumen_word';
+
     protected $fillable = [
-        'user_id',
-        'title',
-        'category',
-        'content',
-        'ai_prompt',
-        'template',
-        'file_path',
+        'pengguna_id',
+        'judul',
+        'kategori',
+        'konten',
+        'prompt_ai',
+        'templat',
+        'path_file',
         'status',
-        'is_shared',
+        'dibagikan',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_shared' => 'boolean',
+            'dibagikan' => 'boolean',
         ];
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pengguna_id');
     }
 
     public function scopeOwned($query, $userId)
     {
-        return $query->where('user_id', $userId);
+        return $query->where('pengguna_id', $userId);
     }
 
     public function scopeShared($query)
     {
-        return $query->where('is_shared', true);
+        return $query->where('dibagikan', true);
     }
 
     public function scopeAccessible($query, $userId)
     {
         return $query->where(function ($q) use ($userId) {
-            $q->where('user_id', $userId)->orWhere('is_shared', true);
+            $q->where('pengguna_id', $userId)->orWhere('dibagikan', true);
         });
     }
 
@@ -67,49 +69,49 @@ class WordDocument extends Model
     {
         return [
             'surat_resmi' => [
-                'name' => 'Surat Resmi Sekolah',
-                'category' => 'surat',
-                'description' => 'Template surat resmi dengan kop SMA Negeri 2 Jember',
+                'nama' => 'Surat Resmi Sekolah',
+                'kategori' => 'surat',
+                'deskripsi' => 'Template surat resmi dengan kop SMA Negeri 2 Jember',
             ],
             'surat_keterangan' => [
-                'name' => 'Surat Keterangan',
-                'category' => 'surat',
-                'description' => 'Template surat keterangan untuk berbagai keperluan',
+                'nama' => 'Surat Keterangan',
+                'kategori' => 'surat',
+                'deskripsi' => 'Template surat keterangan untuk berbagai keperluan',
             ],
             'notulen_rapat' => [
-                'name' => 'Notulen Rapat',
-                'category' => 'notulen',
-                'description' => 'Template notulen/berita acara rapat resmi',
+                'nama' => 'Notulen Rapat',
+                'kategori' => 'notulen',
+                'deskripsi' => 'Template notulen/berita acara rapat resmi',
             ],
             'laporan_bulanan' => [
-                'name' => 'Laporan Bulanan TU',
-                'category' => 'laporan',
-                'description' => 'Template laporan aktivitas bulanan TU',
+                'nama' => 'Laporan Bulanan TU',
+                'kategori' => 'laporan',
+                'deskripsi' => 'Template laporan aktivitas bulanan TU',
             ],
             'laporan_kehadiran' => [
-                'name' => 'Laporan Rekapitulasi Kehadiran',
-                'category' => 'laporan',
-                'description' => 'Template rekap kehadiran staf per bulan',
+                'nama' => 'Laporan Rekapitulasi Kehadiran',
+                'kategori' => 'laporan',
+                'deskripsi' => 'Template rekap kehadiran staf per bulan',
             ],
             'sk_kepala_sekolah' => [
-                'name' => 'SK Kepala Sekolah',
-                'category' => 'sk',
-                'description' => 'Template surat keputusan kepala sekolah',
+                'nama' => 'SK Kepala Sekolah',
+                'kategori' => 'sk',
+                'deskripsi' => 'Template surat keputusan kepala sekolah',
             ],
             'proposal_kegiatan' => [
-                'name' => 'Proposal Kegiatan',
-                'category' => 'proposal',
-                'description' => 'Template proposal kegiatan sekolah',
+                'nama' => 'Proposal Kegiatan',
+                'kategori' => 'proposal',
+                'deskripsi' => 'Template proposal kegiatan sekolah',
             ],
             'laporan_keuangan' => [
-                'name' => 'Laporan Keuangan',
-                'category' => 'keuangan',
-                'description' => 'Template laporan keuangan sekolah',
+                'nama' => 'Laporan Keuangan',
+                'kategori' => 'keuangan',
+                'deskripsi' => 'Template laporan keuangan sekolah',
             ],
             'kosong' => [
-                'name' => 'Dokumen Kosong',
-                'category' => 'umum',
-                'description' => 'Mulai dari dokumen kosong',
+                'nama' => 'Dokumen Kosong',
+                'kategori' => 'umum',
+                'deskripsi' => 'Mulai dari dokumen kosong',
             ],
         ];
     }

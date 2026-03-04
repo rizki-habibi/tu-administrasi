@@ -50,7 +50,7 @@ class FinanceController extends Controller
 
         $data = $request->except('bukti');
         $data['kode_transaksi'] = FinanceRecord::generateKode($request->jenis);
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('bukti')) {
             $file = $request->file('bukti');
@@ -72,7 +72,7 @@ class FinanceController extends Controller
     {
         $keuangan->update([
             'status' => 'approved',
-            'verified_by' => auth()->id(),
+            'diverifikasi_oleh' => auth()->id(),
         ]);
         return redirect()->back()->with('success', 'Transaksi berhasil diverifikasi.');
     }
@@ -88,7 +88,7 @@ class FinanceController extends Controller
     public function budgetIndex()
     {
         $budgets = Budget::with('creator')->latest()->paginate(15);
-        return view('admin.keuangan.budget', compact('budgets'));
+        return view('admin.keuangan.anggaran', compact('budgets'));
     }
 
     public function budgetStore(Request $request)
@@ -101,7 +101,7 @@ class FinanceController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        Budget::create(array_merge($request->all(), ['created_by' => auth()->id()]));
-        return redirect()->route('admin.keuangan.budget')->with('success', 'Anggaran berhasil ditambahkan.');
+        Budget::create(array_merge($request->all(), ['dibuat_oleh' => auth()->id()]));
+        return redirect()->route('admin.keuangan.anggaran')->with('success', 'Anggaran berhasil ditambahkan.');
     }
 }

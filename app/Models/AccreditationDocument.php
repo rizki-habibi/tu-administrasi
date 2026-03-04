@@ -9,14 +9,16 @@ class AccreditationDocument extends Model
 {
     use HasFactory;
 
+    protected $table = 'dokumen_akreditasi';
+
     protected $fillable = [
         'standar', 'komponen', 'indikator', 'deskripsi',
-        'file_path', 'file_name', 'status', 'catatan', 'uploaded_by',
+        'path_file', 'nama_file', 'status', 'catatan', 'diunggah_oleh',
     ];
 
     public function uploader()
     {
-        return $this->belongsTo(User::class, 'uploaded_by');
+        return $this->belongsTo(User::class, 'diunggah_oleh');
     }
 
     public function getStandarLabelAttribute(): string

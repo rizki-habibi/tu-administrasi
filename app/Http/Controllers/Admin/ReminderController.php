@@ -11,56 +11,56 @@ class ReminderController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Reminder::with('user', 'creator')->where('is_completed', false)->latest();
+        $query = Reminder::with('user', 'creator')->where('selesai', false)->latest();
 
-        if ($request->filled('type')) $query->where('type', $request->type);
+        if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
 
         $reminders = $query->paginate(20)->withQueryString();
-        $overdueCount = Reminder::where('is_completed', false)->where('due_date', '<', now())->count();
-        $activeCount = Reminder::where('is_completed', false)->count();
-        $completedCount = Reminder::where('is_completed', true)->count();
-        $completed = Reminder::where('is_completed', true)->latest('updated_at')->take(10)->get();
+        $overdueCount = Reminder::where('selesai', false)->where('tenggat', '<', now())->count();
+        $activeCount = Reminder::where('selesai', false)->count();
+        $completedCount = Reminder::where('selesai', true)->count();
+        $completed = Reminder::where('selesai', true)->latest('updated_at')->take(10)->get();
 
-        return view('admin.reminder.index', compact('reminders', 'overdueCount', 'activeCount', 'completedCount', 'completed'));
+        return view('admin.pengingat.index', compact('reminders', 'overdueCount', 'activeCount', 'completedCount', 'completed'));
     }
 
     public function create()
     {
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
-        return view('admin.reminder.create', compact('staffs'));
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
+        return view('admin.pengingat.create', compact('staffs'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|in:deadline_laporan,bkd,evaluasi_semester,tugas,lainnya',
-            'due_date' => 'required|date',
-            'reminder_time' => 'nullable',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'jenis' => 'required|in:deadline_laporan,bkd,evaluasi_semester,tugas,lainnya',
+            'tenggat' => 'required|date',
+            'waktu_pengingat' => 'nullable',
             'target' => 'required|in:all,specific',
             'user_ids' => 'required_if:target,specific|array',
         ]);
 
         if ($request->target === 'all') {
-            $users = User::where('role', 'staff')->where('is_active', true)->get();
+            $users = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
         } else {
             $users = User::whereIn('id', $request->user_ids)->get();
         }
 
         foreach ($users as $user) {
             Reminder::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'type' => $request->type,
-                'due_date' => $request->due_date,
-                'reminder_time' => $request->reminder_time,
-                'user_id' => $user->id,
-                'created_by' => auth()->id(),
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi,
+                'jenis' => $request->jenis,
+                'tenggat' => $request->tenggat,
+                'waktu_pengingat' => $request->waktu_pengingat,
+                'pengguna_id' => $user->id,
+                'dibuat_oleh' => auth()->id(),
             ]);
         }
 
-        return redirect()->route('admin.reminder.index')->with('success', 'Pengingat berhasil dibuat untuk ' . $users->count() . ' staff.');
+        return redirect()->route('admin.pengingat.index')->with('success', 'Pengingat berhasil dibuat untuk ' . $users->count() . ' staff.');
     }
 
     public function destroy(Reminder $reminder)
@@ -71,7 +71,7 @@ class ReminderController extends Controller
 
     public function toggleComplete(Reminder $reminder)
     {
-        $reminder->update(['is_completed' => !$reminder->is_completed]);
+        $reminder->update(['selesai' => !$reminder->selesai]);
         return redirect()->back()->with('success', 'Status pengingat diperbarui.');
     }
 }

@@ -16,37 +16,37 @@ class AttendanceController extends Controller
         $query = Attendance::with('user');
 
         if ($request->filled('date')) {
-            $query->whereDate('date', $request->date);
+            $query->whereDate('tanggal', $request->date);
         } else {
-            $query->whereDate('date', today());
+            $query->whereDate('tanggal', today());
         }
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        if ($request->filled('user_id')) {
-            $query->where('user_id', $request->user_id);
+        if ($request->filled('pengguna_id')) {
+            $query->where('pengguna_id', $request->pengguna_id);
         }
 
         $attendances = $query->latest()->paginate(20);
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
         $setting = AttendanceSetting::first();
 
-        return view('admin.attendance.index', compact('attendances', 'staffs', 'setting'));
+        return view('admin.kehadiran.index', compact('attendances', 'staffs', 'setting'));
     }
 
     public function report(Request $request)
     {
-        $startDate = $request->input('start_date', now()->startOfMonth()->format('Y-m-d'));
-        $endDate = $request->input('end_date', now()->format('Y-m-d'));
+        $startDate = $request->input('tanggal_mulai', now()->startOfMonth()->format('Y-m-d'));
+        $endDate = $request->input('tanggal_selesai', now()->format('Y-m-d'));
 
-        $staffs = User::where('role', 'staff')->where('is_active', true)->get();
+        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
 
         $attendanceData = [];
         foreach ($staffs as $staff) {
-            $attendances = Attendance::where('user_id', $staff->id)
-                ->whereBetween('date', [$startDate, $endDate])
+            $attendances = Attendance::where('pengguna_id', $staff->id)
+                ->whereBetween('tanggal', [$startDate, $endDate])
                 ->get();
 
             $attendanceData[] = [
@@ -60,30 +60,30 @@ class AttendanceController extends Controller
             ];
         }
 
-        return view('admin.attendance.report', compact('attendanceData', 'startDate', 'endDate'));
+        return view('admin.kehadiran.rekap', compact('attendanceData', 'startDate', 'endDate'));
     }
 
     public function settings()
     {
         $setting = AttendanceSetting::firstOrCreate([], [
-            'clock_in_time' => '08:00:00',
-            'clock_out_time' => '16:00:00',
-            'late_tolerance_minutes' => 15,
-            'max_distance_meters' => 200,
+            'jam_masuk' => '08:00:00',
+            'jam_pulang' => '16:00:00',
+            'toleransi_terlambat_menit' => 15,
+            'jarak_maksimal_meter' => 200,
         ]);
 
-        return view('admin.attendance.settings', compact('setting'));
+        return view('admin.kehadiran.pengaturan', compact('setting'));
     }
 
     public function updateSettings(Request $request)
     {
         $request->validate([
-            'clock_in_time' => 'required',
-            'clock_out_time' => 'required',
-            'late_tolerance_minutes' => 'required|integer|min:0',
-            'office_latitude' => 'nullable|numeric',
-            'office_longitude' => 'nullable|numeric',
-            'max_distance_meters' => 'required|integer|min:0',
+            'jam_masuk' => 'required',
+            'jam_pulang' => 'required',
+            'toleransi_terlambat_menit' => 'required|integer|min:0',
+            'lat_kantor' => 'nullable|numeric',
+            'lng_kantor' => 'nullable|numeric',
+            'jarak_maksimal_meter' => 'required|integer|min:0',
         ]);
 
         $setting = AttendanceSetting::first();
@@ -95,16 +95,16 @@ class AttendanceController extends Controller
     public function show(Attendance $attendance)
     {
         $attendance->load('user');
-        return view('admin.attendance.show', compact('attendance'));
+        return view('admin.kehadiran.show', compact('attendance'));
     }
 
     public function export(Request $request)
     {
         $query = Attendance::with('user');
-        if ($request->filled('start_date')) $query->where('date', '>=', $request->start_date);
-        if ($request->filled('end_date')) $query->where('date', '<=', $request->end_date);
+        if ($request->filled('tanggal_mulai')) $query->where('tanggal', '>=', $request->tanggal_mulai);
+        if ($request->filled('tanggal_selesai')) $query->where('tanggal', '<=', $request->tanggal_selesai);
         if ($request->filled('status')) $query->where('status', $request->status);
-        $attendances = $query->latest('date')->get();
+        $attendances = $query->latest('tanggal')->get();
         $format = $request->get('format', 'csv');
 
         if ($format === 'csv' || $format === 'excel') {
@@ -114,12 +114,12 @@ class AttendanceController extends Controller
                 $f = fopen('php://output', 'w');
                 fputcsv($f, ['No', 'Nama', 'Tanggal', 'Masuk', 'Pulang', 'Status', 'Keterangan']);
                 foreach ($attendances as $i => $a) {
-                    fputcsv($f, [$i+1, $a->user->name ?? '-', $a->date->format('d/m/Y'), $a->clock_in ?? '-', $a->clock_out ?? '-', ucfirst($a->status), $a->note ?? '-']);
+                    fputcsv($f, [$i+1, $a->user->nama ?? '-', $a->tanggal->format('d/m/Y'), $a->jam_masuk ?? '-', $a->jam_pulang ?? '-', ucfirst($a->status), $a->catatan ?? '-']);
                 }
                 fclose($f);
             };
             return response()->stream($callback, 200, $headers);
         }
-        return view('admin.attendance.print', compact('attendances'));
+        return view('admin.kehadiran.cetak', compact('attendances'));
     }
 }

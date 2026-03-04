@@ -27,34 +27,34 @@ class InventarisController extends Controller
         }
 
         $items = $query->latest()->paginate(20);
-        return view('staff.inventaris.index', compact('items'));
+        return view('staf.inventaris.index', compact('items'));
     }
 
     public function show(Inventaris $inventaris)
     {
         $inventaris->load('damageReports');
-        return view('staff.inventaris.show', compact('inventaris'));
+        return view('staf.inventaris.show', compact('inventaris'));
     }
 
     public function reportDamage(Request $request)
     {
         $request->validate([
             'inventaris_id' => 'required|exists:inventaris,id',
-            'description' => 'required|string',
-            'photo' => 'nullable|image|max:5120',
+            'deskripsi' => 'required|string',
+            'foto' => 'nullable|image|max:5120',
         ]);
 
         $data = [
             'inventaris_id' => $request->inventaris_id,
-            'deskripsi_kerusakan' => $request->description,
+            'deskripsi_kerusakan' => $request->deskripsi,
             'tingkat_kerusakan' => $request->tingkat_kerusakan ?? 'ringan',
             'tanggal_laporan' => now()->toDateString(),
-            'reported_by' => auth()->id(),
+            'dilaporkan_oleh' => auth()->id(),
             'status' => 'dilaporkan',
         ];
 
-        if ($request->hasFile('photo')) {
-            $data['foto'] = $request->file('photo')->store('damage-reports', 'public');
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('damage-reports', 'public');
         }
 
         DamageReport::create($data);

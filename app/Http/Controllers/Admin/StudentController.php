@@ -19,7 +19,7 @@ class StudentController extends Controller
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
+                $q->where('nama', 'like', '%' . $request->search . '%')
                   ->orWhere('nis', 'like', '%' . $request->search . '%')
                   ->orWhere('nisn', 'like', '%' . $request->search . '%');
             });
@@ -28,8 +28,8 @@ class StudentController extends Controller
         $students = $query->paginate(20)->withQueryString();
 
         $aktifCount = StudentRecord::where('status', 'aktif')->count();
-        $lakiCount = StudentRecord::where('gender', 'L')->where('status', 'aktif')->count();
-        $perempuanCount = StudentRecord::where('gender', 'P')->where('status', 'aktif')->count();
+        $lakiCount = StudentRecord::where('jenis_kelamin', 'L')->where('status', 'aktif')->count();
+        $perempuanCount = StudentRecord::where('jenis_kelamin', 'P')->where('status', 'aktif')->count();
         $kelasList = StudentRecord::select('class')->distinct()->orderBy('class')->pluck('class');
 
         return view('admin.kesiswaan.index', compact('students', 'aktifCount', 'lakiCount', 'perempuanCount', 'kelasList'));
@@ -45,25 +45,25 @@ class StudentController extends Controller
         $request->validate([
             'nis' => 'required|string|unique:student_records,nis',
             'nisn' => 'nullable|string|unique:student_records,nisn',
-            'name' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'class' => 'required|string',
-            'academic_year' => 'required|string',
-            'gender' => 'required|in:L,P',
-            'place_of_birth' => 'nullable|string',
-            'date_of_birth' => 'nullable|date',
-            'religion' => 'nullable|string',
-            'address' => 'nullable|string',
-            'parent_name' => 'nullable|string',
-            'parent_phone' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048',
+            'tahun_ajaran' => 'required|string',
+            'jenis_kelamin' => 'required|in:L,P',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'agama' => 'nullable|string',
+            'alamat' => 'nullable|string',
+            'nama_orang_tua' => 'nullable|string',
+            'telepon_orang_tua' => 'nullable|string',
+            'foto' => 'nullable|image|max:2048',
             'status' => 'required|in:aktif,mutasi_masuk,mutasi_keluar,lulus,do',
         ]);
 
-        $data = $request->except('photo');
-        $data['created_by'] = auth()->id();
+        $data = $request->except('foto');
+        $data['dibuat_oleh'] = auth()->id();
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('siswa-photos', 'public');
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('siswa-photos', 'public');
         }
 
         StudentRecord::create($data);
@@ -86,19 +86,19 @@ class StudentController extends Controller
         $request->validate([
             'nis' => 'required|string|unique:student_records,nis,' . $kesiswaan->id,
             'nisn' => 'nullable|string|unique:student_records,nisn,' . $kesiswaan->id,
-            'name' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'class' => 'required|string',
-            'academic_year' => 'required|string',
-            'gender' => 'required|in:L,P',
+            'tahun_ajaran' => 'required|string',
+            'jenis_kelamin' => 'required|in:L,P',
             'status' => 'required|in:aktif,mutasi_masuk,mutasi_keluar,lulus,do',
-            'photo' => 'nullable|image|max:2048',
+            'foto' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except('photo');
+        $data = $request->except('foto');
 
-        if ($request->hasFile('photo')) {
-            if ($kesiswaan->photo) Storage::disk('public')->delete($kesiswaan->photo);
-            $data['photo'] = $request->file('photo')->store('siswa-photos', 'public');
+        if ($request->hasFile('foto')) {
+            if ($kesiswaan->foto) Storage::disk('public')->delete($kesiswaan->foto);
+            $data['foto'] = $request->file('foto')->store('siswa-photos', 'public');
         }
 
         $kesiswaan->update($data);
@@ -107,7 +107,7 @@ class StudentController extends Controller
 
     public function destroy(StudentRecord $kesiswaan)
     {
-        if ($kesiswaan->photo) Storage::disk('public')->delete($kesiswaan->photo);
+        if ($kesiswaan->foto) Storage::disk('public')->delete($kesiswaan->foto);
         $kesiswaan->delete();
         return redirect()->route('admin.kesiswaan.index')->with('success', 'Data siswa berhasil dihapus.');
     }

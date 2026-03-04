@@ -12,6 +12,6 @@ class PanduanController extends Controller
         $mdPath = base_path('docs/PANDUAN-PENGGUNAAN.md');
         $content = File::exists($mdPath) ? File::get($mdPath) : '# Panduan belum tersedia';
 
-        return view('staff.panduan.index', compact('content'));
+        return view('staf.panduan.index', compact('content'));
     }
 }

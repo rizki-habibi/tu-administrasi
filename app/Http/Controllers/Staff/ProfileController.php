@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = auth()->user();
-        return view('staff.profile.edit', compact('user'));
+        return view('staf.profil.edit', compact('user'));
     }
 
     public function update(Request $request)
@@ -21,21 +21,21 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:pengguna,email,' . $user->id,
+            'telepon' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'photo_base64' => 'nullable|string',
         ]);
 
-        $data = $request->only('name', 'email', 'phone', 'address');
+        $data = $request->only('nama', 'email', 'telepon', 'alamat');
 
-        if ($request->hasFile('photo')) {
-            if ($user->photo) {
-                Storage::disk('public')->delete($user->photo);
+        if ($request->hasFile('foto')) {
+            if ($user->foto) {
+                Storage::disk('public')->delete($user->foto);
             }
-            $data['photo'] = $request->file('photo')->store('staff-photos', 'public');
+            $data['foto'] = $request->file('foto')->store('staff-photos', 'public');
         } elseif ($request->filled('photo_base64')) {
             // Handle base64 camera capture
             $base64 = $request->photo_base64;
@@ -45,10 +45,10 @@ class ProfileController extends Controller
                 $imageData = base64_decode($base64);
                 $filename = 'staff-photos/' . uniqid('cam_') . '.' . $ext;
                 Storage::disk('public')->put($filename, $imageData);
-                if ($user->photo) {
-                    Storage::disk('public')->delete($user->photo);
+                if ($user->foto) {
+                    Storage::disk('public')->delete($user->foto);
                 }
-                $data['photo'] = $filename;
+                $data['foto'] = $filename;
             }
         }
 

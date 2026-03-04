@@ -9,9 +9,11 @@ class Budget extends Model
 {
     use HasFactory;
 
+    protected $table = 'anggaran';
+
     protected $fillable = [
         'nama_anggaran', 'tahun_anggaran', 'sumber_dana',
-        'total_anggaran', 'terpakai', 'keterangan', 'status', 'created_by',
+        'total_anggaran', 'terpakai', 'keterangan', 'status', 'dibuat_oleh',
     ];
 
     protected $casts = [
@@ -21,7 +23,7 @@ class Budget extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function getSisaAttribute()

@@ -9,9 +9,11 @@ class DamageReport extends Model
 {
     use HasFactory;
 
+    protected $table = 'laporan_kerusakan';
+
     protected $fillable = [
         'inventaris_id', 'tanggal_laporan', 'deskripsi_kerusakan',
-        'tingkat_kerusakan', 'foto', 'status', 'tindakan', 'reported_by',
+        'tingkat_kerusakan', 'foto', 'status', 'tindakan', 'dilaporkan_oleh',
     ];
 
     protected $casts = ['tanggal_laporan' => 'date'];
@@ -23,6 +25,6 @@ class DamageReport extends Model
 
     public function reporter()
     {
-        return $this->belongsTo(User::class, 'reported_by');
+        return $this->belongsTo(User::class, 'dilaporkan_oleh');
     }
 }

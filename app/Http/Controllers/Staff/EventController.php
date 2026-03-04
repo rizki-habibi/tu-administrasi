@@ -12,23 +12,23 @@ class EventController extends Controller
     {
         $query = Event::query();
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
         }
 
         if ($request->filled('month')) {
-            $query->whereMonth('event_date', $request->month);
+            $query->whereMonth('tanggal_acara', $request->month);
         }
 
-        $events = $query->orderBy('event_date', 'desc')->paginate(15);
-        $upcomingEvents = Event::where('event_date', '>=', today())->where('status', 'upcoming')->orderBy('event_date')->get();
+        $events = $query->orderBy('tanggal_acara', 'desc')->paginate(15);
+        $upcomingEvents = Event::where('tanggal_acara', '>=', today())->where('status', 'upcoming')->orderBy('tanggal_acara')->get();
 
-        return view('staff.event.index', compact('events', 'upcomingEvents'));
+        return view('staf.agenda.index', compact('events', 'upcomingEvents'));
     }
 
     public function show(Event $event)
     {
         $event->load('creator');
-        return view('staff.event.show', compact('event'));
+        return view('staf.agenda.show', compact('event'));
     }
 }

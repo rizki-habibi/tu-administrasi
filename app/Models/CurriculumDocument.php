@@ -9,20 +9,22 @@ class CurriculumDocument extends Model
 {
     use HasFactory;
 
+    protected $table = 'dokumen_kurikulum';
+
     protected $fillable = [
-        'title', 'description', 'type', 'academic_year', 'semester',
-        'subject', 'class_level', 'file_path', 'file_name', 'file_type',
-        'file_size', 'status', 'uploaded_by',
+        'judul', 'deskripsi', 'jenis', 'tahun_ajaran', 'semester',
+        'mata_pelajaran', 'tingkat_kelas', 'path_file', 'nama_file', 'tipe_file',
+        'ukuran_file', 'status', 'diunggah_oleh',
     ];
 
     public function uploader()
     {
-        return $this->belongsTo(User::class, 'uploaded_by');
+        return $this->belongsTo(User::class, 'diunggah_oleh');
     }
 
     public function getTypeLabelAttribute(): string
     {
-        return match ($this->type) {
+        return match ($this->jenis) {
             'kalender_pendidikan' => 'Kalender Pendidikan',
             'jadwal_pelajaran' => 'Jadwal Pelajaran',
             'rpp' => 'RPP / Modul Ajar',
@@ -35,13 +37,13 @@ class CurriculumDocument extends Model
             'rekap_nilai' => 'Rekap Nilai Semester',
             'leger' => 'Leger Nilai',
             'raport' => 'Raport',
-            default => ucfirst(str_replace('_', ' ', $this->type)),
+            default => ucfirst(str_replace('_', ' ', $this->jenis)),
         };
     }
 
     public function getFileSizeFormattedAttribute(): string
     {
-        $bytes = $this->file_size;
+        $bytes = $this->ukuran_file;
         if (!$bytes) return '-';
         if ($bytes >= 1048576) return round($bytes / 1048576, 2) . ' MB';
         if ($bytes >= 1024) return round($bytes / 1024, 2) . ' KB';

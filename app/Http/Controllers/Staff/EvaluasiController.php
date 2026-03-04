@@ -15,111 +15,111 @@ class EvaluasiController extends Controller
     // PKG / BKD - view own evaluations
     public function pkgIndex()
     {
-        $evaluations = TeacherEvaluation::where('user_id', auth()->id())
+        $evaluations = TeacherEvaluation::where('pengguna_id', auth()->id())
             ->latest()->paginate(15);
-        return view('staff.evaluasi.pkg', compact('evaluations'));
+        return view('staf.evaluasi.pkg', compact('evaluations'));
     }
 
     // P5 Assessments - view all
     public function p5Index()
     {
         $assessments = P5Assessment::latest()->paginate(15);
-        return view('staff.evaluasi.p5', compact('assessments'));
+        return view('staf.evaluasi.p5', compact('assessments'));
     }
 
     // STAR Analysis - view/create own
     public function starIndex()
     {
-        $analyses = StarAnalysis::where('created_by', auth()->id())
+        $analyses = StarAnalysis::where('dibuat_oleh', auth()->id())
             ->latest()->paginate(15);
-        return view('staff.evaluasi.star', compact('analyses'));
+        return view('staf.evaluasi.star', compact('analyses'));
     }
 
     public function starStore(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'situation' => 'required|string',
-            'task' => 'required|string',
-            'action' => 'required|string',
-            'result' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'situasi' => 'required|string',
+            'tugas' => 'required|string',
+            'aksi' => 'required|string',
+            'hasil' => 'required|string',
         ]);
 
         StarAnalysis::create([
-            'judul' => $request->title,
+            'judul' => $request->judul,
             'kategori' => $request->kategori ?? 'pembelajaran',
-            'situation' => $request->situation,
-            'task' => $request->task,
-            'action' => $request->action,
-            'result' => $request->result,
+            'situasi' => $request->situasi,
+            'tugas' => $request->tugas,
+            'aksi' => $request->aksi,
+            'hasil' => $request->hasil,
             'refleksi' => $request->reflection,
-            'created_by' => auth()->id(),
+            'dibuat_oleh' => auth()->id(),
         ]);
 
-        return redirect()->route('staff.evaluasi.star')->with('success', 'Analisis STAR berhasil disimpan.');
+        return redirect()->route('staf.evaluasi.star')->with('success', 'Analisis STAR berhasil disimpan.');
     }
 
     // Bukti Fisik - view/upload own
     public function buktiFisikIndex()
     {
-        $evidences = PhysicalEvidence::where('uploaded_by', auth()->id())
+        $evidences = PhysicalEvidence::where('diunggah_oleh', auth()->id())
             ->latest()->paginate(15);
-        return view('staff.evaluasi.bukti-fisik', compact('evidences'));
+        return view('staf.evaluasi.bukti-fisik', compact('evidences'));
     }
 
     public function buktiFisikStore(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'kategori' => 'required|string',
             'file' => 'required|file|max:10240',
         ]);
 
         $data = [
-            'judul' => $request->title,
-            'kategori' => $request->category,
-            'deskripsi' => $request->description,
+            'judul' => $request->judul,
+            'kategori' => $request->kategori,
+            'deskripsi' => $request->deskripsi,
             'terkait' => $request->standar,
-            'uploaded_by' => auth()->id(),
+            'diunggah_oleh' => auth()->id(),
         ];
 
         if ($request->hasFile('file')) {
-            $data['file_path'] = $request->file('file')->store('bukti-fisik', 'public');
-            $data['file_name'] = $request->file('file')->getClientOriginalName();
-            $data['file_type'] = $request->file('file')->getClientMimeType();
-            $data['file_size'] = $request->file('file')->getSize();
+            $data['path_file'] = $request->file('file')->store('bukti-fisik', 'public');
+            $data['nama_file'] = $request->file('file')->getClientOriginalName();
+            $data['tipe_file'] = $request->file('file')->getClientMimeType();
+            $data['ukuran_file'] = $request->file('file')->getSize();
         }
 
         PhysicalEvidence::create($data);
-        return redirect()->route('staff.evaluasi.bukti-fisik')->with('success', 'Bukti fisik berhasil diunggah.');
+        return redirect()->route('staf.evaluasi.bukti-fisik')->with('success', 'Bukti fisik berhasil diunggah.');
     }
 
     // Learning Methods - view/create
     public function learningIndex()
     {
-        $methods = LearningMethod::where('created_by', auth()->id())
+        $methods = LearningMethod::where('dibuat_oleh', auth()->id())
             ->latest()->paginate(15);
-        return view('staff.evaluasi.learning', compact('methods'));
+        return view('staf.evaluasi.pembelajaran', compact('methods'));
     }
 
     public function learningStore(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|string',
-            'description' => 'required|string',
+            'nama' => 'required|string|max:255',
+            'jenis' => 'required|string',
+            'deskripsi' => 'required|string',
         ]);
 
         LearningMethod::create([
-            'nama_metode' => $request->name,
-            'jenis' => $request->type,
-            'deskripsi' => $request->description,
-            'mata_pelajaran' => $request->subject,
+            'nama_metode' => $request->nama,
+            'jenis' => $request->jenis,
+            'deskripsi' => $request->deskripsi,
+            'mata_pelajaran' => $request->mata_pelajaran,
             'kelebihan' => $request->benefits,
             'kekurangan' => $request->challenges,
-            'created_by' => auth()->id(),
+            'dibuat_oleh' => auth()->id(),
         ]);
 
-        return redirect()->route('staff.evaluasi.learning')->with('success', 'Model pembelajaran berhasil disimpan.');
+        return redirect()->route('staf.evaluasi.pembelajaran')->with('success', 'Model pembelajaran berhasil disimpan.');
     }
 }

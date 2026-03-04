@@ -13,75 +13,75 @@ class LeaveRequestController extends Controller
 {
     public function index(Request $request)
     {
-        $query = LeaveRequest::where('user_id', auth()->id());
+        $query = LeaveRequest::where('pengguna_id', auth()->id());
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
         $leaveRequests = $query->latest()->paginate(15);
-        return view('staff.leave.index', compact('leaveRequests'));
+        return view('staf.izin.index', compact('leaveRequests'));
     }
 
     public function create()
     {
-        return view('staff.leave.create');
+        return view('staf.izin.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:izin,sakit,cuti,dinas_luar',
-            'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'jenis' => 'required|in:izin,sakit,cuti,dinas_luar',
+            'tanggal_mulai' => 'required|date|after_or_equal:today',
+            'tanggal_selesai' => 'required|date|after_or_equal:start_date',
             'reason' => 'required|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+            'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
         ]);
 
-        $data = $request->except('attachment');
-        $data['user_id'] = auth()->id();
+        $data = $request->except('lampiran');
+        $data['pengguna_id'] = auth()->id();
 
-        if ($request->hasFile('attachment')) {
-            $data['attachment'] = $request->file('attachment')->store('leave-attachments', 'public');
+        if ($request->hasFile('lampiran')) {
+            $data['lampiran'] = $request->file('lampiran')->store('leave-attachments', 'public');
         }
 
         $leave = LeaveRequest::create($data);
 
         // Notify admin
-        $admins = User::where('role', 'admin')->get();
+        $admins = User::where('peran', 'admin')->get();
         foreach ($admins as $admin) {
             Notification::create([
-                'user_id' => $admin->id,
-                'title' => 'Pengajuan Baru',
-                'message' => auth()->user()->name . " mengajukan {$leave->type} dari {$leave->start_date->format('d/m/Y')} s/d {$leave->end_date->format('d/m/Y')}",
-                'type' => 'izin',
-                'link' => route('admin.leave.show', $leave->id),
+                'pengguna_id' => $admin->id,
+                'judul' => 'Pengajuan Baru',
+                'pesan' => auth()->user()->nama . " mengajukan {$leave->jenis} dari {$leave->tanggal_mulai->format('d/m/Y')} s/d {$leave->tanggal_selesai->format('d/m/Y')}",
+                'jenis' => 'izin',
+                'tautan' => route('admin.izin.show', $leave->id),
             ]);
         }
 
-        return redirect()->route('staff.leave.index')->with('success', 'Pengajuan berhasil dikirim.');
+        return redirect()->route('staf.izin.index')->with('success', 'Pengajuan berhasil dikirim.');
     }
 
     public function show(LeaveRequest $leaveRequest)
     {
-        if ($leaveRequest->user_id !== auth()->id()) {
+        if ($leaveRequest->pengguna_id !== auth()->id()) {
             abort(403);
         }
         $leaveRequest->load('approver');
-        return view('staff.leave.show', compact('leaveRequest'));
+        return view('staf.izin.show', compact('leaveRequest'));
     }
 
     public function destroy(LeaveRequest $leaveRequest)
     {
-        if ($leaveRequest->user_id !== auth()->id() || $leaveRequest->status !== 'pending') {
+        if ($leaveRequest->pengguna_id !== auth()->id() || $leaveRequest->status !== 'pending') {
             abort(403);
         }
 
-        if ($leaveRequest->attachment) {
-            Storage::disk('public')->delete($leaveRequest->attachment);
+        if ($leaveRequest->lampiran) {
+            Storage::disk('public')->delete($leaveRequest->lampiran);
         }
 
         $leaveRequest->delete();
-        return redirect()->route('staff.leave.index')->with('success', 'Pengajuan berhasil dibatalkan.');
+        return redirect()->route('staf.izin.index')->with('success', 'Pengajuan berhasil dibatalkan.');
     }
 }

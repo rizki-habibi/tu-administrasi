@@ -14,7 +14,7 @@ class Inventaris extends Model
     protected $fillable = [
         'kode_barang', 'nama_barang', 'deskripsi', 'kategori', 'lokasi',
         'jumlah', 'kondisi', 'tanggal_perolehan', 'sumber_dana',
-        'harga_perolehan', 'foto', 'catatan', 'created_by',
+        'harga_perolehan', 'foto', 'catatan', 'dibuat_oleh',
     ];
 
     protected $casts = [
@@ -24,7 +24,7 @@ class Inventaris extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function damageReports()

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Edit Surat - ' . $surat->nomor_surat)
+@extends('admin.tata-letak.app')
+@section('judul', 'Edit Surat - ' . $surat->nomor_surat)
 
-@section('content')
+@section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h5 class="fw-bold mb-1"><i class="bi bi-pencil-square text-warning me-2"></i>Edit Surat</h5>
@@ -94,11 +94,11 @@
                 <!-- File -->
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Lampiran / Scan</label>
-                    @if($surat->file_path)
+                    @if($surat->path_file)
                     <div class="border rounded p-2 mb-2 d-flex align-items-center gap-2" style="font-size:.82rem;">
                         <i class="bi bi-file-earmark text-primary"></i>
-                        <span>{{ $surat->file_name }}</span>
-                        <a href="{{ asset('storage/' . $surat->file_path) }}" target="_blank" class="ms-auto"><i class="bi bi-eye"></i></a>
+                        <span>{{ $surat->nama_file }}</span>
+                        <a href="{{ asset('storage/' . $surat->path_file) }}" target="_blank" class="ms-auto"><i class="bi bi-eye"></i></a>
                     </div>
                     @endif
                     <input type="file" name="file" class="form-control @error('file') is-invalid @enderror" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">

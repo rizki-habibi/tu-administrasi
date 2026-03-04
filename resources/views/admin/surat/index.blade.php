@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Manajemen Surat')
+@extends('admin.tata-letak.app')
+@section('judul', 'Manajemen Surat')
 
-@section('content')
+@section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h5 class="fw-bold mb-1"><i class="bi bi-envelope-paper-fill text-primary me-2"></i>Manajemen Surat</h5>

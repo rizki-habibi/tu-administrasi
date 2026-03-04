@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'PKG / BKD / SKP')
+@extends('admin.tata-letak.app')
+@section('judul', 'PKG / BKD / SKP')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Penilaian Kinerja Guru (PKG / BKD)</h4>
@@ -21,7 +21,7 @@
                     @forelse($evaluations as $e)
                     <tr>
                         <td>{{ $loop->iteration + ($evaluations->currentPage()-1)*$evaluations->perPage() }}</td>
-                        <td class="fw-semibold">{{ $e->user->name ?? 'N/A' }}</td>
+                        <td class="fw-semibold">{{ $e->user->nama ?? 'N/A' }}</td>
                         <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ strtoupper($e->jenis) }}</span></td>
                         <td>{{ $e->periode ?? '-' }}</td>
                         <td class="fw-bold">{{ $e->nilai ?? '-' }}</td>

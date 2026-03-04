@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Tambah Asesmen P5')
+@extends('admin.tata-letak.app')
+@section('judul', 'Tambah Asesmen P5')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.evaluasi.p5') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <h4 class="fw-bold mb-0" style="color:#1e293b;">Tambah Asesmen P5</h4>
@@ -50,8 +50,8 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Tahun Ajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="academic_year" class="form-control @error('academic_year') is-invalid @enderror" value="{{ old('academic_year') }}" placeholder="2025/2026" required>
-                    @error('academic_year')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="academic_year" class="form-control @error('tahun_ajaran') is-invalid @enderror" value="{{ old('tahun_ajaran') }}" placeholder="2025/2026" required>
+                    @error('tahun_ajaran')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Semester <span class="text-danger">*</span></label>

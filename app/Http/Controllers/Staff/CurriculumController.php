@@ -12,41 +12,41 @@ class CurriculumController extends Controller
     {
         $query = CurriculumDocument::where('status', 'active');
 
-        if ($request->type) {
-            $query->where('type', $request->type);
+        if ($request->jenis) {
+            $query->where('jenis', $request->jenis);
         }
         if ($request->search) {
-            $query->where('title', 'like', "%{$request->search}%");
+            $query->where('judul', 'like', "%{$request->search}%");
         }
 
         $documents = $query->latest()->paginate(15);
-        return view('staff.kurikulum.index', compact('documents'));
+        return view('staf.kurikulum.index', compact('documents'));
     }
 
     public function show(CurriculumDocument $kurikulum)
     {
-        return view('staff.kurikulum.show', compact('kurikulum'));
+        return view('staf.kurikulum.show', compact('kurikulum'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'type' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'jenis' => 'required|string',
             'file' => 'required|file|max:10240',
         ]);
 
-        $data = $request->only(['title', 'type', 'academic_year', 'semester', 'subject', 'class_level', 'description']);
-        $data['uploaded_by'] = auth()->id();
+        $data = $request->only(['judul', 'jenis', 'tahun_ajaran', 'semester', 'mata_pelajaran', 'tingkat_kelas', 'deskripsi']);
+        $data['diunggah_oleh'] = auth()->id();
         $data['status'] = 'draft';
 
         if ($request->hasFile('file')) {
-            $data['file_path'] = $request->file('file')->store('kurikulum', 'public');
-            $data['file_name'] = $request->file('file')->getClientOriginalName();
-            $data['file_size'] = $request->file('file')->getSize();
+            $data['path_file'] = $request->file('file')->store('kurikulum', 'public');
+            $data['nama_file'] = $request->file('file')->getClientOriginalName();
+            $data['ukuran_file'] = $request->file('file')->getSize();
         }
 
         CurriculumDocument::create($data);
-        return redirect()->route('staff.kurikulum.index')->with('success', 'Dokumen kurikulum berhasil diunggah.');
+        return redirect()->route('staf.kurikulum.index')->with('success', 'Dokumen kurikulum berhasil diunggah.');
     }
 }

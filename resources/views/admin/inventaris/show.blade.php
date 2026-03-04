@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Detail Inventaris')
+@extends('admin.tata-letak.app')
+@section('judul', 'Detail Inventaris')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.inventaris.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <h4 class="fw-bold mb-0" style="color:#1e293b;">Detail Inventaris</h4>

@@ -61,12 +61,12 @@ class SuratController extends Controller
         $data = $request->only(['jenis', 'kategori', 'perihal', 'isi', 'tujuan', 'asal', 'tanggal_surat', 'tanggal_terima', 'sifat', 'catatan']);
         $data['nomor_surat'] = Surat::generateNomor($request->jenis, $request->kategori);
         $data['status'] = 'draft';
-        $data['created_by'] = auth()->id();
+        $data['dibuat_oleh'] = auth()->id();
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('surat', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('surat', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         $surat = Surat::create($data);
@@ -103,10 +103,10 @@ class SuratController extends Controller
         $data = $request->only(['kategori', 'perihal', 'isi', 'tujuan', 'asal', 'tanggal_surat', 'tanggal_terima', 'sifat', 'catatan']);
 
         if ($request->hasFile('file')) {
-            if ($surat->file_path) Storage::disk('public')->delete($surat->file_path);
+            if ($surat->path_file) Storage::disk('public')->delete($surat->path_file);
             $file = $request->file('file');
-            $data['file_path'] = $file->store('surat', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('surat', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
         }
 
         $surat->update($data);
@@ -122,7 +122,7 @@ class SuratController extends Controller
 
         $surat->update([
             'status' => $request->status,
-            'approved_by' => in_array($request->status, ['dikirim', 'diterima']) ? auth()->id() : $surat->approved_by,
+            'disetujui_oleh' => in_array($request->status, ['dikirim', 'diterima']) ? auth()->id() : $surat->disetujui_oleh,
         ]);
 
         $statusLabel = ucfirst($request->status);
@@ -131,7 +131,7 @@ class SuratController extends Controller
 
     public function destroy(Surat $surat)
     {
-        if ($surat->file_path) Storage::disk('public')->delete($surat->file_path);
+        if ($surat->path_file) Storage::disk('public')->delete($surat->path_file);
         $surat->delete();
 
         return redirect()->route('admin.surat.index')->with('success', 'Surat berhasil dihapus.');

@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Asesmen P5')
+@extends('admin.tata-letak.app')
+@section('judul', 'Asesmen P5')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Asesmen P5</h4>

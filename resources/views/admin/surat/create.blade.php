@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', $jenis == 'masuk' ? 'Catat Surat Masuk' : 'Buat Surat Keluar')
+@extends('admin.tata-letak.app')
+@section('judul', $jenis == 'masuk' ? 'Catat Surat Masuk' : 'Buat Surat Keluar')
 
-@section('content')
+@section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h5 class="fw-bold mb-1">

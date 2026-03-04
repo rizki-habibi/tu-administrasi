@@ -9,10 +9,12 @@ class FinanceRecord extends Model
 {
     use HasFactory;
 
+    protected $table = 'catatan_keuangan';
+
     protected $fillable = [
         'kode_transaksi', 'jenis', 'kategori', 'uraian', 'jumlah',
         'tanggal', 'bukti_path', 'bukti_nama', 'keterangan',
-        'status', 'created_by', 'verified_by',
+        'status', 'dibuat_oleh', 'diverifikasi_oleh',
     ];
 
     protected $casts = [
@@ -22,12 +24,12 @@ class FinanceRecord extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function verifier()
     {
-        return $this->belongsTo(User::class, 'verified_by');
+        return $this->belongsTo(User::class, 'diverifikasi_oleh');
     }
 
     public static function generateKode($jenis): string

@@ -17,33 +17,33 @@ class LeaveRequestController extends Controller
             $query->where('status', $request->status);
         }
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
+        if ($request->filled('jenis')) {
+            $query->where('jenis', $request->jenis);
         }
 
         $leaveRequests = $query->latest()->paginate(15);
-        return view('admin.leave.index', compact('leaveRequests'));
+        return view('admin.izin.index', compact('leaveRequests'));
     }
 
     public function show(LeaveRequest $leaveRequest)
     {
         $leaveRequest->load('user', 'approver');
-        return view('admin.leave.show', compact('leaveRequest'));
+        return view('admin.izin.show', compact('leaveRequest'));
     }
 
     public function approve(LeaveRequest $leaveRequest)
     {
         $leaveRequest->update([
             'status' => 'approved',
-            'approved_by' => auth()->id(),
+            'disetujui_oleh' => auth()->id(),
         ]);
 
         Notification::create([
-            'user_id' => $leaveRequest->user_id,
-            'title' => 'Pengajuan Disetujui',
-            'message' => "Pengajuan {$leaveRequest->type} Anda dari tanggal {$leaveRequest->start_date->format('d/m/Y')} s/d {$leaveRequest->end_date->format('d/m/Y')} telah disetujui.",
-            'type' => 'izin',
-            'link' => route('staff.leave.show', $leaveRequest->id),
+            'pengguna_id' => $leaveRequest->pengguna_id,
+            'judul' => 'Pengajuan Disetujui',
+            'pesan' => "Pengajuan {$leaveRequest->jenis} Anda dari tanggal {$leaveRequest->tanggal_mulai->format('d/m/Y')} s/d {$leaveRequest->tanggal_selesai->format('d/m/Y')} telah disetujui.",
+            'jenis' => 'izin',
+            'tautan' => route('staf.izin.show', $leaveRequest->id),
         ]);
 
         return redirect()->back()->with('success', 'Pengajuan berhasil disetujui.');
@@ -51,20 +51,20 @@ class LeaveRequestController extends Controller
 
     public function reject(Request $request, LeaveRequest $leaveRequest)
     {
-        $request->validate(['admin_note' => 'required|string']);
+        $request->validate(['catatan_admin' => 'required|string']);
 
         $leaveRequest->update([
             'status' => 'rejected',
-            'approved_by' => auth()->id(),
-            'admin_note' => $request->admin_note,
+            'disetujui_oleh' => auth()->id(),
+            'catatan_admin' => $request->catatan_admin,
         ]);
 
         Notification::create([
-            'user_id' => $leaveRequest->user_id,
-            'title' => 'Pengajuan Ditolak',
-            'message' => "Pengajuan {$leaveRequest->type} Anda ditolak. Alasan: {$request->admin_note}",
-            'type' => 'izin',
-            'link' => route('staff.leave.show', $leaveRequest->id),
+            'pengguna_id' => $leaveRequest->pengguna_id,
+            'judul' => 'Pengajuan Ditolak',
+            'pesan' => "Pengajuan {$leaveRequest->jenis} Anda ditolak. Alasan: {$request->catatan_admin}",
+            'jenis' => 'izin',
+            'tautan' => route('staf.izin.show', $leaveRequest->id),
         ]);
 
         return redirect()->back()->with('success', 'Pengajuan berhasil ditolak.');

@@ -1,14 +1,14 @@
-@extends('layouts.admin')
-@section('title', 'Keuangan')
+@extends('admin.tata-letak.app')
+@section('judul', 'Keuangan')
 
-@section('content')
+@section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Keuangan Sekolah</h4>
         <p class="text-muted mb-0" style="font-size:.85rem;">Kelola transaksi keuangan dan anggaran</p>
     </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('admin.keuangan.budget') }}" class="btn btn-outline-primary"><i class="bi bi-wallet2 me-1"></i> RKAS</a>
+        <a href="{{ route('admin.keuangan.anggaran') }}" class="btn btn-outline-primary"><i class="bi bi-wallet2 me-1"></i> RKAS</a>
         <a href="{{ route('admin.keuangan.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Tambah Transaksi</a>
     </div>
 </div>
@@ -101,7 +101,7 @@
                             <div class="d-flex gap-1">
                                 <a href="{{ route('admin.keuangan.show', $t) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
                                 @if($t->status == 'draft')
-                                <form action="{{ route('admin.keuangan.verify', $t) }}" method="POST">@csrf @method('PATCH')
+                                <form action="{{ route('admin.keuangan.verifikasi', $t) }}" method="POST">@csrf @method('PATCH')
                                     <button type="submit" class="btn btn-sm btn-outline-success" data-confirm="Verifikasi transaksi ini?"><i class="bi bi-check-lg"></i></button>
                                 </form>
                                 @endif

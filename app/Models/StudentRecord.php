@@ -9,32 +9,34 @@ class StudentRecord extends Model
 {
     use HasFactory;
 
+    protected $table = 'data_siswa';
+
     protected $fillable = [
-        'nis', 'nisn', 'name', 'class', 'academic_year', 'gender',
-        'place_of_birth', 'date_of_birth', 'religion', 'address',
-        'parent_name', 'parent_phone', 'photo', 'status',
-        'entry_date', 'exit_date', 'notes', 'created_by',
+        'nis', 'nisn', 'nama', 'kelas', 'tahun_ajaran', 'jenis_kelamin',
+        'tempat_lahir', 'tanggal_lahir', 'agama', 'alamat',
+        'nama_orang_tua', 'telepon_orang_tua', 'foto', 'status',
+        'tanggal_masuk', 'tanggal_keluar', 'notes', 'dibuat_oleh',
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date',
-        'entry_date' => 'date',
-        'exit_date' => 'date',
+        'tanggal_lahir' => 'date',
+        'tanggal_masuk' => 'date',
+        'tanggal_keluar' => 'date',
     ];
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'dibuat_oleh');
     }
 
     public function achievements()
     {
-        return $this->hasMany(StudentAchievement::class, 'student_id');
+        return $this->hasMany(StudentAchievement::class, 'siswa_id');
     }
 
     public function violations()
     {
-        return $this->hasMany(StudentViolation::class, 'student_id');
+        return $this->hasMany(StudentViolation::class, 'siswa_id');
     }
 
     public function getStatusLabelAttribute(): string

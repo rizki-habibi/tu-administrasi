@@ -1,7 +1,7 @@
-@extends('layouts.admin')
-@section('title', 'Tambah Siswa')
+@extends('admin.tata-letak.app')
+@section('judul', 'Tambah Siswa')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.kesiswaan.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <div>
@@ -18,8 +18,8 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
-                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" required>
+                    @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">NIS <span class="text-danger">*</span></label>
@@ -37,46 +37,46 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tahun Ajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('academic_year', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026" required>
+                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                     <select name="gender" class="form-select" required>
-                        <option value="L" {{ old('gender')=='L'?'selected':'' }}>Laki-laki</option>
-                        <option value="P" {{ old('gender')=='P'?'selected':'' }}>Perempuan</option>
+                        <option value="L" {{ old('jenis_kelamin')=='L'?'selected':'' }}>Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin')=='P'?'selected':'' }}>Perempuan</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tempat Lahir</label>
-                    <input type="text" name="place_of_birth" class="form-control" value="{{ old('place_of_birth') }}">
+                    <input type="text" name="place_of_birth" class="form-control" value="{{ old('tempat_lahir') }}">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tanggal Lahir</label>
-                    <input type="date" name="date_of_birth" class="form-control" value="{{ old('date_of_birth') }}">
+                    <input type="date" name="date_of_birth" class="form-control" value="{{ old('tanggal_lahir') }}">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Agama</label>
                     <select name="religion" class="form-select">
                         <option value="">Pilih</option>
-                        <option value="Islam" {{ old('religion')=='Islam'?'selected':'' }}>Islam</option>
-                        <option value="Kristen" {{ old('religion')=='Kristen'?'selected':'' }}>Kristen</option>
-                        <option value="Katolik" {{ old('religion')=='Katolik'?'selected':'' }}>Katolik</option>
-                        <option value="Hindu" {{ old('religion')=='Hindu'?'selected':'' }}>Hindu</option>
-                        <option value="Buddha" {{ old('religion')=='Buddha'?'selected':'' }}>Buddha</option>
-                        <option value="Konghucu" {{ old('religion')=='Konghucu'?'selected':'' }}>Konghucu</option>
+                        <option value="Islam" {{ old('agama')=='Islam'?'selected':'' }}>Islam</option>
+                        <option value="Kristen" {{ old('agama')=='Kristen'?'selected':'' }}>Kristen</option>
+                        <option value="Katolik" {{ old('agama')=='Katolik'?'selected':'' }}>Katolik</option>
+                        <option value="Hindu" {{ old('agama')=='Hindu'?'selected':'' }}>Hindu</option>
+                        <option value="Buddha" {{ old('agama')=='Buddha'?'selected':'' }}>Buddha</option>
+                        <option value="Konghucu" {{ old('agama')=='Konghucu'?'selected':'' }}>Konghucu</option>
                     </select>
                 </div>
                 <div class="col-md-9">
                     <label class="form-label">Alamat</label>
-                    <textarea name="address" class="form-control" rows="2">{{ old('address') }}</textarea>
+                    <textarea name="address" class="form-control" rows="2">{{ old('alamat') }}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Nama Orang Tua/Wali</label>
-                    <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name') }}">
+                    <input type="text" name="parent_name" class="form-control" value="{{ old('nama_orang_tua') }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">No. HP Orang Tua/Wali</label>
-                    <input type="text" name="parent_phone" class="form-control" value="{{ old('parent_phone') }}">
+                    <input type="text" name="parent_phone" class="form-control" value="{{ old('telepon_orang_tua') }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Status</label>

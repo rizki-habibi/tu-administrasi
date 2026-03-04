@@ -1,12 +1,12 @@
-@extends('layouts.admin')
-@section('title', 'Edit Data Siswa')
+@extends('admin.tata-letak.app')
+@section('judul', 'Edit Data Siswa')
 
-@section('content')
+@section('konten')
 <div class="d-flex align-items-center mb-4">
     <a href="{{ route('admin.kesiswaan.index') }}" class="btn btn-outline-secondary btn-sm me-3"><i class="bi bi-arrow-left"></i></a>
     <div>
         <h4 class="fw-bold mb-0" style="color:#1e293b;">Edit Data Siswa</h4>
-        <p class="text-muted mb-0" style="font-size:.85rem;">{{ $kesiswaan->name }} - {{ $kesiswaan->nis }}</p>
+        <p class="text-muted mb-0" style="font-size:.85rem;">{{ $kesiswaan->nama }} - {{ $kesiswaan->nis }}</p>
     </div>
 </div>
 
@@ -17,8 +17,8 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $kesiswaan->name) }}" required>
-                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama', $kesiswaan->nama) }}" required>
+                    @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">NIS <span class="text-danger">*</span></label>
@@ -35,43 +35,43 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('academic_year', $kesiswaan->academic_year) }}" required>
+                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', $kesiswaan->tahun_ajaran) }}" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Jenis Kelamin</label>
                     <select name="gender" class="form-select" required>
-                        <option value="L" {{ old('gender',$kesiswaan->gender)=='L'?'selected':'' }}>Laki-laki</option>
-                        <option value="P" {{ old('gender',$kesiswaan->gender)=='P'?'selected':'' }}>Perempuan</option>
+                        <option value="L" {{ old('jenis_kelamin',$kesiswaan->jenis_kelamin)=='L'?'selected':'' }}>Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin',$kesiswaan->jenis_kelamin)=='P'?'selected':'' }}>Perempuan</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tempat Lahir</label>
-                    <input type="text" name="place_of_birth" class="form-control" value="{{ old('place_of_birth', $kesiswaan->place_of_birth) }}">
+                    <input type="text" name="place_of_birth" class="form-control" value="{{ old('tempat_lahir', $kesiswaan->tempat_lahir) }}">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tanggal Lahir</label>
-                    <input type="date" name="date_of_birth" class="form-control" value="{{ old('date_of_birth', $kesiswaan->date_of_birth) }}">
+                    <input type="date" name="date_of_birth" class="form-control" value="{{ old('tanggal_lahir', $kesiswaan->tanggal_lahir) }}">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Agama</label>
                     <select name="religion" class="form-select">
                         <option value="">Pilih</option>
                         @foreach(['Islam','Kristen','Katolik','Hindu','Buddha','Konghucu'] as $ag)
-                        <option value="{{ $ag }}" {{ old('religion',$kesiswaan->religion)==$ag?'selected':'' }}>{{ $ag }}</option>
+                        <option value="{{ $ag }}" {{ old('agama',$kesiswaan->agama)==$ag?'selected':'' }}>{{ $ag }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-9">
                     <label class="form-label">Alamat</label>
-                    <textarea name="address" class="form-control" rows="2">{{ old('address', $kesiswaan->address) }}</textarea>
+                    <textarea name="address" class="form-control" rows="2">{{ old('alamat', $kesiswaan->alamat) }}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Nama Orang Tua/Wali</label>
-                    <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name', $kesiswaan->parent_name) }}">
+                    <input type="text" name="parent_name" class="form-control" value="{{ old('nama_orang_tua', $kesiswaan->nama_orang_tua) }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">No. HP Orang Tua/Wali</label>
-                    <input type="text" name="parent_phone" class="form-control" value="{{ old('parent_phone', $kesiswaan->parent_phone) }}">
+                    <input type="text" name="parent_phone" class="form-control" value="{{ old('telepon_orang_tua', $kesiswaan->telepon_orang_tua) }}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Status</label>

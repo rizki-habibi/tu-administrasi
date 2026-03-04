@@ -14,77 +14,79 @@ class AttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Attendance::where('user_id', auth()->id());
+        $query = Attendance::where('pengguna_id', auth()->id());
 
         if ($request->filled('month')) {
-            $query->whereMonth('date', $request->month);
+            $query->whereMonth('tanggal', $request->month);
         }
 
         if ($request->filled('year')) {
-            $query->whereYear('date', $request->year);
+            $query->whereYear('tanggal', $request->year);
         }
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        $attendances = $query->orderBy('date', 'desc')->paginate(20);
-        $todayAttendance = Attendance::where('user_id', auth()->id())->whereDate('date', today())->first();
+        $attendances = $query->orderBy('tanggal', 'desc')->paginate(20);
+        $todayAttendance = Attendance::where('pengguna_id', auth()->id())->whereDate('tanggal', today())->first();
         $setting = AttendanceSetting::first();
 
-        return view('staff.attendance.index', compact('attendances', 'todayAttendance', 'setting'));
+        return view('staf.kehadiran.index', compact('attendances', 'todayAttendance', 'setting'));
     }
 
     public function clockIn(Request $request)
     {
         $request->validate([
-            'photo'     => 'required|string',
+            'foto'     => 'required|string',
             'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
+            'alamat'   => 'nullable|string|max:500',
         ]);
 
         // Save base64 photo
-        $photoPath = $this->saveBase64Image($request->photo, 'attendance-photos');
+        $photoPath = $this->saveBase64Image($request->foto, 'attendance-photos');
 
         $setting = AttendanceSetting::first();
         $now     = Carbon::now();
         $status  = 'hadir';
 
         if ($setting) {
-            $clockInLimit = Carbon::parse($setting->clock_in_time)->addMinutes($setting->late_tolerance_minutes ?? 0);
+            $clockInLimit = Carbon::parse($setting->jam_masuk)->addMinutes($setting->toleransi_terlambat_menit ?? 0);
             if ($now->format('H:i:s') > $clockInLimit->format('H:i:s')) {
                 $status = 'terlambat';
             }
         }
 
-        $existing = Attendance::where('user_id', auth()->id())->whereDate('date', today())->first();
+        $existing = Attendance::where('pengguna_id', auth()->id())->whereDate('tanggal', today())->first();
 
         // Delete old photo if re-doing
-        if ($existing && $existing->photo_in) {
-            Storage::disk('public')->delete($existing->photo_in);
+        if ($existing && $existing->foto_masuk) {
+            Storage::disk('public')->delete($existing->foto_masuk);
         }
 
         $attendance = Attendance::updateOrCreate(
-            ['user_id' => auth()->id(), 'date' => today()],
+            ['pengguna_id' => auth()->id(), 'tanggal' => today()],
             [
-                'clock_in'     => $now->format('H:i:s'),
+                'jam_masuk'     => $now->format('H:i:s'),
                 'status'       => $status,
-                'latitude_in'  => $request->latitude,
-                'longitude_in' => $request->longitude,
-                'photo_in'     => $photoPath,
+                'lat_masuk'  => $request->latitude,
+                'lng_masuk' => $request->longitude,
+                'foto_masuk'     => $photoPath,
+                'alamat_masuk'   => $request->input('alamat'),
             ]
         );
 
         if ($status === 'terlambat') {
             Notification::create([
-                'user_id' => auth()->id(),
-                'title'   => 'Anda Terlambat!',
-                'message' => 'Anda tercatat terlambat pada ' . $now->format('d/m/Y H:i:s'),
-                'type'    => 'kehadiran',
+                'pengguna_id' => auth()->id(),
+                'judul'   => 'Anda Terlambat!',
+                'pesan' => 'Anda tercatat terlambat pada ' . $now->format('d/m/Y H:i:s'),
+                'jenis'    => 'kehadiran',
             ]);
         }
 
-        $message = ($existing && $existing->clock_in)
+        $message = ($existing && $existing->jam_masuk)
             ? 'Absen masuk berhasil diperbarui pada ' . $now->format('H:i:s') . ($status === 'terlambat' ? ' (Terlambat)' : '')
             : 'Absen masuk berhasil pada ' . $now->format('H:i:s') . ($status === 'terlambat' ? '. Anda tercatat TERLAMBAT.' : '.');
 
@@ -94,31 +96,33 @@ class AttendanceController extends Controller
     public function clockOut(Request $request)
     {
         $request->validate([
-            'photo'     => 'required|string',
+            'foto'     => 'required|string',
             'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
+            'alamat'   => 'nullable|string|max:500',
         ]);
 
-        $attendance = Attendance::where('user_id', auth()->id())->whereDate('date', today())->first();
+        $attendance = Attendance::where('pengguna_id', auth()->id())->whereDate('tanggal', today())->first();
 
-        if (!$attendance || !$attendance->clock_in) {
+        if (!$attendance || !$attendance->jam_masuk) {
             return redirect()->back()->with('error', 'Anda belum melakukan absen masuk.');
         }
 
         // Delete old photo if re-doing
-        if ($attendance->photo_out) {
-            Storage::disk('public')->delete($attendance->photo_out);
+        if ($attendance->foto_pulang) {
+            Storage::disk('public')->delete($attendance->foto_pulang);
         }
 
-        $photoPath = $this->saveBase64Image($request->photo, 'attendance-photos');
+        $photoPath = $this->saveBase64Image($request->foto, 'attendance-photos');
         $now = Carbon::now();
-        $isRedo = (bool) $attendance->clock_out;
+        $isRedo = (bool) $attendance->jam_pulang;
 
         $attendance->update([
-            'clock_out'     => $now->format('H:i:s'),
-            'latitude_out'  => $request->latitude,
-            'longitude_out' => $request->longitude,
-            'photo_out'     => $photoPath,
+            'jam_pulang'     => $now->format('H:i:s'),
+            'lat_pulang'  => $request->latitude,
+            'lng_pulang' => $request->longitude,
+            'foto_pulang'     => $photoPath,
+            'alamat_pulang'   => $request->input('alamat'),
         ]);
 
         $msg = $isRedo
@@ -130,10 +134,10 @@ class AttendanceController extends Controller
 
     public function show(Attendance $attendance)
     {
-        if ($attendance->user_id !== auth()->id()) {
+        if ($attendance->pengguna_id !== auth()->id()) {
             abort(403);
         }
-        return view('staff.attendance.show', compact('attendance'));
+        return view('staf.kehadiran.show', compact('attendance'));
     }
 
     /**
@@ -142,21 +146,21 @@ class AttendanceController extends Controller
      */
     public function updateNote(Request $request, Attendance $attendance)
     {
-        if ($attendance->user_id !== auth()->id()) abort(403);
+        if ($attendance->pengguna_id !== auth()->id()) abort(403);
 
         // Only allow editing past days via this endpoint
-        if ($attendance->date->isToday()) {
+        if ($attendance->tanggal->isToday()) {
             return redirect()->back()->with('error', 'Gunakan tombol Ubah Kehadiran untuk hari ini.');
         }
 
         $request->validate([
             'status' => 'required|in:hadir,terlambat,izin,sakit,alpha,cuti',
-            'note'   => 'nullable|string|max:500',
+            'catatan'   => 'nullable|string|max:500',
         ]);
 
         $attendance->update([
             'status' => $request->status,
-            'note'   => $request->note,
+            'catatan'   => $request->catatan,
         ]);
 
         return redirect()->back()->with('success', 'Keterangan absensi berhasil diperbarui.');

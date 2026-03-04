@@ -13,24 +13,24 @@ class DocumentController extends Controller
     {
         $query = Document::with('uploader')->latest();
 
-        if ($request->filled('category')) $query->where('category', $request->category);
-        if ($request->filled('search')) $query->where('title', 'like', '%' . $request->search . '%');
+        if ($request->filled('kategori')) $query->where('kategori', $request->kategori);
+        if ($request->filled('search')) $query->where('judul', 'like', '%' . $request->search . '%');
 
         $documents = $query->paginate(15)->withQueryString();
-        return view('admin.document.index', compact('documents'));
+        return view('admin.dokumen.index', compact('documents'));
     }
 
     public function create()
     {
-        return view('admin.document.create');
+        return view('admin.dokumen.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category' => 'required|in:kurikulum,administrasi,keuangan,kepegawaian,kesiswaan,surat,inventaris,lainnya',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|in:kurikulum,administrasi,keuangan,kepegawaian,kesiswaan,surat,inventaris,lainnya',
             'file' => 'required|file|max:10240',
         ]);
 
@@ -38,64 +38,64 @@ class DocumentController extends Controller
         $path = $file->store('documents', 'public');
 
         Document::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'category' => $request->category,
-            'file_path' => $path,
-            'file_name' => $file->getClientOriginalName(),
-            'file_type' => $file->getClientOriginalExtension(),
-            'file_size' => $file->getSize(),
-            'uploaded_by' => auth()->id(),
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'kategori' => $request->kategori,
+            'path_file' => $path,
+            'nama_file' => $file->getClientOriginalName(),
+            'tipe_file' => $file->getClientOriginalExtension(),
+            'ukuran_file' => $file->getSize(),
+            'diunggah_oleh' => auth()->id(),
         ]);
 
-        return redirect()->route('admin.document.index')->with('success', 'Dokumen berhasil diupload.');
+        return redirect()->route('admin.dokumen.index')->with('success', 'Dokumen berhasil diupload.');
     }
 
     public function show(Document $document)
     {
-        return view('admin.document.show', compact('document'));
+        return view('admin.dokumen.show', compact('document'));
     }
 
     public function edit(Document $document)
     {
-        return view('admin.document.edit', compact('document'));
+        return view('admin.dokumen.edit', compact('document'));
     }
 
     public function update(Request $request, Document $document)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category' => 'required|in:kurikulum,administrasi,keuangan,kepegawaian,kesiswaan,surat,inventaris,lainnya',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|in:kurikulum,administrasi,keuangan,kepegawaian,kesiswaan,surat,inventaris,lainnya',
             'file' => 'nullable|file|max:10240',
         ]);
 
-        $data = $request->only(['title', 'description', 'category']);
+        $data = $request->only(['judul', 'deskripsi', 'kategori']);
 
         if ($request->hasFile('file')) {
-            Storage::disk('public')->delete($document->file_path);
+            Storage::disk('public')->delete($document->path_file);
             $file = $request->file('file');
-            $data['file_path'] = $file->store('documents', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
-            $data['file_type'] = $file->getClientOriginalExtension();
-            $data['file_size'] = $file->getSize();
+            $data['path_file'] = $file->store('documents', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
+            $data['tipe_file'] = $file->getClientOriginalExtension();
+            $data['ukuran_file'] = $file->getSize();
         }
 
         $document->update($data);
-        return redirect()->route('admin.document.index')->with('success', 'Dokumen berhasil diperbarui.');
+        return redirect()->route('admin.dokumen.index')->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     public function destroy(Document $document)
     {
-        Storage::disk('public')->delete($document->file_path);
+        Storage::disk('public')->delete($document->path_file);
         $document->delete();
-        return redirect()->route('admin.document.index')->with('success', 'Dokumen berhasil dihapus.');
+        return redirect()->route('admin.dokumen.index')->with('success', 'Dokumen berhasil dihapus.');
     }
 
     public function export(Request $request)
     {
         $documents = Document::with('uploader')
-            ->when($request->category, fn($q) => $q->where('category', $request->category))
+            ->when($request->kategori, fn($q) => $q->where('kategori', $request->kategori))
             ->latest()->get();
 
         $format = $request->get('format', 'csv');
@@ -109,8 +109,8 @@ class DocumentController extends Controller
                 fputcsv($file, ['No', 'Judul', 'Kategori', 'File', 'Ukuran', 'Diupload Oleh', 'Tanggal']);
                 foreach ($documents as $i => $doc) {
                     fputcsv($file, [
-                        $i + 1, $doc->title, ucfirst($doc->category), $doc->file_name,
-                        $doc->file_size_formatted, $doc->uploader->name ?? '-', $doc->created_at->format('d/m/Y H:i'),
+                        $i + 1, $doc->judul, ucfirst($doc->kategori), $doc->nama_file,
+                        $doc->file_size_formatted, $doc->uploader->nama ?? '-', $doc->created_at->format('d/m/Y H:i'),
                     ]);
                 }
                 fclose($file);
@@ -119,6 +119,6 @@ class DocumentController extends Controller
         }
 
         // PDF / Print
-        return view('admin.document.print', compact('documents'));
+        return view('admin.dokumen.cetak', compact('documents'));
     }
 }

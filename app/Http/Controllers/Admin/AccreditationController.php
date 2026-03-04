@@ -46,13 +46,13 @@ class AccreditationController extends Controller
         ]);
 
         $data = $request->except('file');
-        $data['uploaded_by'] = auth()->id();
+        $data['diunggah_oleh'] = auth()->id();
         $data['status'] = 'belum_lengkap';
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $data['file_path'] = $file->store('akreditasi', 'public');
-            $data['file_name'] = $file->getClientOriginalName();
+            $data['path_file'] = $file->store('akreditasi', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
             $data['status'] = 'lengkap';
         }
 
@@ -68,7 +68,7 @@ class AccreditationController extends Controller
 
     public function destroy(AccreditationDocument $akreditasi)
     {
-        if ($akreditasi->file_path) Storage::disk('public')->delete($akreditasi->file_path);
+        if ($akreditasi->path_file) Storage::disk('public')->delete($akreditasi->path_file);
         $akreditasi->delete();
         return redirect()->route('admin.akreditasi.index')->with('success', 'Dokumen akreditasi berhasil dihapus.');
     }
@@ -90,7 +90,7 @@ class AccreditationController extends Controller
             'program_tindak_lanjut' => 'nullable|string',
         ]);
 
-        SchoolEvaluation::create(array_merge($request->all(), ['created_by' => auth()->id()]));
+        SchoolEvaluation::create(array_merge($request->all(), ['dibuat_oleh' => auth()->id()]));
         return redirect()->route('admin.akreditasi.eds')->with('success', 'Evaluasi diri sekolah berhasil ditambahkan.');
     }
 }
