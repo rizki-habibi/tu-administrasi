@@ -180,12 +180,12 @@
 </head>
 <body>
     {{-- Sidebar --}}
-    @include('admin.tata-letak._sidebar')
+    @include('admin.tata-letak.sidebar')
 
     {{-- Main Content --}}
     <div class="main-content" id="mainContent">
         {{-- Top Header --}}
-        @include('admin.tata-letak._header')
+        @include('admin.tata-letak.header')
 
         {{-- Page Content --}}
         <div class="page-content fade-in">
@@ -208,7 +208,7 @@
         </div>
 
         {{-- Footer Scripts --}}
-        @include('admin.tata-letak._footer')
+        @include('admin.tata-letak.footer')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

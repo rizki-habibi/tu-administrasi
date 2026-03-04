@@ -1,9 +1,9 @@
 @extends('kepala-sekolah.tata-letak.app')
-@section('judul', 'Edit Profil')
+@section('judul', 'Ubah Profil')
 
 @section('konten')
 <div class="mb-4">
-    <h5 class="fw-bold mb-1">Edit Profil</h5>
+    <h5 class="fw-bold mb-1">Ubah Profil</h5>
     <p class="text-muted mb-0" style="font-size:.85rem;">Perbarui informasi akun Anda</p>
 </div>
 
@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Nomor Telepon</label>
-                            <input type="text" name="phone" class="form-control" value="{{ old('telepon', $user->telepon) }}" placeholder="08xxxxxxxxxx">
+                            <input type="text" name="telepon" class="form-control" value="{{ old('telepon', $user->telepon) }}" placeholder="08xxxxxxxxxx">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">NIP</label>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Alamat</label>
-                            <textarea name="address" class="form-control" rows="3" placeholder="Masukkan alamat lengkap...">{{ old('alamat', $user->alamat) }}</textarea>
+                            <textarea name="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap...">{{ old('alamat', $user->alamat) }}</textarea>
                         </div>
                     </div>
 
@@ -86,27 +86,27 @@
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header bg-white border-0 py-3">
-                <h6 class="fw-bold mb-0" style="font-size:.9rem;"><i class="bi bi-shield-lock text-warning me-2"></i>Ubah Password</h6>
+                <h6 class="fw-bold mb-0" style="font-size:.9rem;"><i class="bi bi-shield-lock text-warning me-2"></i>Ubah Kata Sandi</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('kepala-sekolah.profil.password') }}" method="POST">
                     @csrf @method('PUT')
 
                     <div class="mb-3">
-                        <label class="form-label">Password Lama <span class="text-danger">*</span></label>
+                        <label class="form-label">Kata Sandi Lama <span class="text-danger">*</span></label>
                         <input type="password" name="current_password" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Password Baru <span class="text-danger">*</span></label>
+                        <label class="form-label">Kata Sandi Baru <span class="text-danger">*</span></label>
                         <input type="password" name="password" class="form-control" required>
                         <small class="text-muted">Minimal 8 karakter</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Konfirmasi Password Baru <span class="text-danger">*</span></label>
+                        <label class="form-label">Konfirmasi Kata Sandi Baru <span class="text-danger">*</span></label>
                         <input type="password" name="password_confirmation" class="form-control" required>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-warning w-100"><i class="bi bi-key me-1"></i>Ubah Password</button>
+                    <button type="submit" class="btn btn-outline-warning w-100"><i class="bi bi-key me-1"></i>Ubah Kata Sandi</button>
                 </form>
             </div>
         </div>
@@ -117,7 +117,7 @@
                 <h6 class="fw-bold mb-0" style="font-size:.9rem;">Info Akun</h6>
             </div>
             <div class="card-body" style="font-size:.85rem;">
-                <div class="mb-2"><strong class="text-muted d-block">Role</strong><span class="badge bg-warning bg-opacity-10 text-warning">{{ $user->role_label }}</span></div>
+                <div class="mb-2"><strong class="text-muted d-block">Peran</strong><span class="badge bg-warning bg-opacity-10 text-warning">{{ $user->role_label }}</span></div>
                 <div class="mb-2"><strong class="text-muted d-block">Status</strong>
                     @if($user->aktif)
                         <span class="badge bg-success bg-opacity-10 text-success">Aktif</span>

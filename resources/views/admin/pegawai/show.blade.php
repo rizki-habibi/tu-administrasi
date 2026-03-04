@@ -1,5 +1,5 @@
 @extends('admin.tata-letak.app')
-@section('judul', 'Detail Staff: ' . $staff->nama)
+@section('judul', 'Detail Staf: ' . $staff->nama)
 
 @section('konten')
 <div class="row g-4">

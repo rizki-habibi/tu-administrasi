@@ -136,7 +136,7 @@
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Status</label>
                         <select name="status" class="form-select">
-                            <option value="draft" selected>Draft</option>
+                            <option value="draft" selected>Draf</option>
                             <option value="final">Final</option>
                             <option value="archived">Arsip</option>
                         </select>

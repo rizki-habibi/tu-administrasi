@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label">Jenis</label>
-                <select name="type" class="form-select">
+                <select name="jenis" class="form-select">
                     <option value="">Semua</option>
                     @foreach(['izin','sakit','cuti','dinas_luar'] as $t)
                         <option value="{{ $t }}" {{ request('jenis') == $t ? 'selected' : '' }}>{{ ucfirst(str_replace('_',' ',$t)) }}</option>
@@ -42,7 +42,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Filter</button>
+                <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Saring</button>
             </div>
         </form>
     </div>

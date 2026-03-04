@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <form class="d-flex gap-2 flex-wrap" method="GET">
-            <select name="type" class="form-select" style="width: auto;">
+            <select name="jenis" class="form-select" style="width: auto;">
                 <option value="">Semua Tipe</option>
                 @foreach(['rapat','kegiatan','upacara','pelatihan','lainnya'] as $t)
                     <option value="{{ $t }}" {{ request('jenis') == $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>

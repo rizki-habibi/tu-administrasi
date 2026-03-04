@@ -7,11 +7,11 @@
         <form method="GET" class="row g-3 align-items-end">
             <div class="col-md-4">
                 <label class="form-label">Tanggal Mulai</label>
-                <input type="date" name="start_date" class="form-control" value="{{ $startDate }}">
+                <input type="date" name="tanggal_mulai" class="form-control" value="{{ $startDate }}">
             </div>
             <div class="col-md-4">
                 <label class="form-label">Tanggal Akhir</label>
-                <input type="date" name="end_date" class="form-control" value="{{ $endDate }}">
+                <input type="date" name="tanggal_selesai" class="form-control" value="{{ $endDate }}">
             </div>
             <div class="col-md-4">
                 <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Filter</button>
@@ -24,7 +24,7 @@
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <h6 class="mb-0">Rekap Periode: {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</h6>
         <div class="dropdown">
-            <button class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
+            <button class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Ekspor</button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item export-btn" href="{{ route('admin.kehadiran.ekspor', ['format'=>'csv','tanggal_mulai'=>$startDate,'tanggal_selesai'=>$endDate]) }}"><i class="bi bi-filetype-csv me-2"></i>CSV / Excel</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.kehadiran.ekspor', ['format'=>'pdf','tanggal_mulai'=>$startDate,'tanggal_selesai'=>$endDate]) }}" target="_blank"><i class="bi bi-printer me-2"></i>Print / PDF</a></li>

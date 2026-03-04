@@ -1,9 +1,9 @@
 @extends('staf.tata-letak.app')
-@section('judul', 'Edit SKP')
+@section('judul', 'Ubah SKP')
 
 @section('konten')
 <div class="mb-4">
-    <h5 class="fw-bold mb-1">Edit SKP</h5>
+    <h5 class="fw-bold mb-1">Ubah SKP</h5>
     <p class="text-muted mb-0" style="font-size:.85rem;">Perbarui data sasaran kinerja Anda</p>
 </div>
 
@@ -66,7 +66,7 @@
             </div>
 
             <div class="d-flex gap-2 mt-4">
-                <button type="submit" name="submit_action" value="draft" class="btn btn-primary"><i class="bi bi-save me-1"></i> Simpan Draft</button>
+                <button type="submit" name="submit_action" value="draft" class="btn btn-primary"><i class="bi bi-save me-1"></i> Simpan Draf</button>
                 <button type="submit" name="submit_action" value="ajukan" class="btn btn-success" data-confirm="Ajukan SKP ini untuk penilaian?"><i class="bi bi-send me-1"></i> Simpan & Ajukan</button>
                 <a href="{{ route('staf.skp.index') }}" class="btn btn-outline-secondary">Batal</a>
             </div>

@@ -39,25 +39,25 @@
                 <div class="row g-2" style="font-size:.8rem;">
                     <div class="col-6">
                         <div class="p-2 rounded-2" style="background:#fef3c7;">
-                            <strong class="d-block text-warning" style="font-size:.72rem;">SITUATION</strong>
+                            <strong class="d-block text-warning" style="font-size:.72rem;">SITUASI</strong>
                             {{ \Str::limit($analysis->situasi, 60) }}
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-2 rounded-2" style="background:#dbeafe;">
-                            <strong class="d-block text-primary" style="font-size:.72rem;">TASK</strong>
+                            <strong class="d-block text-primary" style="font-size:.72rem;">TUGAS</strong>
                             {{ \Str::limit($analysis->tugas, 60) }}
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-2 rounded-2" style="background:#d1fae5;">
-                            <strong class="d-block text-success" style="font-size:.72rem;">ACTION</strong>
+                            <strong class="d-block text-success" style="font-size:.72rem;">TINDAKAN</strong>
                             {{ \Str::limit($analysis->aksi, 60) }}
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-2 rounded-2" style="background:#fce7f3;">
-                            <strong class="d-block text-danger" style="font-size:.72rem;">RESULT</strong>
+                            <strong class="d-block text-danger" style="font-size:.72rem;">HASIL</strong>
                             {{ \Str::limit($analysis->hasil, 60) }}
                         </div>
                     </div>

@@ -12,7 +12,7 @@
         <form method="GET" class="row g-3 align-items-end">
             <div class="col-md-3">
                 <label class="form-label">Kategori</label>
-                <select name="category" class="form-select">
+                <select name="kategori" class="form-select">
                     <option value="">Semua</option>
                     @foreach(['surat_masuk','surat_keluar','inventaris','keuangan','kegiatan','lainnya'] as $c)
                         <option value="{{ $c }}" {{ request('kategori') == $c ? 'selected' : '' }}>{{ ucfirst(str_replace('_',' ',$c)) }}</option>
@@ -33,7 +33,7 @@
                 <input type="text" name="search" class="form-control" placeholder="Judul..." value="{{ request('search') }}">
             </div>
             <div class="col-md-3">
-                <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Filter</button>
+                <button class="btn btn-primary w-100"><i class="bi bi-search"></i> Saring</button>
             </div>
         </form>
     </div>

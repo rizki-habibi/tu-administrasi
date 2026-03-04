@@ -137,10 +137,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
+                    <label>Kata Sandi</label>
                     <div class="input-group-custom">
                         <span class="icon"><i class="bi bi-lock"></i></span>
-                        <input type="password" name="password" id="password" placeholder="Masukkan password" required>
+                        <input type="password" name="password" id="password" placeholder="Masukkan kata sandi" required>
                         <button type="button" class="toggle-pw" onclick="togglePassword()"><i class="bi bi-eye" id="eyeIcon"></i></button>
                     </div>
                     @error('password') <div class="error-msg">{{ $message }}</div> @enderror

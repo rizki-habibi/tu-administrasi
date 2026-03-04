@@ -62,7 +62,7 @@
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left me-2"></i>Logout
+                        <i class="bi bi-box-arrow-left me-2"></i>Keluar
                     </a>
                 </li>
             </ul>

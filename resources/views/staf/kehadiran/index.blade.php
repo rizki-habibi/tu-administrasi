@@ -153,7 +153,7 @@
                 <input type="hidden" name="photo" id="photoIn">
                 <input type="hidden" name="latitude" id="latIn">
                 <input type="hidden" name="longitude" id="lngIn">
-                <input type="hidden" name="address" id="addrIn">
+                <input type="hidden" name="alamat" id="addrIn">
                 <div class="modal-body p-0">
                     <div class="row g-0">
                         <div class="col-lg-6 p-3 border-end">
@@ -213,7 +213,7 @@
                 <input type="hidden" name="photo" id="photoOut">
                 <input type="hidden" name="latitude" id="latOut">
                 <input type="hidden" name="longitude" id="lngOut">
-                <input type="hidden" name="address" id="addrOut">
+                <input type="hidden" name="alamat" id="addrOut">
                 <div class="modal-body p-0">
                     <div class="row g-0">
                         <div class="col-lg-6 p-3 border-end">
@@ -281,7 +281,7 @@
                 </select>
             </div>
             <div class="col-6 col-md-2">
-                <button class="btn btn-primary btn-sm w-100"><i class="bi bi-search me-1"></i>Filter</button>
+                <button class="btn btn-primary btn-sm w-100"><i class="bi bi-search me-1"></i>Saring</button>
             </div>
         </form>
     </div>
@@ -345,7 +345,7 @@
         <div class="modal-content border-0 shadow-lg" style="border-radius:16px;">
             <div class="modal-header border-0" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">
                 <div>
-                    <h6 class="modal-title text-white fw-bold mb-0"><i class="bi bi-journal-text me-2"></i>Edit Keterangan Kehadiran</h6>
+                    <h6 class="modal-title text-white fw-bold mb-0"><i class="bi bi-journal-text me-2"></i>Ubah Keterangan Kehadiran</h6>
                     <small class="text-white opacity-75" id="keteranganDate"></small>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -371,7 +371,7 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold">Keterangan / Catatan <span class="text-muted fw-normal">(opsional)</span></label>
-                        <textarea name="note" id="keteranganNote" class="form-control" rows="3" maxlength="500"
+                        <textarea name="catatan" id="keteranganNote" class="form-control" rows="3" maxlength="500"
                                   placeholder="Contoh: Izin karena acara keluarga, surat terlampir"></textarea>
                         <small class="text-muted"><span id="noteCharCount">0</span>/500 karakter</small>
                     </div>

@@ -20,12 +20,12 @@
                             @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Password Baru <small class="text-muted">(kosongkan jika tidak diubah)</small></label>
+                            <label class="form-label">Kata Sandi Baru <small class="text-muted">(kosongkan jika tidak diubah)</small></label>
                             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
                             @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Konfirmasi Password</label>
+                            <label class="form-label">Konfirmasi Kata Sandi</label>
                             <input type="password" name="password_confirmation" class="form-control">
                         </div>
                         <div class="col-md-6">
@@ -34,11 +34,11 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Telepon</label>
-                            <input type="text" name="phone" class="form-control" value="{{ old('telepon', $staff->telepon) }}">
+                            <input type="text" name="telepon" class="form-control" value="{{ old('telepon', $staff->telepon) }}">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Alamat</label>
-                            <textarea name="address" class="form-control" rows="2">{{ old('alamat', $staff->alamat) }}</textarea>
+                            <textarea name="alamat" class="form-control" rows="2">{{ old('alamat', $staff->alamat) }}</textarea>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Foto</label>

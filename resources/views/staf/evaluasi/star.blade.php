@@ -15,10 +15,10 @@
 
 {{-- STAR Framework Info --}}
 <div class="row g-3 mb-4">
-    <div class="col-md-3"><div class="card border-0 h-100" style="background:#6366f115;"><div class="card-body text-center"><span class="badge bg-primary mb-2" style="font-size:1.2rem;">S</span><h6 class="fw-bold mb-1">Situation</h6><small class="text-muted">Situasi/konteks</small></div></div></div>
-    <div class="col-md-3"><div class="card border-0 h-100" style="background:#f59e0b15;"><div class="card-body text-center"><span class="badge bg-warning text-dark mb-2" style="font-size:1.2rem;">T</span><h6 class="fw-bold mb-1">Task</h6><small class="text-muted">Tugas/tantangan</small></div></div></div>
-    <div class="col-md-3"><div class="card border-0 h-100" style="background:#10b98115;"><div class="card-body text-center"><span class="badge bg-success mb-2" style="font-size:1.2rem;">A</span><h6 class="fw-bold mb-1">Action</h6><small class="text-muted">Tindakan diambil</small></div></div></div>
-    <div class="col-md-3"><div class="card border-0 h-100" style="background:#ef444415;"><div class="card-body text-center"><span class="badge bg-danger mb-2" style="font-size:1.2rem;">R</span><h6 class="fw-bold mb-1">Result</h6><small class="text-muted">Hasil/dampak</small></div></div></div>
+    <div class="col-md-3"><div class="card border-0 h-100" style="background:#6366f115;"><div class="card-body text-center"><span class="badge bg-primary mb-2" style="font-size:1.2rem;">S</span><h6 class="fw-bold mb-1">Situasi</h6><small class="text-muted">Situasi/konteks</small></div></div></div>
+    <div class="col-md-3"><div class="card border-0 h-100" style="background:#f59e0b15;"><div class="card-body text-center"><span class="badge bg-warning text-dark mb-2" style="font-size:1.2rem;">T</span><h6 class="fw-bold mb-1">Tugas</h6><small class="text-muted">Tugas/tantangan</small></div></div></div>
+    <div class="col-md-3"><div class="card border-0 h-100" style="background:#10b98115;"><div class="card-body text-center"><span class="badge bg-success mb-2" style="font-size:1.2rem;">A</span><h6 class="fw-bold mb-1">Tindakan</h6><small class="text-muted">Tindakan diambil</small></div></div></div>
+    <div class="col-md-3"><div class="card border-0 h-100" style="background:#ef444415;"><div class="card-body text-center"><span class="badge bg-danger mb-2" style="font-size:1.2rem;">R</span><h6 class="fw-bold mb-1">Hasil</h6><small class="text-muted">Hasil/dampak</small></div></div></div>
 </div>
 
 {{-- Analyses List --}}
@@ -30,10 +30,10 @@
     </div>
     <div class="card-body">
         <div class="row g-3">
-            <div class="col-md-3"><strong class="text-primary">Situation:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->situasi, 100) }}</p></div>
-            <div class="col-md-3"><strong class="text-warning">Task:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->tugas, 100) }}</p></div>
-            <div class="col-md-3"><strong class="text-success">Action:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->aksi, 100) }}</p></div>
-            <div class="col-md-3"><strong class="text-danger">Result:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->hasil, 100) }}</p></div>
+            <div class="col-md-3"><strong class="text-primary">Situasi:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->situasi, 100) }}</p></div>
+            <div class="col-md-3"><strong class="text-warning">Tugas:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->tugas, 100) }}</p></div>
+            <div class="col-md-3"><strong class="text-success">Tindakan:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->aksi, 100) }}</p></div>
+            <div class="col-md-3"><strong class="text-danger">Hasil:</strong><p class="mb-0 small mt-1">{{ Str::limit($a->hasil, 100) }}</p></div>
         </div>
     </div>
 </div>

@@ -18,7 +18,7 @@
                     <option value="{{ $s }}" {{ request('status') == $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-sm btn-outline-warning"><i class="bi bi-funnel"></i> Filter</button>
+            <button type="submit" class="btn btn-sm btn-outline-warning"><i class="bi bi-funnel"></i> Saring</button>
         </form>
     </div>
 </div>
@@ -28,7 +28,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Pegawai</th><th>Role</th><th>Periode</th><th>Sasaran Kinerja</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>#</th><th>Pegawai</th><th>Peran</th><th>Periode</th><th>Sasaran Kinerja</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($skps as $i => $skp)

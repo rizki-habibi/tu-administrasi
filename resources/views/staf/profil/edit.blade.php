@@ -109,7 +109,7 @@
     <div class="col-lg-8">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-0 pt-3">
-                <h6 class="mb-0 fw-bold"><i class="bi bi-pencil-square text-primary me-2"></i>Edit Informasi Profil</h6>
+                <h6 class="mb-0 fw-bold"><i class="bi bi-pencil-square text-primary me-2"></i>Ubah Informasi Profil</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('staf.profil.update') }}" method="POST" enctype="multipart/form-data">
@@ -135,7 +135,7 @@
                             <label class="form-label fw-bold">No. Telepon</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0"><i class="bi bi-telephone"></i></span>
-                                <input type="text" name="phone" class="form-control border-start-0 @error('telepon') is-invalid @enderror" value="{{ old('telepon', $user->telepon) }}" placeholder="08xxxxxxxxxx">
+                                <input type="text" name="telepon" class="form-control border-start-0 @error('telepon') is-invalid @enderror" value="{{ old('telepon', $user->telepon) }}" placeholder="08xxxxxxxxxx">
                             </div>
                             @error('telepon') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
@@ -151,7 +151,7 @@
                             <label class="form-label fw-bold">Alamat Lengkap</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 align-self-start pt-2"><i class="bi bi-geo-alt"></i></span>
-                                <textarea name="address" class="form-control border-start-0 @error('alamat') is-invalid @enderror" rows="3" placeholder="Masukkan alamat lengkap...">{{ old('alamat', $user->alamat) }}</textarea>
+                                <textarea name="alamat" class="form-control border-start-0 @error('alamat') is-invalid @enderror" rows="3" placeholder="Masukkan alamat lengkap...">{{ old('alamat', $user->alamat) }}</textarea>
                             </div>
                             @error('alamat') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
@@ -178,22 +178,22 @@
         <!-- Change Password -->
         <div class="card border-0 shadow-sm mt-4" id="ubah-password">
             <div class="card-header bg-white border-0 pt-3">
-                <h6 class="mb-0 fw-bold"><i class="bi bi-shield-lock text-warning me-2"></i>Ubah Password</h6>
+                <h6 class="mb-0 fw-bold"><i class="bi bi-shield-lock text-warning me-2"></i>Ubah Kata Sandi</h6>
             </div>
             <div class="card-body">
                 <form action="{{ route('staf.profil.password') }}" method="POST">
                     @csrf @method('PUT')
                     <div class="row g-3">
                         <div class="col-md-12">
-                            <label class="form-label fw-bold">Password Lama <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold">Kata Sandi Lama <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="current_password" class="form-control border-start-0 @error('current_password') is-invalid @enderror" required placeholder="Masukkan password saat ini">
+                                <input type="password" name="current_password" class="form-control border-start-0 @error('current_password') is-invalid @enderror" required placeholder="Masukkan kata sandi saat ini">
                             </div>
                             @error('current_password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Password Baru <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold">Kata Sandi Baru <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0"><i class="bi bi-key"></i></span>
                                 <input type="password" name="password" class="form-control border-start-0 @error('password') is-invalid @enderror" required placeholder="Min. 8 karakter">
@@ -201,15 +201,15 @@
                             @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Konfirmasi Password <span class="text-danger">*</span></label>
+                            <label class="form-label fw-bold">Konfirmasi Kata Sandi <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0"><i class="bi bi-key-fill"></i></span>
-                                <input type="password" name="password_confirmation" class="form-control border-start-0" required placeholder="Ulangi password baru">
+                                <input type="password" name="password_confirmation" class="form-control border-start-0" required placeholder="Ulangi kata sandi baru">
                             </div>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <button type="submit" class="btn btn-warning px-4"><i class="bi bi-shield-check me-1"></i> Ubah Password</button>
+                        <button type="submit" class="btn btn-warning px-4"><i class="bi bi-shield-check me-1"></i> Ubah Kata Sandi</button>
                     </div>
                 </form>
             </div>
@@ -230,7 +230,7 @@
                         <span class="fw-semibold">{{ str_pad($user->id, 6, '0', STR_PAD_LEFT) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between py-3">
-                        <span class="text-muted"><i class="bi bi-shield-check me-2"></i>Role</span>
+                        <span class="text-muted"><i class="bi bi-shield-check me-2"></i>Peran</span>
                         <span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($user->peran) }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between py-3">

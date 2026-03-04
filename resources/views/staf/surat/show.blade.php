@@ -79,7 +79,7 @@
                         <div class="fw-semibold" style="font-size:.85rem;">{{ $surat->nama_file }}</div>
                         <small class="text-muted">Lampiran</small>
                     </div>
-                    <a href="{{ asset('storage/' . $surat->path_file) }}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-download me-1"></i>Download</a>
+                    <a href="{{ asset('storage/' . $surat->path_file) }}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-download me-1"></i>Unduh</a>
                 </div>
                 @endif
             </div>

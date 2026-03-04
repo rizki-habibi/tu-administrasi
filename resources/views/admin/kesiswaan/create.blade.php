@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tahun Ajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026" required>
+                    <input type="text" name="tahun_ajaran" class="form-control" value="{{ old('tahun_ajaran', date('Y').'/'.(date('Y')+1)) }}" placeholder="2025/2026" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-9">
                     <label class="form-label">Alamat</label>
-                    <textarea name="address" class="form-control" rows="2">{{ old('alamat') }}</textarea>
+                    <textarea name="alamat" class="form-control" rows="2">{{ old('alamat') }}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Nama Orang Tua/Wali</label>

@@ -98,7 +98,7 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light"><tr><th>Staff</th><th>Masuk</th><th>Pulang</th><th>Status</th></tr></thead>
+                    <thead class="table-light"><tr><th>Staf</th><th>Masuk</th><th>Pulang</th><th>Status</th></tr></thead>
                     <tbody>
                         @forelse($recentAttendances as $att)
                         <tr>

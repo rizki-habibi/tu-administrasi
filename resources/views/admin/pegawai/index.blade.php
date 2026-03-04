@@ -10,14 +10,14 @@
     </div>
     <div class="d-flex gap-2">
         <div class="dropdown">
-            <button class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
+            <button class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Ekspor</button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item export-btn" href="{{ route('admin.pegawai.ekspor', ['format'=>'csv']) }}" data-format="csv"><i class="bi bi-filetype-csv me-2"></i>CSV / Excel</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.pegawai.ekspor', ['format'=>'pdf']) }}" target="_blank"><i class="bi bi-printer me-2"></i>Print / PDF</a></li>
             </ul>
         </div>
-        <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bi bi-upload me-1"></i>Import</button>
-        <a href="{{ route('admin.pegawai.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>Tambah Staff</a>
+        <button class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#importModal"><i class="bi bi-upload me-1"></i>Impor</button>
+        <a href="{{ route('admin.pegawai.create') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>Tambah Staf</a>
     </div>
 </div>
 
@@ -51,7 +51,7 @@
                 <thead style="background:#f8fafc;">
                     <tr>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;padding:.75rem 1rem;">#</th>
-                        <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Staff</th>
+                        <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Staf</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Jabatan</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Telepon</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Status</th>
@@ -87,7 +87,7 @@
                                         onclick="showDetail({{ $staff->id }}, '{{ addslashes($staff->nama) }}', '{{ $staff->email }}', '{{ $staff->jabatan ?? '-' }}', '{{ $staff->telepon ?? '-' }}', '{{ $staff->alamat ?? '-' }}', '{{ $staff->aktif ? 'Aktif' : 'Nonaktif' }}', '{{ $staff->created_at->format('d M Y') }}')">
                                     <i class="bi bi-eye text-primary"></i>
                                 </button>
-                                <a href="{{ route('admin.pegawai.edit', $staff) }}" class="btn btn-light btn-sm" title="Edit"><i class="bi bi-pencil text-warning"></i></a>
+                                <a href="{{ route('admin.pegawai.edit', $staff) }}" class="btn btn-light btn-sm" title="Ubah"><i class="bi bi-pencil text-warning"></i></a>
                                 <form method="POST" action="{{ route('admin.pegawai.toggle-status', $staff) }}" class="d-inline">
                                     @csrf @method('PATCH')
                                     <button class="btn btn-light btn-sm" title="{{ $staff->aktif ? 'Nonaktifkan' : 'Aktifkan' }}">
@@ -120,7 +120,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header border-0 pb-0">
-                <h6 class="modal-title fw-bold">Detail Staff</h6>
+                <h6 class="modal-title fw-bold">Detail Staf</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body pt-1">

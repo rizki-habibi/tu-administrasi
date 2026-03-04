@@ -24,7 +24,7 @@
                 @endforeach
             </select>
             <input type="text" name="search" class="form-control form-control-sm" style="width:200px;" placeholder="Cari perihal / nomor..." value="{{ request('search') }}">
-            <button type="submit" class="btn btn-sm btn-outline-warning"><i class="bi bi-funnel"></i> Filter</button>
+            <button type="submit" class="btn btn-sm btn-outline-warning"><i class="bi bi-funnel"></i> Saring</button>
         </form>
     </div>
 </div>

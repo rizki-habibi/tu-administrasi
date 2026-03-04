@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Tahun Ajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="academic_year" class="form-control @error('tahun_ajaran') is-invalid @enderror" value="{{ old('tahun_ajaran') }}" placeholder="2025/2026" required>
+                    <input type="text" name="tahun_ajaran" class="form-control @error('tahun_ajaran') is-invalid @enderror" value="{{ old('tahun_ajaran') }}" placeholder="2025/2026" required>
                     @error('tahun_ajaran')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-2">

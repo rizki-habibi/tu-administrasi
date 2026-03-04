@@ -39,8 +39,8 @@
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Status</label>
                     <select name="status" class="form-select @error('status') is-invalid @enderror">
-                        <option value="draft" {{ old('status','draft') == 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="submitted" {{ old('status') == 'submitted' ? 'selected' : '' }}>Submit</option>
+                        <option value="draft" {{ old('status','draft') == 'draft' ? 'selected' : '' }}>Draf</option>
+                        <option value="submitted" {{ old('status') == 'submitted' ? 'selected' : '' }}>Ajukan</option>
                     </select>
                     @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>

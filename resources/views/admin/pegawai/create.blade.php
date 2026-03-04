@@ -20,12 +20,12 @@
                             @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Password <span class="text-danger">*</span></label>
+                            <label class="form-label">Kata Sandi <span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
                             @error('password')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Konfirmasi Password <span class="text-danger">*</span></label>
+                            <label class="form-label">Konfirmasi Kata Sandi <span class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" class="form-control" required>
                         </div>
                         <div class="col-md-6">
@@ -34,11 +34,11 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Telepon</label>
-                            <input type="text" name="phone" class="form-control" value="{{ old('telepon') }}">
+                            <input type="text" name="telepon" class="form-control" value="{{ old('telepon') }}">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Alamat</label>
-                            <textarea name="address" class="form-control" rows="2">{{ old('alamat') }}</textarea>
+                            <textarea name="alamat" class="form-control" rows="2">{{ old('alamat') }}</textarea>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Foto</label>

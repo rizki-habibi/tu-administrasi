@@ -26,9 +26,9 @@
                     <option value="{{ $s }}" {{ request('status') == $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-funnel"></i> Filter</button>
+            <button type="submit" class="btn btn-sm btn-outline-primary"><i class="bi bi-funnel"></i> Saring</button>
             @if(request()->hasAny(['tahun','status']))
-                <a href="{{ route('staf.skp.index') }}" class="btn btn-sm btn-outline-secondary">Reset</a>
+                <a href="{{ route('staf.skp.index') }}" class="btn btn-sm btn-outline-secondary">Atur Ulang</a>
             @endif
         </form>
     </div>
@@ -72,7 +72,7 @@
                             <div class="d-flex gap-1">
                                 <a href="{{ route('staf.skp.show', $skp) }}" class="btn btn-sm btn-outline-primary" title="Detail"><i class="bi bi-eye"></i></a>
                                 @if(in_array($skp->status, ['draft','revisi']))
-                                    <a href="{{ route('staf.skp.edit', $skp) }}" class="btn btn-sm btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></a>
+                                    <a href="{{ route('staf.skp.edit', $skp) }}" class="btn btn-sm btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
                                 @endif
                                 @if($skp->status === 'draft')
                                     <form action="{{ route('staf.skp.destroy', $skp) }}" method="POST" class="d-inline">

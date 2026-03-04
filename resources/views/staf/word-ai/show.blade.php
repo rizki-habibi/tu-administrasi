@@ -1,16 +1,16 @@
 @extends('staf.tata-letak.app')
-@section('judul', 'Preview: ' . $word->judul)
+@section('judul', 'Pratinjau: ' . $word->judul)
 
 @section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
-        <h5 class="fw-bold mb-1"><i class="bi bi-eye-fill text-primary me-2"></i>Preview Dokumen</h5>
+        <h5 class="fw-bold mb-1"><i class="bi bi-eye-fill text-primary me-2"></i>Pratinjau Dokumen</h5>
         <p class="text-muted mb-0" style="font-size:.82rem;">{{ $word->judul }}</p>
     </div>
     <div class="d-flex gap-2">
         <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-info text-white"><i class="bi bi-download me-1"></i>Download .docx</a>
         @if($word->pengguna_id == auth()->id())
-            <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success"><i class="bi bi-pencil me-1"></i>Edit</a>
+            <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success"><i class="bi bi-pencil me-1"></i>Ubah</a>
         @endif
         <a href="{{ route('staf.word-ai.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
@@ -24,7 +24,7 @@
                     <small class="text-muted"><i class="bi bi-file-earmark-word me-1"></i>{{ $word->judul }}</small>
                     <div>
                         @if($word->status=='draft')
-                            <span class="badge bg-warning-subtle text-warning">Draft</span>
+                            <span class="badge bg-warning-subtle text-warning">Draf</span>
                         @elseif($word->status=='final')
                             <span class="badge bg-success-subtle text-success">Final</span>
                         @else
@@ -52,7 +52,7 @@
                     <tr><td class="text-muted" style="width:35%;">Judul</td><td class="fw-semibold">{{ $word->judul }}</td></tr>
                     <tr><td class="text-muted">Kategori</td><td><span class="badge bg-primary-subtle text-primary">{{ App\Models\WordDocument::categories()[$word->kategori] ?? $word->kategori }}</span></td></tr>
                     <tr><td class="text-muted">Status</td><td>
-                        @if($word->status=='draft')<span class="badge bg-warning-subtle text-warning">Draft</span>
+                        @if($word->status=='draft')<span class="badge bg-warning-subtle text-warning">Draf</span>
                         @elseif($word->status=='final')<span class="badge bg-success-subtle text-success">Final</span>
                         @else <span class="badge bg-secondary-subtle text-secondary">Arsip</span>@endif
                     </td></tr>
@@ -73,13 +73,13 @@
             <div class="card-body">
                 <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-info text-white w-100 mb-2"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download .docx</a>
                 @if($word->pengguna_id == auth()->id())
-                    <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success w-100 mb-2"><i class="bi bi-pencil me-1"></i>Edit Dokumen</a>
+                    <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success w-100 mb-2"><i class="bi bi-pencil me-1"></i>Ubah Dokumen</a>
                     <form action="{{ route('staf.word-ai.destroy', $word) }}" method="POST" onsubmit="return false;" id="deleteForm">
                         @csrf @method('DELETE')
                         <button type="button" class="btn btn-outline-danger w-100 btn-delete"><i class="bi bi-trash me-1"></i>Hapus</button>
                     </form>
                 @endif
-                <button onclick="window.print()" class="btn btn-outline-primary w-100 mt-2"><i class="bi bi-printer me-1"></i>Print</button>
+                <button onclick="window.print()" class="btn btn-outline-primary w-100 mt-2"><i class="bi bi-printer me-1"></i>Cetak</button>
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="row g-3" style="font-size:.85rem;">
                     <div class="col-md-6"><strong class="text-muted d-block">Pegawai</strong>{{ $leaveRequest->user->nama ?? '-' }}</div>
-                    <div class="col-md-6"><strong class="text-muted d-block">Role</strong>{{ $leaveRequest->user->role_label ?? '-' }}</div>
+                    <div class="col-md-6"><strong class="text-muted d-block">Peran</strong>{{ $leaveRequest->user->role_label ?? '-' }}</div>
                     <div class="col-md-6"><strong class="text-muted d-block">Jenis</strong><span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($leaveRequest->jenis) }}</span></div>
                     <div class="col-md-6"><strong class="text-muted d-block">Status</strong><span class="badge bg-{{ $leaveRequest->status_badge }} bg-opacity-10 text-{{ $leaveRequest->status_badge }}">{{ ucfirst($leaveRequest->status) }}</span></div>
                     <div class="col-md-6"><strong class="text-muted d-block">Tanggal Mulai</strong>{{ $leaveRequest->tanggal_mulai->translatedFormat('d F Y') }}</div>

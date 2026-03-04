@@ -9,7 +9,7 @@
                 <input type="text" name="search" class="form-control" placeholder="Cari judul..." value="{{ request('search') }}">
             </div>
             <div class="col-md-3">
-                <select name="category" class="form-select">
+                <select name="kategori" class="form-select">
                     <option value="">Semua Kategori</option>
                     @foreach(['surat_masuk','surat_keluar','inventaris','keuangan','kegiatan','lainnya'] as $c)
                         <option value="{{ $c }}" {{ request('kategori') == $c ? 'selected' : '' }}>{{ ucfirst(str_replace('_',' ',$c)) }}</option>

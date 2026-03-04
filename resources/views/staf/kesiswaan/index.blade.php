@@ -13,10 +13,10 @@
                 <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari siswa (nama/NIS)..." value="{{ request('search') }}">
             </div>
             <div class="col-md-2">
-                <select name="class" class="form-select form-select-sm">
+                <select name="kelas" class="form-select form-select-sm">
                     <option value="">Semua Kelas</option>
                     @foreach(['X','XI','XII'] as $c)
-                    <option value="{{ $c }}" {{ request('class')==$c?'selected':'' }}>Kelas {{ $c }}</option>
+                    <option value="{{ $c }}" {{ request('kelas')==$c?'selected':'' }}>Kelas {{ $c }}</option>
                     @endforeach
                 </select>
             </div>

@@ -45,13 +45,17 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function markAsRead(Notification $notification)
+    public function markAsRead(Request $request, Notification $notification)
     {
         if ($notification->pengguna_id !== auth()->id()) {
             abort(403);
         }
 
         $notification->update(['sudah_dibaca' => true]);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true]);
+        }
 
         if ($notification->tautan) {
             return redirect($notification->tautan);

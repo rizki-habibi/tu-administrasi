@@ -6,7 +6,7 @@
     <h4 class="mb-0"><i class="bi bi-eye"></i> Detail Laporan</h4>
     <div>
         @if($report->status == 'draft')
-            <a href="{{ route('staf.laporan.edit', $report) }}" class="btn btn-warning"><i class="bi bi-pencil"></i> Edit</a>
+            <a href="{{ route('staf.laporan.edit', $report) }}" class="btn btn-warning"><i class="bi bi-pencil"></i> Ubah</a>
             <form action="{{ route('staf.laporan.destroy', $report) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
                 @csrf @method('DELETE')
                 <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>

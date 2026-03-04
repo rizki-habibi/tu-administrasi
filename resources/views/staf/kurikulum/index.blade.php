@@ -67,7 +67,7 @@
                         @elseif($doc->status == 'archived')
                         <span class="badge bg-warning text-dark">Diarsipkan</span>
                         @else
-                        <span class="badge bg-secondary">Draft</span>
+                        <span class="badge bg-secondary">Draf</span>
                         @endif
                     </td>
                     <td>{{ $doc->created_at->format('d/m/Y') }}</td>

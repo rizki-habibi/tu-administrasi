@@ -24,7 +24,7 @@
             @endif
         </div>
         <div class="mt-4">
-            <a href="{{ asset('storage/' . $document->path_file) }}" class="btn btn-success" target="_blank"><i class="bi bi-download me-1"></i>Download</a>
+            <a href="{{ asset('storage/' . $document->path_file) }}" class="btn btn-success" target="_blank"><i class="bi bi-download me-1"></i>Unduh</a>
         </div>
     </div>
 </div>

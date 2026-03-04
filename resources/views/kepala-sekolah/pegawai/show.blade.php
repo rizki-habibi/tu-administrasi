@@ -1,9 +1,9 @@
 @extends('kepala-sekolah.tata-letak.app')
-@section('judul', 'Detail Staff - ' . $staff->nama)
+@section('judul', 'Detail Staf - ' . $staff->nama)
 
 @section('konten')
 <div class="mb-4">
-    <a href="{{ route('kepala-sekolah.pegawai.index') }}" class="text-decoration-none text-warning" style="font-size:.85rem;"><i class="bi bi-arrow-left me-1"></i>Kembali ke Daftar Staff</a>
+    <a href="{{ route('kepala-sekolah.pegawai.index') }}" class="text-decoration-none text-warning" style="font-size:.85rem;"><i class="bi bi-arrow-left me-1"></i>Kembali ke Daftar Staf</a>
 </div>
 
 {{-- Profile Card --}}

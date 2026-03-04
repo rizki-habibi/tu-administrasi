@@ -183,12 +183,12 @@
 </head>
 <body>
     {{-- Sidebar --}}
-    @include('kepala-sekolah.tata-letak._sidebar')
+    @include('kepala-sekolah.tata-letak.sidebar')
 
     {{-- Main Content --}}
     <div class="main-content" id="mainContent">
         {{-- Top Header --}}
-        @include('kepala-sekolah.tata-letak._header')
+        @include('kepala-sekolah.tata-letak.header')
 
         {{-- Page Content --}}
         <div class="page-content fade-in">
@@ -211,7 +211,7 @@
         </div>
 
         {{-- Footer Scripts --}}
-        @include('kepala-sekolah.tata-letak._footer')
+        @include('kepala-sekolah.tata-letak.footer')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -15,7 +15,7 @@ class StudentController extends Controller
     {
         $query = StudentRecord::latest();
 
-        if ($request->filled('class')) $query->where('class', $request->class);
+        if ($request->filled('kelas')) $query->where('kelas', $request->kelas);
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {

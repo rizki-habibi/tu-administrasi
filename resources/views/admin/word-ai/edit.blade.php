@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex gap-2">
         <a href="{{ route('admin.word-ai.unduh', $word) }}" class="btn btn-outline-info"><i class="bi bi-download me-1"></i>Download .docx</a>
-        <a href="{{ route('admin.word-ai.show', $word) }}" class="btn btn-outline-primary"><i class="bi bi-eye me-1"></i>Preview</a>
+        <a href="{{ route('admin.word-ai.show', $word) }}" class="btn btn-outline-primary"><i class="bi bi-eye me-1"></i>Pratinjau</a>
         <a href="{{ route('admin.word-ai.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
 </div>
@@ -130,7 +130,7 @@
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Status</label>
                         <select name="status" class="form-select">
-                            <option value="draft" {{ $word->status=='draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="draft" {{ $word->status=='draft' ? 'selected' : '' }}>Draf</option>
                             <option value="final" {{ $word->status=='final' ? 'selected' : '' }}>Final</option>
                             <option value="archived" {{ $word->status=='archived' ? 'selected' : '' }}>Arsip</option>
                         </select>

@@ -19,15 +19,15 @@ class StudentController extends Controller
                   ->orWhere('nisn', 'like', "%{$request->search}%");
             });
         }
-        if ($request->class) {
-            $query->where('class', $request->class);
+        if ($request->kelas) {
+            $query->where('kelas', $request->kelas);
         }
         if ($request->status) {
             $query->where('status', $request->status);
         }
 
-        $students = $query->orderBy('class')->orderBy('nama')->paginate(20);
-        $kelasList = StudentRecord::select('class')->distinct()->orderBy('class')->pluck('class');
+        $students = $query->orderBy('kelas')->orderBy('nama')->paginate(20);
+        $kelasList = StudentRecord::select('kelas')->distinct()->orderBy('kelas')->pluck('kelas');
 
         return view('staf.kesiswaan.index', compact('students', 'kelasList'));
     }

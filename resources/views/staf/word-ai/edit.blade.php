@@ -1,15 +1,15 @@
 @extends('staf.tata-letak.app')
-@section('judul', 'Edit: ' . $word->judul)
+@section('judul', 'Ubah: ' . $word->judul)
 
 @section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
-        <h5 class="fw-bold mb-1"><i class="bi bi-pencil-square text-primary me-2"></i>Edit Dokumen</h5>
+        <h5 class="fw-bold mb-1"><i class="bi bi-pencil-square text-primary me-2"></i>Ubah Dokumen</h5>
         <p class="text-muted mb-0" style="font-size:.82rem;">{{ $word->judul }} <span id="autosaveStatus" class="ms-2 text-success" style="font-size:.72rem;"></span></p>
     </div>
     <div class="d-flex gap-2">
         <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-outline-info"><i class="bi bi-download me-1"></i>Download .docx</a>
-        <a href="{{ route('staf.word-ai.show', $word) }}" class="btn btn-outline-primary"><i class="bi bi-eye me-1"></i>Preview</a>
+        <a href="{{ route('staf.word-ai.show', $word) }}" class="btn btn-outline-primary"><i class="bi bi-eye me-1"></i>Pratinjau</a>
         <a href="{{ route('staf.word-ai.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
 </div>
@@ -116,7 +116,7 @@
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Status</label>
                         <select name="status" class="form-select">
-                            <option value="draft" {{ $word->status=='draft' ? 'selected' : '' }}>Draft</option>
+                            <option value="draft" {{ $word->status=='draft' ? 'selected' : '' }}>Draf</option>
                             <option value="final" {{ $word->status=='final' ? 'selected' : '' }}>Final</option>
                             <option value="archived" {{ $word->status=='archived' ? 'selected' : '' }}>Arsip</option>
                         </select>
@@ -196,7 +196,7 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
     })
     .then(r => r.json())
     .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.content; Swal.fire({icon:'success', title:'Berhasil!', timer:1500, showConfirmButton:false}); } })
-    .catch(() => Swal.fire('Error', 'Gagal generate.', 'error'))
+    .catch(() => Swal.fire('Gagal', 'Gagal generate.', 'error'))
     .finally(() => { this.disabled = false; document.getElementById('aiLoading').classList.add('d-none'); });
 });
 

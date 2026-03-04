@@ -307,7 +307,7 @@
     {{-- Sidebar Footer --}}
     <div class="sidebar-footer">
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="bi bi-box-arrow-left"></i> <span>Logout</span>
+            <i class="bi bi-box-arrow-left"></i> <span>Keluar</span>
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
     </div>

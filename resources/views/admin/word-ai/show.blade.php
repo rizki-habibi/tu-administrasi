@@ -1,10 +1,10 @@
 @extends('admin.tata-letak.app')
-@section('judul', 'Preview: ' . $word->judul)
+@section('judul', 'Pratinjau: ' . $word->judul)
 
 @section('konten')
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
-        <h5 class="fw-bold mb-1"><i class="bi bi-eye-fill text-primary me-2"></i>Preview Dokumen</h5>
+        <h5 class="fw-bold mb-1"><i class="bi bi-eye-fill text-primary me-2"></i>Pratinjau Dokumen</h5>
         <p class="text-muted mb-0" style="font-size:.82rem;">{{ $word->judul }}</p>
     </div>
     <div class="d-flex gap-2">
@@ -23,7 +23,7 @@
                     <small class="text-muted"><i class="bi bi-file-earmark-word me-1"></i>{{ $word->judul }}</small>
                     <div>
                         @if($word->status == 'draft')
-                            <span class="badge bg-warning-subtle text-warning">Draft</span>
+                            <span class="badge bg-warning-subtle text-warning">Draf</span>
                         @elseif($word->status == 'final')
                             <span class="badge bg-success-subtle text-success">Final</span>
                         @else
@@ -65,7 +65,7 @@
                         <td class="text-muted">Status</td>
                         <td>
                             @if($word->status == 'draft')
-                                <span class="badge bg-warning-subtle text-warning">Draft</span>
+                                <span class="badge bg-warning-subtle text-warning">Draf</span>
                             @elseif($word->status == 'final')
                                 <span class="badge bg-success-subtle text-success">Final</span>
                             @else

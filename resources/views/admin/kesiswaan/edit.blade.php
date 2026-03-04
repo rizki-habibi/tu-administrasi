@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Tahun Ajaran</label>
-                    <input type="text" name="academic_year" class="form-control" value="{{ old('tahun_ajaran', $kesiswaan->tahun_ajaran) }}" required>
+                    <input type="text" name="tahun_ajaran" class="form-control" value="{{ old('tahun_ajaran', $kesiswaan->tahun_ajaran) }}" required>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Jenis Kelamin</label>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-md-9">
                     <label class="form-label">Alamat</label>
-                    <textarea name="address" class="form-control" rows="2">{{ old('alamat', $kesiswaan->alamat) }}</textarea>
+                    <textarea name="alamat" class="form-control" rows="2">{{ old('alamat', $kesiswaan->alamat) }}</textarea>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Nama Orang Tua/Wali</label>

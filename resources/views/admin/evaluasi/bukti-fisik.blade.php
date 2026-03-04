@@ -79,7 +79,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i> Upload</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i> Unggah</button>
                 </div>
             </form>
         </div>

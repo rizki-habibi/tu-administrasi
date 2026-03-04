@@ -12,7 +12,7 @@
 <div class="card mb-3">
     <div class="card-body py-2">
         <form class="d-flex gap-2 align-items-center flex-wrap" method="GET">
-            <select name="category" class="form-select form-select-sm" style="width:auto;">
+            <select name="kategori" class="form-select form-select-sm" style="width:auto;">
                 <option value="">Semua Kategori</option>
                 @foreach(['surat_masuk','surat_keluar','inventaris','keuangan','kegiatan','lainnya'] as $c)
                     <option value="{{ $c }}" {{ request('kategori') == $c ? 'selected' : '' }}>{{ ucfirst(str_replace('_',' ',$c)) }}</option>

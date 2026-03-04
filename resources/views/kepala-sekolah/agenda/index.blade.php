@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Agenda & Kegiatan</h5>
     <form class="d-flex gap-2" method="GET">
-        <select name="type" class="form-select" style="width: auto;">
+        <select name="jenis" class="form-select" style="width: auto;">
             <option value="">Semua Tipe</option>
             @foreach(['rapat','kegiatan','upacara','pelatihan','lainnya'] as $t)
                 <option value="{{ $t }}" {{ request('jenis') == $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>

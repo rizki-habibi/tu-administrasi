@@ -46,7 +46,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select">
-                        <option value="draft" {{ old('status',$kurikulum->status)=='draft'?'selected':'' }}>Draft</option>
+                        <option value="draft" {{ old('status',$kurikulum->status)=='draft'?'selected':'' }}>Draf</option>
                         <option value="active" {{ old('status',$kurikulum->status)=='active'?'selected':'' }}>Aktif</option>
                         <option value="archived" {{ old('status',$kurikulum->status)=='archived'?'selected':'' }}>Diarsipkan</option>
                     </select>

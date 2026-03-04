@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex gap-2">
         @if(in_array($skp->status, ['draft','revisi']))
-            <a href="{{ route('staf.skp.edit', $skp) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil me-1"></i> Edit</a>
+            <a href="{{ route('staf.skp.edit', $skp) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil me-1"></i> Ubah</a>
         @endif
         <a href="{{ route('staf.skp.index') }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Kembali</a>
     </div>

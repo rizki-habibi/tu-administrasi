@@ -49,7 +49,7 @@
                 <div class="col-md-4">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select">
-                        <option value="draft">Draft</option>
+                        <option value="draft">Draf</option>
                         <option value="active">Aktif</option>
                         <option value="archived">Diarsipkan</option>
                     </select>

@@ -118,7 +118,7 @@
                     <div class="mb-3">
                         <label class="form-label small fw-bold">Status</label>
                         <select name="status" class="form-select">
-                            <option value="draft" selected>Draft</option>
+                            <option value="draft" selected>Draf</option>
                             <option value="final">Final</option>
                         </select>
                     </div>
@@ -183,7 +183,7 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
             if (!titleInput.value) titleInput.value = prompt.substring(0, 100);
         }
     })
-    .catch(() => Swal.fire('Error', 'Gagal generate.', 'error'))
+    .catch(() => Swal.fire('Gagal', 'Gagal generate.', 'error'))
     .finally(() => { this.disabled = false; document.getElementById('aiLoading').classList.add('d-none'); });
 });
 

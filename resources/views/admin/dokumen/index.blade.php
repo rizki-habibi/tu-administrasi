@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex gap-2">
         <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
+            <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Ekspor</button>
             <ul class="dropdown-menu shadow-sm border-0">
                 <li><a class="dropdown-item export-btn" href="{{ route('admin.dokumen.ekspor', ['format' => 'csv']) }}" data-format="csv"><i class="bi bi-file-earmark-spreadsheet me-2 text-success"></i>CSV / Excel</a></li>
                 <li><a class="dropdown-item" href="{{ route('admin.dokumen.ekspor', ['format' => 'pdf']) }}" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>PDF / Print</a></li>
@@ -25,7 +25,7 @@
         <form method="GET" class="row g-2 align-items-end">
             <div class="col-md-4">
                 <label class="form-label">Kategori</label>
-                <select name="category" class="form-select form-select-sm">
+                <select name="kategori" class="form-select form-select-sm">
                     <option value="">Semua Kategori</option>
                     @foreach(['kurikulum','administrasi','keuangan','kepegawaian','kesiswaan','surat','inventaris','lainnya'] as $c)
                         <option value="{{ $c }}" {{ request('kategori') == $c ? 'selected' : '' }}>{{ ucfirst($c) }}</option>
@@ -79,7 +79,7 @@
                     <td><small>{{ $doc->created_at->format('d/m/Y') }}</small></td>
                     <td>
                         <a href="{{ asset('storage/' . $doc->path_file) }}" class="btn btn-sm btn-outline-success" target="_blank" title="Download"><i class="bi bi-download"></i></a>
-                        <a href="{{ route('admin.dokumen.edit', $doc) }}" class="btn btn-sm btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></a>
+                        <a href="{{ route('admin.dokumen.edit', $doc) }}" class="btn btn-sm btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
                         <form action="{{ route('admin.dokumen.destroy', $doc) }}" method="POST" class="d-inline">
                             @csrf @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus dokumen ini?"><i class="bi bi-trash"></i></button>

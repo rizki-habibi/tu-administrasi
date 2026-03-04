@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-cloud-upload me-1"></i>Upload</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-cloud-upload me-1"></i>Unggah</button>
             </div>
         </form>
     </div>

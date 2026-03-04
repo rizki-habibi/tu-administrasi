@@ -14,7 +14,7 @@
         <form class="d-flex gap-2 align-items-center flex-wrap" method="GET">
             <input type="text" name="search" class="form-control form-control-sm" style="width:220px;" placeholder="Cari nama / NIP..." value="{{ request('search') }}">
             <select name="peran" class="form-select form-select-sm" style="width:auto;">
-                <option value="">Semua Role</option>
+                <option value="">Semua Peran</option>
                 @foreach(\App\Models\User::ROLES as $key => $label)
                     <option value="{{ $key }}" {{ request('peran') == $key ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach
@@ -38,7 +38,7 @@
                         <th>#</th>
                         <th>Nama</th>
                         <th>NIP</th>
-                        <th>Role</th>
+                        <th>Peran</th>
                         <th>Jabatan</th>
                         <th>Status</th>
                         <th>Aksi</th>

@@ -18,7 +18,7 @@
                     <option value="{{ $s }}" {{ request('status') == $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
                 @endforeach
             </select>
-            <select name="type" class="form-select form-select-sm" style="width:auto;">
+            <select name="jenis" class="form-select form-select-sm" style="width:auto;">
                 <option value="">Semua Jenis</option>
                 @foreach(['izin','sakit','cuti'] as $t)
                     <option value="{{ $t }}" {{ request('jenis') == $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>

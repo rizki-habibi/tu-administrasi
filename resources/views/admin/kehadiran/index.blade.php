@@ -19,7 +19,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label">Staff</label>
+                <label class="form-label">Staf</label>
                 <select name="pengguna_id" class="form-select">
                     <option value="">Semua</option>
                     @foreach($staffs as $s)

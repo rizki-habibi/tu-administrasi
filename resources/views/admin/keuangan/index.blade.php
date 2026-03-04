@@ -56,7 +56,7 @@
             <div class="col-md-2">
                 <select name="status" class="form-select">
                     <option value="">Semua Status</option>
-                    <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draft</option>
+                    <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draf</option>
                     <option value="verified" {{ request('status')=='verified'?'selected':'' }}>Terverifikasi</option>
                     <option value="approved" {{ request('status')=='approved'?'selected':'' }}>Disetujui</option>
                 </select>
@@ -95,7 +95,7 @@
                         <td>
                             @if($t->status == 'approved')<span class="badge bg-success">Disetujui</span>
                             @elseif($t->status == 'verified')<span class="badge bg-info">Terverifikasi</span>
-                            @else<span class="badge bg-warning text-dark">Draft</span>@endif
+                            @else<span class="badge bg-warning text-dark">Draf</span>@endif
                         </td>
                         <td>
                             <div class="d-flex gap-1">

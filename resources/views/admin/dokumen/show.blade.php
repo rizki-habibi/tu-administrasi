@@ -26,7 +26,7 @@
             @endif
         </div>
         <div class="mt-4 d-flex gap-2">
-            <a href="{{ asset('storage/' . $document->path_file) }}" class="btn btn-success" target="_blank"><i class="bi bi-download me-1"></i>Download</a>
+            <a href="{{ asset('storage/' . $document->path_file) }}" class="btn btn-success" target="_blank"><i class="bi bi-download me-1"></i>Unduh</a>
             <a href="{{ route('admin.dokumen.edit', $document) }}" class="btn btn-warning"><i class="bi bi-pencil me-1"></i>Edit</a>
         </div>
     </div>

@@ -18,7 +18,7 @@
     <div class="card-body">
         <div class="row g-3 mb-3" style="font-size:.85rem;">
             <div class="col-md-3"><strong class="text-muted d-block">Pegawai</strong>{{ $attendance->user->nama ?? '-' }}</div>
-            <div class="col-md-3"><strong class="text-muted d-block">Role</strong>{{ $attendance->user->role_label ?? '-' }}</div>
+            <div class="col-md-3"><strong class="text-muted d-block">Peran</strong>{{ $attendance->user->role_label ?? '-' }}</div>
             <div class="col-md-3"><strong class="text-muted d-block">Tanggal</strong>{{ $attendance->date->translatedFormat('l, d F Y') }}</div>
             <div class="col-md-3"><strong class="text-muted d-block">Status</strong><span class="badge bg-{{ $attendance->status_badge }} bg-opacity-10 text-{{ $attendance->status_badge }}">{{ ucfirst($attendance->status) }}</span></div>
         </div>

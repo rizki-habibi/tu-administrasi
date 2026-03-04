@@ -1,9 +1,9 @@
 @extends('staf.tata-letak.app')
-@section('judul', 'Edit Laporan')
+@section('judul', 'Ubah Laporan')
 
 @section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="mb-0"><i class="bi bi-pencil"></i> Edit Laporan</h4>
+    <h4 class="mb-0"><i class="bi bi-pencil"></i> Ubah Laporan</h4>
     <a href="{{ route('staf.laporan.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
 </div>
 
@@ -38,8 +38,8 @@
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Status</label>
                     <select name="status" class="form-select @error('status') is-invalid @enderror">
-                        <option value="draft" {{ old('status', $report->status) == 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="submitted" {{ old('status', $report->status) == 'submitted' ? 'selected' : '' }}>Submit</option>
+                        <option value="draft" {{ old('status', $report->status) == 'draft' ? 'selected' : '' }}>Draf</option>
+                        <option value="submitted" {{ old('status', $report->status) == 'submitted' ? 'selected' : '' }}>Ajukan</option>
                     </select>
                     @error('status') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Perbarui</button>
                 <a href="{{ route('staf.laporan.index') }}" class="btn btn-light ms-2">Batal</a>
             </div>
         </form>

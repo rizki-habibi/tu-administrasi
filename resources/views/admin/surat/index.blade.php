@@ -43,7 +43,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-3">
                 <h4 class="fw-bold mb-0 text-secondary">{{ $stats['draft'] }}</h4>
-                <small class="text-muted">Draft</small>
+                <small class="text-muted">Draf</small>
             </div>
         </div>
     </div>
@@ -147,7 +147,7 @@
                     <td class="text-end">
                         <div class="btn-group btn-group-sm">
                             <a href="{{ route('admin.surat.show', $surat) }}" class="btn btn-outline-primary" title="Detail"><i class="bi bi-eye"></i></a>
-                            <a href="{{ route('admin.surat.edit', $surat) }}" class="btn btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></a>
+                            <a href="{{ route('admin.surat.edit', $surat) }}" class="btn btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
                             <form action="{{ route('admin.surat.destroy', $surat) }}" method="POST" onsubmit="return confirm('Hapus surat ini?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-outline-danger btn-sm" title="Hapus"><i class="bi bi-trash"></i></button>

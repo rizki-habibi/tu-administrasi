@@ -18,7 +18,7 @@
                     @elseif($document->status == 'archived')
                     <span class="badge bg-warning text-dark">Diarsipkan</span>
                     @else
-                    <span class="badge bg-secondary">Draft</span>
+                    <span class="badge bg-secondary">Draf</span>
                     @endif
                 </div>
                 <h5 class="fw-bold mb-3">{{ $document->judul }}</h5>

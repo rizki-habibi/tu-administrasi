@@ -38,7 +38,7 @@
         <form method="GET" class="row g-3 align-items-end">
             <div class="col-md-4">
                 <label class="form-label">Tipe</label>
-                <select name="type" class="form-select">
+                <select name="jenis" class="form-select">
                     <option value="">Semua</option>
                     @foreach(['rapat','kegiatan','upacara','pelatihan','lainnya'] as $t)
                         <option value="{{ $t }}" {{ request('jenis') == $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>

@@ -41,7 +41,7 @@
                 <input type="text" name="search" class="form-control" placeholder="Cari dokumen..." value="{{ request('search') }}">
             </div>
             <div class="col-md-3">
-                <select name="type" class="form-select">
+                <select name="jenis" class="form-select">
                     <option value="">Semua Jenis</option>
                     <option value="rpp" {{ request('jenis')=='rpp'?'selected':'' }}>RPP / Modul Ajar</option>
                     <option value="silabus" {{ request('jenis')=='silabus'?'selected':'' }}>Silabus / ATP</option>
@@ -55,7 +55,7 @@
             <div class="col-md-2">
                 <select name="status" class="form-select">
                     <option value="">Semua Status</option>
-                    <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draft</option>
+                    <option value="draft" {{ request('status')=='draft'?'selected':'' }}>Draf</option>
                     <option value="active" {{ request('status')=='active'?'selected':'' }}>Aktif</option>
                     <option value="archived" {{ request('status')=='archived'?'selected':'' }}>Diarsipkan</option>
                 </select>

@@ -178,8 +178,8 @@
                 <i class="bi bi-person-circle icon"></i> <span>Akun Saya</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
-                <a href="{{ route('kepala-sekolah.profil.edit') }}" class="sub-link {{ request()->routeIs('kepala-sekolah.profil.edit') ? 'active' : '' }}">Edit Profil</a>
-                <a href="{{ route('kepala-sekolah.profil.edit') }}#ubah-password" class="sub-link">Ubah Password</a>
+                <a href="{{ route('kepala-sekolah.profil.edit') }}" class="sub-link {{ request()->routeIs('kepala-sekolah.profil.edit') ? 'active' : '' }}">Ubah Profil</a>
+                <a href="{{ route('kepala-sekolah.profil.edit') }}#ubah-password" class="sub-link">Ubah Kata Sandi</a>
             </div>
         </div>
     </nav>
@@ -187,7 +187,7 @@
     {{-- Sidebar Footer --}}
     <div class="sidebar-footer">
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="bi bi-box-arrow-left"></i> <span>Logout</span>
+            <i class="bi bi-box-arrow-left"></i> <span>Keluar</span>
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
     </div>
