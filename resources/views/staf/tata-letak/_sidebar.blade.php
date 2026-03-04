@@ -1,7 +1,7 @@
 @php
     $user = Auth::user();
     $userRole = $user->peran;
-    $unreadCount = \App\Models\Notification::where('pengguna_id', $user->id)->whereNull('read_at')->count();
+    $unreadCount = \App\Models\Notification::where('pengguna_id', $user->id)->where('sudah_dibaca', false)->count();
     $currentRoute = Route::currentRouteName() ?? '';
 @endphp
 
