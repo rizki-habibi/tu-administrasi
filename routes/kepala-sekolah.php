@@ -138,6 +138,32 @@ Route::delete('/catatan/{catatan}', [Kepsek\DashboardController::class, 'destroy
 
 /*
 |--------------------------------------------------------------------------
+| Chat / Pesan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', [Kepsek\ChatController::class, 'index'])->name('index');
+    Route::post('/buat', [Kepsek\ChatController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Kepsek\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Kepsek\ChatController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Kepsek\ChatController::class, 'kirimPesan'])->name('kirim');
+    Route::get('/{percakapan}/pesan-baru', [Kepsek\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Pengaturan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
+    Route::get('/', [Kepsek\PengaturanController::class, 'index'])->name('index');
+    Route::put('/profil', [Kepsek\PengaturanController::class, 'updateProfil'])->name('profil');
+    Route::put('/password', [Kepsek\PengaturanController::class, 'updatePassword'])->name('password');
+    Route::post('/tampilan', [Kepsek\PengaturanController::class, 'updateTampilan'])->name('tampilan');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Panduan
 |--------------------------------------------------------------------------
 */

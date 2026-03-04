@@ -208,3 +208,29 @@ Route::post('/ulang-tahun/ucapan', [Staff\DashboardController::class, 'sendBirth
 Route::post('/catatan', [Staff\DashboardController::class, 'storeCatatan'])->name('catatan.store');
 Route::put('/catatan/{catatan}', [Staff\DashboardController::class, 'updateCatatan'])->name('catatan.update');
 Route::delete('/catatan/{catatan}', [Staff\DashboardController::class, 'destroyCatatan'])->name('catatan.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Chat / Pesan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', [Staff\ChatController::class, 'index'])->name('index');
+    Route::post('/buat', [Staff\ChatController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Staff\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Staff\ChatController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Staff\ChatController::class, 'kirimPesan'])->name('kirim');
+    Route::get('/{percakapan}/pesan-baru', [Staff\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Pengaturan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
+    Route::get('/', [Staff\PengaturanController::class, 'index'])->name('index');
+    Route::put('/profil', [Staff\PengaturanController::class, 'updateProfil'])->name('profil');
+    Route::put('/password', [Staff\PengaturanController::class, 'updatePassword'])->name('password');
+    Route::post('/tampilan', [Staff\PengaturanController::class, 'updateTampilan'])->name('tampilan');
+});

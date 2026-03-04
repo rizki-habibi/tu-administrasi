@@ -183,6 +183,14 @@
             </a>
         </div>
 
+        {{-- Chat / Pesan --}}
+        <div class="nav-item">
+            <a href="{{ route('staf.chat.index') }}" class="nav-link {{ request()->routeIs('staf.chat.*') ? 'active' : '' }}">
+                <i class="bi bi-chat-left-text-fill icon"></i> <span>Chat</span>
+                <span class="badge bg-primary" id="chat-badge-sidebar" style="font-size:.6rem;display:none;">0</span>
+            </a>
+        </div>
+
         {{-- Ulang Tahun --}}
         <div class="nav-item">
             <a href="{{ route('staf.ulang-tahun.index') }}" class="nav-link {{ request()->routeIs('staf.ulang-tahun.*') ? 'active' : '' }}">
@@ -191,11 +199,12 @@
         </div>
 
         {{-- Akun Saya --}}
-        <div class="nav-item {{ request()->routeIs('staf.profil.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.profil.*') ? 'active' : '' }}" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('staf.profil.*') || request()->routeIs('staf.pengaturan.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.profil.*') || request()->routeIs('staf.pengaturan.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-person-circle icon"></i> <span>Akun Saya</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
+                <a href="{{ route('staf.pengaturan.index') }}" class="sub-link {{ request()->routeIs('staf.pengaturan.index') ? 'active' : '' }}">Pengaturan</a>
                 <a href="{{ route('staf.profil.edit') }}" class="sub-link {{ request()->routeIs('staf.profil.edit') ? 'active' : '' }}">Ubah Profil</a>
                 <a href="{{ route('staf.profil.edit') }}#ubah-password" class="sub-link">Ubah Kata Sandi</a>
             </div>

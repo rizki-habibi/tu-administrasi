@@ -219,3 +219,29 @@ Route::post('/ulang-tahun/ucapan', [Admin\DashboardController::class, 'sendBirth
 Route::post('/catatan', [Admin\DashboardController::class, 'storeCatatan'])->name('catatan.store');
 Route::put('/catatan/{catatan}', [Admin\DashboardController::class, 'updateCatatan'])->name('catatan.update');
 Route::delete('/catatan/{catatan}', [Admin\DashboardController::class, 'destroyCatatan'])->name('catatan.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Chat / Pesan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', [Admin\ChatController::class, 'index'])->name('index');
+    Route::post('/buat', [Admin\ChatController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Admin\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Admin\ChatController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Admin\ChatController::class, 'kirimPesan'])->name('kirim');
+    Route::get('/{percakapan}/pesan-baru', [Admin\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Pengaturan
+|--------------------------------------------------------------------------
+*/
+Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
+    Route::get('/', [Admin\PengaturanController::class, 'index'])->name('index');
+    Route::put('/profil', [Admin\PengaturanController::class, 'updateProfil'])->name('profil');
+    Route::put('/password', [Admin\PengaturanController::class, 'updatePassword'])->name('password');
+    Route::post('/tampilan', [Admin\PengaturanController::class, 'updateTampilan'])->name('tampilan');
+});

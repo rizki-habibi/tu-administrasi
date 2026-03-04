@@ -158,6 +158,14 @@
             </a>
         </div>
 
+        {{-- Chat / Pesan --}}
+        <div class="nav-item">
+            <a href="{{ route('kepala-sekolah.chat.index') }}" class="nav-link {{ request()->routeIs('kepala-sekolah.chat.*') ? 'active' : '' }}">
+                <i class="bi bi-chat-left-text-fill icon"></i> <span>Chat</span>
+                <span class="badge bg-primary" id="chat-badge-sidebar" style="font-size:.6rem;display:none;">0</span>
+            </a>
+        </div>
+
         {{-- Ulang Tahun --}}
         <div class="nav-item">
             <a href="{{ route('kepala-sekolah.ulang-tahun.index') }}" class="nav-link {{ request()->routeIs('kepala-sekolah.ulang-tahun.*') ? 'active' : '' }}">
@@ -173,11 +181,12 @@
         </div>
 
         {{-- Akun Saya --}}
-        <div class="nav-item {{ request()->routeIs('kepala-sekolah.profil.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('kepala-sekolah.profil.*') ? 'active' : '' }}" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('kepala-sekolah.profil.*') || request()->routeIs('kepala-sekolah.pengaturan.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('kepala-sekolah.profil.*') || request()->routeIs('kepala-sekolah.pengaturan.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-person-circle icon"></i> <span>Akun Saya</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
+                <a href="{{ route('kepala-sekolah.pengaturan.index') }}" class="sub-link {{ request()->routeIs('kepala-sekolah.pengaturan.index') ? 'active' : '' }}">Pengaturan</a>
                 <a href="{{ route('kepala-sekolah.profil.edit') }}" class="sub-link {{ request()->routeIs('kepala-sekolah.profil.edit') ? 'active' : '' }}">Ubah Profil</a>
                 <a href="{{ route('kepala-sekolah.profil.edit') }}#ubah-password" class="sub-link">Ubah Kata Sandi</a>
             </div>

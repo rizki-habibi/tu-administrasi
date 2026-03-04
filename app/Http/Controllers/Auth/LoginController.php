@@ -35,11 +35,8 @@ class LoginController extends Controller
                 return back()->withErrors(['email' => 'Akun Anda tidak aktif. Hubungi admin.']);
             }
 
-            if ($user->isAdmin()) {
-                return redirect()->intended(route('admin.beranda'));
-            }
-
-            return redirect()->intended(route('staf.beranda'));
+            // Redirect sesuai peran pengguna
+            return redirect()->intended(route($user->getDashboardRoute()));
         }
 
         return back()->withErrors([

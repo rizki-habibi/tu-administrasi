@@ -243,6 +243,14 @@
             </div>
         </div>
 
+        {{-- Chat / Pesan --}}
+        <div class="nav-item">
+            <a href="{{ route('admin.chat.index') }}" class="nav-link {{ request()->routeIs('admin.chat.*') ? 'active' : '' }}">
+                <i class="bi bi-chat-left-text-fill icon"></i> <span>Chat</span>
+                <span class="badge bg-primary" id="chat-badge-sidebar" style="font-size:.6rem;display:none;">0</span>
+            </a>
+        </div>
+
         {{-- Ulang Tahun --}}
         <div class="nav-item">
             <a href="{{ route('admin.ulang-tahun.index') }}" class="nav-link {{ request()->routeIs('admin.ulang-tahun.*') ? 'active' : '' }}">
@@ -291,11 +299,12 @@
         </div>
 
         {{-- Pengaturan --}}
-        <div class="nav-item {{ request()->routeIs('admin.kehadiran.pengaturan') && request()->is('*/pengaturan*') ? 'open' : '' }}">
-            <a class="nav-link" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.kehadiran.pengaturan') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('admin.pengaturan.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-gear-fill icon"></i> <span>Pengaturan</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
+                <a href="{{ route('admin.pengaturan.index') }}" class="sub-link {{ request()->routeIs('admin.pengaturan.index') ? 'active' : '' }}">Profil & Tampilan</a>
                 <a href="{{ route('admin.kehadiran.pengaturan') }}" class="sub-link {{ request()->routeIs('admin.kehadiran.pengaturan') ? 'active' : '' }}">Pengaturan Absensi</a>
                 <a href="{{ route('admin.pegawai.ekspor', ['format' => 'csv']) }}" class="sub-link">Export Data Staff</a>
                 <a href="{{ route('admin.kehadiran.ekspor', ['format' => 'csv']) }}" class="sub-link">Export Kehadiran</a>
