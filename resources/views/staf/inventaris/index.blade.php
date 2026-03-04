@@ -95,7 +95,7 @@
 <div class="modal fade" id="damageModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('staf.inventaris.damage') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('staf.inventaris.kerusakan') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header"><h5 class="modal-title">Lapor Kerusakan Barang</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">

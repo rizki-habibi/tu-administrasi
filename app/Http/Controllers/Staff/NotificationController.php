@@ -38,7 +38,7 @@ class NotificationController extends Controller
                     'pesan' => \Str::limit($n->pesan, 60),
                     'jenis' => $n->jenis,
                     'time' => $n->created_at->diffForHumans(),
-                    'read_url' => route('staf.notifikasi.read', $n->id),
+                    'read_url' => route('staf.notifikasi.baca', $n->id),
                 ];
             }),
             'unread_count' => $unreadCount,

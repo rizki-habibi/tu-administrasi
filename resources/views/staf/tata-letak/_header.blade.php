@@ -389,13 +389,13 @@
                 if (data.notifications && data.notifications.length > 0) {
                     let html = '';
                     data.notifications.forEach(n => {
-                        const unreadClass = !n.read_at ? ' unread' : '';
+                        const unreadClass = ' unread';
                         const readUrl = '{{ url("staf/notifikasi") }}/' + n.id + '/baca';
                         html += `<a href="${readUrl}" class="notif-item${unreadClass}">
                             <div class="notif-item-icon"><i class="fas fa-bell"></i></div>
                             <div class="notif-item-content">
-                                <div class="notif-item-text">${n.title || n.message || 'Notifikasi baru'}</div>
-                                <div class="notif-item-time">${n.time_ago || ''}</div>
+                                <div class="notif-item-text">${n.judul || n.pesan || 'Notifikasi baru'}</div>
+                                <div class="notif-item-time">${n.time || ''}</div>
                             </div>
                         </a>`;
                     });

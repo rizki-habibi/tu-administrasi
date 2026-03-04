@@ -8,7 +8,7 @@
         <p class="text-muted mb-0" style="font-size:.82rem;">{{ $word->judul }} <span id="autosaveStatus" class="ms-2 text-success" style="font-size:.72rem;"></span></p>
     </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('staf.word-ai.download', $word) }}" class="btn btn-outline-info"><i class="bi bi-download me-1"></i>Download .docx</a>
+        <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-outline-info"><i class="bi bi-download me-1"></i>Download .docx</a>
         <a href="{{ route('staf.word-ai.show', $word) }}" class="btn btn-outline-primary"><i class="bi bi-eye me-1"></i>Preview</a>
         <a href="{{ route('staf.word-ai.index') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Kembali</a>
     </div>
@@ -130,7 +130,7 @@
             <div class="card border-0 shadow-sm mb-3">
                 <div class="card-body">
                     <button type="submit" class="btn btn-primary w-100 mb-2" onclick="syncContent()"><i class="bi bi-floppy me-1"></i>Simpan</button>
-                    <a href="{{ route('staf.word-ai.download', $word) }}" class="btn btn-outline-info w-100 mb-2"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download .docx</a>
+                    <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-outline-info w-100 mb-2"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download .docx</a>
                     <form action="{{ route('staf.word-ai.destroy', $word) }}" method="POST" onsubmit="return false;" id="deleteForm">
                         @csrf @method('DELETE')
                         <button type="button" class="btn btn-outline-danger w-100 btn-delete"><i class="bi bi-trash me-1"></i>Hapus Dokumen</button>
@@ -170,7 +170,7 @@ document.getElementById('editor').addEventListener('input', function() {
 
 function autoSave() {
     syncContent();
-    fetch('{{ route("staff.word.autosave", $word) }}', {
+    fetch('{{ route("staf.word-ai.autosave", $word) }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
         body: JSON.stringify({ content: document.getElementById('contentInput').value, title: document.getElementById('docTitle').value })
@@ -189,7 +189,7 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
     this.disabled = true;
     document.getElementById('aiLoading').classList.remove('d-none');
 
-    fetch('{{ route("staff.word.ai-generate") }}', {
+    fetch('{{ route("staf.word-ai.ai-generate") }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
         body: JSON.stringify({ prompt, template: document.getElementById('aiTemplate').value, document_id: {{ $word->id }} })

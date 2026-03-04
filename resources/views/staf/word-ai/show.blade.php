@@ -8,7 +8,7 @@
         <p class="text-muted mb-0" style="font-size:.82rem;">{{ $word->judul }}</p>
     </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('staf.word-ai.download', $word) }}" class="btn btn-info text-white"><i class="bi bi-download me-1"></i>Download .docx</a>
+        <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-info text-white"><i class="bi bi-download me-1"></i>Download .docx</a>
         @if($word->pengguna_id == auth()->id())
             <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success"><i class="bi bi-pencil me-1"></i>Edit</a>
         @endif
@@ -71,7 +71,7 @@
         </div>
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <a href="{{ route('staf.word-ai.download', $word) }}" class="btn btn-info text-white w-100 mb-2"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download .docx</a>
+                <a href="{{ route('staf.word-ai.unduh', $word) }}" class="btn btn-info text-white w-100 mb-2"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download .docx</a>
                 @if($word->pengguna_id == auth()->id())
                     <a href="{{ route('staf.word-ai.edit', $word) }}" class="btn btn-outline-success w-100 mb-2"><i class="bi bi-pencil me-1"></i>Edit Dokumen</a>
                     <form action="{{ route('staf.word-ai.destroy', $word) }}" method="POST" onsubmit="return false;" id="deleteForm">

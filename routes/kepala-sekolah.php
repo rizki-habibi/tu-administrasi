@@ -109,6 +109,7 @@ Route::get('/agenda/{agenda}', [Kepsek\EventController::class, 'show'])->name('a
 Route::prefix('notifikasi')->name('notifikasi.')->group(function () {
     Route::get('/', [Kepsek\NotificationController::class, 'index'])->name('index');
     Route::get('/json', [Kepsek\NotificationController::class, 'json'])->name('json');
+    Route::post('/baca-semua', [Kepsek\NotificationController::class, 'markAllAsRead'])->name('baca-semua');
     Route::patch('/{notifikasi}/baca', [Kepsek\NotificationController::class, 'markAsRead'])->name('baca');
 });
 

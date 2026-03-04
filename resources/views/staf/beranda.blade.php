@@ -4,8 +4,8 @@
 @section('konten')
 @php
     $user = Auth::user();
-    $today = $user->attendances()->whereDate('date', today())->first();
-    $monthAttendances = $user->attendances()->whereMonth('date', now()->month)->whereYear('date', now()->year)->get();
+    $today = $user->attendances()->whereDate('tanggal', today())->first();
+    $monthAttendances = $user->attendances()->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)->get();
     $hadir = $monthAttendances->where('status', 'hadir')->count();
     $terlambat = $monthAttendances->where('status', 'terlambat')->count();
     $izin = $monthAttendances->whereIn('status', ['izin','sakit','cuti'])->count();

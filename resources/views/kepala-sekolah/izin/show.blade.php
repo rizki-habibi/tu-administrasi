@@ -53,7 +53,7 @@
                 <h6 class="fw-bold mb-0 text-warning" style="font-size:.9rem;"><i class="bi bi-exclamation-triangle me-2"></i>Menunggu Keputusan</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('kepala-sekolah.izin.approve', $leaveRequest) }}" method="POST" class="mb-2">
+                <form action="{{ route('kepala-sekolah.izin.setujui', $leaveRequest) }}" method="POST" class="mb-2">
                     @csrf @method('PATCH')
                     <div class="mb-2">
                         <label class="form-label">Catatan (opsional)</label>
@@ -61,7 +61,7 @@
                     </div>
                     <button type="submit" class="btn btn-success w-100" onclick="return confirm('Setujui permohonan ini?')"><i class="bi bi-check-circle me-1"></i>Setujui</button>
                 </form>
-                <form action="{{ route('kepala-sekolah.izin.reject', $leaveRequest) }}" method="POST">
+                <form action="{{ route('kepala-sekolah.izin.tolak', $leaveRequest) }}" method="POST">
                     @csrf @method('PATCH')
                     <input type="hidden" name="admin_note" value="">
                     <button type="submit" class="btn btn-outline-danger w-100" onclick="return confirm('Tolak permohonan ini?')"><i class="bi bi-x-circle me-1"></i>Tolak</button>

@@ -29,7 +29,7 @@ class NotificationController extends Controller
                 'pesan' => \Str::limit($n->pesan, 60),
                 'jenis' => $n->jenis,
                 'time' => $n->created_at->diffForHumans(),
-                'read_url' => route('kepala-sekolah.notifikasi.read', $n->id),
+                'read_url' => route('kepala-sekolah.notifikasi.baca', $n->id),
             ]),
             'unread_count' => $unreadCount,
         ]);
@@ -42,5 +42,14 @@ class NotificationController extends Controller
         }
         $notification->update(['sudah_dibaca' => true]);
         return $notification->tautan ? redirect($notification->tautan) : redirect()->back();
+    }
+
+    public function markAllAsRead()
+    {
+        Notification::where('pengguna_id', auth()->id())
+            ->where('sudah_dibaca', false)
+            ->update(['sudah_dibaca' => true]);
+
+        return redirect()->back()->with('success', 'Semua notifikasi ditandai sudah dibaca.');
     }
 }

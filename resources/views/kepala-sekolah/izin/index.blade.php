@@ -53,11 +53,11 @@
                             <div class="d-flex gap-1">
                                 <a href="{{ route('kepala-sekolah.izin.show', $lr) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-eye"></i></a>
                                 @if($lr->status === 'pending')
-                                    <form action="{{ route('kepala-sekolah.izin.approve', $lr) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('kepala-sekolah.izin.setujui', $lr) }}" method="POST" class="d-inline">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-sm btn-success" title="Setujui" onclick="return confirm('Setujui permohonan ini?')"><i class="bi bi-check-lg"></i></button>
                                     </form>
-                                    <form action="{{ route('kepala-sekolah.izin.reject', $lr) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('kepala-sekolah.izin.tolak', $lr) }}" method="POST" class="d-inline">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-sm btn-danger" title="Tolak" onclick="return confirm('Tolak permohonan ini?')"><i class="bi bi-x-lg"></i></button>
                                     </form>

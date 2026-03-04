@@ -144,7 +144,7 @@
         </a>
     </div>
     <div class="col-md-4">
-        <a href="{{ route('kepala-sekolah.kehadiran.rekap') }}" class="card text-decoration-none h-100">
+        <a href="{{ route('kepala-sekolah.kehadiran.laporan') }}" class="card text-decoration-none h-100">
             <div class="card-body text-center py-4">
                 <div class="mb-2"><i class="bi bi-graph-up-arrow" style="font-size:2rem;color:#10b981;"></i></div>
                 <h6 class="fw-bold">Rekap Kehadiran</h6>

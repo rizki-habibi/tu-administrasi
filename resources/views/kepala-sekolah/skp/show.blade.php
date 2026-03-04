@@ -87,7 +87,7 @@
 
                 @if($skp->status === 'diajukan')
                 <hr>
-                <form action="{{ route('kepala-sekolah.skp.approve', $skp) }}" method="POST" class="mb-3">
+                <form action="{{ route('kepala-sekolah.skp.setujui', $skp) }}" method="POST" class="mb-3">
                     @csrf @method('PATCH')
                     <label class="form-label fw-semibold">Berikan Penilaian</label>
                     <select name="predikat" class="form-select mb-2" required>
@@ -102,7 +102,7 @@
                         <i class="bi bi-check-circle me-1"></i> Setujui & Nilai
                     </button>
                 </form>
-                <form action="{{ route('kepala-sekolah.skp.reject', $skp) }}" method="POST">
+                <form action="{{ route('kepala-sekolah.skp.tolak', $skp) }}" method="POST">
                     @csrf @method('PATCH')
                     <textarea name="catatan" class="form-control mb-2" rows="2" placeholder="Catatan revisi (opsional)..."></textarea>
                     <button type="submit" class="btn btn-outline-danger w-100" data-confirm="Kembalikan SKP ini untuk direvisi?">

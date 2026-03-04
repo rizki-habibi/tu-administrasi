@@ -7,7 +7,7 @@
         <h5 class="fw-bold mb-1">Kehadiran Hari Ini</h5>
         <p class="text-muted mb-0" style="font-size:.85rem;">{{ now()->translatedFormat('l, d F Y') }}</p>
     </div>
-    <a href="{{ route('kepala-sekolah.kehadiran.rekap') }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-graph-up me-1"></i>Rekap Bulanan</a>
+    <a href="{{ route('kepala-sekolah.kehadiran.laporan') }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-graph-up me-1"></i>Rekap Bulanan</a>
 </div>
 
 {{-- Summary Cards --}}

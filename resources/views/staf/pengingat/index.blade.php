@@ -78,7 +78,7 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        <form action="{{ route('staf.pengingat.complete', $r->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('staf.pengingat.selesai', $r->id) }}" method="POST" class="d-inline">
                             @csrf @method('PATCH')
                             <button type="submit" class="btn btn-success btn-sm" title="Tandai Selesai"><i class="bi bi-check-lg"></i></button>
                         </form>

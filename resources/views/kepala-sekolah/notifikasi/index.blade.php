@@ -8,7 +8,7 @@
         <p class="text-muted mb-0" style="font-size:.85rem;">Seluruh notifikasi Anda</p>
     </div>
     @if($notifications->where('sudah_dibaca', false)->count() > 0)
-    <form action="{{ route('kepala-sekolah.notifikasi.readAll') }}" method="POST">
+    <form action="{{ route('kepala-sekolah.notifikasi.baca-semua') }}" method="POST">
         @csrf
         <button type="submit" class="btn btn-sm btn-outline-warning"><i class="bi bi-check-all me-1"></i>Tandai Semua Dibaca</button>
     </form>
@@ -52,7 +52,7 @@
                         <a href="{{ $notif->tautan }}" class="text-warning text-decoration-none"><i class="bi bi-box-arrow-up-right me-1"></i>Lihat</a>
                     @endif
                     @if(!$notif->sudah_dibaca)
-                        <form action="{{ route('kepala-sekolah.notifikasi.read', $notif) }}" method="POST" class="d-inline">
+                        <form action="{{ route('kepala-sekolah.notifikasi.baca', $notif) }}" method="POST" class="d-inline">
                             @csrf @method('PATCH')
                             <button type="submit" class="btn btn-link p-0 text-muted" style="font-size:.75rem;">Tandai Dibaca</button>
                         </form>

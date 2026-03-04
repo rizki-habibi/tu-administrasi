@@ -5,8 +5,8 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0"><i class="bi bi-bell"></i> Notifikasi</h4>
     @if($notifications->where('sudah_dibaca', false)->count() > 0)
-    <form action="{{ route('staf.notifikasi.read-all') }}" method="POST">
-        @csrf @method('PATCH')
+    <form action="{{ route('staf.notifikasi.baca-semua') }}" method="POST">
+        @csrf
         <button class="btn btn-outline-primary"><i class="bi bi-check-all"></i> Tandai Semua Dibaca</button>
     </form>
     @endif
@@ -32,7 +32,7 @@
                 </div>
                 <div class="ms-3">
                     @if(!$notif->sudah_dibaca)
-                    <form action="{{ route('staf.notifikasi.read', $notif) }}" method="POST" class="d-inline">
+                    <form action="{{ route('staf.notifikasi.baca', $notif) }}" method="POST" class="d-inline">
                         @csrf @method('PATCH')
                         <button class="btn btn-sm btn-outline-success" title="Tandai Dibaca"><i class="bi bi-check"></i></button>
                     </form>

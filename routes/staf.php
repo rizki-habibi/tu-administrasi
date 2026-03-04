@@ -70,7 +70,7 @@ Route::prefix('notifikasi')->name('notifikasi.')->group(function () {
     Route::get('/', [Staff\NotificationController::class, 'index'])->name('index');
     Route::get('/json', [Staff\NotificationController::class, 'json'])->name('json');
     Route::patch('/{notifikasi}/baca', [Staff\NotificationController::class, 'markAsRead'])->name('baca');
-    Route::patch('/baca-semua', [Staff\NotificationController::class, 'markAllAsRead'])->name('baca-semua');
+    Route::post('/baca-semua', [Staff\NotificationController::class, 'markAllAsRead'])->name('baca-semua');
 });
 
 /*

@@ -172,7 +172,7 @@ class WordDocumentController extends Controller
         $request->validate([
             'prompt' => 'required|string|max:2000',
             'templat' => 'nullable|string',
-            'document_id' => 'nullable|exists:word_documents,id',
+            'document_id' => 'nullable|exists:dokumen_word,id',
         ]);
 
         $prompt = $request->prompt;

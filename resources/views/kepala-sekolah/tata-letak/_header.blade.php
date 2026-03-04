@@ -1,6 +1,6 @@
 {{-- Top Header Bar for Kepala Sekolah --}}
 @php
-    $unreadNotif = \App\Models\Notification::where('sudah_dibaca', false)->count();
+    $unreadNotif = \App\Models\Notification::where('pengguna_id', auth()->id())->where('sudah_dibaca', false)->count();
 @endphp
 
 <header class="top-header">
@@ -123,13 +123,13 @@
                 };
 
                 list.innerHTML = data.notifications.map(n => `
-                    <div class="d-flex gap-2 px-3 py-2 border-bottom notif-item" style="transition:.15s;${!n.is_read ? 'background:#fffbeb;' : ''}">
+                    <div class="d-flex gap-2 px-3 py-2 border-bottom notif-item" style="transition:.15s;${!n.sudah_dibaca ? 'background:#fffbeb;' : ''}">
                         <div class="flex-shrink-0 mt-1">
-                            <i class="bi ${icons[n.type] || icons.info}" style="font-size:1rem;"></i>
+                            <i class="bi ${icons[n.jenis] || icons.info}" style="font-size:1rem;"></i>
                         </div>
                         <div class="flex-grow-1 overflow-hidden">
-                            <div class="fw-semibold" style="font-size:.82rem;color:#92400e;">${n.title}</div>
-                            <div class="text-muted" style="font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.message}</div>
+                            <div class="fw-semibold" style="font-size:.82rem;color:#92400e;">${n.judul}</div>
+                            <div class="text-muted" style="font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.pesan}</div>
                             <small class="text-muted" style="font-size:.68rem;">${n.time}</small>
                         </div>
                     </div>

@@ -11,8 +11,8 @@
         <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download me-1"></i>Export</button>
             <ul class="dropdown-menu shadow-sm border-0">
-                <li><a class="dropdown-item export-btn" href="{{ route('admin.dokumen.export', ['format' => 'csv']) }}" data-format="csv"><i class="bi bi-file-earmark-spreadsheet me-2 text-success"></i>CSV / Excel</a></li>
-                <li><a class="dropdown-item" href="{{ route('admin.dokumen.export', ['format' => 'pdf']) }}" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>PDF / Print</a></li>
+                <li><a class="dropdown-item export-btn" href="{{ route('admin.dokumen.ekspor', ['format' => 'csv']) }}" data-format="csv"><i class="bi bi-file-earmark-spreadsheet me-2 text-success"></i>CSV / Excel</a></li>
+                <li><a class="dropdown-item" href="{{ route('admin.dokumen.ekspor', ['format' => 'pdf']) }}" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>PDF / Print</a></li>
             </ul>
         </div>
         <a href="{{ route('admin.dokumen.create') }}" class="btn btn-primary"><i class="bi bi-cloud-upload me-1"></i>Upload Dokumen</a>

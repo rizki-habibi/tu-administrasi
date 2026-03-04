@@ -27,7 +27,7 @@
 @php
     $statusColors = ['hadir'=>'success','terlambat'=>'warning','izin'=>'info','sakit'=>'primary','alpha'=>'danger','cuti'=>'secondary'];
     $monthStats = \App\Models\Attendance::where('pengguna_id', auth()->id())
-        ->whereMonth('date', now()->month)->whereYear('date', now()->year)
+        ->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)
         ->selectRaw('status, COUNT(*) as total')->groupBy('status')->pluck('total','status');
     $officeLat = $setting->lat_kantor ?? -8.1740;
     $officeLng = $setting->lng_kantor ?? 113.7169;
@@ -148,7 +148,7 @@
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <form id="clockInForm" action="{{ route('staf.kehadiran.clock-in') }}" method="POST">
+            <form id="clockInForm" action="{{ route('staf.kehadiran.masuk') }}" method="POST">
                 @csrf
                 <input type="hidden" name="photo" id="photoIn">
                 <input type="hidden" name="latitude" id="latIn">
@@ -208,7 +208,7 @@
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <form id="clockOutForm" action="{{ route('staf.kehadiran.clock-out') }}" method="POST">
+            <form id="clockOutForm" action="{{ route('staf.kehadiran.pulang') }}" method="POST">
                 @csrf
                 <input type="hidden" name="photo" id="photoOut">
                 <input type="hidden" name="latitude" id="latOut">

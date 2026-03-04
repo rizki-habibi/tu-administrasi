@@ -169,7 +169,7 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
     this.disabled = true;
     document.getElementById('aiLoading').classList.remove('d-none');
 
-    fetch('{{ route("staff.word.ai-generate") }}', {
+    fetch('{{ route("staf.word-ai.ai-generate") }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
         body: JSON.stringify({ prompt, template })
@@ -190,7 +190,7 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
 document.getElementById('btnLoadTemplate').addEventListener('click', function() {
     const template = document.getElementById('aiTemplate').value;
     if (!template || template === 'kosong') { document.getElementById('editor').innerHTML = '<p>Mulai menulis...</p>'; return; }
-    fetch('{{ route("staff.word.template") }}?template=' + template, { headers: { 'Accept': 'application/json' } })
+    fetch('{{ route("staf.word-ai.template") }}?template=' + template, { headers: { 'Accept': 'application/json' } })
     .then(r => r.json())
     .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.content; Swal.fire({icon:'success', title:'Template Dimuat!', timer:1500, showConfirmButton:false}); } });
 });
