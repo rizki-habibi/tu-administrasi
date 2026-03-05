@@ -15,7 +15,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Guru / Staff</th><th>Jenis</th><th>Periode</th><th>Nilai</th><th>Predikat</th><th>Tanggal</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Guru / Staf</th><th>Jenis</th><th>Periode</th><th>Nilai</th><th>Predikat</th><th>Tanggal</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                     @forelse($evaluations as $e)

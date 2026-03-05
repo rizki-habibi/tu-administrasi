@@ -15,7 +15,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Nama Anggaran</th><th>Sumber Dana</th><th>Tahun</th><th class="text-end">Total</th><th class="text-end">Terpakai</th><th class="text-end">Sisa</th><th>Progres</th></tr>
+                    <tr><th>No</th><th>Nama Anggaran</th><th>Sumber Dana</th><th>Tahun</th><th class="text-end">Total</th><th class="text-end">Terpakai</th><th class="text-end">Sisa</th><th>Progres</th></tr>
                 </thead>
                 <tbody>
                     @forelse($budgets as $b)

@@ -245,3 +245,13 @@ Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
     Route::put('/password', [Admin\PengaturanController::class, 'updatePassword'])->name('password');
     Route::post('/tampilan', [Admin\PengaturanController::class, 'updateTampilan'])->name('tampilan');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Pusat Ekspor Data
+|--------------------------------------------------------------------------
+*/
+Route::get('/ekspor', [Admin\EksporController::class, 'index'])->name('ekspor.index');
+Route::get('/ekspor/staff', [Admin\StaffController::class, 'export'])->name('ekspor.staff');
+Route::get('/ekspor/kehadiran', [Admin\AttendanceController::class, 'export'])->name('ekspor.kehadiran');
+Route::get('/ekspor/dokumen', [Admin\DocumentController::class, 'export'])->name('ekspor.dokumen');

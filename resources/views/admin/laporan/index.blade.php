@@ -35,7 +35,7 @@
     <div class="table-responsive">
         <table class="table table-hover mb-0">
             <thead class="table-light">
-                <tr><th>#</th><th>Judul</th><th>Pembuat</th><th>Kategori</th><th>Prioritas</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr>
+                <tr><th>No</th><th>Judul</th><th>Pembuat</th><th>Kategori</th><th>Prioritas</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr>
             </thead>
             <tbody>
                 @forelse($reports as $i => $report)

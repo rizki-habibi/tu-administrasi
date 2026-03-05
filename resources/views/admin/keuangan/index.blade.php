@@ -77,7 +77,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Kode</th><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th class="text-end">Jumlah</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Kode</th><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th class="text-end">Jumlah</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                     @forelse($transactions as $t)

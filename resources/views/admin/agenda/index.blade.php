@@ -23,7 +23,7 @@
         <table class="table table-hover mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Judul</th>
                     <th>Tanggal</th>
                     <th>Waktu</th>

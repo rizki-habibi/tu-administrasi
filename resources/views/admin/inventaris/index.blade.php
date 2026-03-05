@@ -72,7 +72,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Kode</th><th>Nama Barang</th><th>Kategori</th><th>Lokasi</th><th>Jumlah</th><th>Kondisi</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Kode</th><th>Nama Barang</th><th>Kategori</th><th>Lokasi</th><th>Jumlah</th><th>Kondisi</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                     @forelse($items as $item)

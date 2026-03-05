@@ -35,7 +35,7 @@
         <table class="table table-hover mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Nama</th>
                     <th class="text-center">Hadir</th>
                     <th class="text-center">Terlambat</th>

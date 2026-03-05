@@ -33,7 +33,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Kategori</th><th>Pembuat</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>No</th><th>Judul</th><th>Kategori</th><th>Pembuat</th><th>Tanggal</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($analyses as $a)
                     <tr>

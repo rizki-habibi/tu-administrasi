@@ -101,6 +101,19 @@
         .header-profile .avatar-sm { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: .75rem; }
         .header-profile .name { font-size: .8rem; font-weight: 500; color: #1e293b; }
 
+        /* ── Header Toggle Buttons ── */
+        .header-toggle-btn {
+            background: #f1f5f9; border: none; width: 34px; height: 34px; border-radius: 8px;
+            font-size: .95rem; color: #94a3b8; cursor: pointer; transition: all .2s;
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .header-toggle-btn:hover { background: #e2e8f0; color: #6366f1; }
+        .header-toggle-btn.active { background: #eef2ff; color: #6366f1; }
+        .header-toggle-btn.active::after {
+            content: ''; position: absolute; bottom: 2px; right: 2px;
+            width: 6px; height: 6px; border-radius: 50%; background: #10b981;
+        }
+
         /* ── Page Content ── */
         .page-content { padding: 24px; overflow-x: hidden; }
 
@@ -211,8 +224,75 @@
         @include('peran.admin.footer')
     </div>
 
+    {{-- Floating Buttons: AI & Pengaturan (terpisah) --}}
+    <a href="{{ route('admin.word-ai.create') }}" class="fab-btn fab-ai" id="fabAi" title="Buat Dokumen AI">
+        <i class="bi bi-robot"></i>
+    </a>
+    <a href="{{ route('admin.pengaturan.index') }}" class="fab-btn fab-settings" id="fabSettings" title="Pengaturan">
+        <i class="bi bi-gear-fill"></i>
+    </a>
+
+    <style>
+        /* ── Floating Buttons (Separate) ── */
+        .fab-btn {
+            position: fixed; z-index: 1050; width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.2rem; text-decoration: none;
+            box-shadow: 0 4px 16px rgba(0,0,0,.2);
+            transition: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        .fab-btn:hover { transform: scale(1.12); color: #fff; }
+        .fab-ai { bottom: 84px; right: 24px; background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 4px 16px rgba(16,185,129,.4); }
+        .fab-ai:hover { box-shadow: 0 6px 24px rgba(16,185,129,.5); }
+        .fab-settings { bottom: 24px; right: 24px; background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 4px 16px rgba(245,158,11,.4); }
+        .fab-settings:hover { box-shadow: 0 6px 24px rgba(245,158,11,.5); }
+        .fab-btn.fab-hidden { display: none !important; }
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const aiToggle = document.getElementById('toggleAi');
+        const settingsToggle = document.getElementById('toggleSettings');
+        const fabAi = document.getElementById('fabAi');
+        const fabSettings = document.getElementById('fabSettings');
+
+        // Restore state from localStorage
+        if (localStorage.getItem('fab_ai_visible') === 'false') {
+            fabAi.classList.add('fab-hidden');
+            if (aiToggle) aiToggle.classList.remove('active');
+        } else {
+            if (aiToggle) aiToggle.classList.add('active');
+        }
+
+        if (localStorage.getItem('fab_settings_visible') === 'false') {
+            fabSettings.classList.add('fab-hidden');
+            if (settingsToggle) settingsToggle.classList.remove('active');
+        } else {
+            if (settingsToggle) settingsToggle.classList.add('active');
+        }
+
+        // Toggle AI button
+        if (aiToggle) {
+            aiToggle.addEventListener('click', function() {
+                const isHidden = fabAi.classList.toggle('fab-hidden');
+                this.classList.toggle('active', !isHidden);
+                localStorage.setItem('fab_ai_visible', !isHidden);
+            });
+        }
+
+        // Toggle Settings button
+        if (settingsToggle) {
+            settingsToggle.addEventListener('click', function() {
+                const isHidden = fabSettings.classList.toggle('fab-hidden');
+                this.classList.toggle('active', !isHidden);
+                localStorage.setItem('fab_settings_visible', !isHidden);
+            });
+        }
+    });
+    </script>
     @stack('scripts')
 </body>
 </html>

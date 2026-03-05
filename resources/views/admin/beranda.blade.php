@@ -11,52 +11,60 @@
 <!-- Stat Cards -->
 <div class="row g-3 mb-4">
     <div class="col-6 col-lg-3">
-        <div class="stat-card" style="background: linear-gradient(135deg, #6366f1, #818cf8);">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p>Total Staff</p>
-                    <h3>{{ $totalStaff }}</h3>
-                    <p>{{ $activeStaff }} aktif</p>
+        <a href="{{ route('admin.pegawai.index') }}" class="text-decoration-none">
+            <div class="stat-card" style="background: linear-gradient(135deg, #6366f1, #818cf8); cursor:pointer;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p>Total Staf</p>
+                        <h3>{{ $totalStaff }}</h3>
+                        <p>{{ $activeStaff }} aktif &middot; {{ $totalStaff - $activeStaff }} nonaktif</p>
+                    </div>
+                    <div class="icon-box"><i class="bi bi-people-fill"></i></div>
                 </div>
-                <div class="icon-box"><i class="bi bi-people-fill"></i></div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3">
-        <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #34d399);">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p>Hadir Hari Ini</p>
-                    <h3>{{ $todayPresent }}</h3>
-                    <p>{{ $todayLate }} terlambat</p>
+        <a href="{{ route('admin.kehadiran.index') }}" class="text-decoration-none">
+            <div class="stat-card" style="background: linear-gradient(135deg, #10b981, #34d399); cursor:pointer;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p>Hadir Hari Ini</p>
+                        <h3>{{ $todayPresent }}</h3>
+                        <p>{{ $todayLate }} terlambat &middot; {{ $activeStaff - $todayPresent }} belum absen</p>
+                    </div>
+                    <div class="icon-box"><i class="bi bi-check-circle-fill"></i></div>
                 </div>
-                <div class="icon-box"><i class="bi bi-check-circle-fill"></i></div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3">
-        <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p>Izin Pending</p>
-                    <h3>{{ $pendingLeave }}</h3>
-                    <p>menunggu approval</p>
+        <a href="{{ route('admin.izin.index', ['status' => 'pending']) }}" class="text-decoration-none">
+            <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #fbbf24); cursor:pointer;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p>Izin Pending</p>
+                        <h3>{{ $pendingLeave }}</h3>
+                        <p>menunggu persetujuan</p>
+                    </div>
+                    <div class="icon-box"><i class="bi bi-clock-fill"></i></div>
                 </div>
-                <div class="icon-box"><i class="bi bi-clock-fill"></i></div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3">
-        <div class="stat-card" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p>Dokumen</p>
-                    <h3>{{ $totalDocs }}</h3>
-                    <p>{{ $monthReports }} laporan bulan ini</p>
+        <a href="{{ route('admin.dokumen.index') }}" class="text-decoration-none">
+            <div class="stat-card" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa); cursor:pointer;">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p>Dokumen</p>
+                        <h3>{{ $totalDocs }}</h3>
+                        <p>{{ $monthReports }} laporan bulan ini</p>
+                    </div>
+                    <div class="icon-box"><i class="bi bi-folder-fill"></i></div>
                 </div>
-                <div class="icon-box"><i class="bi bi-folder-fill"></i></div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 

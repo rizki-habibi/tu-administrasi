@@ -37,7 +37,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Judul Projek</th><th>Dimensi</th><th>Kelas</th><th>Tema</th><th>Tanggal</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Judul Projek</th><th>Dimensi</th><th>Kelas</th><th>Tema</th><th>Tanggal</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                     @forelse($assessments as $a)

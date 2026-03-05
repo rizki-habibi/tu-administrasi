@@ -17,6 +17,16 @@
             <i class="bi bi-calendar3"></i> {{ now()->translatedFormat('d F Y') }}
         </span>
 
+        {{-- AI Toggle --}}
+        <button class="header-toggle-btn active" id="toggleAi" title="Tampilkan/Sembunyikan tombol AI">
+            <i class="bi bi-robot"></i>
+        </button>
+
+        {{-- Settings Toggle --}}
+        <button class="header-toggle-btn active" id="toggleSettings" title="Tampilkan/Sembunyikan tombol Pengaturan">
+            <i class="bi bi-gear"></i>
+        </button>
+
         {{-- Notification Dropdown --}}
         <div class="dropdown" id="notifDropdown">
             <button class="notif-btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" id="notifToggle">

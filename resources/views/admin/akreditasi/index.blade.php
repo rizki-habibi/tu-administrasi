@@ -74,7 +74,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Komponen</th><th>Standar</th><th>Status</th><th>File</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>No</th><th>Komponen</th><th>Standar</th><th>Status</th><th>File</th><th>Tanggal</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($documents as $d)
                     <tr>

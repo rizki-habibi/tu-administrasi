@@ -1,12 +1,12 @@
 @extends('peran.admin.app')
-@section('judul', 'Kelola Staff')
+@section('judul', 'Kelola Staf')
 
 @section('konten')
 <!-- Header -->
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
-        <h5 class="fw-bold mb-1">Kelola Staff</h5>
-        <p class="text-muted mb-0" style="font-size:.82rem;">Manajemen data staff TU SMA Negeri 2 Jember</p>
+        <h5 class="fw-bold mb-1">Kelola Staf</h5>
+        <p class="text-muted mb-0" style="font-size:.82rem;">Manajemen data staf TU SMA Negeri 2 Jember</p>
     </div>
     <div class="d-flex gap-2">
         <div class="dropdown">
@@ -50,7 +50,7 @@
             <table class="table table-hover align-middle mb-0">
                 <thead style="background:#f8fafc;">
                     <tr>
-                        <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;padding:.75rem 1rem;">#</th>
+                        <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;padding:.75rem 1rem;">No</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Staf</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Jabatan</th>
                         <th style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:#64748b;">Telepon</th>
@@ -96,13 +96,13 @@
                                 </form>
                                 <form method="POST" action="{{ route('admin.pegawai.destroy', $staff) }}" class="d-inline">
                                     @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus staff {{ $staff->nama }}?" title="Hapus"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus staf {{ $staff->nama }}?" title="Hapus"><i class="bi bi-trash"></i></button>
                                 </form>
                             </div>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="text-center py-4 text-muted">Belum ada data staff</td></tr>
+                    <tr><td colspan="6" class="text-center py-4 text-muted">Belum ada data staf</td></tr>
                 @endforelse
                 </tbody>
             </table>
@@ -197,7 +197,7 @@ document.querySelectorAll('.export-btn').forEach(btn => {
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:16px;">
             <div class="modal-header border-0 pb-0">
-                <h6 class="modal-title fw-bold"><i class="bi bi-upload text-primary me-2"></i>Import Data Staff</h6>
+                <h6 class="modal-title fw-bold"><i class="bi bi-upload text-primary me-2"></i>Import Data Staf</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

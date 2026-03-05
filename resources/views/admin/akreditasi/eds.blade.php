@@ -14,7 +14,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Aspek</th><th>Kondisi Saat Ini</th><th>Target</th><th>Program Tindak Lanjut</th><th>Tahun</th><th>Status</th></tr></thead>
+                <thead><tr><th>No</th><th>Aspek</th><th>Kondisi Saat Ini</th><th>Target</th><th>Program Tindak Lanjut</th><th>Tahun</th><th>Status</th></tr></thead>
                 <tbody>
                     @forelse($evaluations ?? [] as $ev)
                     <tr>

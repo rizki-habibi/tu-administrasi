@@ -37,7 +37,7 @@
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
-                <thead><tr><th>#</th><th>Judul</th><th>Deskripsi</th><th>Tipe</th><th>Untuk</th><th>Deadline</th><th>Aksi</th></tr></thead>
+                <thead><tr><th>No</th><th>Judul</th><th>Deskripsi</th><th>Tipe</th><th>Untuk</th><th>Deadline</th><th>Aksi</th></tr></thead>
                 <tbody>
                     @forelse($reminders as $r)
                     @php $isOverdue = \Carbon\Carbon::parse($r->tenggat)->isPast(); @endphp

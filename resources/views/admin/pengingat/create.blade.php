@@ -44,18 +44,18 @@
                 <div class="col-md-4">
                     <label class="form-label">Target <span class="text-danger">*</span></label>
                     <select name="target" class="form-select" id="targetSelect" required>
-                        <option value="all">Semua Staff</option>
-                        <option value="specific">Staff Tertentu</option>
+                        <option value="all">Semua Staf</option>
+                        <option value="specific">Staf Tertentu</option>
                     </select>
                 </div>
                 <div class="col-md-6" id="targetUserDiv" style="display:none;">
-                    <label class="form-label">Pilih Staff</label>
+                    <label class="form-label">Pilih Staf</label>
                     <select name="user_ids[]" class="form-select" multiple>
                         @foreach($staffs ?? [] as $staff)
-                        <option value="{{ $staff->id }}">{{ $staff->nama }} - {{ $staff->jabatan ?? 'Staff' }}</option>
+                        <option value="{{ $staff->id }}">{{ $staff->nama }} - {{ $staff->jabatan ?? 'Staf' }}</option>
                         @endforeach
                     </select>
-                    <small class="text-muted">Tahan Ctrl untuk memilih beberapa staff</small>
+                    <small class="text-muted">Tahan Ctrl untuk memilih beberapa staf</small>
                 </div>
             </div>
             <hr class="my-4">

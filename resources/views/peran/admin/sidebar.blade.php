@@ -41,12 +41,11 @@
         {{-- Data Staff --}}
         <div class="nav-item {{ request()->routeIs('admin.pegawai.*') ? 'open' : '' }}">
             <a class="nav-link {{ request()->routeIs('admin.pegawai.*') ? 'active' : '' }}" data-toggle="submenu">
-                <i class="bi bi-people-fill icon"></i> <span>Data Staff</span> <i class="bi bi-chevron-right arrow"></i>
+                <i class="bi bi-people-fill icon"></i> <span>Data Staf</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
-                <a href="{{ route('admin.pegawai.index') }}" class="sub-link {{ request()->routeIs('admin.pegawai.index') ? 'active' : '' }}">Semua Staff</a>
-                <a href="{{ route('admin.pegawai.create') }}" class="sub-link {{ request()->routeIs('admin.pegawai.create') ? 'active' : '' }}">Tambah Staff Baru</a>
-                <a href="{{ route('admin.pegawai.ekspor', ['format' => 'pdf']) }}" class="sub-link" target="_blank">Cetak Data Staff</a>
+                <a href="{{ route('admin.pegawai.index') }}" class="sub-link {{ request()->routeIs('admin.pegawai.index') ? 'active' : '' }}">Semua Staf</a>
+                <a href="{{ route('admin.pegawai.create') }}" class="sub-link {{ request()->routeIs('admin.pegawai.create') ? 'active' : '' }}">Tambah Staf Baru</a>
             </div>
         </div>
 
@@ -299,6 +298,17 @@
         </div>
 
         {{-- Pengaturan --}}
+        {{-- Ekspor Data --}}
+        <div class="nav-item {{ request()->routeIs('admin.ekspor.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('admin.ekspor.*') ? 'active' : '' }}" data-toggle="submenu">
+                <i class="bi bi-download icon"></i> <span>Ekspor Data</span> <i class="bi bi-chevron-right arrow"></i>
+            </a>
+            <div class="submenu">
+                <a href="{{ route('admin.ekspor.index') }}" class="sub-link {{ request()->routeIs('admin.ekspor.index') ? 'active' : '' }}">Pusat Ekspor</a>
+            </div>
+        </div>
+
+        {{-- Pengaturan --}}
         <div class="nav-item {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.kehadiran.pengaturan') ? 'open' : '' }}">
             <a class="nav-link {{ request()->routeIs('admin.pengaturan.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-gear-fill icon"></i> <span>Pengaturan</span> <i class="bi bi-chevron-right arrow"></i>
@@ -306,9 +316,6 @@
             <div class="submenu">
                 <a href="{{ route('admin.pengaturan.index') }}" class="sub-link {{ request()->routeIs('admin.pengaturan.index') ? 'active' : '' }}">Profil & Tampilan</a>
                 <a href="{{ route('admin.kehadiran.pengaturan') }}" class="sub-link {{ request()->routeIs('admin.kehadiran.pengaturan') ? 'active' : '' }}">Pengaturan Absensi</a>
-                <a href="{{ route('admin.pegawai.ekspor', ['format' => 'csv']) }}" class="sub-link">Export Data Staff</a>
-                <a href="{{ route('admin.kehadiran.ekspor', ['format' => 'csv']) }}" class="sub-link">Export Kehadiran</a>
-                <a href="{{ route('admin.dokumen.ekspor', ['format' => 'csv']) }}" class="sub-link">Export Dokumen</a>
             </div>
         </div>
     </nav>

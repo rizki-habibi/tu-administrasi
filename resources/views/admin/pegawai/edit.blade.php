@@ -1,5 +1,5 @@
 @extends('peran.admin.app')
-@section('judul', 'Edit Staff')
+@section('judul', 'Edit Staf')
 
 @section('konten')
 <div class="row justify-content-center">

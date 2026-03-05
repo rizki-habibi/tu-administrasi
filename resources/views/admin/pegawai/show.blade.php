@@ -14,7 +14,7 @@
                     </div>
                 @endif
                 <h5>{{ $staff->nama }}</h5>
-                <p class="text-muted">{{ $staff->jabatan ?? 'Staff' }}</p>
+                <p class="text-muted">{{ $staff->jabatan ?? 'Staf' }}</p>
                 <span class="badge bg-{{ $staff->aktif ? 'success' : 'danger' }}">{{ $staff->aktif ? 'Aktif' : 'Nonaktif' }}</span>
                 <hr>
                 <div class="text-start">
