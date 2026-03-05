@@ -24,12 +24,12 @@ class Inventaris extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'dibuat_oleh');
+        return $this->belongsTo(Pengguna::class, 'dibuat_oleh');
     }
 
     public function damageReports()
     {
-        return $this->hasMany(DamageReport::class, 'inventaris_id');
+        return $this->hasMany(LaporanKerusakan::class, 'inventaris_id');
     }
 
     public function getKondisiBadgeAttribute(): string

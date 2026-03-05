@@ -25,11 +25,11 @@ class UcapanUlangTahun extends Model
 
     public function pengirim()
     {
-        return $this->belongsTo(User::class, 'pengirim_id');
+        return $this->belongsTo(Pengguna::class, 'pengirim_id');
     }
 
     public function penerima()
     {
-        return $this->belongsTo(User::class, 'penerima_id');
+        return $this->belongsTo(Pengguna::class, 'penerima_id');
     }
 }

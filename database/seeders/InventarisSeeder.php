@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\DamageReport;
+use App\Models\LaporanKerusakan;
 use App\Models\Inventaris;
-use App\Models\User;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class InventarisSeeder extends Seeder
 {
     public function run(): void
     {
-        $invUser  = User::where('email', 'fatkurahman.inventaris@tu.test')->firstOrFail();
-        $invUser2 = User::where('email', 'imam.inventaris@tu.test')->firstOrFail();
-        $pramuB   = User::where('email', 'eko.pramubakti@tu.test')->firstOrFail();
+        $invUser  = Pengguna::where('email', 'fatkurahman.inventaris@tu.test')->firstOrFail();
+        $invUser2 = Pengguna::where('email', 'imam.inventaris@tu.test')->firstOrFail();
+        $pramuB   = Pengguna::where('email', 'eko.pramubakti@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class InventarisSeeder extends Seeder
             $invItem = $createdItems[$d['inv']] ?? null;
             if (!$invItem) continue;
 
-            DamageReport::updateOrCreate(
+            LaporanKerusakan::updateOrCreate(
                 ['inventaris_id' => $invItem->id, 'tanggal_laporan' => $d['tanggal']],
                 [
                     'deskripsi_kerusakan' => $d['deskripsi'],

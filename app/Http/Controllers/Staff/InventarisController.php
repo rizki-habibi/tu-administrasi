@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventaris;
-use App\Models\DamageReport;
+use App\Models\LaporanKerusakan;
 use Illuminate\Http\Request;
 
 class InventarisController extends Controller
@@ -57,7 +57,7 @@ class InventarisController extends Controller
             $data['foto'] = $request->file('foto')->store('damage-reports', 'public');
         }
 
-        DamageReport::create($data);
+        LaporanKerusakan::create($data);
         return back()->with('success', 'Laporan kerusakan berhasil dikirim.');
     }
 }

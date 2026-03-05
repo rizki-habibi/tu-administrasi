@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\AttendanceSetting;
+use App\Models\Pengguna;
+use App\Models\PengaturanKehadiran;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +19,7 @@ class AkunSeeder extends Seeder
         | 1. ADMIN ACCOUNT (Kepala Tata Usaha)
         |--------------------------------------------------------------------------
         */
-        User::updateOrCreate(
+        Pengguna::updateOrCreate(
             ['email' => 'admin@tu.test'],
             [
                 'nama'          => 'Drs. Bambang Supriyanto, M.Pd.',
@@ -39,7 +39,7 @@ class AkunSeeder extends Seeder
         | 2. KEPALA SEKOLAH
         |--------------------------------------------------------------------------
         */
-        User::updateOrCreate(
+        Pengguna::updateOrCreate(
             ['email' => 'kepsek@tu.test'],
             [
                 'nama'          => 'Dr. H. Sugianto, M.Pd.',
@@ -268,7 +268,7 @@ class AkunSeeder extends Seeder
         foreach ($staffData as $data) {
             $role = $data['peran'];
             unset($data['peran']);
-            User::updateOrCreate(
+            Pengguna::updateOrCreate(
                 ['email' => $data['email']],
                 array_merge($data, [
                     'password'  => Hash::make('password'),
@@ -283,7 +283,7 @@ class AkunSeeder extends Seeder
         | 4. ATTENDANCE SETTINGS
         |--------------------------------------------------------------------------
         */
-        AttendanceSetting::updateOrCreate(
+        PengaturanKehadiran::updateOrCreate(
             ['id' => 1],
             [
                 'jam_masuk'          => '07:30',
@@ -338,7 +338,7 @@ class AkunSeeder extends Seeder
         $this->command->info('  - Herman Budi Santoso (herman.persuratan@tu.test)');
         $this->command->info('');
         $this->command->info('  Total: 1 admin, 1 kepsek, 16 staff (7 role)');
-        $this->command->info('  + AttendanceSetting (07:30-16:00, toleransi 15 menit)');
+        $this->command->info('  + PengaturanKehadiran (07:30-16:00, toleransi 15 menit)');
         $this->command->info('=================================================');
     }
 }

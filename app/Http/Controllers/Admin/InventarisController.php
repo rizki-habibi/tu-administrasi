@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventaris;
-use App\Models\DamageReport;
+use App\Models\LaporanKerusakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

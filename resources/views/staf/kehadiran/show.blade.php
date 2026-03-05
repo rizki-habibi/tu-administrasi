@@ -8,7 +8,7 @@
 
 @section('konten')
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="mb-0">Detail Absensi - {{ $attendance->date->translatedFormat('l, d F Y') }}</h4>
+    <h4 class="mb-0">Detail Absensi - {{ $attendance->tanggal->translatedFormat('l, d F Y') }}</h4>
     <a href="{{ route('staf.kehadiran.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
 </div>
 
@@ -16,7 +16,7 @@
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body">
         <div class="row g-3" style="font-size:.85rem;">
-            <div class="col-md-3"><strong class="text-muted d-block">Tanggal</strong>{{ $attendance->date->translatedFormat('l, d F Y') }}</div>
+            <div class="col-md-3"><strong class="text-muted d-block">Tanggal</strong>{{ $attendance->tanggal->translatedFormat('l, d F Y') }}</div>
             <div class="col-md-2"><strong class="text-muted d-block">Status</strong>
                 @php $colors = ['hadir'=>'success','terlambat'=>'warning','izin'=>'info','sakit'=>'secondary','alpha'=>'danger','cuti'=>'primary']; @endphp
                 <span class="badge bg-{{ $colors[$attendance->status] ?? 'secondary' }}">{{ ucfirst($attendance->status) }}</span>

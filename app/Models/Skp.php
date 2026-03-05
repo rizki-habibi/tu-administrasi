@@ -34,12 +34,12 @@ class Skp extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'pengguna_id');
+        return $this->belongsTo(Pengguna::class, 'pengguna_id');
     }
 
     public function approvedBy()
     {
-        return $this->belongsTo(User::class, 'disetujui_oleh');
+        return $this->belongsTo(Pengguna::class, 'disetujui_oleh');
     }
 
     public function getPredikatBadgeAttribute(): string

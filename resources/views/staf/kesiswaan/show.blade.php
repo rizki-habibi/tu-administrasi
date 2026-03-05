@@ -29,7 +29,7 @@
                 <table class="table table-borderless mb-0">
                     <tr><td class="text-muted" width="200">Nama Lengkap</td><td>{{ $student->nama }}</td></tr>
                     <tr><td class="text-muted">NIS / NISN</td><td>{{ $student->nis ?? '-' }} / {{ $student->nisn ?? '-' }}</td></tr>
-                    <tr><td class="text-muted">Kelas</td><td>{{ $student->class ?? '-' }}</td></tr>
+                    <tr><td class="text-muted">Kelas</td><td>{{ $student->kelas ?? '-' }}</td></tr>
                     <tr><td class="text-muted">Jenis Kelamin</td><td>{{ $student->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td></tr>
                     <tr><td class="text-muted">Tempat, Tanggal Lahir</td><td>{{ $student->tempat_lahir ?? '-' }}, {{ $student->tanggal_lahir ? \Carbon\Carbon::parse($student->tanggal_lahir)->translatedFormat('d F Y') : '-' }}</td></tr>
                     <tr><td class="text-muted">Alamat</td><td>{{ $student->alamat ?? '-' }}</td></tr>
@@ -49,7 +49,7 @@
                     <span class="badge bg-warning text-dark me-2">{{ $a->tingkat ?? '' }}</span>
                     <div>
                         <div class="fw-semibold">{{ $a->judul }}</div>
-                        <small class="text-muted">{{ $a->date ? \Carbon\Carbon::parse($a->date)->translatedFormat('d F Y') : '' }}</small>
+                        <small class="text-muted">{{ $a->tanggal ? $a->tanggal->translatedFormat('d F Y') : '' }}</small>
                     </div>
                 </div>
                 @empty

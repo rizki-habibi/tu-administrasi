@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Kepsek;
 
 use App\Http\Controllers\Controller;
 use App\Models\Skp;
-use App\Models\Notification;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class SkpController extends Controller
@@ -46,7 +46,7 @@ class SkpController extends Controller
         ]);
 
         // Notify staff
-        Notification::create([
+        Notifikasi::create([
             'pengguna_id' => $skp->pengguna_id,
             'judul' => 'SKP Telah Dinilai',
             'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} telah dinilai dengan predikat " . ucfirst(str_replace('_', ' ', $request->predikat)),
@@ -63,7 +63,7 @@ class SkpController extends Controller
             'disetujui_oleh' => auth()->id(),
         ]);
 
-        Notification::create([
+        Notifikasi::create([
             'pengguna_id' => $skp->pengguna_id,
             'judul' => 'SKP Perlu Revisi',
             'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} perlu direvisi. " . ($request->input('catatan', '')),

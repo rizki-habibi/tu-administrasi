@@ -103,12 +103,21 @@
                                     <br><small style="color:#64748b;font-size:.68rem;">{{ \Str::limit($msg->balasan->isi, 50) }}</small>
                                 </div>
                             @endif
-                            <div style="background:{{ $isMine ? 'linear-gradient(135deg,#6366f1,#818cf8)' : '#fff' }};color:{{ $isMine ? '#fff' : '#1e293b' }};padding:8px 14px;border-radius:{{ $msg->balasan ? '0 0 16px 16px' : ($isMine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') }};box-shadow:0 1px 3px rgba(0,0,0,.06);font-size:.82rem;line-height:1.5;position:relative;cursor:pointer;" onclick="setBalasan({{ $msg->id }}, '{{ addslashes($msg->pengirim->nama) }}', '{{ addslashes(\Str::limit($msg->isi, 40)) }}')" data-msg-id="{{ $msg->id }}">
-                                {{ $msg->isi }}
-                                <div style="text-align:right;margin-top:2px;">
-                                    <small style="font-size:.6rem;opacity:.7;">{{ $msg->created_at->format('H:i') }}</small>
+                            @if($msg->tipe === 'gambar' && $msg->file_path)
+                                <div style="background:{{ $isMine ? 'linear-gradient(135deg,#6366f1,#818cf8)' : '#fff' }};padding:4px;border-radius:{{ $msg->balasan ? '0 0 16px 16px' : ($isMine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') }};box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer;" onclick="setBalasan({{ $msg->id }}, '{{ addslashes($msg->pengirim->nama) }}', '📷 Foto')" data-msg-id="{{ $msg->id }}">
+                                    <img src="{{ asset('storage/' . $msg->file_path) }}" alt="Foto" style="width:100%;max-width:280px;border-radius:12px;display:block;cursor:pointer;" onclick="event.stopPropagation();lihatGambar(this.src)">
+                                    <div style="text-align:right;margin-top:2px;padding:0 8px 4px;">
+                                        <small style="font-size:.6rem;{{ $isMine ? 'color:rgba(255,255,255,.7)' : 'color:#94a3b8' }}">{{ $msg->created_at->format('H:i') }}</small>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div style="background:{{ $isMine ? 'linear-gradient(135deg,#6366f1,#818cf8)' : '#fff' }};color:{{ $isMine ? '#fff' : '#1e293b' }};padding:8px 14px;border-radius:{{ $msg->balasan ? '0 0 16px 16px' : ($isMine ? '16px 16px 4px 16px' : '16px 16px 16px 4px') }};box-shadow:0 1px 3px rgba(0,0,0,.06);font-size:.82rem;line-height:1.5;position:relative;cursor:pointer;" onclick="setBalasan({{ $msg->id }}, '{{ addslashes($msg->pengirim->nama) }}', '{{ addslashes(\Str::limit($msg->isi, 40)) }}')" data-msg-id="{{ $msg->id }}">
+                                    {{ $msg->isi }}
+                                    <div style="text-align:right;margin-top:2px;">
+                                        <small style="font-size:.6rem;opacity:.7;">{{ $msg->created_at->format('H:i') }}</small>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -131,6 +140,9 @@
         <div style="padding:12px 20px;border-top:1px solid #e5e7eb;background:#fff;">
             <form id="chatForm" class="d-flex gap-2 align-items-end">
                 <input type="hidden" id="balasanId" value="">
+                <button type="button" class="btn btn-light" onclick="bukaWebcam()" style="border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid #e5e7eb;" title="Ambil Foto">
+                    <i class="bi bi-camera-fill text-primary"></i>
+                </button>
                 <div style="flex:1;position:relative;">
                     <textarea id="pesanInput" rows="1" class="form-control" placeholder="Tulis pesan..." style="border-radius:20px;padding:10px 18px;font-size:.82rem;resize:none;max-height:120px;overflow-y:auto;border:2px solid #e5e7eb;transition:border-color .2s;" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
                 </div>
@@ -142,10 +154,43 @@
     </div>
 </div>
 
+{{-- Webcam Modal --}}
+<div class="modal fade" id="webcamModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;overflow:hidden;">
+            <div class="modal-header" style="background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff;border:0;padding:12px 20px;">
+                <h6 class="modal-title fw-bold mb-0"><i class="bi bi-camera-video-fill me-2"></i>Kamera</h6>
+                <button type="button" class="btn-close btn-close-white" onclick="tutupWebcam()"></button>
+            </div>
+            <div class="modal-body p-0" style="background:#000;">
+                <video id="webcamVideo" autoplay playsinline style="width:100%;display:block;"></video>
+                <canvas id="webcamCanvas" style="display:none;"></canvas>
+                <img id="webcamPreview" style="width:100%;display:none;">
+            </div>
+            <div class="modal-footer justify-content-center" style="border:0;padding:12px;">
+                {{-- Tombol saat live --}}
+                <div id="webcamLiveControls">
+                    <button type="button" class="btn btn-light btn-lg" onclick="ambilFoto()" style="border-radius:50%;width:56px;height:56px;border:3px solid #6366f1;">
+                        <i class="bi bi-circle-fill text-danger" style="font-size:1.2rem;"></i>
+                    </button>
+                </div>
+                {{-- Tombol setelah capture --}}
+                <div id="webcamCaptureControls" style="display:none;" class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-secondary" onclick="ulangFoto()"><i class="bi bi-arrow-repeat me-1"></i>Ulang</button>
+                    <button type="button" class="btn btn-primary" onclick="kirimFoto()"><i class="bi bi-send-fill me-1"></i>Kirim Foto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+
 @push('scripts')
 <script>
 const csrfToken = '{{ csrf_token() }}';
 const kirimUrl = '{{ route($routePrefix . ".chat.kirim", $percakapan) }}';
+const kirimGambarUrl = '{{ route($routePrefix . ".chat.kirim-gambar", $percakapan) }}';
 const pollUrl = '{{ route($routePrefix . ".chat.pesan-baru", $percakapan) }}';
 const buatUrl = '{{ route($routePrefix . ".chat.buat") }}';
 const currentUserId = {{ $currentUserId }};

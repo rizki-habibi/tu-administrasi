@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Attendance;
-use App\Models\AttendanceSetting;
-use App\Models\LeaveRequest;
-use App\Models\Report;
-use App\Models\Event;
-use App\Models\Notification;
-use App\Models\Document;
+use App\Models\Pengguna;
+use App\Models\Kehadiran;
+use App\Models\PengaturanKehadiran;
+use App\Models\PengajuanIzin;
+use App\Models\Laporan;
+use App\Models\Acara;
+use App\Models\Notifikasi;
+use App\Models\Dokumen;
 use App\Models\Skp;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
         | 1. ADMIN ACCOUNT (Kepala Tata Usaha)
         |--------------------------------------------------------------------------
         */
-        $admin = User::updateOrCreate(
+        $admin = Pengguna::updateOrCreate(
             ['email' => 'admin@tu.test'],
             [
                 'nama'     => 'Drs. Bambang Supriyanto, M.Pd.',
@@ -43,7 +43,7 @@ class AdminSeeder extends Seeder
         | 2. KEPALA SEKOLAH
         |--------------------------------------------------------------------------
         */
-        $kepsek = User::updateOrCreate(
+        $kepsek = Pengguna::updateOrCreate(
             ['email' => 'kepsek@tu.test'],
             [
                 'nama'     => 'Dr. H. Sugianto, M.Pd.',
@@ -250,7 +250,7 @@ class AdminSeeder extends Seeder
         foreach ($staffData as $data) {
             $role = $data['peran'];
             unset($data['peran']);
-            $staffUsers[] = User::updateOrCreate(
+            $staffUsers[] = Pengguna::updateOrCreate(
                 ['email' => $data['email']],
                 array_merge($data, [
                     'password'  => Hash::make('password'),
@@ -265,7 +265,7 @@ class AdminSeeder extends Seeder
         | 4. ATTENDANCE SETTINGS
         |--------------------------------------------------------------------------
         */
-        AttendanceSetting::updateOrCreate(
+        PengaturanKehadiran::updateOrCreate(
             ['id' => 1],
             [
                 'jam_masuk'          => '07:30',
@@ -328,7 +328,7 @@ class AdminSeeder extends Seeder
                         break;
                 }
 
-                Attendance::updateOrCreate(
+                Kehadiran::updateOrCreate(
                     ['pengguna_id' => $staff->id, 'tanggal' => $date->format('Y-m-d')],
                     [
                         'jam_masuk'      => $clockIn,
@@ -368,7 +368,7 @@ class AdminSeeder extends Seeder
 
         foreach ($leaveData as $ld) {
             if (!isset($staffUsers[$ld['user']])) continue;
-            LeaveRequest::updateOrCreate(
+            PengajuanIzin::updateOrCreate(
                 ['pengguna_id' => $staffUsers[$ld['user']]->id, 'tanggal_mulai' => $today->copy()->addDays($ld['start'])->format('Y-m-d')],
                 [
                     'jenis'        => $ld['jenis'],
@@ -408,7 +408,7 @@ class AdminSeeder extends Seeder
 
         foreach ($reportsData as $rd) {
             if (!isset($staffUsers[$rd['user']])) continue;
-            Report::updateOrCreate(
+            Laporan::updateOrCreate(
                 ['pengguna_id' => $staffUsers[$rd['user']]->id, 'judul' => $rd['judul']],
                 [
                     'deskripsi' => $rd['desc'],
@@ -435,7 +435,7 @@ class AdminSeeder extends Seeder
         ];
 
         foreach ($eventsData as $ed) {
-            Event::updateOrCreate(
+            Acara::updateOrCreate(
                 ['judul' => $ed['judul']],
                 [
                     'dibuat_oleh'  => $admin->id,
@@ -469,7 +469,7 @@ class AdminSeeder extends Seeder
             $count = rand(3, 5);
             $shuffled = collect($notifTemplates)->shuffle()->take($count);
             foreach ($shuffled as $idx => $n) {
-                Notification::create([
+                Notifikasi::create([
                     'pengguna_id' => $staff->id, 'judul' => $n['judul'], 'pesan' => $n['msg'],
                     'jenis' => $n['jenis'], 'sudah_dibaca' => $idx < 2, 'created_at' => now()->subHours(rand(1, 168)),
                 ]);
@@ -477,8 +477,8 @@ class AdminSeeder extends Seeder
         }
 
         foreach ([$admin, $kepsek] as $u) {
-            Notification::create(['pengguna_id' => $u->id, 'judul' => 'Pengajuan izin baru menunggu persetujuan', 'pesan' => 'Ada pengajuan izin baru yang memerlukan persetujuan.', 'jenis' => 'izin', 'sudah_dibaca' => false]);
-            Notification::create(['pengguna_id' => $u->id, 'judul' => 'Laporan baru perlu ditinjau', 'pesan' => 'Ada laporan baru yang perlu ditinjau.', 'jenis' => 'laporan', 'sudah_dibaca' => false]);
+            Notifikasi::create(['pengguna_id' => $u->id, 'judul' => 'Pengajuan izin baru menunggu persetujuan', 'pesan' => 'Ada pengajuan izin baru yang memerlukan persetujuan.', 'jenis' => 'izin', 'sudah_dibaca' => false]);
+            Notifikasi::create(['pengguna_id' => $u->id, 'judul' => 'Laporan baru perlu ditinjau', 'pesan' => 'Ada laporan baru yang perlu ditinjau.', 'jenis' => 'laporan', 'sudah_dibaca' => false]);
         }
 
         /*
@@ -503,7 +503,7 @@ class AdminSeeder extends Seeder
 
         foreach ($documentsData as $dd) {
             if (!isset($staffUsers[$dd['user']])) continue;
-            Document::updateOrCreate(
+            Dokumen::updateOrCreate(
                 ['judul' => $dd['judul']],
                 [
                     'deskripsi'  => $dd['desc'],

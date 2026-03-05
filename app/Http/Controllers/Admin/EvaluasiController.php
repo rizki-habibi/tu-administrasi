@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TeacherEvaluation;
-use App\Models\P5Assessment;
-use App\Models\StarAnalysis;
-use App\Models\PhysicalEvidence;
-use App\Models\LearningMethod;
-use App\Models\User;
+use App\Models\EvaluasiGuru;
+use App\Models\PenilaianP5;
+use App\Models\AnalisisStar;
+use App\Models\BuktiFisik;
+use App\Models\MetodePembelajaran;
+use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +17,7 @@ class EvaluasiController extends Controller
     // === PKG / BKD ===
     public function pkgIndex(Request $request)
     {
-        $query = TeacherEvaluation::with('user', 'evaluator')->latest();
+        $query = EvaluasiGuru::with('user', 'evaluator')->latest();
         if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
         if ($request->filled('search')) $query->whereHas('user', fn($q) => $q->where('nama', 'like', '%' . $request->search . '%'));
 
@@ -27,7 +27,7 @@ class EvaluasiController extends Controller
 
     public function pkgCreate()
     {
-        $staffs = User::whereIn('peran', User::STAFF_ROLES)->where('aktif', true)->get();
+        $staffs = Pengguna::whereIn('peran', Pengguna::STAFF_ROLES)->where('aktif', true)->get();
         return view('admin.evaluasi.pkg-create', compact('staffs'));
     }
 
@@ -52,14 +52,14 @@ class EvaluasiController extends Controller
             $data['nama_file'] = $file->getClientOriginalName();
         }
 
-        TeacherEvaluation::create($data);
+        EvaluasiGuru::create($data);
         return redirect()->route('admin.evaluasi.pkg')->with('success', 'Evaluasi berhasil ditambahkan.');
     }
 
     // === P5 Asesmen ===
     public function p5Index(Request $request)
     {
-        $query = P5Assessment::with('creator')->latest();
+        $query = PenilaianP5::with('creator')->latest();
         if ($request->filled('dimensi')) $query->where('dimensi', $request->dimensi);
         if ($request->filled('kelas')) $query->where('kelas', $request->kelas);
 
@@ -96,14 +96,14 @@ class EvaluasiController extends Controller
             $data['nama_file'] = $file->getClientOriginalName();
         }
 
-        P5Assessment::create($data);
+        PenilaianP5::create($data);
         return redirect()->route('admin.evaluasi.p5')->with('success', 'Asesmen P5 berhasil ditambahkan.');
     }
 
     // === STAR Analysis ===
     public function starIndex(Request $request)
     {
-        $query = StarAnalysis::with('creator')->latest();
+        $query = AnalisisStar::with('creator')->latest();
         if ($request->filled('kategori')) $query->where('kategori', $request->kategori);
 
         $analyses = $query->paginate(15)->withQueryString();
@@ -136,14 +136,14 @@ class EvaluasiController extends Controller
             $data['path_file'] = $request->file('file')->store('star', 'public');
         }
 
-        StarAnalysis::create($data);
+        AnalisisStar::create($data);
         return redirect()->route('admin.evaluasi.star')->with('success', 'Analisis STAR berhasil ditambahkan.');
     }
 
     // === Bukti Fisik ===
     public function buktiFisikIndex(Request $request)
     {
-        $query = PhysicalEvidence::with('uploader')->latest();
+        $query = BuktiFisik::with('uploader')->latest();
         if ($request->filled('kategori')) $query->where('kategori', $request->kategori);
         if ($request->filled('terkait')) $query->where('terkait', $request->terkait);
 
@@ -162,7 +162,7 @@ class EvaluasiController extends Controller
         ]);
 
         $file = $request->file('file');
-        PhysicalEvidence::create([
+        BuktiFisik::create([
             'judul' => $request->judul,
             'kategori' => $request->kategori,
             'deskripsi' => $request->deskripsi,
@@ -177,7 +177,7 @@ class EvaluasiController extends Controller
         return redirect()->route('admin.evaluasi.bukti-fisik')->with('success', 'Bukti fisik berhasil diupload.');
     }
 
-    public function buktiFisikDestroy(PhysicalEvidence $evidence)
+    public function buktiFisikDestroy(BuktiFisik $evidence)
     {
         Storage::disk('public')->delete($evidence->path_file);
         $evidence->delete();
@@ -187,7 +187,7 @@ class EvaluasiController extends Controller
     // === Model Pembelajaran / Metode Teknologi ===
     public function learningIndex(Request $request)
     {
-        $query = LearningMethod::with('creator')->latest();
+        $query = MetodePembelajaran::with('creator')->latest();
         if ($request->filled('jenis')) $query->where('jenis', $request->jenis);
 
         $methods = $query->paginate(15)->withQueryString();
@@ -222,7 +222,7 @@ class EvaluasiController extends Controller
             $data['nama_file'] = $file->getClientOriginalName();
         }
 
-        LearningMethod::create($data);
+        MetodePembelajaran::create($data);
         return redirect()->route('admin.evaluasi.pembelajaran')->with('success', 'Metode pembelajaran berhasil ditambahkan.');
     }
 }

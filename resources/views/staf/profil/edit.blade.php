@@ -283,7 +283,7 @@
             </div>
             <div class="card-body p-0">
                 @php
-                    $recentAttendances = $user->attendances()->orderBy('date', 'desc')->take(5)->get();
+                    $recentAttendances = $user->attendances()->orderBy('tanggal', 'desc')->take(5)->get();
                 @endphp
                 @forelse($recentAttendances as $att)
                 <div class="d-flex align-items-start gap-2 px-3 py-2 {{ !$loop->last ? 'border-bottom' : '' }}">
@@ -291,14 +291,14 @@
                         <i class="bi bi-clock text-primary" style="font-size:.7rem;"></i>
                     </div>
                     <div class="flex-grow-1">
-                        <small class="fw-semibold d-block">{{ \Carbon\Carbon::parse($att->date)->translatedFormat('d M Y') }}</small>
+                        <small class="fw-semibold d-block">{{ $att->tanggal->translatedFormat('d M Y') }}</small>
                         <small class="text-muted">
                             Masuk: {{ $att->jam_masuk ? \Carbon\Carbon::parse($att->jam_masuk)->format('H:i') : '-' }}
                             | Pulang: {{ $att->jam_pulang ? \Carbon\Carbon::parse($att->jam_pulang)->format('H:i') : '-' }}
                         </small>
                     </div>
-                    <span class="badge bg-{{ $att->status == 'present' ? 'success' : ($att->status == 'late' ? 'warning' : 'danger') }} bg-opacity-10 text-{{ $att->status == 'present' ? 'success' : ($att->status == 'late' ? 'warning' : 'danger') }}" style="font-size:.65rem;">
-                        {{ $att->status == 'present' ? 'Hadir' : ($att->status == 'late' ? 'Terlambat' : ucfirst($att->status)) }}
+                    <span class="badge bg-{{ $att->status == 'hadir' ? 'success' : ($att->status == 'terlambat' ? 'warning' : 'danger') }} bg-opacity-10 text-{{ $att->status == 'hadir' ? 'success' : ($att->status == 'terlambat' ? 'warning' : 'danger') }}" style="font-size:.65rem;">
+                        {{ ucfirst($att->status) }}
                     </span>
                 </div>
                 @empty

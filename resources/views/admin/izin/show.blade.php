@@ -11,7 +11,7 @@
                     <tr><th>Jenis</th><td><span class="badge bg-info">{{ ucfirst(str_replace('_',' ',$leaveRequest->jenis)) }}</span></td></tr>
                     <tr><th>Tanggal</th><td>{{ $leaveRequest->tanggal_mulai->format('d M Y') }} - {{ $leaveRequest->tanggal_selesai->format('d M Y') }}</td></tr>
                     <tr><th>Durasi</th><td>{{ $leaveRequest->tanggal_mulai->diffInDays($leaveRequest->tanggal_selesai) + 1 }} hari</td></tr>
-                    <tr><th>Alasan</th><td>{{ $leaveRequest->reason }}</td></tr>
+                    <tr><th>Alasan</th><td>{{ $leaveRequest->alasan }}</td></tr>
                     <tr><th>Status</th><td>
                         @switch($leaveRequest->status)
                             @case('pending')<span class="badge bg-warning">Pending</span>@break

@@ -73,7 +73,7 @@
                 @forelse($attendances as $i => $att)
                     <tr>
                         <td>{{ $attendances instanceof \Illuminate\Pagination\LengthAwarePaginator ? $attendances->firstItem() + $i : $i + 1 }}</td>
-                        <td>{{ $att->date->translatedFormat('d M Y') }}</td>
+                        <td>{{ $att->tanggal->translatedFormat('d M Y') }}</td>
                         <td>
                             <div class="fw-semibold">{{ $att->user->nama ?? '-' }}</div>
                             <small class="text-muted">{{ $att->user->role_label ?? '-' }}</small>

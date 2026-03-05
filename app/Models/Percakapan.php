@@ -17,12 +17,12 @@ class Percakapan extends Model
 
     public function pembuat(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'dibuat_oleh');
+        return $this->belongsTo(Pengguna::class, 'dibuat_oleh');
     }
 
     public function anggota(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'anggota_percakapan', 'percakapan_id', 'pengguna_id')
+        return $this->belongsToMany(Pengguna::class, 'anggota_percakapan', 'percakapan_id', 'pengguna_id')
             ->withPivot('peran', 'terakhir_dibaca')
             ->withTimestamps();
     }

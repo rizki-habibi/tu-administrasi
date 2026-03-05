@@ -299,8 +299,8 @@
                 @forelse($attendances as $att)
                 <tr>
                     <td>
-                        <strong>{{ $att->date->format('d/m/Y') }}</strong><br>
-                        <small class="text-muted">{{ $att->date->translatedFormat('l') }}</small>
+                        <strong>{{ $att->tanggal->format('d/m/Y') }}</strong><br>
+                        <small class="text-muted">{{ $att->tanggal->translatedFormat('l') }}</small>
                     </td>
                     <td>{{ $att->jam_masuk ?? '-' }}</td>
                     <td>{{ $att->jam_pulang ?? '-' }}</td>
@@ -315,12 +315,12 @@
                     <td>
                         <div class="d-flex gap-1 flex-wrap">
                             <a href="{{ route('staf.kehadiran.show', $att) }}" class="btn btn-sm btn-outline-primary" title="Detail"><i class="bi bi-eye"></i></a>
-                            @if(!$att->date->isToday())
+                            @if(!$att->tanggal->isToday())
                             <button type="button" class="btn btn-sm btn-outline-secondary edit-note-btn"
                                     data-id="{{ $att->id }}"
                                     data-status="{{ $att->status }}"
                                     data-note="{{ $att->catatan ?? '' }}"
-                                    data-date="{{ $att->date->format('d/m/Y') }}"
+                                    data-date="{{ $att->tanggal->format('d/m/Y') }}"
                                     title="Edit keterangan">
                                 <i class="bi bi-journal-text"></i>
                             </button>

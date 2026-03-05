@@ -241,12 +241,12 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ prompt, template, document_id: {{ $word->id }} })
+        body: JSON.stringify({ prompt, templat: template, document_id: {{ $word->id }} })
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('editor').innerHTML = data.content;
+            document.getElementById('editor').innerHTML = data.konten;
             Swal.fire({icon:'success', title:'Berhasil!', timer:1500, showConfirmButton:false});
         }
     })

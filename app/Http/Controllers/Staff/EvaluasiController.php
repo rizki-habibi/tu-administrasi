@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
-use App\Models\TeacherEvaluation;
-use App\Models\P5Assessment;
-use App\Models\StarAnalysis;
-use App\Models\PhysicalEvidence;
-use App\Models\LearningMethod;
+use App\Models\EvaluasiGuru;
+use App\Models\PenilaianP5;
+use App\Models\AnalisisStar;
+use App\Models\BuktiFisik;
+use App\Models\MetodePembelajaran;
 use Illuminate\Http\Request;
 
 class EvaluasiController extends Controller
@@ -15,7 +15,7 @@ class EvaluasiController extends Controller
     // PKG / BKD - view own evaluations
     public function pkgIndex()
     {
-        $evaluations = TeacherEvaluation::where('pengguna_id', auth()->id())
+        $evaluations = EvaluasiGuru::where('pengguna_id', auth()->id())
             ->latest()->paginate(15);
         return view('staf.evaluasi.pkg', compact('evaluations'));
     }
@@ -23,14 +23,14 @@ class EvaluasiController extends Controller
     // P5 Assessments - view all
     public function p5Index()
     {
-        $assessments = P5Assessment::latest()->paginate(15);
+        $assessments = PenilaianP5::latest()->paginate(15);
         return view('staf.evaluasi.p5', compact('assessments'));
     }
 
     // STAR Analysis - view/create own
     public function starIndex()
     {
-        $analyses = StarAnalysis::where('dibuat_oleh', auth()->id())
+        $analyses = AnalisisStar::where('dibuat_oleh', auth()->id())
             ->latest()->paginate(15);
         return view('staf.evaluasi.star', compact('analyses'));
     }
@@ -45,7 +45,7 @@ class EvaluasiController extends Controller
             'hasil' => 'required|string',
         ]);
 
-        StarAnalysis::create([
+        AnalisisStar::create([
             'judul' => $request->judul,
             'kategori' => $request->kategori ?? 'pembelajaran',
             'situasi' => $request->situasi,
@@ -62,7 +62,7 @@ class EvaluasiController extends Controller
     // Bukti Fisik - view/upload own
     public function buktiFisikIndex()
     {
-        $evidences = PhysicalEvidence::where('diunggah_oleh', auth()->id())
+        $evidences = BuktiFisik::where('diunggah_oleh', auth()->id())
             ->latest()->paginate(15);
         return view('staf.evaluasi.bukti-fisik', compact('evidences'));
     }
@@ -90,14 +90,14 @@ class EvaluasiController extends Controller
             $data['ukuran_file'] = $request->file('file')->getSize();
         }
 
-        PhysicalEvidence::create($data);
+        BuktiFisik::create($data);
         return redirect()->route('staf.evaluasi.bukti-fisik')->with('success', 'Bukti fisik berhasil diunggah.');
     }
 
     // Learning Methods - view/create
     public function learningIndex()
     {
-        $methods = LearningMethod::where('dibuat_oleh', auth()->id())
+        $methods = MetodePembelajaran::where('dibuat_oleh', auth()->id())
             ->latest()->paginate(15);
         return view('staf.evaluasi.pembelajaran', compact('methods'));
     }
@@ -110,7 +110,7 @@ class EvaluasiController extends Controller
             'deskripsi' => 'required|string',
         ]);
 
-        LearningMethod::create([
+        MetodePembelajaran::create([
             'nama_metode' => $request->nama,
             'jenis' => $request->jenis,
             'deskripsi' => $request->deskripsi,

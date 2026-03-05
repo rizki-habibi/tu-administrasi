@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Budget;
-use App\Models\FinanceRecord;
-use App\Models\User;
+use App\Models\Anggaran;
+use App\Models\CatatanKeuangan;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class KeuanganSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin   = User::where('email', 'admin@tu.test')->firstOrFail();
-        $finance = User::where('email', 'ike.keuangan@tu.test')->firstOrFail();
+        $admin   = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
+        $finance = Pengguna::where('email', 'ike.keuangan@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class KeuanganSeeder extends Seeder
         ];
 
         foreach ($anggaranData as $a) {
-            Budget::updateOrCreate(
+            Anggaran::updateOrCreate(
                 ['nama_anggaran' => $a['nama_anggaran'], 'tahun_anggaran' => $a['tahun_anggaran']],
                 array_merge($a, ['dibuat_oleh' => $finance->id])
             );
@@ -87,7 +87,7 @@ class KeuanganSeeder extends Seeder
         ];
 
         foreach ($records as $r) {
-            FinanceRecord::updateOrCreate(
+            CatatanKeuangan::updateOrCreate(
                 ['kode_transaksi' => $r['kode']],
                 [
                     'jenis'              => $r['jenis'],

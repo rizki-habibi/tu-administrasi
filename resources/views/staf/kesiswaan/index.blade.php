@@ -62,7 +62,7 @@
                     </td>
                     <td class="fw-semibold">{{ $s->nama }}</td>
                     <td><small>{{ $s->nis ?? '-' }} / {{ $s->nisn ?? '-' }}</small></td>
-                    <td>{{ $s->class ?? '-' }}</td>
+                    <td>{{ $s->kelas ?? '-' }}</td>
                     <td>{{ $s->jenis_kelamin == 'L' ? 'L' : 'P' }}</td>
                     <td>
                         <span class="badge {{ $s->status == 'aktif' ? 'bg-success' : 'bg-secondary' }}">{{ ucfirst($s->status ?? 'aktif') }}</span>

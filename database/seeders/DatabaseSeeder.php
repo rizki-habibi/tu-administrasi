@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Pengguna;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,44 +16,37 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // 1. Akun pengguna & pengaturan kehadiran
-            AkunSeeder::class,
+            // ═══════════════════════════════════════════════════
+            // SEEDER BERDASARKAN PERAN (Role-Based)
+            // Setiap peran membawa akun + seluruh fitur miliknya
+            // ═══════════════════════════════════════════════════
 
-            // 2. Data kehadiran
-            KehadiranSeeder::class,
+            // 1. Admin / KaTU (HARUS pertama — peran lain referensi admin)
+            PeranAdminSeeder::class,
 
-            // 3. Izin, laporan, acara, notifikasi
-            AktivitasSeeder::class,
+            // 2. Kepala Sekolah
+            PeranKepalaSekolahSeeder::class,
 
-            // 4. Dokumen & surat
-            DokumenArsipSeeder::class,
+            // 3. IKI 1 — Kepegawaian
+            PeranKepegawaianSeeder::class,
 
-            // 5. SKP
-            SkpSeeder::class,
+            // 4. IKI 2 — Pramu Bakti
+            PeranPramuBaktiSeeder::class,
 
-            // 6. Template dokumen (10 template surat/SK/notulen/dll)
-            TemplateDokumenSeeder::class,
+            // 5. IKI 3 — Keuangan
+            PeranKeuanganSeeder::class,
 
-            // 7. Keuangan (anggaran + catatan keuangan)
-            KeuanganSeeder::class,
+            // 6. IKI 4 — Persuratan
+            PeranPersuratanSeeder::class,
 
-            // 8. Inventaris & laporan kerusakan
-            InventarisSeeder::class,
+            // 7. IKI 5 — Perpustakaan
+            PeranPerpustakaanSeeder::class,
 
-            // 9. Kurikulum (silabus, RPP, modul ajar, dll)
-            KurikulumSeeder::class,
+            // 8. IKI 6 — Inventaris
+            PeranInventarisSeeder::class,
 
-            // 10. Data siswa, prestasi, pelanggaran
-            SiswaSeeder::class,
-
-            // 11. Akreditasi & EDS
-            AkreditasiSeeder::class,
-
-            // 12. Evaluasi (PKG, P5, STAR, bukti fisik, metode pembelajaran)
-            EvaluasiSeeder::class,
-
-            // 13. Dokumen Word AI, pengingat, catatan beranda, ucapan ultah
-            FiturTambahanSeeder::class,
+            // 9. IKI 7 — Kesiswaan & Kurikulum
+            PeranKesiswaanKurikulumSeeder::class,
         ]);
     }
 }

@@ -60,7 +60,7 @@
                 <tr>
                     <td>{{ $attendances->firstItem() + $i }}</td>
                     <td>{{ $att->user->nama ?? '-' }}</td>
-                    <td>{{ $att->date->format('d/m/Y') }}</td>
+                    <td>{{ $att->tanggal->format('d/m/Y') }}</td>
                     <td>{{ $att->jam_masuk ?? '-' }}</td>
                     <td>{{ $att->jam_pulang ?? '-' }}</td>
                     <td>

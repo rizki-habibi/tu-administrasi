@@ -172,13 +172,13 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
     fetch('{{ route("staf.word-ai.ai-generate") }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
-        body: JSON.stringify({ prompt, template })
+        body: JSON.stringify({ prompt, templat: template })
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('editor').innerHTML = data.content;
-            Swal.fire({icon:'success', title:'Berhasil!', text:'Dokumen berhasil digenerate!', timer:2000, showConfirmButton:false});
+            document.getElementById('editor').innerHTML = data.konten;
+            Swal.fire({icon:'success', title:'Berhasil!', text: data.sumber === 'gemini-ai' ? 'Dokumen digenerate oleh Gemini AI!' : 'Dokumen digenerate dari template lokal.', timer:2500, showConfirmButton:false});
             const titleInput = document.querySelector('input[name="judul"]');
             if (!titleInput.value) titleInput.value = prompt.substring(0, 100);
         }
@@ -190,9 +190,9 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
 document.getElementById('btnLoadTemplate').addEventListener('click', function() {
     const template = document.getElementById('aiTemplate').value;
     if (!template || template === 'kosong') { document.getElementById('editor').innerHTML = '<p>Mulai menulis...</p>'; return; }
-    fetch('{{ route("staf.word-ai.template") }}?template=' + template, { headers: { 'Accept': 'application/json' } })
+    fetch('{{ route("staf.word-ai.template") }}?templat=' + template, { headers: { 'Accept': 'application/json' } })
     .then(r => r.json())
-    .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.content; Swal.fire({icon:'success', title:'Template Dimuat!', timer:1500, showConfirmButton:false}); } });
+    .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.konten; Swal.fire({icon:'success', title:'Template Dimuat!', timer:1500, showConfirmButton:false}); } });
 });
 
 document.getElementById('wordForm').addEventListener('submit', function() { syncContent(); });

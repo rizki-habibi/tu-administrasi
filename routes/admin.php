@@ -14,66 +14,66 @@ use App\Http\Controllers\Admin;
 */
 
 // Beranda
-Route::get('/beranda', [Admin\DashboardController::class, 'index'])->name('beranda');
+Route::get('/beranda', [Admin\BerandaController::class, 'index'])->name('beranda');
 
 /*
 |--------------------------------------------------------------------------
 | Manajemen Pegawai
 |--------------------------------------------------------------------------
 */
-Route::resource('pegawai', Admin\StaffController::class)->parameters(['pegawai' => 'staff']);
-Route::patch('pegawai/{staff}/toggle-status', [Admin\StaffController::class, 'toggleStatus'])->name('pegawai.toggle-status');
-Route::get('/pegawai-ekspor', [Admin\StaffController::class, 'export'])->name('pegawai.ekspor');
-Route::post('/pegawai-impor', [Admin\StaffController::class, 'import'])->name('pegawai.impor');
+Route::resource('pegawai', Admin\PegawaiController::class)->parameters(['pegawai' => 'staff']);
+Route::patch('pegawai/{staff}/toggle-status', [Admin\PegawaiController::class, 'toggleStatus'])->name('pegawai.toggle-status');
+Route::get('/pegawai-ekspor', [Admin\PegawaiController::class, 'export'])->name('pegawai.ekspor');
+Route::post('/pegawai-impor', [Admin\PegawaiController::class, 'import'])->name('pegawai.impor');
 
 /*
 |--------------------------------------------------------------------------
 | Kehadiran
 |--------------------------------------------------------------------------
 */
-Route::get('/kehadiran', [Admin\AttendanceController::class, 'index'])->name('kehadiran.index');
-Route::get('/kehadiran/laporan', [Admin\AttendanceController::class, 'report'])->name('kehadiran.laporan');
-Route::get('/kehadiran/pengaturan', [Admin\AttendanceController::class, 'settings'])->name('kehadiran.pengaturan');
-Route::put('/kehadiran/pengaturan', [Admin\AttendanceController::class, 'updateSettings'])->name('kehadiran.pengaturan.update');
-Route::get('/kehadiran-ekspor', [Admin\AttendanceController::class, 'export'])->name('kehadiran.ekspor');
-Route::get('/kehadiran/{attendance}', [Admin\AttendanceController::class, 'show'])->name('kehadiran.show');
+Route::get('/kehadiran', [Admin\KehadiranController::class, 'index'])->name('kehadiran.index');
+Route::get('/kehadiran/laporan', [Admin\KehadiranController::class, 'report'])->name('kehadiran.laporan');
+Route::get('/kehadiran/pengaturan', [Admin\KehadiranController::class, 'settings'])->name('kehadiran.pengaturan');
+Route::put('/kehadiran/pengaturan', [Admin\KehadiranController::class, 'updateSettings'])->name('kehadiran.pengaturan.update');
+Route::get('/kehadiran-ekspor', [Admin\KehadiranController::class, 'export'])->name('kehadiran.ekspor');
+Route::get('/kehadiran/{attendance}', [Admin\KehadiranController::class, 'show'])->name('kehadiran.show');
 
 /*
 |--------------------------------------------------------------------------
 | Pengajuan Izin
 |--------------------------------------------------------------------------
 */
-Route::get('/izin', [Admin\LeaveRequestController::class, 'index'])->name('izin.index');
-Route::get('/izin/{leaveRequest}', [Admin\LeaveRequestController::class, 'show'])->name('izin.show');
-Route::patch('/izin/{leaveRequest}/setujui', [Admin\LeaveRequestController::class, 'approve'])->name('izin.setujui');
-Route::patch('/izin/{leaveRequest}/tolak', [Admin\LeaveRequestController::class, 'reject'])->name('izin.tolak');
+Route::get('/izin', [Admin\IzinController::class, 'index'])->name('izin.index');
+Route::get('/izin/{leaveRequest}', [Admin\IzinController::class, 'show'])->name('izin.show');
+Route::patch('/izin/{leaveRequest}/setujui', [Admin\IzinController::class, 'approve'])->name('izin.setujui');
+Route::patch('/izin/{leaveRequest}/tolak', [Admin\IzinController::class, 'reject'])->name('izin.tolak');
 
 /*
 |--------------------------------------------------------------------------
 | Laporan
 |--------------------------------------------------------------------------
 */
-Route::get('/laporan', [Admin\ReportController::class, 'index'])->name('laporan.index');
-Route::get('/laporan/{report}', [Admin\ReportController::class, 'show'])->name('laporan.show');
-Route::patch('/laporan/{report}/status', [Admin\ReportController::class, 'updateStatus'])->name('laporan.update-status');
+Route::get('/laporan', [Admin\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/{report}', [Admin\LaporanController::class, 'show'])->name('laporan.show');
+Route::patch('/laporan/{report}/status', [Admin\LaporanController::class, 'updateStatus'])->name('laporan.update-status');
 
 /*
 |--------------------------------------------------------------------------
 | Agenda & Event
 |--------------------------------------------------------------------------
 */
-Route::resource('agenda', Admin\EventController::class)->parameters(['agenda' => 'event']);
+Route::resource('agenda', Admin\AgendaController::class)->parameters(['agenda' => 'event']);
 
 /*
 |--------------------------------------------------------------------------
 | Notifikasi
 |--------------------------------------------------------------------------
 */
-Route::get('/notifikasi', [Admin\NotificationController::class, 'index'])->name('notifikasi.index');
-Route::get('/notifikasi/json', [Admin\NotificationController::class, 'json'])->name('notifikasi.json');
-Route::get('/notifikasi/buat', [Admin\NotificationController::class, 'create'])->name('notifikasi.create');
-Route::post('/notifikasi', [Admin\NotificationController::class, 'store'])->name('notifikasi.store');
-Route::delete('/notifikasi/{notification}', [Admin\NotificationController::class, 'destroy'])->name('notifikasi.destroy');
+Route::get('/notifikasi', [Admin\NotifikasiController::class, 'index'])->name('notifikasi.index');
+Route::get('/notifikasi/json', [Admin\NotifikasiController::class, 'json'])->name('notifikasi.json');
+Route::get('/notifikasi/buat', [Admin\NotifikasiController::class, 'create'])->name('notifikasi.create');
+Route::post('/notifikasi', [Admin\NotifikasiController::class, 'store'])->name('notifikasi.store');
+Route::delete('/notifikasi/{notification}', [Admin\NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -88,22 +88,22 @@ Route::patch('/surat/{surat}/status', [Admin\SuratController::class, 'updateStat
 | Dokumen & Arsip
 |--------------------------------------------------------------------------
 */
-Route::resource('dokumen', Admin\DocumentController::class)->parameters(['dokumen' => 'document']);
-Route::get('/dokumen-ekspor', [Admin\DocumentController::class, 'export'])->name('dokumen.ekspor');
+Route::resource('dokumen', Admin\DokumenController::class)->parameters(['dokumen' => 'document']);
+Route::get('/dokumen-ekspor', [Admin\DokumenController::class, 'export'])->name('dokumen.ekspor');
 
 /*
 |--------------------------------------------------------------------------
 | Kurikulum
 |--------------------------------------------------------------------------
 */
-Route::resource('kurikulum', Admin\CurriculumController::class);
+Route::resource('kurikulum', Admin\KurikulumController::class);
 
 /*
 |--------------------------------------------------------------------------
 | Kesiswaan
 |--------------------------------------------------------------------------
 */
-Route::resource('kesiswaan', Admin\StudentController::class);
+Route::resource('kesiswaan', Admin\KesiswaanController::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -117,14 +117,14 @@ Route::resource('inventaris', Admin\InventarisController::class);
 | Keuangan
 |--------------------------------------------------------------------------
 */
-Route::get('/keuangan', [Admin\FinanceController::class, 'index'])->name('keuangan.index');
-Route::get('/keuangan/buat', [Admin\FinanceController::class, 'create'])->name('keuangan.create');
-Route::post('/keuangan', [Admin\FinanceController::class, 'store'])->name('keuangan.store');
-Route::get('/keuangan/anggaran', [Admin\FinanceController::class, 'budgetIndex'])->name('keuangan.anggaran');
-Route::post('/keuangan/anggaran', [Admin\FinanceController::class, 'budgetStore'])->name('keuangan.anggaran.store');
-Route::get('/keuangan/{keuangan}', [Admin\FinanceController::class, 'show'])->name('keuangan.show');
-Route::patch('/keuangan/{keuangan}/verifikasi', [Admin\FinanceController::class, 'verify'])->name('keuangan.verifikasi');
-Route::delete('/keuangan/{keuangan}', [Admin\FinanceController::class, 'destroy'])->name('keuangan.destroy');
+Route::get('/keuangan', [Admin\KeuanganAdminController::class, 'index'])->name('keuangan.index');
+Route::get('/keuangan/buat', [Admin\KeuanganAdminController::class, 'create'])->name('keuangan.create');
+Route::post('/keuangan', [Admin\KeuanganAdminController::class, 'store'])->name('keuangan.store');
+Route::get('/keuangan/anggaran', [Admin\KeuanganAdminController::class, 'budgetIndex'])->name('keuangan.anggaran');
+Route::post('/keuangan/anggaran', [Admin\KeuanganAdminController::class, 'budgetStore'])->name('keuangan.anggaran.store');
+Route::get('/keuangan/{keuangan}', [Admin\KeuanganAdminController::class, 'show'])->name('keuangan.show');
+Route::patch('/keuangan/{keuangan}/verifikasi', [Admin\KeuanganAdminController::class, 'verify'])->name('keuangan.verifikasi');
+Route::delete('/keuangan/{keuangan}', [Admin\KeuanganAdminController::class, 'destroy'])->name('keuangan.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -163,24 +163,24 @@ Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
 | Akreditasi
 |--------------------------------------------------------------------------
 */
-Route::get('/akreditasi', [Admin\AccreditationController::class, 'index'])->name('akreditasi.index');
-Route::get('/akreditasi/buat', [Admin\AccreditationController::class, 'create'])->name('akreditasi.create');
-Route::post('/akreditasi', [Admin\AccreditationController::class, 'store'])->name('akreditasi.store');
-Route::get('/akreditasi/eds', [Admin\AccreditationController::class, 'edsIndex'])->name('akreditasi.eds');
-Route::post('/akreditasi/eds', [Admin\AccreditationController::class, 'edsStore'])->name('akreditasi.eds.store');
-Route::get('/akreditasi/{akreditasi}', [Admin\AccreditationController::class, 'show'])->name('akreditasi.show');
-Route::delete('/akreditasi/{akreditasi}', [Admin\AccreditationController::class, 'destroy'])->name('akreditasi.destroy');
+Route::get('/akreditasi', [Admin\AkreditasiController::class, 'index'])->name('akreditasi.index');
+Route::get('/akreditasi/buat', [Admin\AkreditasiController::class, 'create'])->name('akreditasi.create');
+Route::post('/akreditasi', [Admin\AkreditasiController::class, 'store'])->name('akreditasi.store');
+Route::get('/akreditasi/eds', [Admin\AkreditasiController::class, 'edsIndex'])->name('akreditasi.eds');
+Route::post('/akreditasi/eds', [Admin\AkreditasiController::class, 'edsStore'])->name('akreditasi.eds.store');
+Route::get('/akreditasi/{akreditasi}', [Admin\AkreditasiController::class, 'show'])->name('akreditasi.show');
+Route::delete('/akreditasi/{akreditasi}', [Admin\AkreditasiController::class, 'destroy'])->name('akreditasi.destroy');
 
 /*
 |--------------------------------------------------------------------------
 | Pengingat
 |--------------------------------------------------------------------------
 */
-Route::get('/pengingat', [Admin\ReminderController::class, 'index'])->name('pengingat.index');
-Route::get('/pengingat/buat', [Admin\ReminderController::class, 'create'])->name('pengingat.create');
-Route::post('/pengingat', [Admin\ReminderController::class, 'store'])->name('pengingat.store');
-Route::patch('/pengingat/{reminder}/toggle', [Admin\ReminderController::class, 'toggleComplete'])->name('pengingat.toggle');
-Route::delete('/pengingat/{reminder}', [Admin\ReminderController::class, 'destroy'])->name('pengingat.destroy');
+Route::get('/pengingat', [Admin\PengingatController::class, 'index'])->name('pengingat.index');
+Route::get('/pengingat/buat', [Admin\PengingatController::class, 'create'])->name('pengingat.create');
+Route::post('/pengingat', [Admin\PengingatController::class, 'store'])->name('pengingat.store');
+Route::patch('/pengingat/{reminder}/toggle', [Admin\PengingatController::class, 'toggleComplete'])->name('pengingat.toggle');
+Route::delete('/pengingat/{reminder}', [Admin\PengingatController::class, 'destroy'])->name('pengingat.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -195,17 +195,17 @@ Route::get('/panduan', [Admin\PanduanController::class, 'index'])->name('panduan
 |--------------------------------------------------------------------------
 */
 Route::prefix('word-ai')->name('word-ai.')->group(function () {
-    Route::get('/', [Admin\WordDocumentController::class, 'index'])->name('index');
-    Route::get('/buat', [Admin\WordDocumentController::class, 'create'])->name('create');
-    Route::post('/', [Admin\WordDocumentController::class, 'store'])->name('store');
-    Route::get('/template', [Admin\WordDocumentController::class, 'template'])->name('template');
-    Route::post('/ai-generate', [Admin\WordDocumentController::class, 'aiGenerate'])->name('ai-generate');
-    Route::get('/{word}', [Admin\WordDocumentController::class, 'show'])->name('show');
-    Route::get('/{word}/edit', [Admin\WordDocumentController::class, 'edit'])->name('edit');
-    Route::put('/{word}', [Admin\WordDocumentController::class, 'update'])->name('update');
-    Route::delete('/{word}', [Admin\WordDocumentController::class, 'destroy'])->name('destroy');
-    Route::get('/{word}/unduh', [Admin\WordDocumentController::class, 'download'])->name('unduh');
-    Route::post('/{word}/autosave', [Admin\WordDocumentController::class, 'autosave'])->name('autosave');
+    Route::get('/', [Admin\DokumenWordController::class, 'index'])->name('index');
+    Route::get('/buat', [Admin\DokumenWordController::class, 'create'])->name('create');
+    Route::post('/', [Admin\DokumenWordController::class, 'store'])->name('store');
+    Route::get('/template', [Admin\DokumenWordController::class, 'template'])->name('template');
+    Route::post('/ai-generate', [Admin\DokumenWordController::class, 'aiGenerate'])->name('ai-generate');
+    Route::get('/{word}', [Admin\DokumenWordController::class, 'show'])->name('show');
+    Route::get('/{word}/edit', [Admin\DokumenWordController::class, 'edit'])->name('edit');
+    Route::put('/{word}', [Admin\DokumenWordController::class, 'update'])->name('update');
+    Route::delete('/{word}', [Admin\DokumenWordController::class, 'destroy'])->name('destroy');
+    Route::get('/{word}/unduh', [Admin\DokumenWordController::class, 'download'])->name('unduh');
+    Route::post('/{word}/autosave', [Admin\DokumenWordController::class, 'autosave'])->name('autosave');
 });
 
 /*
@@ -213,12 +213,23 @@ Route::prefix('word-ai')->name('word-ai.')->group(function () {
 | Ulang Tahun & Catatan Beranda
 |--------------------------------------------------------------------------
 */
-Route::get('/ulang-tahun', [Admin\DashboardController::class, 'birthdayList'])->name('ulang-tahun.index');
-Route::post('/ulang-tahun/ucapan', [Admin\DashboardController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
+Route::get('/ulang-tahun', [Admin\BerandaController::class, 'birthdayList'])->name('ulang-tahun.index');
+Route::post('/ulang-tahun/ucapan', [Admin\BerandaController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
 
-Route::post('/catatan', [Admin\DashboardController::class, 'storeCatatan'])->name('catatan.store');
-Route::put('/catatan/{catatan}', [Admin\DashboardController::class, 'updateCatatan'])->name('catatan.update');
-Route::delete('/catatan/{catatan}', [Admin\DashboardController::class, 'destroyCatatan'])->name('catatan.destroy');
+Route::post('/catatan', [Admin\BerandaController::class, 'storeCatatan'])->name('catatan.store');
+Route::put('/catatan/{catatan}', [Admin\BerandaController::class, 'updateCatatan'])->name('catatan.update');
+Route::delete('/catatan/{catatan}', [Admin\BerandaController::class, 'destroyCatatan'])->name('catatan.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| AI Assistant & Analisis
+|--------------------------------------------------------------------------
+*/
+Route::middleware('throttle:10,1')->prefix('ai')->name('ai.')->group(function () {
+    Route::post('/assistant', [Admin\BerandaController::class, 'aiAssistant'])->name('assistant');
+    Route::get('/ringkasan', [Admin\BerandaController::class, 'aiRingkasan'])->name('ringkasan');
+    Route::get('/analisis-kehadiran', [Admin\BerandaController::class, 'aiAnalisisKehadiran'])->name('analisis-kehadiran');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -226,12 +237,13 @@ Route::delete('/catatan/{catatan}', [Admin\DashboardController::class, 'destroyC
 |--------------------------------------------------------------------------
 */
 Route::prefix('chat')->name('chat.')->group(function () {
-    Route::get('/', [Admin\ChatController::class, 'index'])->name('index');
-    Route::post('/buat', [Admin\ChatController::class, 'buatPercakapan'])->name('buat');
-    Route::get('/belum-dibaca', [Admin\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
-    Route::get('/{percakapan}', [Admin\ChatController::class, 'show'])->name('show');
-    Route::post('/{percakapan}/kirim', [Admin\ChatController::class, 'kirimPesan'])->name('kirim');
-    Route::get('/{percakapan}/pesan-baru', [Admin\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+    Route::get('/', [Admin\PesanController::class, 'index'])->name('index');
+    Route::post('/buat', [Admin\PesanController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Admin\PesanController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Admin\PesanController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Admin\PesanController::class, 'kirimPesan'])->name('kirim');
+    Route::post('/{percakapan}/kirim-gambar', [Admin\PesanController::class, 'kirimGambar'])->name('kirim-gambar');
+    Route::get('/{percakapan}/pesan-baru', [Admin\PesanController::class, 'pesanBaru'])->name('pesan-baru');
 });
 
 /*
@@ -252,6 +264,6 @@ Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/ekspor', [Admin\EksporController::class, 'index'])->name('ekspor.index');
-Route::get('/ekspor/staff', [Admin\StaffController::class, 'export'])->name('ekspor.staff');
-Route::get('/ekspor/kehadiran', [Admin\AttendanceController::class, 'export'])->name('ekspor.kehadiran');
-Route::get('/ekspor/dokumen', [Admin\DocumentController::class, 'export'])->name('ekspor.dokumen');
+Route::get('/ekspor/staff', [Admin\PegawaiController::class, 'export'])->name('ekspor.staff');
+Route::get('/ekspor/kehadiran', [Admin\KehadiranController::class, 'export'])->name('ekspor.kehadiran');
+Route::get('/ekspor/dokumen', [Admin\DokumenController::class, 'export'])->name('ekspor.dokumen');

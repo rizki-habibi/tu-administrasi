@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Attendance;
+use App\Models\Pengguna;
+use App\Models\Kehadiran;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -30,7 +30,7 @@ class KehadiranSeeder extends Seeder
             'wikana.kesiswaan@tu.test',
         ];
 
-        $staffUsers = User::whereIn('email', $staffEmails)
+        $staffUsers = Pengguna::whereIn('email', $staffEmails)
             ->where('aktif', true)
             ->get();
 
@@ -80,7 +80,7 @@ class KehadiranSeeder extends Seeder
                         break;
                 }
 
-                Attendance::updateOrCreate(
+                Kehadiran::updateOrCreate(
                     ['pengguna_id' => $staff->id, 'tanggal' => $date->format('Y-m-d')],
                     [
                         'jam_masuk'      => $clockIn,

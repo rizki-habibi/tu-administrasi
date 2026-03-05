@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\CurriculumDocument;
-use App\Models\User;
+use App\Models\DokumenKurikulum;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class KurikulumSeeder extends Seeder
 {
     public function run(): void
     {
-        $kurStaff1 = User::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
-        $kurStaff2 = User::where('email', 'wikana.kesiswaan@tu.test')->firstOrFail();
+        $kurStaff1 = Pengguna::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
+        $kurStaff2 = Pengguna::where('email', 'wikana.kesiswaan@tu.test')->firstOrFail();
 
         $docs = [
             ['judul' => 'KTSP SMA Negeri 2 Jember TA 2025/2026',               'jenis' => 'ktsp',                'ta' => '2025/2026', 'smt' => 'genap',   'mapel' => null,                  'kelas' => null,    'status' => 'final',    'user' => $kurStaff1],
@@ -27,7 +27,7 @@ class KurikulumSeeder extends Seeder
         ];
 
         foreach ($docs as $d) {
-            CurriculumDocument::updateOrCreate(
+            DokumenKurikulum::updateOrCreate(
                 ['judul' => $d['judul']],
                 [
                     'deskripsi'      => 'Dokumen kurikulum ' . strtolower($d['jenis']) . ' untuk SMA Negeri 2 Jember.',

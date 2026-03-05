@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Document;
+use App\Models\Pengguna;
+use App\Models\Dokumen;
 use App\Models\Surat;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ class DokumenArsipSeeder extends Seeder
     public function run(): void
     {
         // Look up users by email
-        $admin = User::where('email', 'admin@tu.test')->firstOrFail();
+        $admin = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
 
         $staffEmails = [
             'dwi.kepegawaian@tu.test',       // 0
@@ -34,7 +34,7 @@ class DokumenArsipSeeder extends Seeder
             'wikana.kesiswaan@tu.test',       // 15
         ];
 
-        $staffUsers = User::whereIn('email', $staffEmails)->get()->keyBy('email');
+        $staffUsers = Pengguna::whereIn('email', $staffEmails)->get()->keyBy('email');
 
         // Map index to user for easy reference (same order as original AdminSeeder)
         $staff = [];
@@ -64,7 +64,7 @@ class DokumenArsipSeeder extends Seeder
 
         foreach ($documentsData as $dd) {
             if (!isset($staff[$dd['user']])) continue;
-            Document::updateOrCreate(
+            Dokumen::updateOrCreate(
                 ['judul' => $dd['judul']],
                 [
                     'deskripsi'  => $dd['desc'],

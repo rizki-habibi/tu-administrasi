@@ -18,7 +18,7 @@
     <div class="card-body">
         <div class="row g-3" style="font-size:.85rem;">
             <div class="col-md-3"><strong class="text-muted d-block">Nama</strong>{{ $attendance->user->nama ?? '-' }}</div>
-            <div class="col-md-2"><strong class="text-muted d-block">Tanggal</strong>{{ $attendance->date->translatedFormat('d F Y') }}</div>
+            <div class="col-md-2"><strong class="text-muted d-block">Tanggal</strong>{{ $attendance->tanggal->translatedFormat('d F Y') }}</div>
             <div class="col-md-2"><strong class="text-muted d-block">Status</strong>
                 @php $colors = ['hadir'=>'success','terlambat'=>'warning','izin'=>'info','sakit'=>'primary','alpha'=>'danger']; @endphp
                 <span class="badge bg-{{ $colors[$attendance->status] ?? 'secondary' }}">{{ ucfirst($attendance->status) }}</span>

@@ -27,6 +27,6 @@ class CatatanBeranda extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'pengguna_id');
+        return $this->belongsTo(Pengguna::class, 'pengguna_id');
     }
 }

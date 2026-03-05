@@ -235,13 +235,13 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ prompt, template })
+        body: JSON.stringify({ prompt, templat: template })
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('editor').innerHTML = data.content;
-            Swal.fire({icon:'success', title:'Berhasil!', text:'Dokumen berhasil digenerate!', timer:2000, showConfirmButton:false});
+            document.getElementById('editor').innerHTML = data.konten;
+            Swal.fire({icon:'success', title:'Berhasil!', text: data.sumber === 'gemini-ai' ? 'Dokumen digenerate oleh Gemini AI!' : 'Dokumen digenerate dari template lokal.', timer:2500, showConfirmButton:false});
             // Auto-fill title from prompt if empty
             const titleInput = document.querySelector('input[name="judul"]');
             if (!titleInput.value) {
@@ -264,13 +264,13 @@ document.getElementById('btnLoadTemplate').addEventListener('click', function() 
         return;
     }
 
-    fetch('{{ route("admin.word-ai.template") }}?template=' + template, {
+    fetch('{{ route("admin.word-ai.template") }}?templat=' + template, {
         headers: { 'Accept': 'application/json' }
     })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('editor').innerHTML = data.content;
+            document.getElementById('editor').innerHTML = data.konten;
             Swal.fire({icon:'success', title:'Template Dimuat!', timer:1500, showConfirmButton:false});
         }
     });

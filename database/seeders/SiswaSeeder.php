@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\StudentRecord;
-use App\Models\StudentAchievement;
-use App\Models\StudentViolation;
-use App\Models\User;
+use App\Models\DataSiswa;
+use App\Models\PrestasiSiswa;
+use App\Models\PelanggaranSiswa;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class SiswaSeeder extends Seeder
 {
     public function run(): void
     {
-        $creator = User::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
-        $creator2 = User::where('email', 'wikana.kesiswaan@tu.test')->firstOrFail();
+        $creator = Pengguna::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
+        $creator2 = Pengguna::where('email', 'wikana.kesiswaan@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ class SiswaSeeder extends Seeder
 
         $createdStudents = [];
         foreach ($students as $s) {
-            $createdStudents[$s['nis']] = StudentRecord::updateOrCreate(
+            $createdStudents[$s['nis']] = DataSiswa::updateOrCreate(
                 ['nis' => $s['nis']],
                 [
                     'nisn'             => $s['nisn'],
@@ -75,7 +75,7 @@ class SiswaSeeder extends Seeder
             $student = $createdStudents[$a['nis']] ?? null;
             if (!$student) continue;
 
-            StudentAchievement::updateOrCreate(
+            PrestasiSiswa::updateOrCreate(
                 ['siswa_id' => $student->id, 'judul' => $a['judul']],
                 [
                     'tingkat'       => $a['tingkat'],
@@ -102,7 +102,7 @@ class SiswaSeeder extends Seeder
             $student = $createdStudents[$v['nis']] ?? null;
             if (!$student) continue;
 
-            StudentViolation::updateOrCreate(
+            PelanggaranSiswa::updateOrCreate(
                 ['siswa_id' => $student->id, 'tanggal' => $v['tanggal'], 'jenis' => $v['jenis']],
                 [
                     'deskripsi'       => $v['deskripsi'],

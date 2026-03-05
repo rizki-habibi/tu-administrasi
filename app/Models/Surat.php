@@ -23,12 +23,12 @@ class Surat extends Model
     // ─── Relationships ────────────────────────
     public function creator()
     {
-        return $this->belongsTo(User::class, 'dibuat_oleh');
+        return $this->belongsTo(Pengguna::class, 'dibuat_oleh');
     }
 
     public function approver()
     {
-        return $this->belongsTo(User::class, 'disetujui_oleh');
+        return $this->belongsTo(Pengguna::class, 'disetujui_oleh');
     }
 
     // ─── Auto Number Generator ────────────────

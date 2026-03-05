@@ -10,7 +10,7 @@ use Symfony\Component\Process\Process;
 /**
  * Dev System Scan Controller
  * Mendeteksi SEMUA kemungkinan error dalam project Laravel secara otomatis.
- * Hanya bisa diakses jika APP_ENV=local (via LocalOnly middleware).
+ * Hanya bisa diakses jika APP_ENV=local (via HanyaLokal middleware).
  */
 class DevSystemScanController extends Controller
 {

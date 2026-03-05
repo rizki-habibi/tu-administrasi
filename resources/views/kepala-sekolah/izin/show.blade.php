@@ -22,7 +22,7 @@
                     <div class="col-md-6"><strong class="text-muted d-block">Tanggal Selesai</strong>{{ $leaveRequest->tanggal_selesai->translatedFormat('d F Y') }}</div>
                     <div class="col-md-6"><strong class="text-muted d-block">Durasi</strong>{{ $leaveRequest->duration }} hari</div>
                     <div class="col-md-6"><strong class="text-muted d-block">Diajukan</strong>{{ $leaveRequest->created_at->translatedFormat('d F Y H:i') }}</div>
-                    <div class="col-12"><strong class="text-muted d-block">Alasan</strong>{{ $leaveRequest->reason ?? '-' }}</div>
+                    <div class="col-12"><strong class="text-muted d-block">Alasan</strong>{{ $leaveRequest->alasan ?? '-' }}</div>
                     @if($leaveRequest->catatan_admin)
                     <div class="col-12"><strong class="text-muted d-block">Catatan Atasan</strong>{{ $leaveRequest->catatan_admin }}</div>
                     @endif

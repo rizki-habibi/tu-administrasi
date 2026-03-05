@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\LeaveRequest;
-use App\Models\Report;
-use App\Models\Event;
-use App\Models\Notification;
+use App\Models\Pengguna;
+use App\Models\PengajuanIzin;
+use App\Models\Laporan;
+use App\Models\Acara;
+use App\Models\Notifikasi;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -17,8 +17,8 @@ class AktivitasSeeder extends Seeder
         $today = Carbon::today();
 
         // Look up users by email
-        $admin  = User::where('email', 'admin@tu.test')->firstOrFail();
-        $kepsek = User::where('email', 'kepsek@tu.test')->firstOrFail();
+        $admin  = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
+        $kepsek = Pengguna::where('email', 'kepsek@tu.test')->firstOrFail();
 
         $staffEmails = [
             'dwi.kepegawaian@tu.test',       // 0
@@ -39,7 +39,7 @@ class AktivitasSeeder extends Seeder
             'wikana.kesiswaan@tu.test',       // 15
         ];
 
-        $staffUsers = User::whereIn('email', $staffEmails)->get()->keyBy('email');
+        $staffUsers = Pengguna::whereIn('email', $staffEmails)->get()->keyBy('email');
 
         // Map index to user for easy reference (same order as original AdminSeeder)
         $staff = [];
@@ -69,7 +69,7 @@ class AktivitasSeeder extends Seeder
 
         foreach ($leaveData as $ld) {
             if (!isset($staff[$ld['user']])) continue;
-            LeaveRequest::updateOrCreate(
+            PengajuanIzin::updateOrCreate(
                 ['pengguna_id' => $staff[$ld['user']]->id, 'tanggal_mulai' => $today->copy()->addDays($ld['start'])->format('Y-m-d')],
                 [
                     'jenis'        => $ld['jenis'],
@@ -109,7 +109,7 @@ class AktivitasSeeder extends Seeder
 
         foreach ($reportsData as $rd) {
             if (!isset($staff[$rd['user']])) continue;
-            Report::updateOrCreate(
+            Laporan::updateOrCreate(
                 ['pengguna_id' => $staff[$rd['user']]->id, 'judul' => $rd['judul']],
                 [
                     'deskripsi' => $rd['desc'],
@@ -136,7 +136,7 @@ class AktivitasSeeder extends Seeder
         ];
 
         foreach ($eventsData as $ed) {
-            Event::updateOrCreate(
+            Acara::updateOrCreate(
                 ['judul' => $ed['judul']],
                 [
                     'dibuat_oleh'  => $admin->id,
@@ -171,7 +171,7 @@ class AktivitasSeeder extends Seeder
             $count = rand(3, 5);
             $shuffled = collect($notifTemplates)->shuffle()->take($count);
             foreach ($shuffled as $idx => $n) {
-                Notification::create([
+                Notifikasi::create([
                     'pengguna_id' => $staffUser->id, 'judul' => $n['judul'], 'pesan' => $n['msg'],
                     'jenis' => $n['jenis'], 'sudah_dibaca' => $idx < 2, 'created_at' => now()->subHours(rand(1, 168)),
                 ]);
@@ -180,8 +180,8 @@ class AktivitasSeeder extends Seeder
         }
 
         foreach ([$admin, $kepsek] as $u) {
-            Notification::create(['pengguna_id' => $u->id, 'judul' => 'Pengajuan izin baru menunggu persetujuan', 'pesan' => 'Ada pengajuan izin baru yang memerlukan persetujuan.', 'jenis' => 'izin', 'sudah_dibaca' => false]);
-            Notification::create(['pengguna_id' => $u->id, 'judul' => 'Laporan baru perlu ditinjau', 'pesan' => 'Ada laporan baru yang perlu ditinjau.', 'jenis' => 'laporan', 'sudah_dibaca' => false]);
+            Notifikasi::create(['pengguna_id' => $u->id, 'judul' => 'Pengajuan izin baru menunggu persetujuan', 'pesan' => 'Ada pengajuan izin baru yang memerlukan persetujuan.', 'jenis' => 'izin', 'sudah_dibaca' => false]);
+            Notifikasi::create(['pengguna_id' => $u->id, 'judul' => 'Laporan baru perlu ditinjau', 'pesan' => 'Ada laporan baru yang perlu ditinjau.', 'jenis' => 'laporan', 'sudah_dibaca' => false]);
             $totalNotif += 2;
         }
 

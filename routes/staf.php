@@ -18,7 +18,7 @@ use App\Http\Controllers\Staff;
 */
 
 // Beranda
-Route::get('/beranda', [Staff\DashboardController::class, 'index'])->name('beranda');
+Route::get('/beranda', [Staff\BerandaController::class, 'index'])->name('beranda');
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +26,11 @@ Route::get('/beranda', [Staff\DashboardController::class, 'index'])->name('beran
 |--------------------------------------------------------------------------
 */
 Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
-    Route::get('/', [Staff\AttendanceController::class, 'index'])->name('index');
-    Route::post('/masuk', [Staff\AttendanceController::class, 'clockIn'])->name('masuk');
-    Route::post('/pulang', [Staff\AttendanceController::class, 'clockOut'])->name('pulang');
-    Route::get('/{kehadiran}', [Staff\AttendanceController::class, 'show'])->name('show');
-    Route::patch('/{kehadiran}/catatan', [Staff\AttendanceController::class, 'updateNote'])->name('catatan');
+    Route::get('/', [Staff\KehadiranController::class, 'index'])->name('index');
+    Route::post('/masuk', [Staff\KehadiranController::class, 'clockIn'])->name('masuk');
+    Route::post('/pulang', [Staff\KehadiranController::class, 'clockOut'])->name('pulang');
+    Route::get('/{kehadiran}', [Staff\KehadiranController::class, 'show'])->name('show');
+    Route::patch('/{kehadiran}/catatan', [Staff\KehadiranController::class, 'updateNote'])->name('catatan');
 });
 
 /*
@@ -39,11 +39,11 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('izin')->name('izin.')->group(function () {
-    Route::get('/', [Staff\LeaveRequestController::class, 'index'])->name('index');
-    Route::get('/buat', [Staff\LeaveRequestController::class, 'create'])->name('create');
-    Route::post('/', [Staff\LeaveRequestController::class, 'store'])->name('store');
-    Route::get('/{izin}', [Staff\LeaveRequestController::class, 'show'])->name('show');
-    Route::delete('/{izin}', [Staff\LeaveRequestController::class, 'destroy'])->name('destroy');
+    Route::get('/', [Staff\IzinController::class, 'index'])->name('index');
+    Route::get('/buat', [Staff\IzinController::class, 'create'])->name('create');
+    Route::post('/', [Staff\IzinController::class, 'store'])->name('store');
+    Route::get('/{izin}', [Staff\IzinController::class, 'show'])->name('show');
+    Route::delete('/{izin}', [Staff\IzinController::class, 'destroy'])->name('destroy');
 });
 
 /*
@@ -51,15 +51,15 @@ Route::prefix('izin')->name('izin.')->group(function () {
 | Laporan
 |--------------------------------------------------------------------------
 */
-Route::resource('laporan', Staff\ReportController::class);
+Route::resource('laporan', Staff\LaporanController::class);
 
 /*
 |--------------------------------------------------------------------------
 | Agenda
 |--------------------------------------------------------------------------
 */
-Route::get('/agenda', [Staff\EventController::class, 'index'])->name('agenda.index');
-Route::get('/agenda/{agenda}', [Staff\EventController::class, 'show'])->name('agenda.show');
+Route::get('/agenda', [Staff\AgendaController::class, 'index'])->name('agenda.index');
+Route::get('/agenda/{agenda}', [Staff\AgendaController::class, 'show'])->name('agenda.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -67,10 +67,10 @@ Route::get('/agenda/{agenda}', [Staff\EventController::class, 'show'])->name('ag
 |--------------------------------------------------------------------------
 */
 Route::prefix('notifikasi')->name('notifikasi.')->group(function () {
-    Route::get('/', [Staff\NotificationController::class, 'index'])->name('index');
-    Route::get('/json', [Staff\NotificationController::class, 'json'])->name('json');
-    Route::patch('/{notifikasi}/baca', [Staff\NotificationController::class, 'markAsRead'])->name('baca');
-    Route::post('/baca-semua', [Staff\NotificationController::class, 'markAllAsRead'])->name('baca-semua');
+    Route::get('/', [Staff\NotifikasiController::class, 'index'])->name('index');
+    Route::get('/json', [Staff\NotifikasiController::class, 'json'])->name('json');
+    Route::patch('/{notifikasi}/baca', [Staff\NotifikasiController::class, 'markAsRead'])->name('baca');
+    Route::post('/baca-semua', [Staff\NotifikasiController::class, 'markAllAsRead'])->name('baca-semua');
 });
 
 /*
@@ -88,26 +88,26 @@ Route::get('/surat/{surat}', [Staff\SuratController::class, 'show'])->name('sura
 | Dokumen
 |--------------------------------------------------------------------------
 */
-Route::get('/dokumen', [Staff\DocumentController::class, 'index'])->name('dokumen.index');
-Route::get('/dokumen/{dokumen}', [Staff\DocumentController::class, 'show'])->name('dokumen.show');
-Route::post('/dokumen', [Staff\DocumentController::class, 'upload'])->name('dokumen.upload');
+Route::get('/dokumen', [Staff\DokumenController::class, 'index'])->name('dokumen.index');
+Route::get('/dokumen/{dokumen}', [Staff\DokumenController::class, 'show'])->name('dokumen.show');
+Route::post('/dokumen', [Staff\DokumenController::class, 'upload'])->name('dokumen.upload');
 
 /*
 |--------------------------------------------------------------------------
 | Kurikulum
 |--------------------------------------------------------------------------
 */
-Route::get('/kurikulum', [Staff\CurriculumController::class, 'index'])->name('kurikulum.index');
-Route::get('/kurikulum/{kurikulum}', [Staff\CurriculumController::class, 'show'])->name('kurikulum.show');
-Route::post('/kurikulum', [Staff\CurriculumController::class, 'store'])->name('kurikulum.store');
+Route::get('/kurikulum', [Staff\KurikulumController::class, 'index'])->name('kurikulum.index');
+Route::get('/kurikulum/{kurikulum}', [Staff\KurikulumController::class, 'show'])->name('kurikulum.show');
+Route::post('/kurikulum', [Staff\KurikulumController::class, 'store'])->name('kurikulum.store');
 
 /*
 |--------------------------------------------------------------------------
 | Kesiswaan
 |--------------------------------------------------------------------------
 */
-Route::get('/kesiswaan', [Staff\StudentController::class, 'index'])->name('kesiswaan.index');
-Route::get('/kesiswaan/{kesiswaan}', [Staff\StudentController::class, 'show'])->name('kesiswaan.show');
+Route::get('/kesiswaan', [Staff\KesiswaanController::class, 'index'])->name('kesiswaan.index');
+Route::get('/kesiswaan/{kesiswaan}', [Staff\KesiswaanController::class, 'show'])->name('kesiswaan.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -142,8 +142,8 @@ Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
 | Pengingat
 |--------------------------------------------------------------------------
 */
-Route::get('/pengingat', [Staff\ReminderController::class, 'index'])->name('pengingat.index');
-Route::patch('/pengingat/{pengingat}/selesai', [Staff\ReminderController::class, 'markComplete'])->name('pengingat.selesai');
+Route::get('/pengingat', [Staff\PengingatController::class, 'index'])->name('pengingat.index');
+Route::patch('/pengingat/{pengingat}/selesai', [Staff\PengingatController::class, 'markComplete'])->name('pengingat.selesai');
 
 /*
 |--------------------------------------------------------------------------
@@ -151,9 +151,9 @@ Route::patch('/pengingat/{pengingat}/selesai', [Staff\ReminderController::class,
 |--------------------------------------------------------------------------
 */
 Route::prefix('profil')->name('profil.')->group(function () {
-    Route::get('/', [Staff\ProfileController::class, 'edit'])->name('edit');
-    Route::put('/', [Staff\ProfileController::class, 'update'])->name('update');
-    Route::put('/password', [Staff\ProfileController::class, 'changePassword'])->name('password');
+    Route::get('/', [Staff\ProfilController::class, 'edit'])->name('edit');
+    Route::put('/', [Staff\ProfilController::class, 'update'])->name('update');
+    Route::put('/password', [Staff\ProfilController::class, 'changePassword'])->name('password');
 });
 
 /*
@@ -184,17 +184,17 @@ Route::get('/panduan', [Staff\PanduanController::class, 'index'])->name('panduan
 |--------------------------------------------------------------------------
 */
 Route::prefix('word-ai')->name('word-ai.')->group(function () {
-    Route::get('/', [Staff\WordDocumentController::class, 'index'])->name('index');
-    Route::get('/buat', [Staff\WordDocumentController::class, 'create'])->name('create');
-    Route::post('/', [Staff\WordDocumentController::class, 'store'])->name('store');
-    Route::get('/template', [Staff\WordDocumentController::class, 'template'])->name('template');
-    Route::post('/ai-generate', [Staff\WordDocumentController::class, 'aiGenerate'])->name('ai-generate');
-    Route::get('/{word}', [Staff\WordDocumentController::class, 'show'])->name('show');
-    Route::get('/{word}/edit', [Staff\WordDocumentController::class, 'edit'])->name('edit');
-    Route::put('/{word}', [Staff\WordDocumentController::class, 'update'])->name('update');
-    Route::delete('/{word}', [Staff\WordDocumentController::class, 'destroy'])->name('destroy');
-    Route::get('/{word}/unduh', [Staff\WordDocumentController::class, 'download'])->name('unduh');
-    Route::post('/{word}/autosave', [Staff\WordDocumentController::class, 'autosave'])->name('autosave');
+    Route::get('/', [Staff\DokumenWordController::class, 'index'])->name('index');
+    Route::get('/buat', [Staff\DokumenWordController::class, 'create'])->name('create');
+    Route::post('/', [Staff\DokumenWordController::class, 'store'])->name('store');
+    Route::get('/template', [Staff\DokumenWordController::class, 'template'])->name('template');
+    Route::post('/ai-generate', [Staff\DokumenWordController::class, 'aiGenerate'])->name('ai-generate');
+    Route::get('/{word}', [Staff\DokumenWordController::class, 'show'])->name('show');
+    Route::get('/{word}/edit', [Staff\DokumenWordController::class, 'edit'])->name('edit');
+    Route::put('/{word}', [Staff\DokumenWordController::class, 'update'])->name('update');
+    Route::delete('/{word}', [Staff\DokumenWordController::class, 'destroy'])->name('destroy');
+    Route::get('/{word}/unduh', [Staff\DokumenWordController::class, 'download'])->name('unduh');
+    Route::post('/{word}/autosave', [Staff\DokumenWordController::class, 'autosave'])->name('autosave');
 });
 
 /*
@@ -202,12 +202,12 @@ Route::prefix('word-ai')->name('word-ai.')->group(function () {
 | Ulang Tahun & Catatan Beranda
 |--------------------------------------------------------------------------
 */
-Route::get('/ulang-tahun', [Staff\DashboardController::class, 'birthdayList'])->name('ulang-tahun.index');
-Route::post('/ulang-tahun/ucapan', [Staff\DashboardController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
+Route::get('/ulang-tahun', [Staff\BerandaController::class, 'birthdayList'])->name('ulang-tahun.index');
+Route::post('/ulang-tahun/ucapan', [Staff\BerandaController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
 
-Route::post('/catatan', [Staff\DashboardController::class, 'storeCatatan'])->name('catatan.store');
-Route::put('/catatan/{catatan}', [Staff\DashboardController::class, 'updateCatatan'])->name('catatan.update');
-Route::delete('/catatan/{catatan}', [Staff\DashboardController::class, 'destroyCatatan'])->name('catatan.destroy');
+Route::post('/catatan', [Staff\BerandaController::class, 'storeCatatan'])->name('catatan.store');
+Route::put('/catatan/{catatan}', [Staff\BerandaController::class, 'updateCatatan'])->name('catatan.update');
+Route::delete('/catatan/{catatan}', [Staff\BerandaController::class, 'destroyCatatan'])->name('catatan.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -215,12 +215,13 @@ Route::delete('/catatan/{catatan}', [Staff\DashboardController::class, 'destroyC
 |--------------------------------------------------------------------------
 */
 Route::prefix('chat')->name('chat.')->group(function () {
-    Route::get('/', [Staff\ChatController::class, 'index'])->name('index');
-    Route::post('/buat', [Staff\ChatController::class, 'buatPercakapan'])->name('buat');
-    Route::get('/belum-dibaca', [Staff\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
-    Route::get('/{percakapan}', [Staff\ChatController::class, 'show'])->name('show');
-    Route::post('/{percakapan}/kirim', [Staff\ChatController::class, 'kirimPesan'])->name('kirim');
-    Route::get('/{percakapan}/pesan-baru', [Staff\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+    Route::get('/', [Staff\PesanController::class, 'index'])->name('index');
+    Route::post('/buat', [Staff\PesanController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Staff\PesanController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Staff\PesanController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Staff\PesanController::class, 'kirimPesan'])->name('kirim');
+    Route::post('/{percakapan}/kirim-gambar', [Staff\PesanController::class, 'kirimGambar'])->name('kirim-gambar');
+    Route::get('/{percakapan}/pesan-baru', [Staff\PesanController::class, 'pesanBaru'])->name('pesan-baru');
 });
 
 /*

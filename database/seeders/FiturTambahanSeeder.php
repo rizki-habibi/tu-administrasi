@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\CatatanBeranda;
-use App\Models\Reminder;
+use App\Models\Pengingat;
 use App\Models\UcapanUlangTahun;
-use App\Models\User;
-use App\Models\WordDocument;
+use App\Models\Pengguna;
+use App\Models\DokumenWord;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -14,11 +14,11 @@ class FiturTambahanSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin   = User::where('email', 'admin@tu.test')->firstOrFail();
-        $kepsek  = User::where('email', 'kepsek@tu.test')->firstOrFail();
-        $staff1  = User::where('email', 'aris.persuratan@tu.test')->firstOrFail();
-        $staff2  = User::where('email', 'ike.keuangan@tu.test')->firstOrFail();
-        $staff3  = User::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
+        $admin   = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
+        $kepsek  = Pengguna::where('email', 'kepsek@tu.test')->firstOrFail();
+        $staff1  = Pengguna::where('email', 'aris.persuratan@tu.test')->firstOrFail();
+        $staff2  = Pengguna::where('email', 'ike.keuangan@tu.test')->firstOrFail();
+        $staff3  = Pengguna::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ class FiturTambahanSeeder extends Seeder
         ];
 
         foreach ($wordDocs as $doc) {
-            WordDocument::updateOrCreate(
+            DokumenWord::updateOrCreate(
                 ['judul' => $doc['judul'], 'pengguna_id' => $doc['pengguna_id']],
                 $doc
             );
@@ -92,7 +92,7 @@ class FiturTambahanSeeder extends Seeder
         ];
 
         foreach ($reminders as $r) {
-            Reminder::updateOrCreate(
+            Pengingat::updateOrCreate(
                 ['judul' => $r['judul'], 'pengguna_id' => $r['user']],
                 [
                     'deskripsi'          => $r['deskripsi'],

@@ -15,7 +15,7 @@ class PengaturanPengguna extends Model
 
     public function pengguna(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'pengguna_id');
+        return $this->belongsTo(Pengguna::class, 'pengguna_id');
     }
 
     /**

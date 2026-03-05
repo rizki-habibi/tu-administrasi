@@ -192,10 +192,10 @@ document.getElementById('btnAiGenerate').addEventListener('click', function() {
     fetch('{{ route("staf.word-ai.ai-generate") }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
-        body: JSON.stringify({ prompt, template: document.getElementById('aiTemplate').value, document_id: {{ $word->id }} })
+        body: JSON.stringify({ prompt, templat: document.getElementById('aiTemplate').value, document_id: {{ $word->id }} })
     })
     .then(r => r.json())
-    .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.content; Swal.fire({icon:'success', title:'Berhasil!', timer:1500, showConfirmButton:false}); } })
+    .then(data => { if (data.success) { document.getElementById('editor').innerHTML = data.konten; Swal.fire({icon:'success', title:'Berhasil!', timer:1500, showConfirmButton:false}); } })
     .catch(() => Swal.fire('Gagal', 'Gagal generate.', 'error'))
     .finally(() => { this.disabled = false; document.getElementById('aiLoading').classList.add('d-none'); });
 });

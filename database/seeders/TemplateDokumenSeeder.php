@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\DocumentTemplate;
-use App\Models\User;
+use App\Models\TemplateDokumen;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class TemplateDokumenSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('email', 'admin@tu.test')->firstOrFail();
+        $admin = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
 
         $templates = [
             [
@@ -135,7 +135,7 @@ class TemplateDokumenSeeder extends Seeder
         ];
 
         foreach ($templates as $tpl) {
-            DocumentTemplate::updateOrCreate(
+            TemplateDokumen::updateOrCreate(
                 ['kode' => $tpl['kode']],
                 array_merge($tpl, [
                     'aktif'       => true,

@@ -63,7 +63,7 @@
                     <tbody>
                         @forelse($staff->attendances as $att)
                         <tr>
-                            <td>{{ $att->date->format('d/m/Y') }}</td>
+                            <td>{{ $att->tanggal->format('d/m/Y') }}</td>
                             <td>{{ $att->jam_masuk ?? '-' }}</td>
                             <td>{{ $att->jam_pulang ?? '-' }}</td>
                             <td><span class="badge bg-{{ $colors[$att->status] ?? 'secondary' }}">{{ ucfirst($att->status) }}</span></td>

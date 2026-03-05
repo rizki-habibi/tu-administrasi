@@ -33,7 +33,7 @@
             <div class="card-header bg-transparent"><h6 class="mb-0 fw-semibold"><i class="bi bi-info-circle me-1 text-primary"></i> Informasi Lengkap</h6></div>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label text-muted">Kelas</label><p class="fw-semibold">{{ $kesiswaan->class }}</p></div>
+                    <div class="col-md-6"><label class="form-label text-muted">Kelas</label><p class="fw-semibold">{{ $kesiswaan->kelas }}</p></div>
                     <div class="col-md-6"><label class="form-label text-muted">Jenis Kelamin</label><p>{{ $kesiswaan->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</p></div>
                     <div class="col-md-6"><label class="form-label text-muted">Tempat, Tanggal Lahir</label><p>{{ $kesiswaan->tempat_lahir ?? '' }}{{ $kesiswaan->tanggal_lahir ? ', '.\Carbon\Carbon::parse($kesiswaan->tanggal_lahir)->format('d F Y') : '' }}</p></div>
                     <div class="col-md-6"><label class="form-label text-muted">Agama</label><p>{{ $kesiswaan->agama ?? '-' }}</p></div>

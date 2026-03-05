@@ -2,36 +2,36 @@
 
 namespace Database\Seeders;
 
-use App\Models\LearningMethod;
-use App\Models\P5Assessment;
-use App\Models\PhysicalEvidence;
-use App\Models\StarAnalysis;
-use App\Models\TeacherEvaluation;
-use App\Models\User;
+use App\Models\MetodePembelajaran;
+use App\Models\PenilaianP5;
+use App\Models\BuktiFisik;
+use App\Models\AnalisisStar;
+use App\Models\EvaluasiGuru;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class EvaluasiSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin   = User::where('email', 'admin@tu.test')->firstOrFail();
-        $kepsek  = User::where('email', 'kepsek@tu.test')->firstOrFail();
-        $staff1  = User::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
-        $staff2  = User::where('email', 'dwi.kepegawaian@tu.test')->firstOrFail();
+        $admin   = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
+        $kepsek  = Pengguna::where('email', 'kepsek@tu.test')->firstOrFail();
+        $staff1  = Pengguna::where('email', 'bayu.kesiswaan@tu.test')->firstOrFail();
+        $staff2  = Pengguna::where('email', 'dwi.kepegawaian@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
         | 1. EVALUASI GURU (PKG — Penilaian Kinerja Guru)
         |--------------------------------------------------------------------------
         */
-        $teachers = User::where('peran', '!=', 'kepala_sekolah')->where('aktif', true)->take(8)->get();
+        $teachers = Pengguna::where('peran', '!=', 'kepala_sekolah')->where('aktif', true)->take(8)->get();
 
         $predikats = ['Amat Baik', 'Baik', 'Cukup'];
         foreach ($teachers as $i => $teacher) {
             $nilai = rand(70, 95) + (rand(0, 99) / 100);
             $predikat = $nilai >= 90 ? 'Amat Baik' : ($nilai >= 76 ? 'Baik' : 'Cukup');
 
-            TeacherEvaluation::updateOrCreate(
+            EvaluasiGuru::updateOrCreate(
                 ['pengguna_id' => $teacher->id, 'periode' => 'Semester Ganjil 2025/2026'],
                 [
                     'jenis'           => 'pkg',
@@ -97,7 +97,7 @@ class EvaluasiSeeder extends Seeder
         ];
 
         foreach ($p5Data as $p5) {
-            P5Assessment::updateOrCreate(
+            PenilaianP5::updateOrCreate(
                 ['judul_projek' => $p5['judul_projek']],
                 array_merge($p5, [
                     'tahun_ajaran' => '2025/2026',
@@ -145,7 +145,7 @@ class EvaluasiSeeder extends Seeder
         ];
 
         foreach ($starData as $star) {
-            StarAnalysis::updateOrCreate(
+            AnalisisStar::updateOrCreate(
                 ['judul' => $star['judul']],
                 array_merge($star, ['dibuat_oleh' => $admin->id])
             );
@@ -166,7 +166,7 @@ class EvaluasiSeeder extends Seeder
         ];
 
         foreach ($evidences as $e) {
-            PhysicalEvidence::updateOrCreate(
+            BuktiFisik::updateOrCreate(
                 ['judul' => $e['judul']],
                 [
                     'kategori'      => $e['kategori'],
@@ -221,7 +221,7 @@ class EvaluasiSeeder extends Seeder
         ];
 
         foreach ($methods as $m) {
-            LearningMethod::updateOrCreate(
+            MetodePembelajaran::updateOrCreate(
                 ['nama_metode' => $m['nama_metode']],
                 array_merge($m, ['dibuat_oleh' => $staff1->id])
             );

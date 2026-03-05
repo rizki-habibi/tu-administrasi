@@ -20,7 +20,7 @@ class Pesan extends Model
 
     public function pengirim(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'pengirim_id');
+        return $this->belongsTo(Pengguna::class, 'pengirim_id');
     }
 
     public function balasan(): BelongsTo

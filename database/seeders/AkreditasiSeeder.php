@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\AccreditationDocument;
-use App\Models\SchoolEvaluation;
-use App\Models\User;
+use App\Models\DokumenAkreditasi;
+use App\Models\EvaluasiSekolah;
+use App\Models\Pengguna;
 use Illuminate\Database\Seeder;
 
 class AkreditasiSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('email', 'admin@tu.test')->firstOrFail();
+        $admin = Pengguna::where('email', 'admin@tu.test')->firstOrFail();
 
         /*
         |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class AkreditasiSeeder extends Seeder
         ];
 
         foreach ($docs as $d) {
-            AccreditationDocument::updateOrCreate(
+            DokumenAkreditasi::updateOrCreate(
                 ['standar' => $d['standar'], 'indikator' => $d['indikator']],
                 [
                     'komponen'     => $d['komponen'],
@@ -77,7 +77,7 @@ class AkreditasiSeeder extends Seeder
         ];
 
         foreach ($eds as $e) {
-            SchoolEvaluation::updateOrCreate(
+            EvaluasiSekolah::updateOrCreate(
                 ['tahun' => '2026', 'aspek' => $e['aspek']],
                 [
                     'kondisi_saat_ini'       => $e['kondisi'],

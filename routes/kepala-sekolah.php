@@ -14,15 +14,15 @@ use App\Http\Controllers\Kepsek;
 */
 
 // Beranda
-Route::get('/beranda', [Kepsek\DashboardController::class, 'index'])->name('beranda');
+Route::get('/beranda', [Kepsek\BerandaController::class, 'index'])->name('beranda');
 
 /*
 |--------------------------------------------------------------------------
 | Pegawai (Read-Only)
 |--------------------------------------------------------------------------
 */
-Route::get('/pegawai', [Kepsek\StaffController::class, 'index'])->name('pegawai.index');
-Route::get('/pegawai/{pegawai}', [Kepsek\StaffController::class, 'show'])->name('pegawai.show');
+Route::get('/pegawai', [Kepsek\PegawaiController::class, 'index'])->name('pegawai.index');
+Route::get('/pegawai/{pegawai}', [Kepsek\PegawaiController::class, 'show'])->name('pegawai.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +30,9 @@ Route::get('/pegawai/{pegawai}', [Kepsek\StaffController::class, 'show'])->name(
 |--------------------------------------------------------------------------
 */
 Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
-    Route::get('/', [Kepsek\AttendanceController::class, 'index'])->name('index');
-    Route::get('/laporan', [Kepsek\AttendanceController::class, 'report'])->name('laporan');
-    Route::get('/{kehadiran}', [Kepsek\AttendanceController::class, 'show'])->name('show');
+    Route::get('/', [Kepsek\KehadiranController::class, 'index'])->name('index');
+    Route::get('/laporan', [Kepsek\KehadiranController::class, 'report'])->name('laporan');
+    Route::get('/{kehadiran}', [Kepsek\KehadiranController::class, 'show'])->name('show');
 });
 
 /*
@@ -41,10 +41,10 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('izin')->name('izin.')->group(function () {
-    Route::get('/', [Kepsek\LeaveController::class, 'index'])->name('index');
-    Route::get('/{izin}', [Kepsek\LeaveController::class, 'show'])->name('show');
-    Route::patch('/{izin}/setujui', [Kepsek\LeaveController::class, 'approve'])->name('setujui');
-    Route::patch('/{izin}/tolak', [Kepsek\LeaveController::class, 'reject'])->name('tolak');
+    Route::get('/', [Kepsek\IzinController::class, 'index'])->name('index');
+    Route::get('/{izin}', [Kepsek\IzinController::class, 'show'])->name('show');
+    Route::patch('/{izin}/setujui', [Kepsek\IzinController::class, 'approve'])->name('setujui');
+    Route::patch('/{izin}/tolak', [Kepsek\IzinController::class, 'reject'])->name('tolak');
 });
 
 /*
@@ -83,8 +83,8 @@ Route::get('/surat/{surat}', [Kepsek\SuratController::class, 'show'])->name('sur
 | Laporan (Read-Only)
 |--------------------------------------------------------------------------
 */
-Route::get('/laporan', [Kepsek\ReportController::class, 'index'])->name('laporan.index');
-Route::get('/laporan/{laporan}', [Kepsek\ReportController::class, 'show'])->name('laporan.show');
+Route::get('/laporan', [Kepsek\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/{laporan}', [Kepsek\LaporanController::class, 'show'])->name('laporan.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -98,8 +98,8 @@ Route::get('/keuangan', [Kepsek\KeuanganController::class, 'index'])->name('keua
 | Agenda (Read-Only)
 |--------------------------------------------------------------------------
 */
-Route::get('/agenda', [Kepsek\EventController::class, 'index'])->name('agenda.index');
-Route::get('/agenda/{agenda}', [Kepsek\EventController::class, 'show'])->name('agenda.show');
+Route::get('/agenda', [Kepsek\AgendaController::class, 'index'])->name('agenda.index');
+Route::get('/agenda/{agenda}', [Kepsek\AgendaController::class, 'show'])->name('agenda.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -107,10 +107,10 @@ Route::get('/agenda/{agenda}', [Kepsek\EventController::class, 'show'])->name('a
 |--------------------------------------------------------------------------
 */
 Route::prefix('notifikasi')->name('notifikasi.')->group(function () {
-    Route::get('/', [Kepsek\NotificationController::class, 'index'])->name('index');
-    Route::get('/json', [Kepsek\NotificationController::class, 'json'])->name('json');
-    Route::post('/baca-semua', [Kepsek\NotificationController::class, 'markAllAsRead'])->name('baca-semua');
-    Route::patch('/{notifikasi}/baca', [Kepsek\NotificationController::class, 'markAsRead'])->name('baca');
+    Route::get('/', [Kepsek\NotifikasiController::class, 'index'])->name('index');
+    Route::get('/json', [Kepsek\NotifikasiController::class, 'json'])->name('json');
+    Route::post('/baca-semua', [Kepsek\NotifikasiController::class, 'markAllAsRead'])->name('baca-semua');
+    Route::patch('/{notifikasi}/baca', [Kepsek\NotifikasiController::class, 'markAsRead'])->name('baca');
 });
 
 /*
@@ -119,9 +119,9 @@ Route::prefix('notifikasi')->name('notifikasi.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('profil')->name('profil.')->group(function () {
-    Route::get('/', [Kepsek\ProfileController::class, 'edit'])->name('edit');
-    Route::put('/', [Kepsek\ProfileController::class, 'update'])->name('update');
-    Route::put('/password', [Kepsek\ProfileController::class, 'changePassword'])->name('password');
+    Route::get('/', [Kepsek\ProfilController::class, 'edit'])->name('edit');
+    Route::put('/', [Kepsek\ProfilController::class, 'update'])->name('update');
+    Route::put('/password', [Kepsek\ProfilController::class, 'changePassword'])->name('password');
 });
 
 /*
@@ -129,12 +129,22 @@ Route::prefix('profil')->name('profil.')->group(function () {
 | Ulang Tahun & Catatan Beranda
 |--------------------------------------------------------------------------
 */
-Route::get('/ulang-tahun', [Kepsek\DashboardController::class, 'birthdayList'])->name('ulang-tahun.index');
-Route::post('/ulang-tahun/ucapan', [Kepsek\DashboardController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
+Route::get('/ulang-tahun', [Kepsek\BerandaController::class, 'birthdayList'])->name('ulang-tahun.index');
+Route::post('/ulang-tahun/ucapan', [Kepsek\BerandaController::class, 'sendBirthdayGreeting'])->name('ulang-tahun.ucapan');
 
-Route::post('/catatan', [Kepsek\DashboardController::class, 'storeCatatan'])->name('catatan.store');
-Route::put('/catatan/{catatan}', [Kepsek\DashboardController::class, 'updateCatatan'])->name('catatan.update');
-Route::delete('/catatan/{catatan}', [Kepsek\DashboardController::class, 'destroyCatatan'])->name('catatan.destroy');
+Route::post('/catatan', [Kepsek\BerandaController::class, 'storeCatatan'])->name('catatan.store');
+Route::put('/catatan/{catatan}', [Kepsek\BerandaController::class, 'updateCatatan'])->name('catatan.update');
+Route::delete('/catatan/{catatan}', [Kepsek\BerandaController::class, 'destroyCatatan'])->name('catatan.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| AI Assistant
+|--------------------------------------------------------------------------
+*/
+Route::middleware('throttle:10,1')->prefix('ai')->name('ai.')->group(function () {
+    Route::post('/assistant', [Kepsek\BerandaController::class, 'aiAssistant'])->name('assistant');
+    Route::get('/ringkasan', [Kepsek\BerandaController::class, 'aiRingkasan'])->name('ringkasan');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -142,12 +152,13 @@ Route::delete('/catatan/{catatan}', [Kepsek\DashboardController::class, 'destroy
 |--------------------------------------------------------------------------
 */
 Route::prefix('chat')->name('chat.')->group(function () {
-    Route::get('/', [Kepsek\ChatController::class, 'index'])->name('index');
-    Route::post('/buat', [Kepsek\ChatController::class, 'buatPercakapan'])->name('buat');
-    Route::get('/belum-dibaca', [Kepsek\ChatController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
-    Route::get('/{percakapan}', [Kepsek\ChatController::class, 'show'])->name('show');
-    Route::post('/{percakapan}/kirim', [Kepsek\ChatController::class, 'kirimPesan'])->name('kirim');
-    Route::get('/{percakapan}/pesan-baru', [Kepsek\ChatController::class, 'pesanBaru'])->name('pesan-baru');
+    Route::get('/', [Kepsek\PesanController::class, 'index'])->name('index');
+    Route::post('/buat', [Kepsek\PesanController::class, 'buatPercakapan'])->name('buat');
+    Route::get('/belum-dibaca', [Kepsek\PesanController::class, 'jumlahBelumDibaca'])->name('belum-dibaca');
+    Route::get('/{percakapan}', [Kepsek\PesanController::class, 'show'])->name('show');
+    Route::post('/{percakapan}/kirim', [Kepsek\PesanController::class, 'kirimPesan'])->name('kirim');
+    Route::post('/{percakapan}/kirim-gambar', [Kepsek\PesanController::class, 'kirimGambar'])->name('kirim-gambar');
+    Route::get('/{percakapan}/pesan-baru', [Kepsek\PesanController::class, 'pesanBaru'])->name('pesan-baru');
 });
 
 /*

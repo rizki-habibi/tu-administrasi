@@ -23,7 +23,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4 fw-bold">Alasan</div>
-                    <div class="col-md-8">{{ $leaveRequest->reason }}</div>
+                    <div class="col-md-8">{{ $leaveRequest->alasan }}</div>
                 </div>
                 @if($leaveRequest->lampiran)
                 <div class="row mb-3">
