@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Kehadiran;
 use App\Models\Dokumen;
+use App\Models\DokumenKepegawaian;
 use App\Models\PengajuanIzin;
 use App\Models\Notifikasi;
 use App\Models\Laporan;
@@ -148,7 +149,29 @@ class PeranKepegawaianSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | 8. NOTIFIKASI
+        | 8. DOKUMEN KEPEGAWAIAN
+        |--------------------------------------------------------------------------
+        */
+        DokumenKepegawaian::updateOrCreate(
+            ['pengguna_id' => $dwi->id, 'judul' => 'SK PNS Dwi Kriswahyudi'],
+            ['kategori' => 'sk_pns', 'nomor_dokumen' => 'BKN/SK-PNS/2010/001234', 'tanggal_dokumen' => '2010-04-01', 'keterangan' => 'Surat Keputusan pengangkatan sebagai PNS.']
+        );
+        DokumenKepegawaian::updateOrCreate(
+            ['pengguna_id' => $dwi->id, 'judul' => 'SK Kenaikan Pangkat III/c'],
+            ['kategori' => 'sk_kenaikan_pangkat', 'nomor_dokumen' => 'BKN/KP/2023/005678', 'tanggal_dokumen' => '2023-10-01', 'keterangan' => 'Kenaikan pangkat menjadi Penata (III/c).']
+        );
+        DokumenKepegawaian::updateOrCreate(
+            ['pengguna_id' => $faizz->id, 'judul' => 'SK CPNS Faizz Moch. Nur Adam'],
+            ['kategori' => 'sk_cpns', 'nomor_dokumen' => 'BKN/SK-CPNS/2018/009876', 'tanggal_dokumen' => '2018-03-01', 'keterangan' => 'Surat Keputusan pengangkatan sebagai CPNS.']
+        );
+        DokumenKepegawaian::updateOrCreate(
+            ['pengguna_id' => $faizz->id, 'judul' => 'Sertifikat Pelatihan SIMPATIKA'],
+            ['kategori' => 'sertifikat', 'nomor_dokumen' => 'SERT/SIMPATIKA/2024/0042', 'tanggal_dokumen' => '2024-06-15', 'keterangan' => 'Sertifikat pelatihan operator SIMPATIKA.']
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | 9. NOTIFIKASI
         |--------------------------------------------------------------------------
         */
         $this->seedNotifikasi($staffUsers);
@@ -164,7 +187,7 @@ class PeranKepegawaianSeeder extends Seeder
         $this->command->info('  Akun   : dwi.kepegawaian@tu.test');
         $this->command->info('           faizz.kepegawaian@tu.test');
         $this->command->info('  Fitur  : Kehadiran 30 hari, 2 izin, 2 laporan, 2 SKP,');
-        $this->command->info('           2 dokumen, 1 surat, notifikasi');
+        $this->command->info('           2 dokumen, 1 surat, 4 dokumen kepegawaian, notifikasi');
     }
 
     private function seedKehadiran(array $users, Carbon $today): void

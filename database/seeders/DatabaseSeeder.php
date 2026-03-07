@@ -58,6 +58,9 @@ class DatabaseSeeder extends Seeder
 
             // 12. Berita / Konten Halaman Utama
             BeritaSeeder::class,
+
+            // 13. Pengunjung (sample visitor data)
+            PengunjungSeeder::class,
         ]);
     }
 }

@@ -466,11 +466,16 @@
                         <i class="bi bi-gift-fill icon"></i> <span>Ulang Tahun</span>
                     </a>
                 </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.disposisi.index') }}" class="nav-link {{ request()->routeIs('admin.disposisi.*') ? 'active' : '' }}">
+                        <i class="bi bi-signpost-split-fill icon"></i> <span>Disposisi Surat</span>
+                    </a>
+                </div>
             </div>
         </div>
 
         {{-- ▸ Sistem — Pengingat, panduan, tools AI, ekspor & pengaturan --}}
-        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') || request()->routeIs('admin.database.*') ? 'open' : '' }}">
+        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') || request()->routeIs('admin.database.*') || request()->routeIs('admin.siatu-ai.*') || request()->routeIs('admin.log-aktivitas.*') ? 'open' : '' }}">
             <div class="nav-group-label" data-toggle="nav-group">
                 <span>Sistem</span>
                 @if($overdueReminders > 0)<span class="group-badge bg-warning text-dark">{{ $overdueReminders }}</span>@endif
@@ -541,6 +546,16 @@
                             <i class="bi bi-download sub-icon"></i> Ekspor Data
                         </a>
                     </div>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.siatu-ai.index') }}" class="nav-link {{ request()->routeIs('admin.siatu-ai.*') ? 'active' : '' }}">
+                        <i class="bi bi-robot icon"></i> <span>SIATU-AI</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.log-aktivitas.index') }}" class="nav-link {{ request()->routeIs('admin.log-aktivitas.*') ? 'active' : '' }}">
+                        <i class="bi bi-journal-text icon"></i> <span>Log Aktivitas</span>
+                    </a>
                 </div>
                 <div class="nav-item {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'active' : '' }}" data-toggle="submenu">

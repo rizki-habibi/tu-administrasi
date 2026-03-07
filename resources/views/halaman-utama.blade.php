@@ -675,6 +675,112 @@
 </section>
 @endif
 
+{{-- ═══════════════════ TENTANG SEKOLAH & MEDIA ═══════════════════ --}}
+<section class="section" id="tentang" style="padding:80px 0;">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-chip chip-indigo"><i class="bi bi-camera-reels-fill"></i> Tentang Sekolah</div>
+            <h2 class="section-heading">Mengenal Lebih Dekat<br>SMA Negeri 2 Jember</h2>
+            <p class="section-desc mx-auto">Sejarah, profil, dan kegiatan terbaru SMA Negeri 2 Jember melalui video dan dokumentasi visual.</p>
+        </div>
+
+        {{-- Video Utama --}}
+        <div class="row g-4 mb-5 fade-up">
+            <div class="col-lg-8">
+                <div style="position:relative;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.15);aspect-ratio:16/9;">
+                    <iframe src="https://www.youtube.com/embed/lU4jiQrfOik" title="Kepala Sekolah SMAN 2 Jember" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>
+                </div>
+            </div>
+            <div class="col-lg-4 d-flex flex-column gap-3">
+                <div style="background:linear-gradient(135deg,#312e81,#6366f1);border-radius:18px;padding:28px;color:#fff;flex:1;">
+                    <h5 style="font-family:'Space Grotesk',sans-serif;font-weight:700;margin-bottom:12px;">
+                        <i class="bi bi-stars me-2"></i>Babak Baru SMAN 2 Jember
+                    </h5>
+                    <p style="font-size:.85rem;opacity:.9;line-height:1.7;">New leadership, new direction! SMA Negeri 2 Jember memulai babak baru bersama Kepala Sekolah yang siap mengangkat kualitas pendidikan, karakter, dan prestasi siswa ke level berikutnya.</p>
+                    <a href="https://sman2jember.sch.id/about/" target="_blank" rel="noopener noreferrer" class="btn btn-sm mt-2" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Sejarah Sekolah
+                    </a>
+                </div>
+                <div style="background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:20px;">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--emerald),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div>
+                            <h6 style="margin:0;font-weight:700;font-size:.88rem;">SMAN 2 Jember</h6>
+                            <small style="color:var(--gray);font-size:.72rem;">Terakreditasi A | NPSN: 20523868</small>
+                        </div>
+                    </div>
+                    <p style="font-size:.78rem;color:var(--gray);line-height:1.6;margin:0;">Sekolah unggulan di Kabupaten Jember dengan visi membentuk insan yang beriman, berilmu, berkarakter, dan berwawasan global.</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Video Grid --}}
+        <div class="row g-4 fade-up">
+            <div class="col-lg-4 col-md-6">
+                <div style="border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid #e5e7eb;background:#fff;">
+                    <div style="aspect-ratio:16/9;">
+                        <iframe src="https://www.youtube.com/embed/iLBBTDctlVU" title="Profil Guru SMAN 2 Jember" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>
+                    </div>
+                    <div style="padding:16px;">
+                        <h6 style="font-size:.85rem;font-weight:700;margin-bottom:4px;"><i class="bi bi-people-fill me-1" style="color:var(--indigo);"></i>Profil Guru</h6>
+                        <p style="font-size:.75rem;color:var(--gray);margin:0;line-height:1.5;">Mengenal lebih dekat para pendidik SMAN 2 Jember yang berdedikasi tinggi.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div style="border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid #e5e7eb;background:#fff;">
+                    <div style="aspect-ratio:16/9;">
+                        <iframe src="https://www.youtube.com/embed/FjvxaQ_3Kbc" title="7 Kebiasaan Anak Indonesia Hebat" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>
+                    </div>
+                    <div style="padding:16px;">
+                        <h6 style="font-size:.85rem;font-weight:700;margin-bottom:4px;"><i class="bi bi-award-fill me-1" style="color:var(--amber);"></i>7 Kebiasaan Anak Hebat</h6>
+                        <p style="font-size:.75rem;color:var(--gray);margin:0;line-height:1.5;">Program karakter 7 Kebiasaan Anak Indonesia Hebat di SMAN 2 Jember.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div style="border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.08);border:1px solid #e5e7eb;background:#fff;">
+                    <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#059669,#0891b2);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;">
+                        <i class="bi bi-egg-fried" style="font-size:2.5rem;margin-bottom:8px;"></i>
+                        <h6 style="font-size:.88rem;font-weight:700;margin:0;">Makan Bergizi Gratis</h6>
+                    </div>
+                    <div style="padding:16px;">
+                        <h6 style="font-size:.85rem;font-weight:700;margin-bottom:4px;"><i class="bi bi-heart-pulse-fill me-1" style="color:var(--emerald);"></i>Program MBG</h6>
+                        <p style="font-size:.75rem;color:var(--gray);margin:0;line-height:1.5;">SMAN 2 Jember melaksanakan Program Makan Bergizi Gratis dari Pemerintah.</p>
+                        <a href="https://sman2jember.sch.id/elementor-2038/" target="_blank" rel="noopener noreferrer" style="font-size:.72rem;color:var(--indigo);font-weight:600;text-decoration:none;">Selengkapnya <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- 360 View --}}
+        <div class="row g-4 mt-4 fade-up">
+            <div class="col-lg-6">
+                <div style="border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5e7eb;aspect-ratio:16/9;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!4v1709913600000!6m8!1m7!1sCfhQmJIB0YlnswGcDuLUcg!2m2!1d-8.1721234!2d113.7029!3f0!4f0!5f0.7820865974627469" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="360° View SMAN 2 Jember"></iframe>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div style="border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5e7eb;aspect-ratio:16/9;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.3297!2d113.7029!3d-8.1721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6a4e3%3A0x2bce46e45b9f9c0e!2sSMAN%202%20Jember!5e1!3m2!1sid!2sid!4v1709913600000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="Satelit SMAN 2 Jember"></iframe>
+                </div>
+            </div>
+            <div class="col-12 text-center mt-2">
+                <div class="d-inline-flex gap-3 flex-wrap justify-content-center">
+                    <a href="https://maps.app.goo.gl/AtSZWWQp57YcW9WV7" target="_blank" rel="noopener noreferrer" class="btn btn-sm" style="background:var(--indigo);color:#fff;border-radius:10px;font-size:.78rem;padding:8px 18px;">
+                        <i class="bi bi-geo-alt-fill me-1"></i> Buka di Google Maps
+                    </a>
+                    <a href="https://maps.app.goo.gl/bqDDhppTZPak8FQo9" target="_blank" rel="noopener noreferrer" class="btn btn-sm" style="background:var(--emerald);color:#fff;border-radius:10px;font-size:.78rem;padding:8px 18px;">
+                        <i class="bi bi-eye-fill me-1"></i> Lihat 360° Street View
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{-- ═══════════════════ FITUR LAYANAN ═══════════════════ --}}
 <section class="section bg-gradient-mesh" id="fitur">
     <div class="container">
@@ -872,7 +978,7 @@
                         <h6><i class="bi bi-geo-alt-fill me-1" style="color:var(--rose);"></i> SMA Negeri 2 Jember</h6>
                         <small>Jl. Jawa No. 16, Sumbersari, Jember</small>
                     </div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.225!2d113.704!3d-8.173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6!2sSMA+Negeri+2+Jember!5e0!3m2!1sid!2sid!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi SMA Negeri 2 Jember"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.3187417696467!2d113.70127867589513!3d-8.172088480405044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6a4e3%3A0x2bce46e45b9f9c0e!2sSMAN%202%20Jember!5e0!3m2!1sid!2sid!4v1709913600000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi SMA Negeri 2 Jember"></iframe>
                 </div>
             </div>
             <div class="col-lg-5">
@@ -1004,12 +1110,12 @@
                     @else
                         <div class="d-flex align-items-center justify-content-between" style="padding:6px 12px;background:rgba(255,255,255,.04);border-radius:8px;">
                             <span style="font-size:.78rem;color:var(--gray-light);"><i class="bi bi-geo-alt me-1" style="color:var(--emerald-light);"></i>Indonesia</span>
-                            <span class="badge" style="background:rgba(99,102,241,.2);color:var(--indigo-light);font-size:.68rem;">{{ $statistikPengunjung['total'] ?? 0 }} kunjungan</span>
+                            <span class="badge" style="background:rgba(99,102,241,.2);color:var(--indigo-light);font-size:.68rem;">{{ $statistikPengunjung['total_kunjungan'] ?? 0 }} kunjungan</span>
                         </div>
                     @endif
                 </div>
                 <div class="mt-3 d-flex align-items-center gap-3" style="font-size:.72rem;color:var(--gray);">
-                    <span><i class="bi bi-people-fill me-1" style="color:var(--indigo-light);"></i>Total: {{ number_format($statistikPengunjung['total'] ?? 0) }}</span>
+                    <span><i class="bi bi-people-fill me-1" style="color:var(--indigo-light);"></i>Total: {{ number_format($statistikPengunjung['total_kunjungan'] ?? 0) }}</span>
                     <span><i class="bi bi-calendar-check me-1" style="color:var(--emerald-light);"></i>Hari Ini: {{ $statistikPengunjung['hari_ini'] ?? 0 }}</span>
                 </div>
             </div>

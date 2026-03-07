@@ -57,7 +57,15 @@ class KontenPublik extends Model
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        return $this->thumbnail ? asset('storage/' . $this->thumbnail) : null;
+        if (!$this->thumbnail) {
+            return null;
+        }
+
+        if (str_starts_with($this->thumbnail, 'http://') || str_starts_with($this->thumbnail, 'https://')) {
+            return $this->thumbnail;
+        }
+
+        return asset('storage/' . $this->thumbnail);
     }
 
     public function getUkuranFormatAttribute(): string
