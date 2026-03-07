@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Laporan::with('user');
@@ -121,5 +124,26 @@ class LaporanController extends Controller
         $request->validate(['status' => 'required|in:draft,submitted,reviewed,completed']);
         $report->update(['status' => $request->status]);
         return redirect()->back()->with('success', 'Status laporan berhasil diperbarui.');
+    }
+
+    public function export()
+    {
+        $rows = Laporan::with('user')->latest()->get()->map(function ($r, $i) {
+            return [
+                $i + 1,
+                $r->judul,
+                $r->user->nama ?? '-',
+                ucfirst(str_replace('_', ' ', $r->kategori)),
+                ucfirst($r->prioritas),
+                ucfirst($r->status),
+                $r->created_at?->format('d/m/Y H:i'),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'laporan_' . now()->format('Ymd') . '.csv',
+            ['No', 'Judul', 'Pembuat', 'Kategori', 'Prioritas', 'Status', 'Tanggal'],
+            $rows
+        );
     }
 }

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Skp;
 use Illuminate\Http\Request;
 
 class SkpController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Skp::where('pengguna_id', auth()->id());
@@ -129,5 +132,28 @@ class SkpController extends Controller
 
         $skp->delete();
         return redirect()->route('staf.skp.index')->with('success', 'SKP berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = Skp::where('pengguna_id', auth()->id())->latest()->get()->map(function ($s, $i) {
+            return [
+                $i + 1,
+                ucfirst(str_replace('_', ' ', $s->periode)),
+                $s->tahun,
+                $s->sasaran_kinerja,
+                $s->indikator_kinerja,
+                $s->target_kuantitas ?? '-',
+                $s->realisasi_kuantitas ?? '-',
+                $s->nilai_capaian ?? '-',
+                ucfirst($s->status),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'skp_saya_' . now()->format('Ymd') . '.csv',
+            ['No', 'Periode', 'Tahun', 'Sasaran Kinerja', 'Indikator', 'Target', 'Realisasi', 'Nilai Capaian', 'Status'],
+            $rows
+        );
     }
 }

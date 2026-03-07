@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Magang;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\KegiatanMagang;
 use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = KegiatanMagang::where('pengguna_id', auth()->id());
@@ -92,5 +95,27 @@ class KegiatanController extends Controller
 
         return redirect()->route('magang.kegiatan.index')
             ->with('success', 'Kegiatan berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = KegiatanMagang::where('pengguna_id', auth()->id())
+            ->latest()->get()->map(function ($k, $i) {
+                return [
+                    $i + 1,
+                    $k->judul,
+                    $k->tanggal_mulai?->format('d/m/Y'),
+                    $k->tanggal_selesai?->format('d/m/Y') ?? '-',
+                    ucfirst(str_replace('_', ' ', $k->status)),
+                    ucfirst($k->prioritas),
+                    $k->catatan ?? '-',
+                ];
+            });
+
+        return $this->eksporCsv(
+            'kegiatan_magang_' . now()->format('Ymd') . '.csv',
+            ['No', 'Judul', 'Mulai', 'Selesai', 'Status', 'Prioritas', 'Catatan'],
+            $rows
+        );
     }
 }

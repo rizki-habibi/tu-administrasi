@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Kepsek;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\PengajuanIzin;
 use Illuminate\Http\Request;
 
 class IzinController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = PengajuanIzin::with('user');
@@ -43,5 +46,26 @@ class IzinController extends Controller
             'rejection_reason' => $request->input('rejection_reason', ''),
         ]);
         return redirect()->back()->with('success', 'Pengajuan izin ditolak.');
+    }
+
+    public function export()
+    {
+        $rows = PengajuanIzin::with('user')->latest()->get()->map(function ($iz, $i) {
+            return [
+                $i + 1,
+                $iz->user->nama ?? '-',
+                ucfirst(str_replace('_', ' ', $iz->jenis)),
+                $iz->tanggal_mulai?->format('d/m/Y'),
+                $iz->tanggal_selesai?->format('d/m/Y'),
+                ucfirst($iz->status),
+                $iz->created_at?->format('d/m/Y'),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'pengajuan_izin_' . now()->format('Ymd') . '.csv',
+            ['No', 'Nama Staf', 'Jenis', 'Mulai', 'Selesai', 'Status', 'Tanggal Ajukan'],
+            $rows
+        );
     }
 }

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Magang;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\LogbookMagang;
 use Illuminate\Http\Request;
 
 class LogbookController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = LogbookMagang::where('pengguna_id', auth()->id())
@@ -110,5 +113,29 @@ class LogbookController extends Controller
 
         return redirect()->route('magang.logbook.index')
             ->with('success', 'Logbook berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = LogbookMagang::where('pengguna_id', auth()->id())
+            ->latest('tanggal')->get()->map(function ($l, $i) {
+                return [
+                    $i + 1,
+                    $l->tanggal?->format('d/m/Y'),
+                    $l->jam_mulai ?? '-',
+                    $l->jam_selesai ?? '-',
+                    $l->kegiatan,
+                    $l->hasil ?? '-',
+                    $l->kendala ?? '-',
+                    $l->rencana_besok ?? '-',
+                    ucfirst($l->status),
+                ];
+            });
+
+        return $this->eksporCsv(
+            'logbook_magang_' . now()->format('Ymd') . '.csv',
+            ['No', 'Tanggal', 'Jam Mulai', 'Jam Selesai', 'Kegiatan', 'Hasil', 'Kendala', 'Rencana Besok', 'Status'],
+            $rows
+        );
     }
 }

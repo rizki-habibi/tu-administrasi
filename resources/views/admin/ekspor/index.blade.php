@@ -99,10 +99,15 @@
                         <small class="text-muted">{{ $stats['laporan'] }} laporan</small>
                     </div>
                 </div>
-                <p class="text-muted mb-3" style="font-size:.8rem;">Data laporan dari berbagai divisi staf TU.</p>
-                <a href="{{ route('admin.laporan.index') }}" class="btn btn-sm btn-outline-primary w-100">
-                    <i class="bi bi-eye me-1"></i>Lihat Laporan
-                </a>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor data laporan dari berbagai divisi staf TU.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.laporan') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.laporan.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -120,10 +125,15 @@
                         <small class="text-muted">{{ $stats['surat'] }} surat</small>
                     </div>
                 </div>
-                <p class="text-muted mb-3" style="font-size:.8rem;">Arsip surat masuk dan surat keluar sekolah.</p>
-                <a href="{{ route('admin.surat.index') }}" class="btn btn-sm btn-outline-primary w-100">
-                    <i class="bi bi-eye me-1"></i>Lihat Surat
-                </a>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor arsip surat masuk dan surat keluar sekolah.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.surat') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.surat.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -141,10 +151,93 @@
                         <small class="text-muted">{{ $stats['izin'] }} pengajuan</small>
                     </div>
                 </div>
-                <p class="text-muted mb-3" style="font-size:.8rem;">Rekap pengajuan izin, cuti, sakit, dan dinas luar.</p>
-                <a href="{{ route('admin.izin.index') }}" class="btn btn-sm btn-outline-primary w-100">
-                    <i class="bi bi-eye me-1"></i>Lihat Pengajuan
-                </a>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor rekap pengajuan izin, cuti, sakit, dan dinas luar.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.izin') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.izin.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Agenda --}}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:linear-gradient(135deg,#14b8a6,#2dd4bf);">
+                        <i class="bi bi-calendar-event text-white" style="font-size:1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="font-size:.9rem;">Agenda / Event</h6>
+                        <small class="text-muted">{{ $stats['agenda'] }} agenda</small>
+                    </div>
+                </div>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor jadwal kegiatan, rapat, dan event sekolah.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.agenda') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.agenda.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Inventaris --}}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:linear-gradient(135deg,#f97316,#fb923c);">
+                        <i class="bi bi-box-seam text-white" style="font-size:1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="font-size:.9rem;">Inventaris</h6>
+                        <small class="text-muted">{{ $stats['inventaris'] }} barang</small>
+                    </div>
+                </div>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor data inventaris dan sarana prasarana sekolah.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.inventaris') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.inventaris.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Keuangan --}}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:linear-gradient(135deg,#22c55e,#4ade80);">
+                        <i class="bi bi-cash-stack text-white" style="font-size:1.2rem;"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold" style="font-size:.9rem;">Keuangan</h6>
+                        <small class="text-muted">{{ $stats['keuangan'] }} transaksi</small>
+                    </div>
+                </div>
+                <p class="text-muted mb-3" style="font-size:.8rem;">Ekspor catatan keuangan, pemasukan, dan pengeluaran.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.ekspor.keuangan') }}" class="btn btn-sm btn-outline-success flex-fill export-btn">
+                        <i class="bi bi-filetype-csv me-1"></i>CSV
+                    </a>
+                    <a href="{{ route('admin.keuangan.index') }}" class="btn btn-sm btn-outline-primary flex-fill">
+                        <i class="bi bi-eye me-1"></i>Lihat
+                    </a>
+                </div>
             </div>
         </div>
     </div>

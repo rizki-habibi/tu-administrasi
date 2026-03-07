@@ -421,3 +421,9 @@ Route::get('/ekspor', [Admin\EksporController::class, 'index'])->name('ekspor.in
 Route::get('/ekspor/staff', [Admin\PegawaiController::class, 'export'])->name('ekspor.staff');
 Route::get('/ekspor/kehadiran', [Admin\KehadiranController::class, 'export'])->name('ekspor.kehadiran');
 Route::get('/ekspor/dokumen', [Admin\DokumenController::class, 'export'])->name('ekspor.dokumen');
+Route::get('/ekspor/laporan', [Admin\LaporanController::class, 'export'])->name('ekspor.laporan');
+Route::get('/ekspor/surat', [Admin\SuratController::class, 'export'])->name('ekspor.surat');
+Route::get('/ekspor/agenda', [Admin\AgendaController::class, 'export'])->name('ekspor.agenda');
+Route::get('/ekspor/izin', [Admin\IzinController::class, 'export'])->name('ekspor.izin');
+Route::get('/ekspor/inventaris', [Admin\InventarisController::class, 'export'])->name('ekspor.inventaris');
+Route::get('/ekspor/keuangan', [Admin\KeuanganAdminController::class, 'export'])->name('ekspor.keuangan');

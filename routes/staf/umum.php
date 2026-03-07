@@ -25,6 +25,7 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
     Route::get('/', [Staff\KehadiranController::class, 'index'])->name('index');
     Route::post('/masuk', [Staff\KehadiranController::class, 'clockIn'])->name('masuk');
     Route::post('/pulang', [Staff\KehadiranController::class, 'clockOut'])->name('pulang');
+    Route::get('/ekspor', [Staff\KehadiranController::class, 'export'])->name('ekspor');
     Route::get('/{kehadiran}', [Staff\KehadiranController::class, 'show'])->name('show');
     Route::patch('/{kehadiran}/catatan', [Staff\KehadiranController::class, 'updateNote'])->name('catatan');
 });
@@ -51,6 +52,7 @@ Route::prefix('skp')->name('skp.')->group(function () {
     Route::get('/', [Staff\SkpController::class, 'index'])->name('index');
     Route::get('/buat', [Staff\SkpController::class, 'create'])->name('create');
     Route::post('/', [Staff\SkpController::class, 'store'])->name('store');
+    Route::get('/ekspor', [Staff\SkpController::class, 'export'])->name('ekspor');
     Route::get('/{skp}', [Staff\SkpController::class, 'show'])->name('show');
     Route::get('/{skp}/edit', [Staff\SkpController::class, 'edit'])->name('edit');
     Route::put('/{skp}', [Staff\SkpController::class, 'update'])->name('update');
@@ -221,6 +223,7 @@ Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('laporan', Staff\LaporanController::class);
+Route::get('laporan-ekspor', [Staff\LaporanController::class, 'export'])->name('laporan.ekspor');
 
 /*
 |--------------------------------------------------------------------------
@@ -228,6 +231,7 @@ Route::resource('laporan', Staff\LaporanController::class);
 |--------------------------------------------------------------------------
 */
 Route::resource('catatan-harian', Staff\CatatanHarianController::class)->parameters(['catatan-harian' => 'catatan']);
+Route::get('catatan-harian-ekspor', [Staff\CatatanHarianController::class, 'export'])->name('catatan-harian.ekspor');
 
 /*
 |--------------------------------------------------------------------------

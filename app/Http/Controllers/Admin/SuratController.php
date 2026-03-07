@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Surat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class SuratController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Surat::with('creator')->latest();
@@ -135,5 +138,29 @@ class SuratController extends Controller
         $surat->delete();
 
         return redirect()->route('admin.surat.index')->with('success', 'Surat berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = Surat::with('creator')->latest()->get()->map(function ($s, $i) {
+            return [
+                $i + 1,
+                $s->nomor_surat,
+                ucfirst($s->jenis),
+                ucfirst($s->kategori),
+                $s->perihal,
+                $s->tujuan ?? $s->asal ?? '-',
+                ucfirst($s->sifat),
+                ucfirst($s->status),
+                $s->tanggal_surat?->format('d/m/Y'),
+                $s->creator->nama ?? '-',
+            ];
+        });
+
+        return $this->eksporCsv(
+            'surat_' . now()->format('Ymd') . '.csv',
+            ['No', 'Nomor Surat', 'Jenis', 'Kategori', 'Perihal', 'Tujuan/Asal', 'Sifat', 'Status', 'Tanggal', 'Dibuat Oleh'],
+            $rows
+        );
     }
 }

@@ -25,6 +25,7 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
     Route::get('/', [Magang\KehadiranController::class, 'index'])->name('index');
     Route::post('/masuk', [Magang\KehadiranController::class, 'clockIn'])->name('masuk');
     Route::post('/pulang', [Magang\KehadiranController::class, 'clockOut'])->name('pulang');
+    Route::get('/ekspor', [Magang\KehadiranController::class, 'export'])->name('ekspor');
     Route::get('/{kehadiran}', [Magang\KehadiranController::class, 'show'])->name('show');
 });
 
@@ -34,6 +35,7 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('logbook', Magang\LogbookController::class)->parameters(['logbook' => 'logbook']);
+Route::get('logbook-ekspor', [Magang\LogbookController::class, 'export'])->name('logbook.ekspor');
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,7 @@ Route::prefix('izin')->name('izin.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::resource('kegiatan', Magang\KegiatanController::class);
+Route::get('kegiatan-ekspor', [Magang\KegiatanController::class, 'export'])->name('kegiatan.ekspor');
 
 /*
 |--------------------------------------------------------------------------

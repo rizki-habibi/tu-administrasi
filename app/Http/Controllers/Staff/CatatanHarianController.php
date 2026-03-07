@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\CatatanHarian;
 use App\Models\LogAktivitas;
 use Illuminate\Http\Request;
 
 class CatatanHarianController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = CatatanHarian::where('pengguna_id', auth()->id())
@@ -107,5 +110,27 @@ class CatatanHarianController extends Controller
 
         return redirect()->route('staf.catatan-harian.index')
             ->with('success', 'Catatan harian berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = CatatanHarian::where('pengguna_id', auth()->id())
+            ->latest('tanggal')->get()->map(function ($c, $i) {
+                return [
+                    $i + 1,
+                    $c->tanggal?->format('d/m/Y'),
+                    $c->kegiatan,
+                    $c->hasil ?? '-',
+                    $c->kendala ?? '-',
+                    $c->rencana_besok ?? '-',
+                    ucfirst($c->status),
+                ];
+            });
+
+        return $this->eksporCsv(
+            'catatan_harian_' . now()->format('Ymd') . '.csv',
+            ['No', 'Tanggal', 'Kegiatan', 'Hasil', 'Kendala', 'Rencana Besok', 'Status'],
+            $rows
+        );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\CatatanKeuangan;
 use App\Models\Anggaran;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class KeuanganAdminController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = CatatanKeuangan::with('creator')->latest();
@@ -103,5 +106,28 @@ class KeuanganAdminController extends Controller
 
         Anggaran::create(array_merge($request->all(), ['dibuat_oleh' => auth()->id()]));
         return redirect()->route('admin.keuangan.anggaran')->with('success', 'Anggaran berhasil ditambahkan.');
+    }
+
+    public function export()
+    {
+        $rows = CatatanKeuangan::with('creator')->latest()->get()->map(function ($t, $i) {
+            return [
+                $i + 1,
+                $t->kode_transaksi,
+                ucfirst($t->jenis),
+                ucfirst(str_replace('_', ' ', $t->kategori)),
+                $t->uraian,
+                number_format($t->jumlah, 0, ',', '.'),
+                $t->tanggal ? \Carbon\Carbon::parse($t->tanggal)->format('d/m/Y') : '-',
+                ucfirst($t->status),
+                $t->creator->nama ?? '-',
+            ];
+        });
+
+        return $this->eksporCsv(
+            'keuangan_' . now()->format('Ymd') . '.csv',
+            ['No', 'Kode Transaksi', 'Jenis', 'Kategori', 'Uraian', 'Jumlah (Rp)', 'Tanggal', 'Status', 'Dicatat Oleh'],
+            $rows
+        );
     }
 }

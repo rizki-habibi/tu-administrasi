@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Kepsek;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Kehadiran;
 use App\Models\Pengguna;
 use App\Models\PengaturanKehadiran;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 
 class KehadiranController extends Controller
 {
+    use EksporImporTrait;
+
     public function index()
     {
         $todayAttendances = Kehadiran::with('user')->whereDate('tanggal', today())->get();
@@ -127,5 +130,26 @@ class KehadiranController extends Controller
         $imageName = $folder . '/' . uniqid() . '_' . time() . '.png';
         Storage::disk('public')->put($imageName, base64_decode($image));
         return $imageName;
+    }
+
+    public function export()
+    {
+        $rows = Kehadiran::with('user')->whereMonth('tanggal', now()->month)
+            ->orderBy('tanggal', 'desc')->get()->map(function ($a, $i) {
+                return [
+                    $i + 1,
+                    $a->user->nama ?? '-',
+                    $a->tanggal?->format('d/m/Y'),
+                    $a->jam_masuk ?? '-',
+                    $a->jam_pulang ?? '-',
+                    ucfirst($a->status),
+                ];
+            });
+
+        return $this->eksporCsv(
+            'kehadiran_semua_' . now()->format('Ymd') . '.csv',
+            ['No', 'Nama', 'Tanggal', 'Jam Masuk', 'Jam Pulang', 'Status'],
+            $rows
+        );
     }
 }

@@ -22,6 +22,7 @@ Route::get('/beranda', [Kepsek\BerandaController::class, 'index'])->name('berand
 |--------------------------------------------------------------------------
 */
 Route::get('/pegawai', [Kepsek\PegawaiController::class, 'index'])->name('pegawai.index');
+Route::get('/pegawai/ekspor', [Kepsek\PegawaiController::class, 'export'])->name('pegawai.ekspor');
 Route::get('/pegawai/{pegawai}', [Kepsek\PegawaiController::class, 'show'])->name('pegawai.show');
 
 /*
@@ -32,6 +33,7 @@ Route::get('/pegawai/{pegawai}', [Kepsek\PegawaiController::class, 'show'])->nam
 Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
     Route::get('/', [Kepsek\KehadiranController::class, 'index'])->name('index');
     Route::get('/laporan', [Kepsek\KehadiranController::class, 'report'])->name('laporan');
+    Route::get('/ekspor', [Kepsek\KehadiranController::class, 'export'])->name('ekspor');
     Route::post('/masuk', [Kepsek\KehadiranController::class, 'clockIn'])->name('masuk');
     Route::post('/pulang', [Kepsek\KehadiranController::class, 'clockOut'])->name('pulang');
     Route::get('/{kehadiran}', [Kepsek\KehadiranController::class, 'show'])->name('show');
@@ -44,6 +46,7 @@ Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
 */
 Route::prefix('izin')->name('izin.')->group(function () {
     Route::get('/', [Kepsek\IzinController::class, 'index'])->name('index');
+    Route::get('/ekspor', [Kepsek\IzinController::class, 'export'])->name('ekspor');
     Route::get('/{izin}', [Kepsek\IzinController::class, 'show'])->name('show');
     Route::patch('/{izin}/setujui', [Kepsek\IzinController::class, 'approve'])->name('setujui');
     Route::patch('/{izin}/tolak', [Kepsek\IzinController::class, 'reject'])->name('tolak');
@@ -56,6 +59,7 @@ Route::prefix('izin')->name('izin.')->group(function () {
 */
 Route::prefix('skp')->name('skp.')->group(function () {
     Route::get('/', [Kepsek\SkpController::class, 'index'])->name('index');
+    Route::get('/ekspor', [Kepsek\SkpController::class, 'export'])->name('ekspor');
     Route::get('/{skp}', [Kepsek\SkpController::class, 'show'])->name('show');
     Route::patch('/{skp}/setujui', [Kepsek\SkpController::class, 'approve'])->name('setujui');
     Route::patch('/{skp}/tolak', [Kepsek\SkpController::class, 'reject'])->name('tolak');
@@ -87,6 +91,7 @@ Route::get('/surat/{surat}', [Kepsek\SuratController::class, 'show'])->name('sur
 |--------------------------------------------------------------------------
 */
 Route::get('/laporan', [Kepsek\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/ekspor', [Kepsek\LaporanController::class, 'export'])->name('laporan.ekspor');
 Route::get('/laporan/{laporan}', [Kepsek\LaporanController::class, 'show'])->name('laporan.show');
 
 /*

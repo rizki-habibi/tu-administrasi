@@ -10,6 +10,8 @@ use App\Models\Laporan;
 use App\Models\Surat;
 use App\Models\Acara;
 use App\Models\PengajuanIzin;
+use App\Models\Inventaris;
+use App\Models\CatatanKeuangan;
 
 class EksporController extends Controller
 {
@@ -23,6 +25,8 @@ class EksporController extends Controller
             'surat' => Surat::count(),
             'agenda' => Acara::count(),
             'izin' => PengajuanIzin::count(),
+            'inventaris' => Inventaris::count(),
+            'keuangan' => CatatanKeuangan::count(),
         ];
 
         return view('admin.ekspor.index', compact('stats'));

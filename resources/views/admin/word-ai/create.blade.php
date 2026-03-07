@@ -57,28 +57,37 @@
                 </div>
                 <div class="card-body">
                     <!-- Toolbar -->
-                    <div class="btn-toolbar mb-2 border rounded p-2 bg-light" id="editorToolbar">
-                        <div class="btn-group btn-group-sm me-2">
+                    <div class="btn-toolbar mb-2 border rounded p-2 bg-light flex-wrap gap-1" id="editorToolbar">
+                        <div class="btn-group btn-group-sm me-1">
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('bold')" title="Bold"><i class="bi bi-type-bold"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('italic')" title="Italic"><i class="bi bi-type-italic"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('underline')" title="Underline"><i class="bi bi-type-underline"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('strikeThrough')" title="Strikethrough"><i class="bi bi-type-strikethrough"></i></button>
                         </div>
-                        <div class="btn-group btn-group-sm me-2">
+                        <div class="btn-group btn-group-sm me-1">
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('justifyLeft')" title="Rata Kiri"><i class="bi bi-text-left"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('justifyCenter')" title="Rata Tengah"><i class="bi bi-text-center"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('justifyRight')" title="Rata Kanan"><i class="bi bi-text-right"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('justifyFull')" title="Rata Semua"><i class="bi bi-justify"></i></button>
                         </div>
-                        <div class="btn-group btn-group-sm me-2">
+                        <div class="btn-group btn-group-sm me-1">
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('insertOrderedList')" title="Ordered List"><i class="bi bi-list-ol"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('insertUnorderedList')" title="Unordered List"><i class="bi bi-list-ul"></i></button>
                         </div>
-                        <div class="btn-group btn-group-sm me-2">
+                        <div class="btn-group btn-group-sm me-1">
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('indent')" title="Indent"><i class="bi bi-text-indent-left"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('outdent')" title="Outdent"><i class="bi bi-text-indent-right"></i></button>
                         </div>
-                        <div class="btn-group btn-group-sm me-2">
+                        <div class="btn-group btn-group-sm me-1">
+                            <select class="form-select form-select-sm" onchange="execCmdArg('fontName', this.value)" style="width:auto;" title="Font">
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Calibri">Calibri</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                            </select>
+                        </div>
+                        <div class="btn-group btn-group-sm me-1">
                             <select class="form-select form-select-sm" onchange="execCmdArg('formatBlock', this.value)" style="width:auto;">
                                 <option value="p">Normal</option>
                                 <option value="h1">Heading 1</option>
@@ -87,7 +96,7 @@
                                 <option value="h4">Heading 4</option>
                             </select>
                         </div>
-                        <div class="btn-group btn-group-sm me-2">
+                        <div class="btn-group btn-group-sm me-1">
                             <select class="form-select form-select-sm" onchange="execCmdArg('fontSize', this.value)" style="width:auto;">
                                 <option value="2">10pt</option>
                                 <option value="3" selected>12pt</option>
@@ -96,13 +105,31 @@
                                 <option value="6">24pt</option>
                             </select>
                         </div>
-                        <div class="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-sm me-1">
+                            <label class="btn btn-outline-secondary position-relative" title="Warna Teks">
+                                <i class="bi bi-palette"></i>
+                                <input type="color" class="position-absolute opacity-0" style="width:1px;height:1px;top:0;left:0;" onchange="execCmdArg('foreColor', this.value)">
+                            </label>
+                            <label class="btn btn-outline-secondary position-relative" title="Warna Latar">
+                                <i class="bi bi-paint-bucket"></i>
+                                <input type="color" value="#ffff00" class="position-absolute opacity-0" style="width:1px;height:1px;top:0;left:0;" onchange="execCmdArg('hiliteColor', this.value)">
+                            </label>
+                        </div>
+                        <div class="btn-group btn-group-sm me-1">
                             <button type="button" class="btn btn-outline-secondary" onclick="insertTable()" title="Insert Table"><i class="bi bi-table"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('insertHorizontalRule')" title="Horizontal Line"><i class="bi bi-hr"></i></button>
+                        </div>
+                        <div class="btn-group btn-group-sm me-1">
+                            <button type="button" class="btn btn-outline-info" onclick="insertLogo()" title="Sisipkan Logo/Gambar"><i class="bi bi-image"></i></button>
+                            <button type="button" class="btn btn-outline-warning" onclick="insertStamp()" title="Sisipkan Stempel"><i class="bi bi-patch-check-fill"></i></button>
+                        </div>
+                        <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('undo')" title="Undo"><i class="bi bi-arrow-counterclockwise"></i></button>
                             <button type="button" class="btn btn-outline-secondary" onclick="execCmd('redo')" title="Redo"><i class="bi bi-arrow-clockwise"></i></button>
                         </div>
                     </div>
+                    <input type="file" id="imageUpload" accept="image/*" class="d-none">
+                    <input type="file" id="stampUpload" accept="image/*" class="d-none">
 
                     <!-- Content Editable Area -->
                     <div id="editor" contenteditable="true" class="border rounded p-4" style="min-height:500px;max-height:700px;overflow-y:auto;font-family:'Times New Roman',serif;font-size:12pt;line-height:1.6;background:#fff;">
@@ -200,6 +227,34 @@ function insertTable() {
     const html = '<table style="width:100%;border-collapse:collapse;"><tr><th style="border:1px solid #000;padding:8px;">Header 1</th><th style="border:1px solid #000;padding:8px;">Header 2</th><th style="border:1px solid #000;padding:8px;">Header 3</th></tr><tr><td style="border:1px solid #000;padding:8px;">Data 1</td><td style="border:1px solid #000;padding:8px;">Data 2</td><td style="border:1px solid #000;padding:8px;">Data 3</td></tr></table><br>';
     document.execCommand('insertHTML', false, html);
 }
+
+function insertLogo() {
+    document.getElementById('imageUpload').click();
+}
+function insertStamp() {
+    document.getElementById('stampUpload').click();
+}
+function handleImageInsert(file, isStamp) {
+    if (!file || !file.type.startsWith('image/')) return;
+    if (file.size > 2 * 1024 * 1024) { Swal.fire('Error', 'Ukuran gambar maksimal 2MB', 'error'); return; }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const maxW = isStamp ? 150 : 200;
+        const style = isStamp
+            ? 'max-width:'+maxW+'px;opacity:0.85;display:block;margin:10px auto;'
+            : 'max-width:'+maxW+'px;display:block;margin:10px auto;';
+        const html = '<img src="'+e.target.result+'" style="'+style+'" alt="'+(isStamp?'Stempel':'Logo')+'"><br>';
+        document.getElementById('editor').focus();
+        document.execCommand('insertHTML', false, html);
+    };
+    reader.readAsDataURL(file);
+}
+document.getElementById('imageUpload').addEventListener('change', function() {
+    handleImageInsert(this.files[0], false); this.value = '';
+});
+document.getElementById('stampUpload').addEventListener('change', function() {
+    handleImageInsert(this.files[0], true); this.value = '';
+});
 
 function syncContent() {
     document.getElementById('contentInput').value = document.getElementById('editor').innerHTML;

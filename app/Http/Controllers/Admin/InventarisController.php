@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Inventaris;
 use App\Models\LaporanKerusakan;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class InventarisController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Inventaris::with('creator')->latest();
@@ -106,5 +109,30 @@ class InventarisController extends Controller
         if ($inventari->foto) Storage::disk('public')->delete($inventari->foto);
         $inventari->delete();
         return redirect()->route('admin.inventaris.index')->with('success', 'Inventaris berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = Inventaris::with('creator')->latest()->get()->map(function ($item, $i) {
+            return [
+                $i + 1,
+                $item->kode_barang,
+                $item->nama_barang,
+                ucfirst(str_replace('_', ' ', $item->kategori)),
+                $item->lokasi,
+                $item->jumlah,
+                ucfirst(str_replace('_', ' ', $item->kondisi)),
+                $item->tanggal_perolehan ? \Carbon\Carbon::parse($item->tanggal_perolehan)->format('d/m/Y') : '-',
+                $item->harga_perolehan ? number_format($item->harga_perolehan, 0, ',', '.') : '-',
+                $item->sumber_dana ?? '-',
+                $item->creator->nama ?? '-',
+            ];
+        });
+
+        return $this->eksporCsv(
+            'inventaris_' . now()->format('Ymd') . '.csv',
+            ['No', 'Kode', 'Nama Barang', 'Kategori', 'Lokasi', 'Jumlah', 'Kondisi', 'Tgl Perolehan', 'Harga', 'Sumber Dana', 'Dicatat Oleh'],
+            $rows
+        );
     }
 }

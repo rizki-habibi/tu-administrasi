@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Kepsek;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Skp;
 use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class SkpController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Skp::with('user');
@@ -102,5 +105,27 @@ class SkpController extends Controller
         ]);
 
         return redirect()->route('kepala-sekolah.skp.index')->with('success', 'SKP dikembalikan untuk revisi.');
+    }
+
+    public function export()
+    {
+        $rows = Skp::with('user')->latest()->get()->map(function ($s, $i) {
+            return [
+                $i + 1,
+                $s->user->nama ?? '-',
+                ucfirst(str_replace('_', ' ', $s->periode)),
+                $s->tahun,
+                $s->sasaran_kinerja,
+                $s->nilai_capaian ?? '-',
+                ucfirst(str_replace('_', ' ', $s->predikat ?? '-')),
+                ucfirst($s->status),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'skp_semua_' . now()->format('Ymd') . '.csv',
+            ['No', 'Nama Staf', 'Periode', 'Tahun', 'Sasaran Kinerja', 'Nilai Capaian', 'Predikat', 'Status'],
+            $rows
+        );
     }
 }

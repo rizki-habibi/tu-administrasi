@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Magang;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Kehadiran;
 use App\Models\PengaturanKehadiran;
 use Carbon\Carbon;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class KehadiranController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Kehadiran::where('pengguna_id', auth()->id());
@@ -116,5 +119,25 @@ class KehadiranController extends Controller
         $filename = $folder . '/' . auth()->id() . '_' . now()->format('Ymd_His') . '.jpg';
         Storage::disk('public')->put($filename, $image);
         return $filename;
+    }
+
+    public function export()
+    {
+        $rows = Kehadiran::where('pengguna_id', auth()->id())
+            ->orderBy('tanggal', 'desc')->get()->map(function ($a, $i) {
+                return [
+                    $i + 1,
+                    $a->tanggal?->format('d/m/Y'),
+                    $a->jam_masuk ?? '-',
+                    $a->jam_pulang ?? '-',
+                    ucfirst($a->status),
+                ];
+            });
+
+        return $this->eksporCsv(
+            'kehadiran_magang_' . now()->format('Ymd') . '.csv',
+            ['No', 'Tanggal', 'Jam Masuk', 'Jam Pulang', 'Status'],
+            $rows
+        );
     }
 }

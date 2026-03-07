@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Laporan::where('pengguna_id', auth()->id());
@@ -109,5 +112,25 @@ class LaporanController extends Controller
 
         $report->delete();
         return redirect()->route('staf.laporan.index')->with('success', 'Laporan berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = Laporan::where('pengguna_id', auth()->id())->latest()->get()->map(function ($r, $i) {
+            return [
+                $i + 1,
+                $r->judul,
+                ucfirst(str_replace('_', ' ', $r->kategori)),
+                ucfirst($r->prioritas),
+                ucfirst($r->status),
+                $r->created_at?->format('d/m/Y H:i'),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'laporan_saya_' . now()->format('Ymd') . '.csv',
+            ['No', 'Judul', 'Kategori', 'Prioritas', 'Status', 'Tanggal'],
+            $rows
+        );
     }
 }

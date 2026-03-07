@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\PengajuanIzin;
 use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class IzinController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = PengajuanIzin::with('user', 'approver');
@@ -68,5 +71,27 @@ class IzinController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Pengajuan berhasil ditolak.');
+    }
+
+    public function export()
+    {
+        $rows = PengajuanIzin::with('user')->latest()->get()->map(function ($iz, $i) {
+            return [
+                $i + 1,
+                $iz->user->nama ?? '-',
+                ucfirst(str_replace('_', ' ', $iz->jenis)),
+                $iz->tanggal_mulai?->format('d/m/Y'),
+                $iz->tanggal_selesai?->format('d/m/Y'),
+                $iz->alasan ?? '-',
+                ucfirst($iz->status),
+                $iz->created_at?->format('d/m/Y H:i'),
+            ];
+        });
+
+        return $this->eksporCsv(
+            'pengajuan_izin_' . now()->format('Ymd') . '.csv',
+            ['No', 'Nama Staf', 'Jenis', 'Mulai', 'Selesai', 'Alasan', 'Status', 'Tanggal Ajukan'],
+            $rows
+        );
     }
 }

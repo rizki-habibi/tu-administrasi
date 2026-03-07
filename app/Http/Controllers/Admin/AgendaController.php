@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\EksporImporTrait;
 use App\Models\Acara;
 use App\Models\Notifikasi;
 use App\Models\Pengguna;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
+    use EksporImporTrait;
+
     public function index(Request $request)
     {
         $query = Acara::with('creator');
@@ -97,5 +100,28 @@ class AgendaController extends Controller
     {
         $event->delete();
         return redirect()->route('admin.agenda.index')->with('success', 'Event berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        $rows = Acara::with('creator')->orderBy('tanggal_acara', 'desc')->get()->map(function ($e, $i) {
+            return [
+                $i + 1,
+                $e->judul,
+                ucfirst($e->jenis),
+                $e->tanggal_acara?->format('d/m/Y'),
+                $e->waktu_mulai ?? '-',
+                $e->waktu_selesai ?? '-',
+                $e->lokasi ?? '-',
+                ucfirst($e->status ?? 'upcoming'),
+                $e->creator->nama ?? '-',
+            ];
+        });
+
+        return $this->eksporCsv(
+            'agenda_' . now()->format('Ymd') . '.csv',
+            ['No', 'Judul', 'Jenis', 'Tanggal', 'Waktu Mulai', 'Waktu Selesai', 'Lokasi', 'Status', 'Dibuat Oleh'],
+            $rows
+        );
     }
 }
