@@ -110,7 +110,7 @@ class CekBahasaInggris extends Command
     {
         $this->info('');
         $this->info('╔══════════════════════════════════════════════════╗');
-        $this->info('║   🔍 CEK BAHASA INGGRIS - TU Administrasi      ║');
+        $this->info('║   🔍 CEK BAHASA INGGRIS - SIMPEG-SMART      ║');
         $this->info('║   Deteksi otomatis kata Inggris di codebase     ║');
         $this->info('╚══════════════════════════════════════════════════╝');
         $this->info('');

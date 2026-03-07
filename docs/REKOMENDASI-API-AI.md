@@ -1,4 +1,4 @@
-# Rekomendasi API AI — Sistem TU Administrasi
+# Rekomendasi API AI — Sistem SIMPEG-SMART
 
 > **Versi:** 1.0  
 > **Tanggal:** 7 Maret 2026  
@@ -21,7 +21,7 @@
 
 ## 1. Pendahuluan
 
-Dokumen ini menyediakan daftar rekomendasi API AI yang dapat diintegrasikan ke Sistem TU Administrasi untuk meningkatkan fitur-fitur cerdas seperti:
+Dokumen ini menyediakan daftar rekomendasi API AI yang dapat diintegrasikan ke Sistem SIMPEG-SMART untuk meningkatkan fitur-fitur cerdas seperti:
 
 - Generate dokumen otomatis
 - Chatbot asisten administrasi
@@ -44,7 +44,7 @@ Dokumen ini menyediakan daftar rekomendasi API AI yang dapat diintegrasikan ke S
 | **Auth** | API Key via query param `?key=` |
 | **Harga** | Gratis (tier free) |
 | **Limit** | 15 RPM, 1M token/menit, 1.500 request/hari |
-| **Digunakan untuk** | Generate dokumen Word, SIATU-AI chatbot |
+| **Digunakan untuk** | Generate dokumen Word, SIMPEG-AI chatbot |
 | **Config** | `.env` → `GEMINI_API_KEY`, `GEMINI_MODEL` |
 
 ---
@@ -197,7 +197,7 @@ $response = Http::withToken($groqApiKey)
 
 ### 6.2. Chatbot Asisten Administrasi
 - **API:** Google Gemini / Groq
-- **Fitur:** SIATU-AI — jawab pertanyaan tentang prosedur, data sekolah
+- **Fitur:** SIMPEG-AI — jawab pertanyaan tentang prosedur, data sekolah
 
 ### 6.3. OCR Dokumen & Surat
 - **API:** Google Gemini Vision / Hugging Face
@@ -291,4 +291,4 @@ Sistem sudah memiliki **fallback ke template lokal** jika Gemini tidak tersedia.
 
 ---
 
-> *Dokumen ini adalah referensi teknis untuk pengembangan fitur AI pada Sistem TU Administrasi SMA Negeri 2 Jember.*
+> *Dokumen ini adalah referensi teknis untuk pengembangan fitur AI pada Sistem SIMPEG-SMART SMA Negeri 2 Jember.*

@@ -1,4 +1,4 @@
-# Pembaruan Fitur v0.2 — Sistem TU Administrasi
+# Pembaruan Fitur v0.2 — Sistem SIMPEG-SMART
 
 > **Versi:** 0.2  
 > **Tanggal Rilis:** 7 Maret 2026  
@@ -205,7 +205,7 @@ Di setiap halaman panduan kini terdapat tombol **Scroll ke Atas** (⬆) yang mun
 Sistem sudah memiliki integrasi **Google Gemini AI** untuk:
 - Generate dokumen Word otomatis
 - Template dokumen cerdas
-- SIATU-AI — asisten AI berbasis chat
+- SIMPEG-AI — asisten AI berbasis chat
 
 ### 8.2. Rencana Pengembangan AI
 
@@ -222,4 +222,4 @@ Lihat dokumen **[Rekomendasi API AI](REKOMENDASI-API-AI.md)** untuk daftar lengk
 
 ---
 
-> *Dokumen ini adalah bagian dari Panduan Sistem TU Administrasi SMA Negeri 2 Jember.*
+> *Dokumen ini adalah bagian dari Panduan Sistem SIMPEG-SMART SMA Negeri 2 Jember.*

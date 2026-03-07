@@ -336,6 +336,7 @@
             });
         });
     </script>
+    @include('komponen.notifikasi-popup')
     @stack('scripts')
 </body>
 </html>

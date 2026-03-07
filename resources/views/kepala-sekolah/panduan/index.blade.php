@@ -26,7 +26,7 @@
 @section('konten')
 <div class="panduan-hub-header">
     <h1><i class="bi bi-book me-2"></i>Pusat Panduan</h1>
-    <p>Dokumentasi lengkap & panduan penggunaan Sistem TU Administrasi</p>
+    <p>Dokumentasi lengkap & panduan penggunaan Sistem SIMPEG-SMART</p>
 </div>
 
 {{-- Search & Filter --}}

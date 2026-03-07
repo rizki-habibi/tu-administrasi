@@ -1,5 +1,5 @@
 @extends('peran.kepala-sekolah.app')
-@section('judul', 'SIATU-AI - Asisten AI')
+@section('judul', 'SIMPEG-AI - Asisten AI')
 
 @section('konten')
 <div class="row justify-content-center">
@@ -11,7 +11,7 @@
                         <i class="bi bi-robot text-white" style="font-size:1.5rem;"></i>
                     </div>
                     <div>
-                        <h5 class="fw-bold mb-0">SIATU-AI <span class="badge bg-success" style="font-size:.6rem;">Online</span></h5>
+                        <h5 class="fw-bold mb-0">SIMPEG-AI <span class="badge bg-success" style="font-size:.6rem;">Online</span></h5>
                         <p class="text-muted mb-0" style="font-size:.8rem;">Asisten AI Kepala Sekolah SMA Negeri 2 Jember</p>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="bg-white rounded-3 p-3 shadow-sm" style="max-width:80%;font-size:.9rem;">
                         <p class="mb-2">Selamat datang, <strong>{{ Auth::user()->nama }}</strong>! 👋</p>
-                        <p class="mb-2">Saya <strong>SIATU-AI</strong>, asisten AI strategis untuk Kepala Sekolah SMA Negeri 2 Jember. Saya siap membantu:</p>
+                        <p class="mb-2">Saya <strong>SIMPEG-AI</strong>, asisten AI strategis untuk Kepala Sekolah SMA Negeri 2 Jember. Saya siap membantu:</p>
                         <ul class="mb-2">
                             <li>📊 Analisis kinerja & rekap eksekutif</li>
                             <li>🎯 Strategi peningkatan mutu sekolah</li>
@@ -50,7 +50,7 @@
                     </button>
                 </form>
                 <div class="text-center mt-2">
-                    <small class="text-muted" style="font-size:.7rem;"><i class="bi bi-shield-check me-1"></i>SIATU-AI menggunakan teknologi Gemini AI. Harap verifikasi informasi penting.</small>
+                    <small class="text-muted" style="font-size:.7rem;"><i class="bi bi-shield-check me-1"></i>SIMPEG-AI menggunakan teknologi Gemini AI. Harap verifikasi informasi penting.</small>
                 </div>
             </div>
         </div>

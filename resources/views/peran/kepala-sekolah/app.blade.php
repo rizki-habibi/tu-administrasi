@@ -260,7 +260,7 @@
                 <i class="bi bi-bar-chart-line-fill"></i> <span>Rekap Eksekutif</span>
             </a>
             <a href="{{ route('kepala-sekolah.siatu-ai.index') }}" class="rp-item">
-                <i class="bi bi-robot"></i> <span>SIATU-AI</span>
+                <i class="bi bi-robot"></i> <span>SIMPEG-AI</span>
             </a>
 
             <div class="rp-section-label">Pengaturan</div>
@@ -379,6 +379,7 @@
         if (rpOverlay) rpOverlay.addEventListener('click', closeRightPanel);
     });
     </script>
+    @include('komponen.notifikasi-popup')
     @stack('scripts')
 </body>
 </html>

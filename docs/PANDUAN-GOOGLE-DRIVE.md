@@ -51,7 +51,7 @@ Backup dikompres menjadi file `.zip` lalu diunggah ke **Google Drive**. Setiap b
 
 1. Buka [https://console.cloud.google.com/](https://console.cloud.google.com/)
 2. Klik **"Select a project"** → **"New Project"**
-3. Isi nama project: `TU Administrasi Backup`
+3. Isi nama project: `SIMPEG-SMART Backup`
 4. Klik **Create**
 
 ### 2.2. Aktifkan Google Drive API
@@ -66,7 +66,7 @@ Backup dikompres menjadi file `.zip` lalu diunggah ke **Google Drive**. Setiap b
 2. Klik **"+ Create Credentials"** → **"OAuth client ID"**
 3. Jika diminta, konfigurasi **OAuth Consent Screen** dulu:
    - User Type: **External** (atau Internal jika pakai Google Workspace)
-   - App Name: `TU Administrasi Backup`  
+   - App Name: `SIMPEG-SMART Backup`  
    - User support email: email admin
    - Authorized domains: kosongkan
    - Klik **Save and Continue** sampai selesai

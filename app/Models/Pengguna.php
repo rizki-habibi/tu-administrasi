@@ -35,16 +35,16 @@ class Pengguna extends Authenticatable
     const ROLE_MAGANG = 'magang';
 
     const ROLES = [
-        self::ROLE_ADMIN => 'Administrator',
+        self::ROLE_ADMIN => 'Admin TU',
         self::ROLE_KEPALA_SEKOLAH => 'Kepala Sekolah',
-        self::ROLE_KEPEGAWAIAN => 'Kepegawaian',
+        self::ROLE_KEPEGAWAIAN => 'Staf Kepegawaian',
         self::ROLE_PRAMU_BAKTI => 'Pramu Bakti',
-        self::ROLE_KEUANGAN => 'Keuangan',
-        self::ROLE_PERSURATAN => 'Persuratan',
-        self::ROLE_PERPUSTAKAAN => 'Perpustakaan',
-        self::ROLE_INVENTARIS => 'Inventaris/Sarpras',
-        self::ROLE_KESISWAAN_KURIKULUM => 'Kesiswaan/Kurikulum',
-        self::ROLE_STAFF => 'Staff',
+        self::ROLE_KEUANGAN => 'Staf Keuangan',
+        self::ROLE_PERSURATAN => 'Staf Persuratan',
+        self::ROLE_PERPUSTAKAAN => 'Staf Perpustakaan',
+        self::ROLE_INVENTARIS => 'Staf Inventaris/Sarpras',
+        self::ROLE_KESISWAAN_KURIKULUM => 'Staf Kesiswaan/Kurikulum',
+        self::ROLE_STAFF => 'Tenaga Kependidikan',
         self::ROLE_MAGANG => 'Staff Magang',
     ];
 
@@ -179,5 +179,20 @@ class Pengguna extends Authenticatable
     public function skp()
     {
         return $this->hasMany(Skp::class, 'pengguna_id');
+    }
+
+    public function riwayatJabatan()
+    {
+        return $this->hasMany(RiwayatJabatan::class, 'pengguna_id');
+    }
+
+    public function riwayatPangkat()
+    {
+        return $this->hasMany(RiwayatPangkat::class, 'pengguna_id');
+    }
+
+    public function dokumenKepegawaian()
+    {
+        return $this->hasMany(DokumenKepegawaian::class, 'pengguna_id');
     }
 }

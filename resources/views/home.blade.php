@@ -15,7 +15,7 @@
                     Anda telah berhasil masuk! Mengarahkan ke beranda...
                     <script>
                         setTimeout(function() {
-                            window.location.href = '{{ auth()->check() && auth()->user()->isAdmin() ? route("admin.dashboard") : route("staff.dashboard") }}';
+                            window.location.href = '{{ auth()->check() ? route(auth()->user()->getDashboardRoute()) : route("login") }}';
                         }, 1000);
                     </script>
                 </div>

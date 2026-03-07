@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-    <meta charset="utf-8"><title>Daftar Dokumen - TU Administrasi</title>
+    <meta charset="utf-8"><title>Daftar Dokumen - SIMPEG-SMART</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; font-size: 12px; padding: 20px; }
         h2 { text-align: center; margin-bottom: 4px; }
@@ -14,7 +14,7 @@
     </style>
 </head><body onload="window.print()">
     <h2>Daftar Dokumen</h2>
-    <p class="subtitle">TU Administrasi - SMA Negeri 2 Jember | Dicetak: {{ now()->format('d/m/Y H:i') }}</p>
+    <p class="subtitle">SIMPEG-SMART - SMA Negeri 2 Jember | Dicetak: {{ now()->format('d/m/Y H:i') }}</p>
     <table>
         <thead><tr><th>No</th><th>Judul</th><th>Kategori</th><th>File</th><th>Ukuran</th><th>Diupload</th><th>Tanggal</th></tr></thead>
         <tbody>
@@ -27,5 +27,5 @@
             @endforeach
         </tbody>
     </table>
-    <div class="footer">Dicetak dari Sistem TU Administrasi SMA Negeri 2 Jember</div>
+    <div class="footer">Dicetak dari Sistem SIMPEG-SMART SMA Negeri 2 Jember</div>
 </body></html>

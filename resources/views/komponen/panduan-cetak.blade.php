@@ -87,7 +87,7 @@
             </div>
         @endif
 
-        <div class="cover-institution">Sistem TU Administrasi</div>
+        <div class="cover-institution">Sistem SIMPEG-SMART</div>
         <div class="cover-school">SMA Negeri 2 Jember</div>
         <div class="cover-divider"></div>
         <div class="cover-title">{{ $panduan->judul }}</div>
@@ -113,7 +113,7 @@
             {!! \Illuminate\Support\Str::markdown($panduan->konten ?? '') !!}
         </div>
         <div class="doc-footer">
-            Dokumen ini digenerate dari Sistem TU Administrasi &mdash; SMA Negeri 2 Jember &mdash; {{ now()->translatedFormat('d F Y, H:i') }} WIB
+            Dokumen ini digenerate dari Sistem SIMPEG-SMART &mdash; SMA Negeri 2 Jember &mdash; {{ now()->translatedFormat('d F Y, H:i') }} WIB
         </div>
     </div>
 </body>

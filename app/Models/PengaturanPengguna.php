@@ -58,5 +58,9 @@ class PengaturanPengguna extends Model
         'warna_aksen'       => '#6366f1',    // hex color
         'notifikasi_suara'  => 'true',       // true / false
         'bahasa'            => 'id',         // id / en
+        'notifikasi_email'  => 'false',      // true / false
+        'notifikasi_push'   => 'false',      // true / false
+        'notifikasi_popup'  => 'true',       // true / false
+        'notifikasi_popup_delay' => '5',     // menit
     ];
 }

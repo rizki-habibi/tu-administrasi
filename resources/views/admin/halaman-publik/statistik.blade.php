@@ -5,7 +5,7 @@
 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
     <div>
         <h4 class="fw-bold mb-1" style="color:var(--dark);">Statistik Pengunjung</h4>
-        <p class="text-muted mb-0" style="font-size:.82rem;">Pantau jumlah pengunjung halaman publik SIATU</p>
+        <p class="text-muted mb-0" style="font-size:.82rem;">Pantau jumlah pengunjung halaman publik SIMPEG-SMART</p>
     </div>
     <a href="{{ route('admin.halaman-publik.index') }}" class="btn btn-outline-secondary btn-sm">
         <i class="bi bi-arrow-left"></i> Kembali

@@ -29,6 +29,11 @@
                     <i class="bi bi-palette-fill me-1"></i> Tampilan
                 </button>
             </li>
+            <li class="nav-item">
+                <button class="nav-link px-3 py-2" id="notif-tab" data-bs-toggle="pill" data-bs-target="#notif-panel" type="button" style="font-size:.82rem;border-radius:10px;">
+                    <i class="bi bi-bell-fill me-1"></i> Pemberitahuan
+                </button>
+            </li>
         </ul>
     </div>
 
@@ -243,6 +248,143 @@
                 </div>
             </div>
 
+            {{-- ═══ TAB: PEMBERITAHUAN ═══ --}}
+            <div class="tab-pane fade" id="notif-panel">
+                <div class="card border-0 shadow-sm" style="border-radius:14px;">
+                    <div class="card-body p-4">
+                        <h6 class="fw-bold mb-1"><i class="bi bi-bell-fill text-success me-2"></i>Pengaturan Pemberitahuan</h6>
+                        <p class="text-muted mb-4" style="font-size:.78rem;">Atur bagaimana Anda ingin menerima pemberitahuan dari sistem.</p>
+
+                        <div class="row g-4" style="max-width:600px;">
+                            {{-- Push Notification Browser --}}
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start p-3" style="background:#f8fafc;border-radius:12px;">
+                                    <div class="d-flex gap-3">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-phone-vibrate" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div>
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Notifikasi Push (Browser/HP)</label>
+                                            <p class="text-muted mb-0" style="font-size:.72rem;">Terima notifikasi langsung di browser atau perangkat Anda, bahkan saat tab tidak aktif.</p>
+                                            <span class="badge mt-1" id="pushStatusBadge" style="font-size:.65rem;background:#e5e7eb;color:#475569;">Checking...</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="pushToggle" {{ ($settings['notifikasi_push'] ?? 'false') === 'true' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Email Notification --}}
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start p-3" style="background:#f8fafc;border-radius:12px;">
+                                    <div class="d-flex gap-3">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#10b981,#34d399);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-envelope-fill" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div>
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Notifikasi Email</label>
+                                            <p class="text-muted mb-0" style="font-size:.72rem;">Terima email saat ada pesan penting, pengumuman, atau notifikasi sistem. Email dikirim ke <strong>{{ $user->email }}</strong>.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="emailToggle" {{ ($settings['notifikasi_email'] ?? 'false') === 'true' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Popup Notification --}}
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start p-3" style="background:#f8fafc;border-radius:12px;">
+                                    <div class="d-flex gap-3">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#f59e0b,#fbbf24);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-window-dock" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div>
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Popup Pemberitahuan Otomatis</label>
+                                            <p class="text-muted mb-0" style="font-size:.72rem;">Tampilkan popup pemberitahuan penting secara otomatis saat Anda membuka aplikasi.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="popupToggle" {{ ($settings['notifikasi_popup'] ?? 'true') === 'true' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Popup Delay --}}
+                            <div class="col-12" id="popupDelaySection">
+                                <div class="p-3" style="background:#f8fafc;border-radius:12px;">
+                                    <div class="d-flex gap-3 align-items-start">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-clock-history" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div style="flex:1;">
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Waktu Tunggu Popup</label>
+                                            <p class="text-muted mb-2" style="font-size:.72rem;">Berapa menit setelah membuka aplikasi popup muncul.</p>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="range" class="form-range" id="popupDelayRange" min="1" max="30" value="{{ $settings['notifikasi_popup_delay'] ?? 5 }}" style="flex:1;" oninput="document.getElementById('delayValue').textContent=this.value">
+                                                <span class="badge bg-primary px-3 py-2" style="min-width:50px;font-size:.82rem;" id="delayValue">{{ $settings['notifikasi_popup_delay'] ?? 5 }}</span>
+                                                <span style="font-size:.75rem;color:#64748b;">menit</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Suara Notifikasi --}}
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start p-3" style="background:#f8fafc;border-radius:12px;">
+                                    <div class="d-flex gap-3">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#f87171);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-volume-up-fill" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div>
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Suara Notifikasi</label>
+                                            <p class="text-muted mb-0" style="font-size:.72rem;">Putar bunyi pendek saat notifikasi baru muncul.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="soundNotifToggle" {{ ($settings['notifikasi_suara'] ?? 'true') === 'true' ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Info Storage --}}
+                            <div class="col-12">
+                                <div class="p-3" style="background:#f0fdf4;border-radius:12px;border:1px solid #bbf7d0;">
+                                    <div class="d-flex gap-3 align-items-start">
+                                        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#059669,#34d399);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                            <i class="bi bi-cloud-check-fill" style="color:#fff;font-size:1.1rem;"></i>
+                                        </div>
+                                        <div style="flex:1;">
+                                            <label class="form-label fw-semibold mb-0" style="font-size:.85rem;">Monitoring Penyimpanan Awan</label>
+                                            <p class="text-muted mb-2" style="font-size:.72rem;">Status penggunaan penyimpanan file pada server.</p>
+                                            <div style="background:#d1fae5;border-radius:8px;height:8px;overflow:hidden;margin-bottom:6px;">
+                                                <div id="settingsStorageBar" style="height:100%;border-radius:8px;background:#10b981;width:0%;transition:width .5s;"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-between" style="font-size:.7rem;color:#065f46;">
+                                                <span id="settingsStorageUsed">Memuat...</span>
+                                                <span id="settingsStoragePercent"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Simpan Button --}}
+                            <div class="col-12">
+                                <button type="button" class="btn btn-primary px-4" onclick="simpanPemberitahuan()" style="border-radius:10px;font-size:.82rem;">
+                                    <i class="bi bi-check-lg me-1"></i> Simpan Pengaturan Pemberitahuan
+                                </button>
+                                <button type="button" class="btn btn-outline-primary px-4 ms-2" onclick="bukaNotifPopup()" style="border-radius:10px;font-size:.82rem;">
+                                    <i class="bi bi-bell me-1"></i> Test Popup Notifikasi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -296,6 +438,90 @@ async function simpanTampilan() {
         }
     } catch (err) {
         Swal.fire({ icon: 'error', title: 'Gagal', text: 'Terjadi kesalahan', confirmButtonColor: '#ef4444' });
+    }
+}
+
+// ═══ PEMBERITAHUAN TAB JS ═══
+const notifUrl = '{{ route("api.pengaturan-notifikasi") }}';
+const storageUrl = '{{ route("api.cek-storage") }}';
+
+// Push notification status
+document.addEventListener('DOMContentLoaded', function() {
+    // Check push status
+    const badge = document.getElementById('pushStatusBadge');
+    if (badge) {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+            badge.textContent = 'Tidak didukung browser ini';
+            badge.style.background = '#fee2e2'; badge.style.color = '#dc2626';
+        } else if (Notification.permission === 'granted') {
+            badge.textContent = 'Aktif'; badge.style.background = '#dcfce7'; badge.style.color = '#16a34a';
+        } else if (Notification.permission === 'denied') {
+            badge.textContent = 'Diblokir oleh browser'; badge.style.background = '#fee2e2'; badge.style.color = '#dc2626';
+        } else {
+            badge.textContent = 'Belum diaktifkan'; badge.style.background = '#fef9c3'; badge.style.color = '#a16207';
+        }
+    }
+
+    // Push toggle behavior
+    const pushToggle = document.getElementById('pushToggle');
+    if (pushToggle) {
+        pushToggle.addEventListener('change', async function() {
+            if (this.checked && Notification.permission === 'default') {
+                const perm = await Notification.requestPermission();
+                if (perm !== 'granted') { this.checked = false; return; }
+                if (badge) { badge.textContent = 'Aktif'; badge.style.background = '#dcfce7'; badge.style.color = '#16a34a'; }
+                if (typeof aktifkanPush === 'function') aktifkanPush();
+            } else if (!this.checked && typeof nonaktifkanPush === 'function') {
+                nonaktifkanPush();
+            }
+        });
+    }
+
+    // Popup toggle → show/hide delay section
+    const popupToggle = document.getElementById('popupToggle');
+    const delaySection = document.getElementById('popupDelaySection');
+    if (popupToggle && delaySection) {
+        delaySection.style.display = popupToggle.checked ? '' : 'none';
+        popupToggle.addEventListener('change', () => { delaySection.style.display = popupToggle.checked ? '' : 'none'; });
+    }
+
+    // Load storage info in settings
+    loadSettingsStorage();
+});
+
+async function loadSettingsStorage() {
+    try {
+        const res = await fetch(storageUrl, { headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken } });
+        const d = await res.json();
+        const bar = document.getElementById('settingsStorageBar');
+        const used = document.getElementById('settingsStorageUsed');
+        const pct = document.getElementById('settingsStoragePercent');
+        if (bar) { bar.style.width = d.persentase + '%'; bar.style.background = d.persentase > 80 ? '#ef4444' : d.persentase > 60 ? '#f59e0b' : '#10b981'; }
+        if (used) used.textContent = d.digunakan_format + ' dari ' + d.limit_format;
+        if (pct) pct.textContent = d.persentase + '%';
+    } catch(e) {}
+}
+
+async function simpanPemberitahuan() {
+    try {
+        const payload = {
+            notifikasi_push: document.getElementById('pushToggle')?.checked ? 'true' : 'false',
+            notifikasi_email: document.getElementById('emailToggle')?.checked ? 'true' : 'false',
+            notifikasi_popup: document.getElementById('popupToggle')?.checked ? 'true' : 'false',
+            notifikasi_popup_delay: document.getElementById('popupDelayRange')?.value || '5',
+            notifikasi_suara: document.getElementById('soundNotifToggle')?.checked ? 'true' : 'false',
+        };
+        const res = await fetch(notifUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+            Swal.fire({ icon: 'success', title: 'Berhasil!', text: data.pesan || 'Pengaturan pemberitahuan disimpan', confirmButtonColor: '#6366f1', timer: 2000, timerProgressBar: true, showConfirmButton: false });
+        }
+    } catch (err) {
+        Swal.fire({ icon: 'error', title: 'Gagal', text: 'Terjadi kesalahan menyimpan pengaturan', confirmButtonColor: '#ef4444' });
     }
 }
 </script>

@@ -1,0 +1,231 @@
+name: CI - Deteksi Error & Keamanan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 1: PHP Syntax Check — cek error sintaks di semua file PHP
+  # ═══════════════════════════════════════════════════════════════
+  syntax-check:
+    name: "PHP Syntax Check"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, xml, ctype, json, bcmath, pdo_mysql
+          coverage: none
+
+      - name: Cek sintaks semua file PHP
+        run: |
+          echo "🔍 Mengecek sintaks PHP di seluruh project..."
+          errors=0
+          while IFS= read -r file; do
+            if ! php -l "$file" > /dev/null 2>&1; then
+              echo "❌ Error: $file"
+              php -l "$file"
+              errors=$((errors + 1))
+            fi
+          done < <(find app config database routes tests -name "*.php" -type f)
+          if [ $errors -gt 0 ]; then
+            echo "❌ Ditemukan $errors file dengan error sintaks!"
+            exit 1
+          fi
+          echo "✅ Semua file PHP valid."
+
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 2: Static Analysis — PHPStan untuk analisis Model, View, Controller
+  # ═══════════════════════════════════════════════════════════════
+  static-analysis:
+    name: "Static Analysis (PHPStan)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, xml, ctype, json, bcmath, pdo_mysql
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Install PHPStan & Larastan
+        run: composer require --dev "larastan/larastan:^3.0" --no-interaction
+
+      - name: Buat konfigurasi PHPStan
+        run: |
+          cat > phpstan.neon << 'EOF'
+          includes:
+            - vendor/larastan/larastan/extension.neon
+          parameters:
+            paths:
+              - app/Models
+              - app/Http/Controllers
+              - app/Services
+              - database/seeders
+              - routes
+            level: 5
+            ignoreErrors:
+              - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'
+            excludePaths:
+              - vendor
+          EOF
+
+      - name: Jalankan PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=512M --no-progress
+
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 3: Laravel Checks — route, view, config validation
+  # ═══════════════════════════════════════════════════════════════
+  laravel-checks:
+    name: "Laravel Validation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, xml, ctype, json, bcmath, pdo_mysql
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Persiapan environment
+        run: |
+          cp .env.example .env || true
+          php artisan key:generate --force || true
+
+      - name: Cek konfigurasi & cache
+        run: |
+          echo "📋 Validasi konfigurasi..."
+          php artisan config:cache && echo "✅ Config OK" || echo "❌ Config error"
+          php artisan config:clear
+
+      - name: Cek route terregistrasi
+        run: |
+          echo "🛤️ Memeriksa routes..."
+          php artisan route:list --compact 2>&1 || true
+
+      - name: Cek Blade view untuk error
+        run: |
+          echo "🖼️ Mengecek Blade views..."
+          errors=0
+          while IFS= read -r file; do
+            if php -l "$file" > /dev/null 2>&1; then
+              : # ok
+            else
+              echo "❌ Blade error: $file"
+              errors=$((errors + 1))
+            fi
+          done < <(find resources/views -name "*.blade.php" -type f)
+          if [ $errors -gt 0 ]; then
+            echo "❌ Ditemukan $errors Blade view dengan error!"
+            exit 1
+          fi
+          echo "✅ Semua Blade view valid."
+
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 4: Security Scanning — GitHub CodeQL AI-powered analysis
+  # ═══════════════════════════════════════════════════════════════
+  codeql-analysis:
+    name: "CodeQL Security Scan (AI)"
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript"
+
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 5: Dependency Security — audit composer & npm packages
+  # ═══════════════════════════════════════════════════════════════
+  dependency-audit:
+    name: "Dependency Security Audit"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, xml, ctype, json, bcmath
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Audit Composer packages
+        run: |
+          echo "📦 Memeriksa keamanan Composer packages..."
+          composer audit --no-interaction || true
+
+      - name: Audit NPM packages
+        run: |
+          echo "📦 Memeriksa keamanan NPM packages..."
+          npm audit --production || true
+
+  # ═══════════════════════════════════════════════════════════════
+  # JOB 6: Tests — jalankan PHPUnit
+  # ═══════════════════════════════════════════════════════════════
+  tests:
+    name: "PHPUnit Tests"
+    runs-on: ubuntu-latest
+    needs: [syntax-check]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, xml, ctype, json, bcmath, pdo_sqlite
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-progress
+
+      - name: Persiapan environment testing
+        run: |
+          cp .env.example .env || true
+          php artisan key:generate --force || true
+          touch database/database.sqlite
+
+      - name: Jalankan PHPUnit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/phpunit --no-coverage

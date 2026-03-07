@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Kinerja Publik - SIATU | SMA Negeri 2 Jember</title>
+    <title>Kinerja Publik - SIMPEG-SMART | SMA Negeri 2 Jember</title>
     <meta name="description" content="Halaman kinerja publik Sistem Informasi Administrasi Tata Usaha SMA Negeri 2 Jember.">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -289,7 +289,7 @@
         <a href="{{ url('/') }}" class="nav-brand">
             <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" onerror="this.style.display='none'">
             <div class="txt">
-                <h6>SIATU</h6>
+                <h6>SIMPEG-SMART</h6>
                 <small>SMA Negeri 2 Jember</small>
             </div>
         </a>
@@ -518,7 +518,7 @@
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width:42px;height:42px;border-radius:12px;object-fit:contain;border:2px solid rgba(255,255,255,.1);" onerror="this.style.display='none'">
                     <div>
-                        <h5 class="mb-0">SIATU</h5>
+                        <h5 class="mb-0">SIMPEG-SMART</h5>
                         <small style="color:var(--gray);font-size:.68rem;">Sistem Informasi Administrasi TU</small>
                     </div>
                 </div>
@@ -531,7 +531,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} SIATU &mdash; SMA Negeri 2 Jember</p>
+            <p>&copy; {{ date('Y') }} SIMPEG-SMART &mdash; SMA Negeri 2 Jember</p>
             <div class="footer-socials">
                 <a href="{{ url('/') }}" title="Beranda"><i class="bi bi-house-fill"></i></a>
                 <a href="#" title="Ke Atas" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><i class="bi bi-arrow-up"></i></a>

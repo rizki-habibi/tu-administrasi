@@ -138,7 +138,7 @@
     <div style="width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#312e81,#6366f1);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
         <span style="font-size:28px;color:#fff;">&#128214;</span>
     </div>
-    <div class="cover-institution">Sistem TU Administrasi</div>
+    <div class="cover-institution">Sistem SIMPEG-SMART</div>
     <div class="cover-school">SMA Negeri 2 Jember</div>
     <div class="cover-divider"></div>
     <div class="cover-title">{{ $panduan->judul }}</div>
@@ -256,7 +256,7 @@
             </div>
         </div>
         <div class="print-footer">
-            Dokumen ini dicetak dari Sistem TU Administrasi &mdash; SMA Negeri 2 Jember &mdash; {{ now()->translatedFormat('d F Y') }}
+            Dokumen ini dicetak dari Sistem SIMPEG-SMART &mdash; SMA Negeri 2 Jember &mdash; {{ now()->translatedFormat('d F Y') }}
         </div>
     </div>
 </div>
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Footer
         const footer = document.createElement('div');
         footer.style.cssText = 'text-align:center;font-size:8pt;color:#94a3b8;margin-top:30px;padding-top:10px;border-top:1px solid #e2e8f0;';
-        footer.textContent = 'Dokumen ini digenerate dari Sistem TU Administrasi - SMA Negeri 2 Jember';
+        footer.textContent = 'Dokumen ini digenerate dari Sistem SIMPEG-SMART - SMA Negeri 2 Jember';
         wrapper.appendChild(footer);
 
         const opt = {

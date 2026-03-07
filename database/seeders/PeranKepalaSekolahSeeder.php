@@ -273,7 +273,7 @@ class PeranKepalaSekolahSeeder extends Seeder
         Notifikasi::create(['pengguna_id' => $kepsek->id, 'judul' => 'Surat keluar menunggu persetujuan',             'pesan' => 'Ada surat keluar yang perlu disetujui sebelum dikirim.',                        'jenis' => 'sistem',    'sudah_dibaca' => false]);
         Notifikasi::create(['pengguna_id' => $kepsek->id, 'judul' => 'Rapor Pendidikan Sekolah 2025 tersedia',        'pesan' => 'Data rapor pendidikan dari platform Kemendikbud sudah tersedia.',               'jenis' => 'sistem',    'sudah_dibaca' => true, 'created_at' => now()->subDays(14)]);
         Notifikasi::create(['pengguna_id' => $kepsek->id, 'judul' => 'Agenda: Rapat Persiapan PPDB',                  'pesan' => 'Rapat persiapan PPDB 2026/2027 dijadwalkan 3 hari lagi di Ruang Rapat.',       'jenis' => 'event',     'sudah_dibaca' => false]);
-        Notifikasi::create(['pengguna_id' => $kepsek->id, 'judul' => 'Selamat datang di Sistem TU Administrasi!',     'pesan' => 'Akun Kepala Sekolah sudah aktif. Pantau kinerja staf dan approval dari sini.', 'jenis' => 'sistem',    'sudah_dibaca' => true, 'created_at' => now()->subDays(30)]);
+        Notifikasi::create(['pengguna_id' => $kepsek->id, 'judul' => 'Selamat datang di Sistem SIMPEG-SMART!',     'pesan' => 'Akun Kepala Sekolah sudah aktif. Pantau kinerja staf dan approval dari sini.', 'jenis' => 'sistem',    'sudah_dibaca' => true, 'created_at' => now()->subDays(30)]);
 
         /*
         |--------------------------------------------------------------------------

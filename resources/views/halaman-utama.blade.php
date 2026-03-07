@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>SIATU - Sistem Informasi Administrasi Tata Usaha | SMA Negeri 2 Jember</title>
+    <title>SIMPEG-SMART - Sistem Informasi Administrasi Tata Usaha | SMA Negeri 2 Jember</title>
     <meta name="description" content="Sistem Informasi Administrasi Tata Usaha SMA Negeri 2 Jember - Layanan administrasi sekolah yang modern, efisien, dan terintegrasi.">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
@@ -406,6 +406,67 @@
         .footer-map-mini { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); height: 180px; }
         .footer-map-mini iframe { width: 100%; height: 100%; border: none; filter: grayscale(.3) brightness(.8); }
 
+        /* ═══════════════════ HERO IMAGE ═══════════════════ */
+        .hero-img-wrap {
+            position: relative; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,.35);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+        .hero-img-main {
+            width: 100%; height: auto; display: block; border-radius: 24px;
+            aspect-ratio: 16/10; object-fit: cover;
+        }
+
+        /* ═══════════════════ BERITA CAROUSEL ═══════════════════ */
+        .berita-section { background: var(--light); }
+        .berita-carousel { overflow: hidden; position: relative; border-radius: 16px; }
+        .berita-track {
+            display: flex; gap: 24px;
+            animation: beritaScroll 40s linear infinite;
+        }
+        .berita-track:hover { animation-play-state: paused; }
+        .berita-track.paused { animation-play-state: paused; }
+        @keyframes beritaScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .berita-card {
+            min-width: 340px; max-width: 340px; background: var(--white);
+            border-radius: 18px; overflow: hidden; flex-shrink: 0;
+            border: 1px solid #e5e7eb; transition: all .35s;
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+        }
+        .berita-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.1); border-color: transparent; }
+        .berita-img { position: relative; height: 180px; overflow: hidden; }
+        .berita-img img { width: 100%; height: 100%; object-fit: cover; }
+        .berita-img-placeholder {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #1e1b4b, #312e81); color: rgba(255,255,255,.25);
+            font-size: 3rem;
+        }
+        .berita-badge {
+            position: absolute; top: 12px; left: 12px;
+            background: linear-gradient(135deg, var(--amber), #f97316); color: #fff;
+            font-size: .65rem; font-weight: 700; padding: 4px 12px; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .berita-body { padding: 20px; }
+        .berita-date { font-size: .7rem; color: var(--gray); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .berita-title { font-size: .9rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .berita-excerpt { font-size: .78rem; color: var(--gray); line-height: 1.6; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .berita-controls { display: inline-flex; gap: 8px; }
+        .berita-nav-btn {
+            width: 42px; height: 42px; border-radius: 12px; border: 1.5px solid #e5e7eb;
+            background: var(--white); color: var(--dark); font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all .2s;
+        }
+        .berita-nav-btn:hover { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+        @media(max-width:767px) {
+            .berita-card { min-width: 280px; max-width: 280px; }
+            .berita-img { height: 140px; }
+        }
+
         /* ═══════════════════ SCROLLBAR ═══════════════════ */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark); }
@@ -453,7 +514,7 @@
         <a href="#" class="nav-brand">
             <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" onerror="this.style.display='none'">
             <div class="txt">
-                <h6>SIATU</h6>
+                <h6>SIMPEG-SMART</h6>
                 <small>SMA Negeri 2 Jember</small>
             </div>
         </a>
@@ -462,6 +523,7 @@
         </button>
         <div class="nav-pills-custom">
             <a href="#beranda">Beranda</a>
+            <a href="#berita">Berita</a>
             <a href="#fitur">Fitur</a>
             <a href="{{ route('kinerja') }}">Kinerja</a>
             <a href="#statistik">Statistik</a>
@@ -511,24 +573,10 @@
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1 hero-visual">
-                <div class="hero-glass">
-                    <div class="glass-head">
-                        <div class="glass-icon" style="background:linear-gradient(135deg,var(--emerald),var(--cyan));">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div>
-                            <h5>Layanan Terintegrasi</h5>
-                            <small>Fitur terpadu untuk setiap peran staf</small>
-                        </div>
-                    </div>
-                    <ul class="glass-list">
-                        <li><span class="icon-sm" style="background:rgba(99,102,241,.15);color:var(--indigo-light);"><i class="bi bi-fingerprint"></i></span> Absensi GPS &amp; Selfie Realtime</li>
-                        <li><span class="icon-sm" style="background:rgba(5,150,105,.15);color:var(--emerald-light);"><i class="bi bi-envelope-paper-fill"></i></span> Surat Menyurat &amp; Disposisi Digital</li>
-                        <li><span class="icon-sm" style="background:rgba(217,119,6,.15);color:var(--amber-light);"><i class="bi bi-cash-coin"></i></span> Keuangan, RKAS &amp; Anggaran</li>
-                        <li><span class="icon-sm" style="background:rgba(236,72,153,.15);color:#f472b6;"><i class="bi bi-box-seam-fill"></i></span> Inventaris &amp; Sarana Prasarana</li>
-                        <li><span class="icon-sm" style="background:rgba(139,92,246,.15);color:#a78bfa;"><i class="bi bi-clipboard2-data-fill"></i></span> SKP, PKG, P5, STAR &amp; Evaluasi</li>
-                        <li><span class="icon-sm" style="background:rgba(6,182,212,.15);color:#22d3ee;"><i class="bi bi-robot"></i></span> SIATU-AI Assistant &amp; Word Generator</li>
-                    </ul>
+                {{-- Hero Image Placeholder (ganti dengan gambar sekolah) --}}
+                <div class="hero-img-wrap">
+                    <img src="{{ asset('images/hero-dashboard.png') }}" alt="Dashboard SIMPEG-SMART" class="hero-img-main"
+                         onerror="this.parentElement.innerHTML='<div class=\'hero-glass\'><div class=\'glass-head\'><div class=\'glass-icon\' style=\'background:linear-gradient(135deg,var(--emerald),var(--cyan));\'><i class=\'bi bi-shield-check\'></i></div><div><h5>Layanan Terintegrasi</h5><small>Fitur terpadu untuk setiap peran staf</small></div></div><ul class=\'glass-list\'><li><span class=\'icon-sm\' style=\'background:rgba(99,102,241,.15);color:var(--indigo-light);\'><i class=\'bi bi-fingerprint\'></i></span> Absensi GPS &amp; Selfie Realtime</li><li><span class=\'icon-sm\' style=\'background:rgba(5,150,105,.15);color:var(--emerald-light);\'><i class=\'bi bi-envelope-paper-fill\'></i></span> Surat Menyurat &amp; Disposisi Digital</li><li><span class=\'icon-sm\' style=\'background:rgba(217,119,6,.15);color:var(--amber-light);\'><i class=\'bi bi-cash-coin\'></i></span> Keuangan, RKAS &amp; Anggaran</li><li><span class=\'icon-sm\' style=\'background:rgba(236,72,153,.15);color:#f472b6;\'><i class=\'bi bi-box-seam-fill\'></i></span> Inventaris &amp; Sarana Prasarana</li><li><span class=\'icon-sm\' style=\'background:rgba(139,92,246,.15);color:#a78bfa;\'><i class=\'bi bi-clipboard2-data-fill\'></i></span> SKP, PKG, P5, STAR &amp; Evaluasi</li><li><span class=\'icon-sm\' style=\'background:rgba(6,182,212,.15);color:#22d3ee;\'><i class=\'bi bi-robot\'></i></span> SIMPEG-AI Assistant &amp; Word Generator</li></ul></div>';">
                 </div>
             </div>
         </div>
@@ -555,6 +603,77 @@
         </div>
     </div>
 </div>
+
+{{-- ═══════════════════ BERITA TERBARU (Auto-scroll Ticker) ═══════════════════ --}}
+@if($beritaTerbaru->count() > 0)
+<section class="section berita-section" id="berita" style="padding:80px 0;">
+    <div class="container">
+        <div class="text-center mb-5 fade-up">
+            <div class="section-chip chip-amber"><i class="bi bi-newspaper"></i> Berita Terkini</div>
+            <h2 class="section-heading">Berita &amp; Pengumuman<br>Terbaru</h2>
+            <p class="section-desc mx-auto">Informasi terkini dari kegiatan administrasi, event sekolah, dan pembaruan sistem SIMPEG-SMART.</p>
+        </div>
+        <div class="berita-carousel fade-up">
+            <div class="berita-track" id="beritaTrack">
+                @foreach($beritaTerbaru as $berita)
+                <div class="berita-card">
+                    <div class="berita-img">
+                        @if($berita->thumbnail)
+                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}">
+                        @else
+                            <div class="berita-img-placeholder">
+                                <i class="bi bi-newspaper"></i>
+                            </div>
+                        @endif
+                        @if($berita->unggulan)
+                            <span class="berita-badge"><i class="bi bi-star-fill"></i> Unggulan</span>
+                        @endif
+                    </div>
+                    <div class="berita-body">
+                        <div class="berita-date">
+                            <i class="bi bi-calendar3"></i> {{ $berita->created_at->translatedFormat('d M Y') }}
+                        </div>
+                        <h5 class="berita-title">{{ $berita->judul }}</h5>
+                        <p class="berita-excerpt">{{ Str::limit($berita->deskripsi, 100) }}</p>
+                    </div>
+                </div>
+                @endforeach
+                {{-- Duplicate for infinite scroll --}}
+                @foreach($beritaTerbaru as $berita)
+                <div class="berita-card">
+                    <div class="berita-img">
+                        @if($berita->thumbnail)
+                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}">
+                        @else
+                            <div class="berita-img-placeholder">
+                                <i class="bi bi-newspaper"></i>
+                            </div>
+                        @endif
+                        @if($berita->unggulan)
+                            <span class="berita-badge"><i class="bi bi-star-fill"></i> Unggulan</span>
+                        @endif
+                    </div>
+                    <div class="berita-body">
+                        <div class="berita-date">
+                            <i class="bi bi-calendar3"></i> {{ $berita->created_at->translatedFormat('d M Y') }}
+                        </div>
+                        <h5 class="berita-title">{{ $berita->judul }}</h5>
+                        <p class="berita-excerpt">{{ Str::limit($berita->deskripsi, 100) }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="text-center mt-4 fade-up">
+            <div class="berita-controls">
+                <button class="berita-nav-btn" id="beritaPrev" title="Sebelumnya"><i class="bi bi-chevron-left"></i></button>
+                <button class="berita-nav-btn berita-pause-btn" id="beritaPause" title="Jeda/Lanjut"><i class="bi bi-pause-fill"></i></button>
+                <button class="berita-nav-btn" id="beritaNext" title="Selanjutnya"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- ═══════════════════ FITUR LAYANAN ═══════════════════ --}}
 <section class="section bg-gradient-mesh" id="fitur">
@@ -655,7 +774,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="row g-3">
-                        <div class="col-sm-6 col-lg-4"><div class="mini-card"><i class="bi bi-robot" style="color:var(--emerald-light);"></i><h6>SIATU-AI</h6><small>Chatbot asisten cerdas</small></div></div>
+                        <div class="col-sm-6 col-lg-4"><div class="mini-card"><i class="bi bi-robot" style="color:var(--emerald-light);"></i><h6>SIMPEG-AI</h6><small>Chatbot asisten cerdas</small></div></div>
                         <div class="col-sm-6 col-lg-4"><div class="mini-card"><i class="bi bi-file-earmark-word" style="color:#4ea8de;"></i><h6>Word AI</h6><small>Generate dokumen otomatis</small></div></div>
                         <div class="col-sm-6 col-lg-4"><div class="mini-card"><i class="bi bi-geo-alt-fill" style="color:#f472b6;"></i><h6>GPS Absensi</h6><small>Tracking lokasi realtime</small></div></div>
                         <div class="col-sm-6 col-lg-4"><div class="mini-card"><i class="bi bi-cloud-arrow-up-fill" style="color:var(--amber-light);"></i><h6>Cloud Backup</h6><small>Auto backup Google Drive</small></div></div>
@@ -846,7 +965,7 @@
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width:48px;height:48px;border-radius:14px;object-fit:contain;border:2px solid rgba(255,255,255,.1);" onerror="this.style.display='none'">
                     <div>
-                        <h5 class="mb-0" style="font-family:'Space Grotesk',sans-serif;">SIATU</h5>
+                        <h5 class="mb-0" style="font-family:'Space Grotesk',sans-serif;">SIMPEG-SMART</h5>
                         <small style="color:var(--gray);font-size:.68rem;">Sistem Informasi Administrasi TU</small>
                     </div>
                 </div>
@@ -876,7 +995,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} SIATU &mdash; Sistem Informasi Administrasi Tata Usaha | SMA Negeri 2 Jember</p>
+            <p>&copy; {{ date('Y') }} SIMPEG-SMART &mdash; Sistem Informasi Administrasi Tata Usaha | SMA Negeri 2 Jember</p>
             <div class="footer-socials">
                 <a href="#" title="Ke Atas" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><i class="bi bi-arrow-up"></i></a>
             </div>
@@ -929,6 +1048,47 @@
     }, { threshold: 0.25 });
     const ss = document.getElementById('statistik');
     if (ss) counterObs.observe(ss);
+
+    // Berita carousel controls
+    (function() {
+        const track = document.getElementById('beritaTrack');
+        const pauseBtn = document.getElementById('beritaPause');
+        const prevBtn = document.getElementById('beritaPrev');
+        const nextBtn = document.getElementById('beritaNext');
+        if (!track) return;
+
+        let isPaused = false;
+        if (pauseBtn) pauseBtn.addEventListener('click', function() {
+            isPaused = !isPaused;
+            track.classList.toggle('paused', isPaused);
+            this.innerHTML = isPaused
+                ? '<i class="bi bi-play-fill"></i>'
+                : '<i class="bi bi-pause-fill"></i>';
+        });
+
+        function scrollByCard(dir) {
+            const card = track.querySelector('.berita-card');
+            if (!card) return;
+            const w = card.offsetWidth + 24;
+            track.style.animation = 'none';
+            track.offsetHeight; // reflow
+            const current = track.scrollLeft || 0;
+            const matrix = getComputedStyle(track).transform;
+            let tx = 0;
+            if (matrix && matrix !== 'none') {
+                tx = parseFloat(matrix.split(',')[4]) || 0;
+            }
+            track.style.transform = 'translateX(' + (tx + (dir * w)) + 'px)';
+            track.style.transition = 'transform .4s ease';
+            setTimeout(() => {
+                track.style.transition = '';
+                track.style.animation = '';
+                if (!isPaused) track.classList.remove('paused');
+            }, 500);
+        }
+        if (prevBtn) prevBtn.addEventListener('click', () => scrollByCard(1));
+        if (nextBtn) nextBtn.addEventListener('click', () => scrollByCard(-1));
+    })();
 </script>
 </body>
 </html>

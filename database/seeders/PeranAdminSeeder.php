@@ -148,7 +148,7 @@ class PeranAdminSeeder extends Seeder
                 'kategori'      => 'administrasi',
                 'situasi'       => 'Arsip surat masih berbasis fisik, sulit dicari dan rawan hilang.',
                 'tugas'         => 'Migrasi arsip ke sistem digital dengan pencarian.',
-                'aksi'          => 'Scan semua arsip surat 2 tahun terakhir. Input ke sistem TU Administrasi. Training untuk staf persuratan.',
+                'aksi'          => 'Scan semua arsip surat 2 tahun terakhir. Input ke sistem SIMPEG-SMART. Training untuk staf persuratan.',
                 'hasil'         => '95% arsip surat 2024-2025 berhasil didigitalisasi. Waktu pencarian arsip turun dari 15 menit menjadi di bawah 1 menit.',
                 'refleksi'      => 'Digitalisasi sangat membantu efisiensi administrasi.',
                 'tindak_lanjut' => 'Arsip surat baru langsung diinput ke sistem.',
@@ -172,7 +172,7 @@ class PeranAdminSeeder extends Seeder
             ['aspek' => 'Proses Pembelajaran',     'kondisi' => 'Implementasi Kurikulum Merdeka sudah berjalan 80%. Diferensiasi pembelajaran sudah diterapkan di beberapa kelas.',                                      'target' => '100% guru menerapkan kurikulum merdeka dengan diferensiasi.',                   'program' => 'Pelatihan IKM dan Lesson Study kolaboratif.',                            'status' => 'final'],
             ['aspek' => 'Kualitas Guru',           'kondisi' => '85% guru sudah S1/S2. 60% guru telah mengikuti PPG.',                                                                                                  'target' => '100% guru mengikuti PPG dalam 2 tahun ke depan.',                              'program' => 'Fasilitasi pendaftaran PPG dan workshop kompetensi pedagogik.',           'status' => 'final'],
             ['aspek' => 'Sarana & Prasarana',       'kondisi' => 'Lab komputer perlu pembaruan perangkat. WiFi sekolah sudah memadai.',                                                                                  'target' => 'Semua lab memiliki peralatan sesuai standar minimal.',                         'program' => 'Pengadaan 20 unit komputer baru dari dana BOS.',                         'status' => 'draft'],
-            ['aspek' => 'Manajemen Sekolah',       'kondisi' => 'RKS dan RKAS sudah tersedia. Sistem informasi administrasi baru diimplementasikan.',                                                                   'target' => 'Digitalisasi penuh administrasi sekolah.',                                     'program' => 'Pengembangan sistem TU Administrasi dan pelatihan SDM.',                 'status' => 'final'],
+            ['aspek' => 'Manajemen Sekolah',       'kondisi' => 'RKS dan RKAS sudah tersedia. Sistem informasi administrasi baru diimplementasikan.',                                                                   'target' => 'Digitalisasi penuh administrasi sekolah.',                                     'program' => 'Pengembangan sistem SIMPEG-SMART dan pelatihan SDM.',                 'status' => 'final'],
             ['aspek' => 'Iklim & Budaya Sekolah',  'kondisi' => 'Program literasi berjalan rutin. Angka pelanggaran tata tertib menurun 15%.',                                                                          'target' => 'Zero bullying dan peningkatan budaya literasi.',                               'program' => 'Gerakan Literasi Sekolah (GLS) dan program anti-perundungan.',           'status' => 'draft'],
         ];
 
@@ -367,7 +367,7 @@ class PeranAdminSeeder extends Seeder
         Notifikasi::create(['pengguna_id' => $admin->id, 'judul' => 'Laporan baru perlu ditinjau',                'pesan' => 'Ada laporan baru yang perlu ditinjau dan diverifikasi.',        'jenis' => 'laporan', 'sudah_dibaca' => false]);
         Notifikasi::create(['pengguna_id' => $admin->id, 'judul' => 'SKP baru menunggu persetujuan',              'pesan' => 'Ada SKP yang diajukan staf dan menunggu persetujuan Anda.',     'jenis' => 'sistem',  'sudah_dibaca' => false]);
         Notifikasi::create(['pengguna_id' => $admin->id, 'judul' => 'Surat baru menunggu persetujuan',            'pesan' => 'Ada surat keluar yang baru dibuat dan menunggu persetujuan.',   'jenis' => 'sistem',  'sudah_dibaca' => false]);
-        Notifikasi::create(['pengguna_id' => $admin->id, 'judul' => 'Selamat datang di Sistem TU Administrasi!',  'pesan' => 'Akun admin Anda sudah aktif. Kelola seluruh fitur TU.', 'jenis' => 'sistem',  'sudah_dibaca' => true, 'created_at' => now()->subDays(30)]);
+        Notifikasi::create(['pengguna_id' => $admin->id, 'judul' => 'Selamat datang di Sistem SIMPEG-SMART!',  'pesan' => 'Akun admin Anda sudah aktif. Kelola seluruh fitur TU.', 'jenis' => 'sistem',  'sudah_dibaca' => true, 'created_at' => now()->subDays(30)]);
 
         /*
         |--------------------------------------------------------------------------

@@ -9,7 +9,7 @@
     {{-- Brand --}}
     <div class="sidebar-brand">
         <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:42px;height:42px;object-fit:contain;" onerror="this.style.display='none'">
-        <h6>TU Administrasi</h6>
+        <h6>SIMPEG-SMART</h6>
         <small>SMA Negeri 2 Jember</small>
     </div>
 
@@ -208,10 +208,10 @@
             </a>
         </div>
 
-        {{-- SIATU-AI --}}
+        {{-- SIMPEG-AI --}}
         <div class="nav-item">
             <a href="{{ route('staf.siatu-ai.index') }}" class="nav-link {{ request()->routeIs('staf.siatu-ai.*') ? 'active' : '' }}">
-                <i class="bi bi-robot icon"></i> <span>SIATU-AI</span>
+                <i class="bi bi-robot icon"></i> <span>SIMPEG-AI</span>
                 <span class="badge bg-success" style="font-size:.55rem;">AI</span>
             </a>
         </div>

@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     <p style="color:#94a3b8;font-size:12px;margin-top:12px;font-style:italic;">
-                        — Sistem TU Administrasi, SMA Negeri 2 Jember
+                        — Sistem SIMPEG-SMART, SMA Negeri 2 Jember
                     </p>
                 </div>
                 <style>@keyframes bdBounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-15px)}60%{transform:translateY(-8px)}}</style>

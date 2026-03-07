@@ -17,14 +17,14 @@
             <i class="bi bi-calendar3"></i> {{ now()->translatedFormat('d F Y') }}
         </span>
 
-        {{-- AI Toggle --}}
-        <button class="header-toggle-btn active" id="toggleAi" title="Tampilkan/Sembunyikan tombol AI">
+        {{-- AI Button → opens AI popup --}}
+        <button class="header-tool-btn" id="headerAiBtn" title="SIMPEG-AI Assistant">
             <i class="bi bi-robot"></i>
         </button>
 
-        {{-- Settings Toggle --}}
-        <button class="header-toggle-btn active" id="toggleSettings" title="Tampilkan/Sembunyikan tombol Pengaturan">
-            <i class="bi bi-gear"></i>
+        {{-- Settings Button → opens right drawer --}}
+        <button class="header-tool-btn" id="headerSettingsBtn" title="Pengaturan & Alat Cepat">
+            <i class="bi bi-gear-fill"></i>
         </button>
 
         {{-- Notification Dropdown --}}
@@ -64,9 +64,24 @@
                 <i class="bi bi-chevron-down" style="font-size:.65rem;color:#94a3b8;"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
+                <li class="px-3 py-2">
+                    <div class="fw-semibold" style="font-size:.82rem;">{{ Auth::user()->nama }}</div>
+                    <div class="text-muted" style="font-size:.68rem;">{{ Auth::user()->email }}</div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.pengaturan.index') }}">
+                        <i class="bi bi-gear me-2 text-primary"></i>Pengaturan Sistem
+                    </a>
+                </li>
                 <li>
                     <a class="dropdown-item" href="{{ route('admin.kehadiran.pengaturan') }}">
-                        <i class="bi bi-gear me-2 text-primary"></i>Pengaturan
+                        <i class="bi bi-fingerprint me-2 text-success"></i>Pengaturan Absensi
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.log-aktivitas.index') }}">
+                        <i class="bi bi-clock-history me-2 text-info"></i>Log Aktivitas
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>

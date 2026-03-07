@@ -28,7 +28,7 @@ class LayananCadanganGoogleDrive
             }
 
             $this->client = new GoogleClient();
-            $this->client->setApplicationName('TU Administrasi Backup');
+            $this->client->setApplicationName('SIMPEG-SMART Backup');
             $this->client->setScopes([GoogleDrive::DRIVE_FILE]);
             $this->client->setAuthConfig($credentialsPath);
             $this->client->setAccessType('offline');
@@ -74,7 +74,7 @@ class LayananCadanganGoogleDrive
             }
 
             $this->client = new GoogleClient();
-            $this->client->setApplicationName('TU Administrasi Backup');
+            $this->client->setApplicationName('SIMPEG-SMART Backup');
             $this->client->setScopes([GoogleDrive::DRIVE_FILE]);
             $this->client->setAuthConfig($credentialsPath);
             $this->client->setAccessType('offline');

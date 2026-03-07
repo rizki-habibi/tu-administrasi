@@ -165,7 +165,7 @@ Route::prefix('rekap-eksekutif')->name('rekap-eksekutif.')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| AI Chatbot SIATU-AI
+| AI Chatbot SIMPEG-AI
 |--------------------------------------------------------------------------
 */
 Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {

@@ -45,7 +45,26 @@ Route::post('password/email', [Auth\LupaKataSandiController::class, 'sendResetLi
 Route::get('password/reset/{token}', [Auth\AturUlangKataSandiController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [Auth\AturUlangKataSandiController::class, 'reset'])->name('password.update');
 
+Route::get('password/confirm', [Auth\KonfirmasiKataSandiController::class, 'showConfirmForm'])->name('password.confirm');
+Route::post('password/confirm', [Auth\KonfirmasiKataSandiController::class, 'confirm']);
+
+Route::post('email/resend', [Auth\VerifikasiController::class, 'resend'])->name('verification.resend');
+
 Route::get('/home', [BerandaUtamaController::class, 'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| API Internal (Notifikasi, Storage, Push) — semua role
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->prefix('api-internal')->name('api.')->group(function () {
+    Route::get('/notifikasi-penting', [\App\Http\Controllers\ApiNotifikasiController::class, 'notifikasiPenting'])->name('notifikasi-penting');
+    Route::post('/notifikasi-baca', [\App\Http\Controllers\ApiNotifikasiController::class, 'tandaiDibaca'])->name('notifikasi-baca');
+    Route::post('/push-subscribe', [\App\Http\Controllers\ApiNotifikasiController::class, 'simpanPushSubscription'])->name('push-subscribe');
+    Route::post('/push-unsubscribe', [\App\Http\Controllers\ApiNotifikasiController::class, 'hapusPushSubscription'])->name('push-unsubscribe');
+    Route::post('/pengaturan-notifikasi', [\App\Http\Controllers\ApiNotifikasiController::class, 'updatePengaturanNotifikasi'])->name('pengaturan-notifikasi');
+    Route::get('/cek-storage', [\App\Http\Controllers\ApiNotifikasiController::class, 'cekStorage'])->name('cek-storage');
+});
 
 /*
 |--------------------------------------------------------------------------

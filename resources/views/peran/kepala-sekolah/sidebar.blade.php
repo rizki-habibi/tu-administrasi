@@ -10,7 +10,7 @@
     <div class="sidebar-brand">
         <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width:42px;height:42px;object-fit:contain;" onerror="this.style.display='none'">
         <div>
-            <h6>Kepala Sekolah</h6>
+            <h6>SIMPEG-SMART</h6>
             <small>SMA Negeri 2 Jember</small>
         </div>
     </div>

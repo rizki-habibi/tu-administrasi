@@ -55,6 +55,9 @@ class DatabaseSeeder extends Seeder
             FiturAuditSeeder::class,
             // 11. Staff Magang
             PeranMagangSeeder::class,
+
+            // 12. Berita / Konten Halaman Utama
+            BeritaSeeder::class,
         ]);
     }
 }

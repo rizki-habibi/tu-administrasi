@@ -137,7 +137,7 @@ class EvaluasiSeeder extends Seeder
                 'kategori'  => 'administrasi',
                 'situasi'   => 'Arsip surat masih berbasis fisik, sulit dicari dan rawan hilang.',
                 'tugas'     => 'Migrasi arsip ke sistem digital dengan pencarian.',
-                'aksi'      => 'Scan semua arsip surat 2 tahun terakhir. Input ke sistem TU Administrasi. Training untuk staf persuratan.',
+                'aksi'      => 'Scan semua arsip surat 2 tahun terakhir. Input ke sistem SIMPEG-SMART. Training untuk staf persuratan.',
                 'hasil'     => '95% arsip surat 2024-2025 berhasil didigitalisasi. Waktu pencarian arsip turun dari 15 menit menjadi di bawah 1 menit.',
                 'refleksi'  => 'Digitalisasi sangat membantu efisiensi administrasi.',
                 'tindak_lanjut' => 'Arsip surat baru langsung diinput ke sistem.',

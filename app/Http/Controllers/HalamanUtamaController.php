@@ -9,6 +9,7 @@ use App\Models\Kehadiran;
 use App\Models\Inventaris;
 use App\Models\DataSiswa;
 use App\Models\Acara;
+use App\Models\KontenPublik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -49,10 +50,21 @@ class HalamanUtamaController extends Controller
                 ->get(['latitude', 'longitude', 'kota', 'created_at'])
             : collect();
 
+        // Berita terbaru untuk halaman utama
+        $beritaTerbaru = Schema::hasTable('konten_publik')
+            ? KontenPublik::aktif()
+                ->where('kategori', 'berita')
+                ->bagian('halaman_utama')
+                ->orderByDesc('created_at')
+                ->take(6)
+                ->get()
+            : collect();
+
         return view('halaman-utama', compact(
             'statistikPengunjung',
             'statistikLayanan',
-            'lokasiPengunjung'
+            'lokasiPengunjung',
+            'beritaTerbaru'
         ));
     }
 }

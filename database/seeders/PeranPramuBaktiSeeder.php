@@ -207,7 +207,7 @@ class PeranPramuBaktiSeeder extends Seeder
             ['judul' => 'Pengingat absen pulang',                    'msg' => 'Jangan lupa absen pulang sebelum meninggalkan area sekolah.', 'jenis' => 'kehadiran'],
             ['judul' => 'Pengajuan cuti disetujui',                  'msg' => 'Pengajuan cuti Anda telah disetujui oleh Kasubag TU.',       'jenis' => 'izin'],
             ['judul' => 'Agenda baru: Pelatihan Google Workspace',   'msg' => 'Pelatihan di Lab Komputer 1. Bawa laptop.',                  'jenis' => 'event'],
-            ['judul' => 'Selamat datang di Sistem TU Administrasi!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
+            ['judul' => 'Selamat datang di Sistem SIMPEG-SMART!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
             ['judul' => 'Pembaruan Sistem v3.0',                     'msg' => 'Fitur baru: SKP, Word AI, lokasi detail kehadiran.',         'jenis' => 'sistem'],
         ];
 

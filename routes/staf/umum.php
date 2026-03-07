@@ -167,7 +167,7 @@ Route::prefix('chat')->name('chat.')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| AI Chatbot SIATU-AI (Semua Staff)
+| AI Chatbot SIMPEG-AI (Semua Staff)
 |--------------------------------------------------------------------------
 */
 Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {
@@ -255,6 +255,7 @@ Route::post('/dokumen', [Staff\DokumenController::class, 'upload'])->name('dokum
 |--------------------------------------------------------------------------
 */
 Route::get('/kurikulum', [Staff\KurikulumController::class, 'index'])->name('kurikulum.index');
+Route::post('/kurikulum', [Staff\KurikulumController::class, 'store'])->name('kurikulum.store');
 Route::get('/kurikulum/{kurikulum}', [Staff\KurikulumController::class, 'show'])->name('kurikulum.show');
 
 /*

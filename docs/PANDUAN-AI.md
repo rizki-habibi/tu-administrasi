@@ -20,7 +20,7 @@
 
 ## 1. Tentang Fitur AI
 
-Sistem TU Administrasi menggunakan **Google Gemini AI** untuk menghasilkan konten dokumen secara otomatis. Fitur ini tersedia di modul **Dokumen Word** dan membantu staff/admin membuat:
+Sistem SIMPEG-SMART menggunakan **Google Gemini AI** untuk menghasilkan konten dokumen secara otomatis. Fitur ini tersedia di modul **Dokumen Word** dan membantu staff/admin membuat:
 
 - Surat resmi (undangan, edaran, keputusan)
 - Laporan kegiatan

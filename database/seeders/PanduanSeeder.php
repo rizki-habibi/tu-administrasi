@@ -15,7 +15,7 @@ class PanduanSeeder extends Seeder
             [
                 'judul' => 'Panduan Penggunaan',
                 'slug' => 'panduan-penggunaan',
-                'deskripsi' => 'Panduan lengkap penggunaan 20 modul fitur dasar Sistem TU Administrasi',
+                'deskripsi' => 'Panduan lengkap penggunaan 20 modul fitur dasar Sistem SIMPEG-SMART',
                 'ikon' => 'bi-book',
                 'warna' => '#6366f1',
                 'versi' => 'v0.1',

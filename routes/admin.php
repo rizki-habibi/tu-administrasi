@@ -28,6 +28,47 @@ Route::post('/pegawai-impor', [Admin\PegawaiController::class, 'import'])->name(
 
 /*
 |--------------------------------------------------------------------------
+| Kepegawaian (Riwayat Jabatan, Pangkat, Dokumen, Laporan)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('kepegawaian')->name('kepegawaian.')->group(function () {
+    // Riwayat Jabatan
+    Route::prefix('jabatan')->name('jabatan.')->group(function () {
+        Route::get('/', [Admin\KepegawaianController::class, 'jabatanIndex'])->name('index');
+        Route::get('/tambah', [Admin\KepegawaianController::class, 'jabatanCreate'])->name('create');
+        Route::post('/', [Admin\KepegawaianController::class, 'jabatanStore'])->name('store');
+        Route::get('/{jabatan}', [Admin\KepegawaianController::class, 'jabatanShow'])->name('show');
+        Route::get('/{jabatan}/edit', [Admin\KepegawaianController::class, 'jabatanEdit'])->name('edit');
+        Route::put('/{jabatan}', [Admin\KepegawaianController::class, 'jabatanUpdate'])->name('update');
+        Route::delete('/{jabatan}', [Admin\KepegawaianController::class, 'jabatanDestroy'])->name('destroy');
+    });
+
+    // Riwayat Pangkat
+    Route::prefix('pangkat')->name('pangkat.')->group(function () {
+        Route::get('/', [Admin\KepegawaianController::class, 'pangkatIndex'])->name('index');
+        Route::get('/tambah', [Admin\KepegawaianController::class, 'pangkatCreate'])->name('create');
+        Route::post('/', [Admin\KepegawaianController::class, 'pangkatStore'])->name('store');
+        Route::get('/{pangkat}', [Admin\KepegawaianController::class, 'pangkatShow'])->name('show');
+        Route::get('/{pangkat}/edit', [Admin\KepegawaianController::class, 'pangkatEdit'])->name('edit');
+        Route::put('/{pangkat}', [Admin\KepegawaianController::class, 'pangkatUpdate'])->name('update');
+        Route::delete('/{pangkat}', [Admin\KepegawaianController::class, 'pangkatDestroy'])->name('destroy');
+    });
+
+    // Dokumen Kepegawaian
+    Route::prefix('dokumen')->name('dokumen.')->group(function () {
+        Route::get('/', [Admin\KepegawaianController::class, 'dokumenIndex'])->name('index');
+        Route::get('/tambah', [Admin\KepegawaianController::class, 'dokumenCreate'])->name('create');
+        Route::post('/', [Admin\KepegawaianController::class, 'dokumenStore'])->name('store');
+        Route::get('/{dokumen}', [Admin\KepegawaianController::class, 'dokumenShow'])->name('show');
+        Route::delete('/{dokumen}', [Admin\KepegawaianController::class, 'dokumenDestroy'])->name('destroy');
+    });
+
+    // Laporan Kepegawaian
+    Route::get('/laporan', [Admin\KepegawaianController::class, 'laporanIndex'])->name('laporan');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Kehadiran
 |--------------------------------------------------------------------------
 */
@@ -308,7 +349,7 @@ Route::get('/log-aktivitas', [Admin\LogAktivitasController::class, 'index'])->na
 
 /*
 |--------------------------------------------------------------------------
-| AI Chatbot SIATU-AI
+| AI Chatbot SIMPEG-AI
 |--------------------------------------------------------------------------
 */
 Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {

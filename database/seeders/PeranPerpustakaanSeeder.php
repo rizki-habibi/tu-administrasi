@@ -184,7 +184,7 @@ class PeranPerpustakaanSeeder extends Seeder
             ['judul' => 'Pengingat absen pulang',                    'msg' => 'Jangan lupa absen pulang sebelum meninggalkan area sekolah.', 'jenis' => 'kehadiran'],
             ['judul' => 'Pengajuan izin ditolak',                    'msg' => 'Pengajuan izin Anda tidak disetujui. Lihat catatan admin.',    'jenis' => 'izin'],
             ['judul' => 'Laporan Anda telah di-review',              'msg' => 'Laporan Anda ditinjau. Cek status laporan.',                 'jenis' => 'laporan'],
-            ['judul' => 'Selamat datang di Sistem TU Administrasi!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
+            ['judul' => 'Selamat datang di Sistem SIMPEG-SMART!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
             ['judul' => 'Pembaruan Sistem v3.0',                     'msg' => 'Fitur baru: SKP, Word AI, lokasi detail kehadiran.',         'jenis' => 'sistem'],
         ];
 

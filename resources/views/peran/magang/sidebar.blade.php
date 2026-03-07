@@ -8,7 +8,7 @@
     {{-- Brand --}}
     <div class="sidebar-brand">
         <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:42px;height:42px;object-fit:contain;" onerror="this.style.display='none'">
-        <h6>TU Administrasi</h6>
+        <h6>SIMPEG-SMART</h6>
         <small>SMA Negeri 2 Jember</small>
     </div>
 

@@ -8,6 +8,7 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Services\LayananNotifikasi;
 
 /**
  * Shared Chat logic — digunakan oleh Admin, Staff, dan Kepala Sekolah ChatController.
@@ -113,6 +114,9 @@ trait PesanTrait
             ->where('pengguna_id', $user->id)
             ->update(['terakhir_dibaca' => now()]);
 
+        // Kirim notifikasi ke anggota percakapan lain
+        $this->kirimNotifikasiPesan($percakapan, $user, $request->isi);
+
         $pesan->load('pengirim', 'balasan.pengirim');
 
         return response()->json([
@@ -178,6 +182,9 @@ trait PesanTrait
             ->where('percakapan_id', $percakapan->id)
             ->where('pengguna_id', $user->id)
             ->update(['terakhir_dibaca' => now()]);
+
+        // Kirim notifikasi ke anggota percakapan lain
+        $this->kirimNotifikasiPesan($percakapan, $user, '📷 Mengirim foto');
 
         $pesan->load('pengirim');
 
@@ -336,5 +343,36 @@ trait PesanTrait
             ->whereHas('anggota', fn ($q) => $q->where('pengguna_id', $userId1))
             ->whereHas('anggota', fn ($q) => $q->where('pengguna_id', $userId2))
             ->first();
+    }
+
+    /**
+     * Kirim notifikasi pesan ke semua anggota percakapan (kecuali pengirim)
+     */
+    private function kirimNotifikasiPesan(Percakapan $percakapan, $pengirim, string $isiPesan): void
+    {
+        try {
+            $anggotaIds = DB::table('anggota_percakapan')
+                ->where('percakapan_id', $percakapan->id)
+                ->where('pengguna_id', '!=', $pengirim->id)
+                ->pluck('pengguna_id')
+                ->toArray();
+
+            if (empty($anggotaIds)) return;
+
+            $prefix = $pengirim->getRoutePrefix();
+            $judul = 'Pesan baru dari ' . $pengirim->nama;
+            $ringkasan = \Str::limit($isiPesan, 80);
+            $tautan = route("{$prefix}.chat.show", $percakapan);
+
+            LayananNotifikasi::kirimKeBanyak(
+                $anggotaIds,
+                $judul,
+                $ringkasan,
+                'event',
+                $tautan
+            );
+        } catch (\Exception $e) {
+            \Log::warning('Gagal kirim notifikasi pesan: ' . $e->getMessage());
+        }
     }
 }

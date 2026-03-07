@@ -260,7 +260,7 @@
                 <i class="bi bi-envelope-open-fill"></i> <span>Disposisi Masuk</span>
             </a>
             <a href="{{ route('staf.siatu-ai.index') }}" class="rp-item">
-                <i class="bi bi-robot"></i> <span>SIATU-AI</span>
+                <i class="bi bi-robot"></i> <span>SIMPEG-AI</span>
             </a>
 
             <div class="rp-section-label">Alat Produktivitas</div>
@@ -381,6 +381,7 @@
         if (rpOverlay) rpOverlay.addEventListener('click', closeRightPanel);
     });
     </script>
+    @include('komponen.notifikasi-popup')
     @stack('scripts')
 </body>
 </html>

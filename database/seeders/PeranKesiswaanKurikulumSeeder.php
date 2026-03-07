@@ -349,7 +349,7 @@ class PeranKesiswaanKurikulumSeeder extends Seeder
             ['judul' => 'Pengingat absen pulang',                    'msg' => 'Jangan lupa absen pulang sebelum meninggalkan area sekolah.', 'jenis' => 'kehadiran'],
             ['judul' => 'Data siswa baru ditambahkan',               'msg' => 'Data siswa baru telah berhasil dimasukkan ke sistem.',       'jenis' => 'sistem'],
             ['judul' => 'Dokumen kurikulum diunggah',                'msg' => 'Dokumen kurikulum baru telah diunggah dan menunggu review.',  'jenis' => 'pengumuman'],
-            ['judul' => 'Selamat datang di Sistem TU Administrasi!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
+            ['judul' => 'Selamat datang di Sistem SIMPEG-SMART!', 'msg' => 'Akun Anda sudah aktif. Lengkapi profil.',                    'jenis' => 'sistem'],
             ['judul' => 'Pembaruan Sistem v3.0',                     'msg' => 'Fitur baru: SKP, Word AI, lokasi detail kehadiran.',         'jenis' => 'sistem'],
         ];
 

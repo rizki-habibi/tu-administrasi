@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Masuk - TU Administrasi</title>
+    <title>Masuk - SIMPEG-SMART</title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -108,7 +108,7 @@
         <div class="login-left">
             <div class="content">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo SMA Negeri 2 Jember" style="width:80px;height:80px;object-fit:contain;" onerror="this.style.display='none'">
-                <h2>TU Administrasi</h2>
+                <h2>SIMPEG-SMART</h2>
                 <h4>SMA Negeri 2 Jember</h4>
                 <p>Sistem Informasi Tata Usaha terintegrasi untuk pengelolaan administrasi sekolah yang efisien dan modern.</p>
                 <ul class="features">
@@ -162,7 +162,7 @@
             </form>
 
             <div class="footer-text">
-                &copy; {{ date('Y') }} TU Administrasi - SMA Negeri 2 Jember
+                &copy; {{ date('Y') }} SIMPEG-SMART - SMA Negeri 2 Jember
             </div>
         </div>
     </div>

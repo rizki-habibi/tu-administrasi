@@ -1,6 +1,6 @@
-# SIATU — Sistem Informasi Administrasi Tata Usaha
+# SIMPEG-SMART — Sistem Informasi Manajemen Kepegawaian Sekolah Terintegrasi
 
-> Aplikasi manajemen administrasi Tata Usaha SMA Negeri 2 Jember berbasis Laravel 12 dengan multi-peran dan integrasi AI.
+> Aplikasi manajemen administrasi kepegawaian sekolah SMA Negeri 2 Jember berbasis Laravel 12 dengan multi-peran dan integrasi AI.
 
 ## Tech Stack
 
@@ -20,7 +20,7 @@
 | Peran | Prefix Rute | Tema |
 |---|---|---|
 | Admin (Kepala TU) | `/admin` | Indigo |
-| Kepala Sekolah | `/kepala-sekolah` | Amber |
+| Kepala Sekolah (Pimpinan) | `/kepala-sekolah` | Amber |
 | Staf Kepegawaian | `/staf` | Hijau |
 | Staf Keuangan | `/staf` | Hijau |
 | Staf Persuratan | `/staf` | Hijau |
@@ -29,6 +29,7 @@
 | Staf Kesiswaan & Kurikulum | `/staf` | Hijau |
 | Pramu Bakti | `/staf` | Hijau |
 | Staf Umum | `/staf` | Hijau |
+| Staff Magang | `/magang` | Cyan |
 
 Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan prefix `/staf` dengan sub-file rute sesuai bidang.
 
@@ -53,7 +54,7 @@ Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan pre
 - **Keuangan** — Catatan keuangan, anggaran, verifikasi
 
 ### AI & Dokumen Cerdas
-- **SIATU-AI Chatbot** — Asisten AI untuk setiap peran (Gemini API)
+- **SIMPEG-AI Chatbot** — Asisten AI untuk setiap peran (Gemini API)
 - **Word-AI** — Pembuatan dokumen otomatis (PHPWord + Gemini)
 - **Rekap Eksekutif** — Ringkasan eksekutif dengan analisis AI (Kepala Sekolah)
 
@@ -63,13 +64,22 @@ Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan pre
 - **Saran Pengunjung** — Formulir saran dari pengunjung publik
 
 ### Komunikasi & Produktivitas
-- **Chat/Pesan** — Sistem pesan internal dengan dukungan gambar
-- **Notifikasi** — Sistem notifikasi per peran
-- **Agenda/Event** — Manajemen acara
-- **Pengingat** — Sistem reminder/tugas
+- **Chat/Pesan** — Sistem pesan internal dengan dukungan gambar + notifikasi realtime
+- **Notifikasi Multi-Channel** — Push notification (browser), email, popup, storage alert
+- **Agenda/Event** — Manajemen acara dengan notifikasi otomatis
+- **Pengingat** — Sistem reminder/tugas dengan overdue tracking
 - **Ulang Tahun** — Pelacakan & ucapan ulang tahun
 - **Catatan Beranda** — Sticky notes di dashboard
 - **Catatan Harian** — Jurnal kerja harian (staf)
+- **Berita** — Sistem publikasi berita sekolah
+
+### UI/UX Modern
+- **Settings Right Drawer** — Widget panel kanan dengan stat cepat, navigasi cepat, storage monitor
+- **AI Chat Popup** — Popup interaktif bottom-left dengan 3D animated icon (conic-gradient spin, float animation)
+- **Sidebar Navigasi** — Multi-level submenu, pencarian, nav-group collapsible
+- **Header Terintegrasi** — Quick access ke AI & Settings langsung dari header
+- **Responsive Design** — Full responsive untuk mobile/tablet/desktop
+- **Dark Mode** — Toggle tema gelap melalui Settings Drawer
 
 ### Manajemen & Monitoring
 - **Resolusi** — Keputusan Kepala Sekolah
@@ -78,10 +88,12 @@ Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan pre
 - **Pusat Ekspor** — Ekspor terpusat (pegawai, kehadiran, dokumen)
 - **Akreditasi** — Dokumen akreditasi & EDS (Evaluasi Diri Sekolah)
 - **Laporan** — Manajemen laporan per peran
+- **Storage Monitor** — Real-time monitoring penyimpanan server (progress bar + persentase)
 
 ### Pengaturan & Backup
-- **Profil & Pengaturan** — Profil pengguna, password, preferensi tampilan
-- **Google Drive Backup** — Backup otomatis ke Google Drive
+- **Profil & Pengaturan** — Profil pengguna, password, preferensi tampilan, pengaturan notifikasi
+- **Google Drive Backup** — Backup otomatis ke Google Drive (database + uploads → zip → upload)
+- **Pengaturan Notifikasi** — Toggle push/email/popup per kategori
 - **Dev System Scan** — Diagnostik sistem (lokal saja)
 
 ## Struktur Rute
@@ -190,11 +202,37 @@ Seeder utama: `database/seeders/DatabaseSeeder.php`
 | Dokumen | Keterangan |
 |---|---|
 | `docs/DATABASE-DAN-PERAN.md` | Skema database & definisi peran |
-| `docs/PANDUAN-AI.md` | Panduan integrasi AI |
-| `docs/PANDUAN-GOOGLE-DRIVE.md` | Setup Google Drive |
-| `docs/PANDUAN-PENGGUNAAN.md` | Panduan penggunaan umum |
+| `docs/PANDUAN-AI.md` | Panduan integrasi Gemini AI (setup, API key, model) |
+| `docs/PANDUAN-GOOGLE-DRIVE.md` | Setup Google Drive backup (OAuth, credentials) |
+| `docs/PANDUAN-PENGGUNAAN.md` | Panduan penggunaan lengkap semua fitur |
+| `docs/PANDUAN-DEPLOYMENT.md` | Panduan hosting gratis (Railway, Render, Fly.io) |
 | `docs/USE-CASE-DIAGRAM.md` | Diagram use case |
 | `docs/REKOMENDASI-API-AI.md` | Rekomendasi API AI |
+
+## Arsitektur UI Admin
+
+```
+┌────────────────────────────────────────────────────────┐
+│ Header: [☰ Toggle] [Judul] ... [🤖 AI] [⚙ Settings] [🔔] [Profile] │
+├──────────┬─────────────────────────────────────────────┤
+│ Sidebar  │  Main Content                               │
+│  268px   │  ┌─────────────────────────────────────┐   │
+│          │  │ Page Content (@yield konten)         │   │
+│ Nav      │  │                                     │   │
+│ Groups   │  └─────────────────────────────────────┘   │
+│ + Search │                                             │
+│ + Profile│  AI Popup (bottom-left)    Settings Drawer → │
+├──────────┴─────────────────────────────────────────────┤
+│ FAB: [🤖 3D AI]                                         │
+└────────────────────────────────────────────────────────┘
+```
+
+### Komponen UI Utama
+- **Sidebar** — Navigasi multi-level dengan nav-group collapsible, submenu, pencarian, badge counter
+- **Header** — Judul halaman, tanggal, tombol AI & Settings, notifikasi dropdown, profil dropdown
+- **Settings Right Drawer** — Panel 340px kanan: stat cepat (staf, izin, notifikasi, inventaris), dark mode, navigasi cepat, alat khusus, storage monitor
+- **AI Chat Popup** — Chat interaktif 400x560px: 3D animated icon, 6 quick actions, voice input (Web Speech API), knowledge base dari seluruh docs
+- **Floating AI FAB** — Tombol 3D dengan conic-gradient spinning border & perspective rotateY hover
 
 ## Perintah Berguna
 

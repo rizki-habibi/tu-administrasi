@@ -25,7 +25,7 @@ class SiatuAiController extends Controller
         }
 
         $user = Auth::user();
-        $systemPrompt = "Kamu adalah SIATU-AI, asisten AI cerdas milik SMA Negeri 2 Jember untuk Sistem Informasi Administrasi Tata Usaha (SIATU). "
+        $systemPrompt = "Kamu adalah SIMPEG-AI, asisten AI cerdas milik SMA Negeri 2 Jember untuk Sistem Informasi Administrasi Tata Usaha (SIMPEG-SMART). "
             . "Kamu membantu {$user->nama} (peran: Kepala Sekolah) dengan pengambilan keputusan dan monitoring. "
             . "Jawab dalam Bahasa Indonesia yang sopan, profesional, dan strategic. "
             . "Kamu ahli dalam: manajemen sekolah, kebijakan pendidikan, evaluasi kinerja, perencanaan strategis, leadership, dan supervisi. "
@@ -52,7 +52,7 @@ class SiatuAiController extends Controller
 
             return response()->json(['success' => false, 'pesan' => 'Gagal mendapatkan respons dari AI.']);
         } catch (\Exception $e) {
-            Log::error('SIATU-AI Error: ' . $e->getMessage());
+            Log::error('SIMPEG-AI Error: ' . $e->getMessage());
             return response()->json(['success' => false, 'pesan' => 'Terjadi kesalahan. Silakan coba lagi.']);
         }
     }

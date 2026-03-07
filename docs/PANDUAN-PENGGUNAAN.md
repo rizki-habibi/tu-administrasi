@@ -1,4 +1,4 @@
-# Panduan Penggunaan — Sistem TU Administrasi
+# Panduan Penggunaan — Sistem SIMPEG-SMART
 
 > **Versi:** 0.1  
 > **Terakhir diperbarui:** 3 Maret 2026  
@@ -33,7 +33,7 @@
 
 ## 1. Pendahuluan
 
-Sistem **TU Administrasi** adalah aplikasi berbasis web yang dirancang untuk membantu pengelolaan administrasi Tata Usaha di SMA Negeri 2 Jember. Sistem ini memiliki **10 peran pengguna**:
+Sistem **SIMPEG-SMART** adalah aplikasi berbasis web yang dirancang untuk membantu pengelolaan administrasi Tata Usaha di SMA Negeri 2 Jember. Sistem ini memiliki **10 peran pengguna**:
 
 | Peran | Akses |
 |-------|-------|
@@ -570,4 +570,4 @@ Jika mengalami kendala teknis, hubungi:
 
 ---
 
-> *Dokumen ini dibuat untuk pedoman penggunaan Sistem TU Administrasi SMA Negeri 2 Jember.*
+> *Dokumen ini dibuat untuk pedoman penggunaan Sistem SIMPEG-SMART SMA Negeri 2 Jember.*
