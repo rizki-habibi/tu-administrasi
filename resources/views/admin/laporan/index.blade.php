@@ -2,6 +2,21 @@
 @section('judul', 'Laporan')
 
 @section('konten')
+
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>Laporan</h5>
+    <a href="{{ route('admin.laporan.create') }}" class="btn btn-primary btn-sm">
+        <i class="bi bi-plus-lg me-1"></i> Tambah Laporan
+    </a>
+</div>
+
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body">
         <form method="GET" class="row g-3 align-items-end">
@@ -53,7 +68,16 @@
                         <span class="badge bg-{{ $sColors[$report->status] ?? 'secondary' }}">{{ ucfirst($report->status) }}</span>
                     </td>
                     <td>{{ $report->created_at->format('d/m/Y') }}</td>
-                    <td><a href="{{ route('admin.laporan.show', $report) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{{ route('admin.laporan.show', $report) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye"></i></a>
+                            <a href="{{ route('admin.laporan.edit', $report) }}" class="btn btn-sm btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></a>
+                            <form action="{{ route('admin.laporan.destroy', $report) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus laporan ini?')">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-sm btn-outline-danger" title="Hapus"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 @empty
                 <tr><td colspan="8" class="text-center text-muted py-4">Belum ada laporan</td></tr>

@@ -97,7 +97,12 @@ Route::patch('/izin/{leaveRequest}/tolak', [Admin\IzinController::class, 'reject
 |--------------------------------------------------------------------------
 */
 Route::get('/laporan', [Admin\LaporanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/tambah', [Admin\LaporanController::class, 'create'])->name('laporan.create');
+Route::post('/laporan', [Admin\LaporanController::class, 'store'])->name('laporan.store');
 Route::get('/laporan/{report}', [Admin\LaporanController::class, 'show'])->name('laporan.show');
+Route::get('/laporan/{report}/edit', [Admin\LaporanController::class, 'edit'])->name('laporan.edit');
+Route::put('/laporan/{report}', [Admin\LaporanController::class, 'update'])->name('laporan.update');
+Route::delete('/laporan/{report}', [Admin\LaporanController::class, 'destroy'])->name('laporan.destroy');
 Route::patch('/laporan/{report}/status', [Admin\LaporanController::class, 'updateStatus'])->name('laporan.update-status');
 
 /*

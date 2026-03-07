@@ -26,10 +26,10 @@ class HalamanUtamaController extends Controller
 
         // Statistik pengunjung
         $statistikPengunjung = [
-            'hari_ini'   => $pengunjungTersedia ? Pengunjung::hariIni() : 0,
-            'bulan_ini'  => $pengunjungTersedia ? Pengunjung::bulanIni() : 0,
-            'total_unik' => $pengunjungTersedia ? Pengunjung::totalUnik() : 0,
-            'total'      => $pengunjungTersedia ? Pengunjung::totalKunjungan() : 0,
+            'hari_ini'         => $pengunjungTersedia ? Pengunjung::hariIni() : 0,
+            'bulan_ini'        => $pengunjungTersedia ? Pengunjung::bulanIni() : 0,
+            'total_unik'       => $pengunjungTersedia ? Pengunjung::totalUnik() : 0,
+            'total_kunjungan'  => $pengunjungTersedia ? Pengunjung::totalKunjungan() : 0,
         ];
 
         // Statistik layanan sekolah (publik — hanya angka umum)
