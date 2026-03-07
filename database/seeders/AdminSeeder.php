@@ -11,6 +11,8 @@ use App\Models\Acara;
 use App\Models\Notifikasi;
 use App\Models\Dokumen;
 use App\Models\Skp;
+use App\Models\LogbookMagang;
+use App\Models\KegiatanMagang;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +21,8 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
+        $today = Carbon::today();
+        $todayMonthDay = $today->format('m-d');
         /*
         |--------------------------------------------------------------------------
         | 1. ADMIN ACCOUNT (Kepala Tata Usaha)
@@ -35,6 +39,7 @@ class AdminSeeder extends Seeder
                 'telepon'    => '081234567890',
                 'alamat'  => 'Jl. Mastrip No. 45, Kel. Sumbersari, Kec. Sumbersari, Jember',
                 'aktif' => true,
+                'tanggal_lahir' => '1968-05-15',
             ]
         );
 
@@ -54,6 +59,7 @@ class AdminSeeder extends Seeder
                 'telepon'    => '081234567800',
                 'alamat'  => 'Jl. Kaliurang No. 10, Jember',
                 'aktif' => true,
+                'tanggal_lahir' => '1967-01-01',
             ]
         );
 
@@ -81,6 +87,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14344',
                 'telepon'          => '081298765001',
                 'alamat'        => 'Jl. Kalimantan No. 12, Jember',
+                'tanggal_lahir'  => '1985-' . $todayMonthDay,
             ],
             [
                 'nama'           => 'Faizz Moch. Nur Adam',
@@ -91,6 +98,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14344',
                 'telepon'          => '081298765002',
                 'alamat'        => 'Jl. Sumatera No. 8, Jember',
+                'tanggal_lahir'  => '1992-07-14',
             ],
 
             // === IKI 2: PRAMU BAKTI ===
@@ -103,6 +111,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '23304',
                 'telepon'          => '081298765003',
                 'alamat'        => 'Jl. Jawa No. 25, Jember',
+                'tanggal_lahir'  => '1990-02-15',
             ],
             [
                 'nama'           => 'Marsis',
@@ -113,6 +122,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '23304',
                 'telepon'          => '081298765004',
                 'alamat'        => 'Jl. Sulawesi No. 3, Jember',
+                'tanggal_lahir'  => '1978-11-20',
             ],
             [
                 'nama'           => 'Miftahul Ulum',
@@ -123,6 +133,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '23304',
                 'telepon'          => '081298765005',
                 'alamat'        => 'Jl. Borneo No. 17, Jember',
+                'tanggal_lahir'  => '1988-06-03',
             ],
 
             // === IKI 3: KEUANGAN ===
@@ -135,6 +146,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14342',
                 'telepon'          => '081298765006',
                 'alamat'        => 'Jl. Papua No. 9, Jember',
+                'tanggal_lahir'  => '1986-09-25',
             ],
 
             // === IKI 4: PERSURATAN ===
@@ -147,6 +159,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14345',
                 'telepon'          => '081298765007',
                 'alamat'        => 'Jl. Bali No. 22, Jember',
+                'tanggal_lahir'  => '1983-12-10',
             ],
             [
                 'nama'           => 'Ginabul Rahayu',
@@ -157,6 +170,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14345',
                 'telepon'          => '081298765008',
                 'alamat'        => 'Jl. Flores No. 5, Jember',
+                'tanggal_lahir'  => '1991-04-18',
             ],
             [
                 'nama'           => 'Herman Budi Santoso',
@@ -167,6 +181,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14345',
                 'telepon'          => '081298765009',
                 'alamat'        => 'Jl. Lombok No. 14, Jember',
+                'tanggal_lahir'  => '1980-' . $todayMonthDay,
             ],
 
             // === IKI 5: PERPUSTAKAAN ===
@@ -179,6 +194,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '19463',
                 'telepon'          => '081298765010',
                 'alamat'        => 'Jl. Timor No. 7, Jember',
+                'tanggal_lahir'  => '1993-10-08',
             ],
             [
                 'nama'           => 'Bagus Pribadi',
@@ -189,6 +205,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '19463',
                 'telepon'          => '081298765011',
                 'alamat'        => 'Jl. Madura No. 33, Jember',
+                'tanggal_lahir'  => '1987-01-27',
             ],
             [
                 'nama'           => 'Moh. Sutrisno',
@@ -199,6 +216,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '19463',
                 'telepon'          => '081298765012',
                 'alamat'        => 'Jl. Nusa Tenggara No. 11, Jember',
+                'tanggal_lahir'  => '1979-08-30',
             ],
 
             // === IKI 6: INVENTARIS/SARPRAS ===
@@ -211,6 +229,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14343',
                 'telepon'          => '081298765013',
                 'alamat'        => 'Jl. Kartini No. 20, Jember',
+                'tanggal_lahir'  => '1984-03-22',
             ],
             [
                 'nama'           => 'Imam Basori',
@@ -221,6 +240,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '14343',
                 'telepon'          => '081298765014',
                 'alamat'        => 'Jl. Diponegoro No. 15, Jember',
+                'tanggal_lahir'  => '1989-05-11',
             ],
 
             // === IKI 7: KESISWAAN/KURIKULUM ===
@@ -233,6 +253,7 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '23305',
                 'telepon'          => '081298765015',
                 'alamat'        => 'Jl. Gajah Mada No. 10, Jember',
+                'tanggal_lahir'  => '1991-12-01',
             ],
             [
                 'nama'           => 'Wikana Subadra Subowo',
@@ -243,6 +264,20 @@ class AdminSeeder extends Seeder
                 'kode_depan'     => '23305',
                 'telepon'          => '081298765016',
                 'alamat'        => 'Jl. Sudirman No. 42, Jember',
+                'tanggal_lahir'  => '1982-08-19',
+            ],
+
+            // === STAFF UMUM (Tenaga Kependidikan) ===
+            [
+                'nama'           => 'Siti Aminah',
+                'email'          => 'siti.staff@tu.test',
+                'peran'           => 'staff',
+                'jabatan'       => 'Tenaga Kependidikan',
+                'iki_pelaksana'  => null,
+                'kode_depan'     => null,
+                'telepon'          => '081298765017',
+                'alamat'        => 'Jl. Ahmad Yani No. 55, Jember',
+                'tanggal_lahir'  => '1990-04-12',
             ],
         ];
 
@@ -600,12 +635,79 @@ class AdminSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
+        | 13. AKUN MAGANG
+        |--------------------------------------------------------------------------
+        */
+        $magang = Pengguna::updateOrCreate(
+            ['email' => 'magang@tu.test'],
+            [
+                'nama'                   => 'Andi Pratama',
+                'password'               => Hash::make('password'),
+                'peran'                  => 'magang',
+                'jabatan'                => 'Staff Magang',
+                'telepon'                => '081298765432',
+                'alamat'                 => 'Jl. Kalimantan No. 10, Kel. Sumbersari, Kec. Sumbersari, Jember',
+                'aktif'                  => true,
+                'tanggal_lahir'          => '2002-08-15',
+                'pembimbing_lapangan'    => 'Drs. Bambang Supriyanto, M.Pd.',
+                'instansi_asal'          => 'Universitas Jember',
+                'tanggal_mulai_magang'   => $today->copy()->subDays(30)->format('Y-m-d'),
+                'tanggal_selesai_magang' => $today->copy()->addDays(60)->format('Y-m-d'),
+            ]
+        );
+
+        // Sample Logbook Magang
+        for ($i = 5; $i >= 1; $i--) {
+            LogbookMagang::updateOrCreate(
+                [
+                    'pengguna_id' => $magang->id,
+                    'tanggal'     => $today->copy()->subDays($i)->format('Y-m-d'),
+                ],
+                [
+                    'jam_mulai'      => '08:00',
+                    'jam_selesai'    => '16:00',
+                    'kegiatan'       => "Kegiatan magang hari ke-" . (31 - $i) . ": membantu administrasi umum dan pendataan arsip.",
+                    'hasil'          => 'Input data selesai dan arsip tertata rapi.',
+                    'kendala'        => $i % 2 === 0 ? 'Tidak ada kendala.' : 'Sistem sempat lambat saat jam sibuk.',
+                    'rencana_besok'  => 'Melanjutkan pendataan dan membantu persuratan.',
+                    'status'         => $i > 2 ? 'final' : 'draft',
+                ]
+            );
+        }
+
+        // Sample Kegiatan Magang
+        KegiatanMagang::updateOrCreate(
+            ['pengguna_id' => $magang->id, 'judul' => 'Input Data Siswa Baru'],
+            [
+                'deskripsi'       => 'Membantu proses input data siswa baru ke sistem administrasi sekolah.',
+                'tanggal_mulai'   => $today->copy()->subDays(10)->format('Y-m-d'),
+                'tanggal_selesai' => $today->copy()->subDays(3)->format('Y-m-d'),
+                'status'          => 'selesai',
+                'prioritas'       => 'tinggi',
+                'catatan'         => 'Data 120 siswa berhasil diinput.',
+            ]
+        );
+
+        KegiatanMagang::updateOrCreate(
+            ['pengguna_id' => $magang->id, 'judul' => 'Penataan Arsip Surat'],
+            [
+                'deskripsi'       => 'Menata dan mendigitalkan arsip surat masuk/keluar tahun 2024.',
+                'tanggal_mulai'   => $today->copy()->subDays(5)->format('Y-m-d'),
+                'tanggal_selesai' => $today->copy()->addDays(10)->format('Y-m-d'),
+                'status'          => 'berlangsung',
+                'prioritas'       => 'sedang',
+                'catatan'         => null,
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
         | OUTPUT
         |--------------------------------------------------------------------------
         */
         $this->command->info('');
         $this->command->info('=================================================');
-        $this->command->info('  SEEDER BERHASIL DIJALANKAN!');
+        $this->command->info('  ADMIN SEEDER BERHASIL DIJALANKAN!');
         $this->command->info('=================================================');
         $this->command->info('');
         $this->command->info('  AKUN LOGIN (password: password)');
@@ -635,11 +737,20 @@ class AdminSeeder extends Seeder
         $this->command->info('  ─── IKI 7: KESISWAAN/KURIKULUM ───');
         $this->command->info('  Bayu Kurniawan      : bayu.kesiswaan@tu.test');
         $this->command->info('  Wikana S.S.         : wikana.kesiswaan@tu.test');
+        $this->command->info('  ─── STAFF UMUM ───');
+        $this->command->info('  Siti Aminah         : siti.staff@tu.test');
+        $this->command->info('  ─── MAGANG ───');
+        $this->command->info('  Andi Pratama        : magang@tu.test');
+        $this->command->info('');
+        $this->command->info('  Ulang tahun hari ini (testing):');
+        $this->command->info('  - Dwi Kriswahyudi (dwi.kepegawaian@tu.test)');
+        $this->command->info('  - Herman Budi Santoso (herman.persuratan@tu.test)');
         $this->command->info('');
         $this->command->info('  DATA DUMMY:');
-        $this->command->info('  1 admin, 1 kepsek, 16 staff (7 role),');
+        $this->command->info('  1 admin, 1 kepsek, 17 staff (8 role), 1 magang,');
         $this->command->info('  ~320 absensi, 12 izin, 13 laporan, 11 SKP,');
-        $this->command->info('  7 event, 70+ notifikasi, 12 dokumen, 8 surat');
+        $this->command->info('  7 event, 70+ notifikasi, 12 dokumen, 8 surat,');
+        $this->command->info('  5 logbook magang, 2 kegiatan magang');
         $this->command->info('=================================================');
     }
 }

@@ -263,6 +263,19 @@ class AkunSeeder extends Seeder
                 'alamat'        => 'Jl. Sudirman No. 42, Jember',
                 'tanggal_lahir'  => '1982-08-19',
             ],
+
+            // === STAFF UMUM (Tenaga Kependidikan) ===
+            [
+                'nama'           => 'Siti Aminah',
+                'email'          => 'siti.staff@tu.test',
+                'peran'           => 'staff',
+                'jabatan'       => 'Tenaga Kependidikan',
+                'iki_pelaksana'  => null,
+                'kode_depan'     => null,
+                'telepon'          => '081298765017',
+                'alamat'        => 'Jl. Ahmad Yani No. 55, Jember',
+                'tanggal_lahir'  => '1990-04-12',
+            ],
         ];
 
         foreach ($staffData as $data) {
@@ -292,6 +305,29 @@ class AkunSeeder extends Seeder
                 'lat_kantor'         => -8.165908,
                 'lng_kantor'        => 113.706649,
                 'jarak_maksimal_meter'     => 200,
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | 5. AKUN MAGANG
+        |--------------------------------------------------------------------------
+        */
+        Pengguna::updateOrCreate(
+            ['email' => 'magang@tu.test'],
+            [
+                'nama'                   => 'Andi Pratama',
+                'password'               => Hash::make('password'),
+                'peran'                  => 'magang',
+                'jabatan'                => 'Staff Magang',
+                'telepon'                => '081298765432',
+                'alamat'                 => 'Jl. Kalimantan No. 10, Kel. Sumbersari, Kec. Sumbersari, Jember',
+                'aktif'                  => true,
+                'tanggal_lahir'          => '2002-08-15',
+                'pembimbing_lapangan'    => 'Drs. Bambang Supriyanto, M.Pd.',
+                'instansi_asal'          => 'Universitas Jember',
+                'tanggal_mulai_magang'   => $today->copy()->subDays(30)->format('Y-m-d'),
+                'tanggal_selesai_magang' => $today->copy()->addDays(60)->format('Y-m-d'),
             ]
         );
 
@@ -332,12 +368,16 @@ class AkunSeeder extends Seeder
         $this->command->info('  ─── IKI 7: KESISWAAN/KURIKULUM ───');
         $this->command->info('  Bayu Kurniawan      : bayu.kesiswaan@tu.test');
         $this->command->info('  Wikana S.S.         : wikana.kesiswaan@tu.test');
+        $this->command->info('  ─── STAFF UMUM ───');
+        $this->command->info('  Siti Aminah         : siti.staff@tu.test');
+        $this->command->info('  ─── MAGANG ───');
+        $this->command->info('  Andi Pratama        : magang@tu.test');
         $this->command->info('');
         $this->command->info('  Ulang tahun hari ini (testing):');
         $this->command->info('  - Dwi Kriswahyudi (dwi.kepegawaian@tu.test)');
         $this->command->info('  - Herman Budi Santoso (herman.persuratan@tu.test)');
         $this->command->info('');
-        $this->command->info('  Total: 1 admin, 1 kepsek, 16 staff (7 role)');
+        $this->command->info('  Total: 1 admin, 1 kepsek, 17 staff (8 role), 1 magang');
         $this->command->info('  + PengaturanKehadiran (07:30-16:00, toleransi 15 menit)');
         $this->command->info('=================================================');
     }
