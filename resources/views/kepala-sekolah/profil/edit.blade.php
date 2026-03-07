@@ -46,7 +46,7 @@
                         </div>
                         <div>
                             <label class="form-label mb-1">Foto Profil</label>
-                            <input type="file" name="photo" class="form-control form-control-sm" accept="image/*">
+                            <input type="file" name="foto" class="form-control form-control-sm" accept="image/*">
                             <small class="text-muted">Maks 2MB. Format: JPG, PNG</small>
                         </div>
                     </div>

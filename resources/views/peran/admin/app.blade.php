@@ -543,6 +543,12 @@
             @yield('konten')
         </div>
 
+        {{-- Page Footer --}}
+        <footer style="padding:20px 28px;border-top:1px solid #e5e7eb;background:#fff;margin-top:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <small style="color:#94a3b8;font-size:.72rem;">&copy; {{ date('Y') }} SIMPEG-SMART &mdash; SMA Negeri 2 Jember</small>
+            <small style="color:#94a3b8;font-size:.72rem;">v2.0 &middot; Laravel {{ app()->version() }}</small>
+        </footer>
+
         {{-- Footer Scripts --}}
         @include('peran.admin.footer')
     </div>
@@ -572,6 +578,11 @@
                     group.classList.remove('open');
                     if (items) items.style.maxHeight = '';
                 }
+
+                // Keep clicked group visible in sidebar
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
             });
         });
     });

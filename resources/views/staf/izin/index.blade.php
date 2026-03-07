@@ -61,8 +61,8 @@
                     <td><span class="badge bg-info">{{ ucfirst(str_replace('_',' ',$leave->jenis)) }}</span></td>
                     <td>{{ $leave->tanggal_mulai->format('d/m/Y') }} - {{ $leave->tanggal_selesai->format('d/m/Y') }}</td>
                     <td>
-                        @php $colors = ['pending'=>'warning','approved'=>'success','rejected'=>'danger']; @endphp
-                        <span class="badge bg-{{ $colors[$leave->status] ?? 'secondary' }}">{{ ucfirst($leave->status) }}</span>
+                        @php $colors = ['pending'=>'warning','approved'=>'success','rejected'=>'danger']; $statusLabel = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                        <span class="badge bg-{{ $colors[$leave->status] ?? 'secondary' }}">{{ $statusLabel[$leave->status] ?? ucfirst($leave->status) }}</span>
                     </td>
                     <td>
                         <a href="{{ route('staf.izin.show', $leave) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>

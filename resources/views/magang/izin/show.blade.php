@@ -9,8 +9,8 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
         <h6 class="fw-bold mb-0"><i class="bi bi-envelope-open me-2 text-primary"></i>Detail Pengajuan Izin</h6>
-        @php $ws = ['approved'=>'success','rejected'=>'danger','pending'=>'warning']; @endphp
-        <span class="badge bg-{{ $ws[$izin->status] ?? 'secondary' }}">{{ ucfirst($izin->status) }}</span>
+        @php $ws = ['approved'=>'success','rejected'=>'danger','pending'=>'warning']; $sl = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+        <span class="badge bg-{{ $ws[$izin->status] ?? 'secondary' }}">{{ $sl[$izin->status] ?? ucfirst($izin->status) }}</span>
     </div>
     <div class="card-body">
         <div class="row g-3">

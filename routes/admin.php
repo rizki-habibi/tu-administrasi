@@ -203,6 +203,13 @@ Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
     Route::get('/star', [Admin\EvaluasiController::class, 'starIndex'])->name('star');
     Route::get('/star/buat', [Admin\EvaluasiController::class, 'starCreate'])->name('star.create');
     Route::post('/star', [Admin\EvaluasiController::class, 'starStore'])->name('star.store');
+    Route::get('/star/sampah', [Admin\EvaluasiController::class, 'starTrash'])->name('star.trash');
+    Route::get('/star/{star}', [Admin\EvaluasiController::class, 'starShow'])->name('star.show');
+    Route::get('/star/{star}/edit', [Admin\EvaluasiController::class, 'starEdit'])->name('star.edit');
+    Route::put('/star/{star}', [Admin\EvaluasiController::class, 'starUpdate'])->name('star.update');
+    Route::delete('/star/{star}', [Admin\EvaluasiController::class, 'starDestroy'])->name('star.destroy');
+    Route::post('/star/{id}/pulihkan', [Admin\EvaluasiController::class, 'starRestore'])->name('star.restore');
+    Route::delete('/star/{id}/hapus-permanen', [Admin\EvaluasiController::class, 'starForceDelete'])->name('star.force-delete');
 
     // Bukti Fisik
     Route::get('/bukti-fisik', [Admin\EvaluasiController::class, 'buktiFisikIndex'])->name('bukti-fisik');
@@ -213,6 +220,10 @@ Route::prefix('evaluasi')->name('evaluasi.')->group(function () {
     Route::get('/pembelajaran', [Admin\EvaluasiController::class, 'learningIndex'])->name('pembelajaran');
     Route::get('/pembelajaran/buat', [Admin\EvaluasiController::class, 'learningCreate'])->name('pembelajaran.create');
     Route::post('/pembelajaran', [Admin\EvaluasiController::class, 'learningStore'])->name('pembelajaran.store');
+    Route::get('/pembelajaran/{method}', [Admin\EvaluasiController::class, 'learningShow'])->name('pembelajaran.show');
+    Route::get('/pembelajaran/{method}/edit', [Admin\EvaluasiController::class, 'learningEdit'])->name('pembelajaran.edit');
+    Route::put('/pembelajaran/{method}', [Admin\EvaluasiController::class, 'learningUpdate'])->name('pembelajaran.update');
+    Route::delete('/pembelajaran/{method}', [Admin\EvaluasiController::class, 'learningDestroy'])->name('pembelajaran.destroy');
 });
 
 /*

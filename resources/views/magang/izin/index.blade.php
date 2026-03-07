@@ -24,8 +24,8 @@
                         <td><span class="badge bg-{{ $item->jenis === 'sakit' ? 'danger' : 'info' }}">{{ ucfirst($item->jenis) }}</span></td>
                         <td style="max-width:280px;" class="text-truncate">{{ $item->alasan }}</td>
                         <td>
-                            @php $ws = ['approved'=>'success','rejected'=>'danger','pending'=>'warning']; @endphp
-                            <span class="badge bg-{{ $ws[$item->status] ?? 'secondary' }}">{{ ucfirst($item->status) }}</span>
+                            @php $ws = ['approved'=>'success','rejected'=>'danger','pending'=>'warning']; $sl = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                            <span class="badge bg-{{ $ws[$item->status] ?? 'secondary' }}">{{ $sl[$item->status] ?? ucfirst($item->status) }}</span>
                         </td>
                         <td>
                             <a href="{{ route('magang.izin.show', $item) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>

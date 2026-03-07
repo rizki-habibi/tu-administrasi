@@ -14,8 +14,9 @@
         <form class="d-flex gap-2 align-items-center flex-wrap" method="GET">
             <select name="status" class="form-select form-select-sm" style="width:auto;">
                 <option value="">Semua Status</option>
-                @foreach(['pending','approved','rejected'] as $s)
-                    <option value="{{ $s }}" {{ request('status') == $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
+                @php $statusOpt = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                @foreach($statusOpt as $sVal => $sLabel)
+                    <option value="{{ $sVal }}" {{ request('status') == $sVal ? 'selected' : '' }}>{{ $sLabel }}</option>
                 @endforeach
             </select>
             <select name="jenis" class="form-select form-select-sm" style="width:auto;">
@@ -48,7 +49,8 @@
                         <td style="font-size:.8rem;">{{ $lr->tanggal_mulai->format('d/m/Y') }} - {{ $lr->tanggal_selesai->format('d/m/Y') }}</td>
                         <td>{{ $lr->duration }} hari</td>
                         <td style="max-width:180px;font-size:.8rem;">{{ \Str::limit($lr->reason, 40) }}</td>
-                        <td><span class="badge bg-{{ $lr->status_badge }} bg-opacity-10 text-{{ $lr->status_badge }}">{{ ucfirst($lr->status) }}</span></td>
+                        @php $sl = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                        <td><span class="badge bg-{{ $lr->status_badge }} bg-opacity-10 text-{{ $lr->status_badge }}">{{ $sl[$lr->status] ?? ucfirst($lr->status) }}</span></td>
                         <td>
                             <div class="d-flex gap-1">
                                 <a href="{{ route('kepala-sekolah.izin.show', $lr) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-eye"></i></a>

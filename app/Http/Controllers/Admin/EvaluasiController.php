@@ -140,6 +140,72 @@ class EvaluasiController extends Controller
         return redirect()->route('admin.evaluasi.star')->with('success', 'Analisis STAR berhasil ditambahkan.');
     }
 
+    public function starShow(AnalisisStar $star)
+    {
+        $star->load('creator');
+        return view('admin.evaluasi.star-show', compact('star'));
+    }
+
+    public function starEdit(AnalisisStar $star)
+    {
+        return view('admin.evaluasi.star-edit', compact('star'));
+    }
+
+    public function starUpdate(Request $request, AnalisisStar $star)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'kategori' => 'required|in:pembelajaran,administrasi,manajemen',
+            'situasi' => 'required|string',
+            'tugas' => 'required|string',
+            'aksi' => 'required|string',
+            'hasil' => 'required|string',
+            'refleksi' => 'nullable|string',
+            'tindak_lanjut' => 'nullable|string',
+            'file' => 'nullable|file|max:10240',
+        ]);
+
+        $data = $request->except('file');
+
+        if ($request->hasFile('file')) {
+            if ($star->path_file) {
+                Storage::disk('public')->delete($star->path_file);
+            }
+            $data['path_file'] = $request->file('file')->store('star', 'public');
+        }
+
+        $star->update($data);
+        return redirect()->route('admin.evaluasi.star')->with('success', 'Analisis STAR berhasil diperbarui.');
+    }
+
+    public function starDestroy(AnalisisStar $star)
+    {
+        $star->delete();
+        return redirect()->route('admin.evaluasi.star')->with('success', 'Analisis STAR dipindahkan ke sampah. Dapat dipulihkan dalam 30 hari.');
+    }
+
+    public function starTrash(Request $request)
+    {
+        $analyses = AnalisisStar::onlyTrashed()->with('creator')->latest('deleted_at')->paginate(15);
+        return view('admin.evaluasi.star-trash', compact('analyses'));
+    }
+
+    public function starRestore($id)
+    {
+        AnalisisStar::onlyTrashed()->findOrFail($id)->restore();
+        return redirect()->route('admin.evaluasi.star.trash')->with('success', 'Analisis STAR berhasil dipulihkan.');
+    }
+
+    public function starForceDelete($id)
+    {
+        $star = AnalisisStar::onlyTrashed()->findOrFail($id);
+        if ($star->path_file) {
+            Storage::disk('public')->delete($star->path_file);
+        }
+        $star->forceDelete();
+        return redirect()->route('admin.evaluasi.star.trash')->with('success', 'Analisis STAR dihapus permanen.');
+    }
+
     // === Bukti Fisik ===
     public function buktiFisikIndex(Request $request)
     {
@@ -224,5 +290,54 @@ class EvaluasiController extends Controller
 
         MetodePembelajaran::create($data);
         return redirect()->route('admin.evaluasi.pembelajaran')->with('success', 'Metode pembelajaran berhasil ditambahkan.');
+    }
+
+    public function learningShow(MetodePembelajaran $method)
+    {
+        $method->load('creator');
+        return view('admin.evaluasi.pembelajaran-show', compact('method'));
+    }
+
+    public function learningEdit(MetodePembelajaran $method)
+    {
+        return view('admin.evaluasi.pembelajaran-edit', compact('method'));
+    }
+
+    public function learningUpdate(Request $request, MetodePembelajaran $method)
+    {
+        $request->validate([
+            'nama_metode' => 'required|string|max:255',
+            'jenis' => 'required|in:model_pembelajaran,teknologi_pembelajaran,media_pembelajaran',
+            'deskripsi' => 'required|string',
+            'langkah_pelaksanaan' => 'nullable|string',
+            'kelebihan' => 'nullable|string',
+            'kekurangan' => 'nullable|string',
+            'hasil' => 'nullable|string',
+            'mata_pelajaran' => 'nullable|string',
+            'file' => 'nullable|file|max:10240',
+        ]);
+
+        $data = $request->except('file');
+
+        if ($request->hasFile('file')) {
+            if ($method->path_file) {
+                Storage::disk('public')->delete($method->path_file);
+            }
+            $file = $request->file('file');
+            $data['path_file'] = $file->store('learning', 'public');
+            $data['nama_file'] = $file->getClientOriginalName();
+        }
+
+        $method->update($data);
+        return redirect()->route('admin.evaluasi.pembelajaran')->with('success', 'Metode pembelajaran berhasil diperbarui.');
+    }
+
+    public function learningDestroy(MetodePembelajaran $method)
+    {
+        if ($method->path_file) {
+            Storage::disk('public')->delete($method->path_file);
+        }
+        $method->delete();
+        return redirect()->route('admin.evaluasi.pembelajaran')->with('success', 'Metode pembelajaran berhasil dihapus.');
     }
 }

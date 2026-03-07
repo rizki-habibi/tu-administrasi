@@ -90,7 +90,8 @@
                             <td>{{ ucfirst($leave->jenis) }}</td>
                             <td>{{ $leave->tanggal_mulai->format('d/m/Y') }}</td>
                             <td>{{ $leave->tanggal_selesai->format('d/m/Y') }}</td>
-                            <td><span class="badge bg-{{ $leaveColors[$leave->status] ?? 'secondary' }}">{{ ucfirst($leave->status) }}</span></td>
+                            @php $sl = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                            <td><span class="badge bg-{{ $leaveColors[$leave->status] ?? 'secondary' }}">{{ $sl[$leave->status] ?? ucfirst($leave->status) }}</span></td>
                             <td><a href="{{ route('admin.izin.show', $leave) }}" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a></td>
                         </tr>
                         @empty

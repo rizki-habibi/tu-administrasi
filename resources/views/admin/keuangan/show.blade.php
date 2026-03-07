@@ -32,7 +32,7 @@
                     @elseif($keuangan->status == 'verified')
                     <span class="badge bg-info"><i class="bi bi-check-circle me-1"></i> Terverifikasi</span>
                     @else
-                    <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Draft</span>
+                    <span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i> Draf</span>
                     @endif
                 </div>
                 <h5 class="fw-bold mb-3">{{ $keuangan->uraian }}</h5>

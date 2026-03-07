@@ -619,7 +619,10 @@
                 <div class="berita-card">
                     <div class="berita-img">
                         @if($berita->thumbnail)
-                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}">
+                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="berita-img-placeholder" style="display:none;">
+                                <i class="bi bi-newspaper"></i>
+                            </div>
                         @else
                             <div class="berita-img-placeholder">
                                 <i class="bi bi-newspaper"></i>
@@ -643,7 +646,10 @@
                 <div class="berita-card">
                     <div class="berita-img">
                         @if($berita->thumbnail)
-                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}">
+                            <img src="{{ $berita->thumbnail_url }}" alt="{{ $berita->judul }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="berita-img-placeholder" style="display:none;">
+                                <i class="bi bi-newspaper"></i>
+                            </div>
                         @else
                             <div class="berita-img-placeholder">
                                 <i class="bi bi-newspaper"></i>
@@ -759,12 +765,12 @@
         <div class="row g-4 mt-4 fade-up">
             <div class="col-lg-6">
                 <div style="border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5e7eb;aspect-ratio:16/9;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!4v1709913600000!6m8!1m7!1sCfhQmJIB0YlnswGcDuLUcg!2m2!1d-8.1721234!2d113.7029!3f0!4f0!5f0.7820865974627469" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="360° View SMAN 2 Jember"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!4v1709913600000!6m8!1m7!1sXwUEXSol16X4fYLKtk3RcA!2m2!1d-8.1691173!2d113.7139495!3f229.84!4f-29.14!5f0.7820865974627469" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="360° View SMAN 2 Jember"></iframe>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div style="border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5e7eb;aspect-ratio:16/9;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.3297!2d113.7029!3d-8.1721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6a4e3%3A0x2bce46e45b9f9c0e!2sSMAN%202%20Jember!5e1!3m2!1sid!2sid!4v1709913600000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="Satelit SMAN 2 Jember"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d987.3297!2d113.7139495!3d-8.1691173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695cd4a10f679%3A0x413e8c44fb9d2ff7!2sSMAN%202%20JEMBER!5e1!3m2!1sid!2sid!4v1709913600000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" style="width:100%;height:100%;border:none;" title="Satelit SMAN 2 Jember"></iframe>
                 </div>
             </div>
             <div class="col-12 text-center mt-2">
@@ -907,18 +913,18 @@
         <div class="row g-4 justify-content-center fade-up">
             @php
                 $steps = [
-                    ['num' => 1, 'title' => 'Login Sistem', 'desc' => 'Masuk sesuai peran & autentikasi aman', 'color' => 'var(--indigo)'],
-                    ['num' => 2, 'title' => 'Absensi GPS', 'desc' => 'Catat kehadiran via GPS & selfie', 'color' => 'var(--emerald)'],
-                    ['num' => 3, 'title' => 'Tugas Harian', 'desc' => 'Kerjakan sesuai tupoksi masing-masing', 'color' => 'var(--amber)'],
-                    ['num' => 4, 'title' => 'Persetujuan', 'desc' => 'Approval berjenjang dari atasan', 'color' => 'var(--indigo)'],
-                    ['num' => 5, 'title' => 'Laporan', 'desc' => 'Generate & export data ke berbagai format', 'color' => 'var(--emerald)'],
-                    ['num' => 6, 'title' => 'Arsip Cloud', 'desc' => 'Simpan & backup otomatis ke Google Drive', 'color' => 'var(--amber)'],
+                    ['num' => 1, 'icon' => 'bi-box-arrow-in-right', 'title' => 'Login Sistem', 'desc' => 'Masuk sesuai peran & autentikasi aman', 'color' => 'var(--indigo)'],
+                    ['num' => 2, 'icon' => 'bi-geo-alt-fill', 'title' => 'Absensi GPS', 'desc' => 'Catat kehadiran via GPS & selfie', 'color' => 'var(--emerald)'],
+                    ['num' => 3, 'icon' => 'bi-clipboard-check-fill', 'title' => 'Tugas Harian', 'desc' => 'Kerjakan sesuai tupoksi masing-masing', 'color' => 'var(--amber)'],
+                    ['num' => 4, 'icon' => 'bi-check-circle-fill', 'title' => 'Persetujuan', 'desc' => 'Persetujuan berjenjang dari atasan', 'color' => 'var(--indigo)'],
+                    ['num' => 5, 'icon' => 'bi-file-earmark-bar-graph-fill', 'title' => 'Laporan', 'desc' => 'Buat & ekspor data ke berbagai format', 'color' => 'var(--emerald)'],
+                    ['num' => 6, 'icon' => 'bi-cloud-arrow-up-fill', 'title' => 'Arsip Cloud', 'desc' => 'Simpan & cadangkan otomatis ke Google Drive', 'color' => 'var(--amber)'],
                 ];
             @endphp
             @foreach($steps as $i => $step)
             <div class="col-lg-2 col-md-4 col-6">
                 <div class="flow-card">
-                    <div class="flow-num" style="background:linear-gradient(135deg,{{ $step['color'] }},{{ $step['color'] }}cc);">{{ $step['num'] }}</div>
+                    <div class="flow-num" style="background:linear-gradient(135deg,{{ $step['color'] }},{{ $step['color'] }}cc);"><i class="bi {{ $step['icon'] }}"></i></div>
                     <h6>{{ $step['title'] }}</h6>
                     <p>{{ $step['desc'] }}</p>
                     @if($i < count($steps) - 1)
@@ -972,17 +978,8 @@
             </div>
         </div>
         <div class="row g-4 fade-up">
-            <div class="col-lg-7">
-                <div class="map-card">
-                    <div class="map-overlay">
-                        <h6><i class="bi bi-geo-alt-fill me-1" style="color:var(--rose);"></i> SMA Negeri 2 Jember</h6>
-                        <small>Jl. Jawa No. 16, Sumbersari, Jember</small>
-                    </div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.3187417696467!2d113.70127867589513!3d-8.172088480405044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6a4e3%3A0x2bce46e45b9f9c0e!2sSMAN%202%20Jember!5e0!3m2!1sid!2sid!4v1709913600000!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi SMA Negeri 2 Jember"></iframe>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="school-data-panel mb-3">
+            <div class="col-lg-8">
+                <div class="school-data-panel">
                     <h6><i class="bi bi-building me-2" style="color:var(--indigo-light);"></i>Data Sekolah</h6>
                     <div class="sd-row"><span class="sd-label"><i class="bi bi-people-fill" style="color:var(--emerald-light);"></i> Pegawai Aktif</span><span class="sd-value">{{ number_format($statistikLayanan['total_pegawai']) }}</span></div>
                     <div class="sd-row"><span class="sd-label"><i class="bi bi-mortarboard-fill" style="color:var(--indigo-light);"></i> Siswa Aktif</span><span class="sd-value">{{ number_format($statistikLayanan['total_siswa']) }}</span></div>
@@ -990,15 +987,18 @@
                     <div class="sd-row"><span class="sd-label"><i class="bi bi-box-seam-fill" style="color:var(--amber-light);"></i> Inventaris</span><span class="sd-value">{{ number_format($statistikLayanan['total_inventaris']) }}</span></div>
                     <div class="sd-row"><span class="sd-label"><i class="bi bi-calendar-event-fill" style="color:#22d3ee;"></i> Agenda Mendatang</span><span class="sd-value">{{ number_format($statistikLayanan['total_acara']) }}</span></div>
                 </div>
-                <div class="school-data-panel">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0"><i class="bi bi-clock me-1"></i> Jam Layanan</h6>
-                            <small style="color:var(--gray-light);font-size:.7rem;">Senin &ndash; Jumat</small>
+            </div>
+            <div class="col-lg-4">
+                <div class="school-data-panel h-100 d-flex flex-column justify-content-center">
+                    <div class="text-center">
+                        <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--emerald),var(--cyan));display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;">
+                            <i class="bi bi-clock-fill" style="font-size:1.5rem;color:#fff;"></i>
                         </div>
-                        <div style="text-align:right;">
-                            <span style="color:var(--emerald-light);font-weight:800;font-size:1rem;font-family:'Space Grotesk',sans-serif;">07:00 - 15:00</span><br>
-                            <small style="color:var(--gray);font-size:.6rem;">WIB</small>
+                        <h6 class="mb-1">Jam Layanan</h6>
+                        <small style="color:var(--gray-light);font-size:.7rem;">Senin &ndash; Jumat</small>
+                        <div style="margin-top:8px;">
+                            <span style="color:var(--emerald-light);font-weight:800;font-size:1.3rem;font-family:'Space Grotesk',sans-serif;">07:00 - 15:00</span>
+                            <br><small style="color:var(--gray);font-size:.65rem;">WIB</small>
                         </div>
                     </div>
                 </div>

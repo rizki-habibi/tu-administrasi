@@ -28,7 +28,7 @@
     <div class="col-6 col-lg-3">
         <div class="stat-card" style="background: linear-gradient(135deg, #ef4444, #f87171);">
             <div class="d-flex justify-content-between align-items-start">
-                <div><p>Izin Pending</p><h3>{{ $pendingLeave }}</h3><p>menunggu persetujuan</p></div>
+                <div><p>Izin Menunggu</p><h3>{{ $pendingLeave }}</h3><p>menunggu persetujuan</p></div>
                 <div class="icon-box"><i class="bi bi-hourglass-split"></i></div>
             </div>
         </div>

@@ -42,8 +42,8 @@
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white"><h6 class="mb-0">Status</h6></div>
             <div class="card-body text-center">
-                @php $colors = ['pending'=>'warning','approved'=>'success','rejected'=>'danger']; @endphp
-                <span class="badge bg-{{ $colors[$leaveRequest->status] ?? 'secondary' }} fs-6 px-4 py-2">{{ ucfirst($leaveRequest->status) }}</span>
+                @php $colors = ['pending'=>'warning','approved'=>'success','rejected'=>'danger']; $statusLabel = ['pending'=>'Menunggu','approved'=>'Disetujui','rejected'=>'Ditolak']; @endphp
+                <span class="badge bg-{{ $colors[$leaveRequest->status] ?? 'secondary' }} fs-6 px-4 py-2">{{ $statusLabel[$leaveRequest->status] ?? ucfirst($leaveRequest->status) }}</span>
 
                 @if($leaveRequest->approver)
                     <p class="text-muted mt-3 mb-1">Diproses oleh:</p>

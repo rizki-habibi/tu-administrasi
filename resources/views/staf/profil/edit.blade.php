@@ -162,7 +162,7 @@
                                     <i class="bi bi-camera me-1"></i>Ganti Foto Profil
                                 </button>
                             </div>
-                            <input type="file" name="photo" id="photoFileInput" class="d-none" accept="image/*">
+                            <input type="file" name="foto" id="photoFileInput" class="d-none" accept="image/*">
                             <input type="hidden" name="photo_base64" id="photoBase64Input">
                             <small class="text-muted d-block mt-1">Bisa via kamera/webcam atau unggah file</small>
                             @error('foto') <div class="text-danger small mt-1">{{ $message }}</div> @enderror

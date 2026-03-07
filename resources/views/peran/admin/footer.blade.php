@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }, 50);
             }
+
+            // Keep the clicked item visible in sidebar
+            setTimeout(() => {
+                this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 120);
         });
     });
 

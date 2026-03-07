@@ -10,7 +10,6 @@
     .location-address { font-size: .82rem; background: #f0fdf4; border-radius: 8px; padding: 10px 14px; border-left: 3px solid #10b981; }
     .distance-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
     .distance-ok { background: #d1fae5; color: #065f46; }
-    .distance-far { background: #fee2e2; color: #991b1b; }
     .distance-unknown { background: #f1f5f9; color: #475569; }
     .camera-wrapper { position: relative; border-radius: 12px; overflow: hidden; background: #000; min-height: 200px; }
     .capture-overlay { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); }
@@ -533,13 +532,12 @@ function getLocation(type) {
 
         if (HAS_OFFICE) {
             const dist = haversine(lat, lng, OFFICE_LAT, OFFICE_LNG);
-            const ok = dist <= MAX_DIST;
-            distEl.innerHTML = `<span class="distance-badge ${ok?'distance-ok':'distance-far'}">
-                <i class="bi bi-${ok?'check-circle-fill':'exclamation-circle-fill'}"></i>
-                Jarak ke sekolah: <strong>${dist}m</strong> ${ok?'? Dalam radius':'? Melebihi batas '+MAX_DIST+'m'}
+            distEl.innerHTML = `<span class="distance-badge distance-ok">
+                <i class="bi bi-check-circle-fill"></i>
+                Lokasi terdeteksi: <strong>${dist}m</strong> dari sekolah
             </span>`;
         } else {
-            distEl.innerHTML = `<span class="distance-badge distance-unknown"><i class="bi bi-info-circle"></i> Koordinat sekolah belum diatur admin</span>`;
+            distEl.innerHTML = `<span class="distance-badge distance-ok"><i class="bi bi-check-circle-fill"></i> Lokasi GPS berhasil terdeteksi</span>`;
         }
         checkReady(type);
     };

@@ -7,7 +7,10 @@
         <h4 class="fw-bold mb-1" style="color:#1e293b;">Analisis Metode STAR</h4>
         <p class="text-muted mb-0" style="font-size:.85rem;">Situation - Task - Action - Result</p>
     </div>
-    <a href="{{ route('admin.evaluasi.star.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Tambah Analisis</a>
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.evaluasi.star.trash') }}" class="btn btn-outline-secondary"><i class="bi bi-trash3 me-1"></i> Sampah</a>
+        <a href="{{ route('admin.evaluasi.star.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Tambah</a>
+    </div>
 </div>
 
 <!-- STAR Explanation Cards -->
@@ -42,7 +45,16 @@
                         <td><span class="badge bg-info bg-opacity-10 text-info">{{ ucfirst($a->kategori ?? '-') }}</span></td>
                         <td>{{ $a->creator->nama ?? 'N/A' }}</td>
                         <td>{{ $a->created_at->format('d/m/Y') }}</td>
-                        <td><a href="{{ route('admin.evaluasi.star') }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a href="{{ route('admin.evaluasi.star.show', $a) }}" class="btn btn-sm btn-outline-primary" title="Lihat"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('admin.evaluasi.star.edit', $a) }}" class="btn btn-sm btn-outline-warning" title="Edit"><i class="bi bi-pencil"></i></a>
+                                <form action="{{ route('admin.evaluasi.star.destroy', $a) }}" method="POST" class="d-inline">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Pindahkan analisis ini ke sampah?" title="Hapus"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     @empty
                     <tr><td colspan="6" class="text-center py-4 text-muted"><i class="bi bi-inbox" style="font-size:2rem;"></i><br>Belum ada analisis STAR</td></tr>

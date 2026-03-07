@@ -36,12 +36,12 @@
     </div>
     <div class="col-6 col-lg-3">
         <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-            <div><p>Izin Pending</p><h3>{{ $rekapIzin['pending'] }}</h3><p>dari {{ $rekapIzin['total'] }} total</p></div>
+            <div><p>Izin Menunggu</p><h3>{{ $rekapIzin['pending'] }}</h3><p>dari {{ $rekapIzin['total'] }} total</p></div>
         </div>
     </div>
     <div class="col-6 col-lg-3">
         <div class="stat-card" style="background: linear-gradient(135deg, #ef4444, #f87171);">
-            <div><p>SKP Pending</p><h3>{{ $skpStats['diajukan'] }}</h3><p>menunggu penilaian</p></div>
+            <div><p>SKP Menunggu</p><h3>{{ $skpStats['diajukan'] }}</h3><p>menunggu penilaian</p></div>
         </div>
     </div>
 </div>
