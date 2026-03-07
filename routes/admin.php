@@ -375,6 +375,20 @@ Route::prefix('pengaturan-ai')->name('pengaturan-ai.')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| Database Inspector & Cloud Drive (Admin Only)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('database')->name('database.')->group(function () {
+    Route::get('/', [Admin\DatabaseController::class, 'index'])->name('index');
+    Route::get('/tabel/{table}', [Admin\DatabaseController::class, 'showTable'])->name('show');
+    Route::get('/cloud', [Admin\DatabaseController::class, 'cloudIndex'])->name('cloud');
+    Route::post('/cloud', [Admin\DatabaseController::class, 'cloudStore'])->name('cloud.store');
+    Route::put('/cloud/{cloud}', [Admin\DatabaseController::class, 'cloudUpdate'])->name('cloud.update');
+    Route::delete('/cloud/{cloud}', [Admin\DatabaseController::class, 'cloudDestroy'])->name('cloud.destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Pusat Ekspor Data
 |--------------------------------------------------------------------------
 */

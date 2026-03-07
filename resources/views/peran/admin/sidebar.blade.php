@@ -470,13 +470,13 @@
         </div>
 
         {{-- ▸ Sistem — Pengingat, panduan, tools AI, ekspor & pengaturan --}}
-        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'open' : '' }}">
+        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') || request()->routeIs('admin.database.*') ? 'open' : '' }}">
             <div class="nav-group-label" data-toggle="nav-group">
                 <span>Sistem</span>
                 @if($overdueReminders > 0)<span class="group-badge bg-warning text-dark">{{ $overdueReminders }}</span>@endif
                 <i class="bi bi-chevron-down"></i>
             </div>
-            <div class="nav-group-desc">Pengingat, panduan, AI tools, ekspor & pengaturan</div>
+            <div class="nav-group-desc">Pengingat, panduan, AI tools, database, ekspor & pengaturan</div>
             <div class="nav-group-items">
                 <div class="nav-item {{ request()->routeIs('admin.pengingat.*') ? 'open' : '' }}">
                     <a class="nav-link {{ request()->routeIs('admin.pengingat.*') ? 'active' : '' }}" data-toggle="submenu">
@@ -516,6 +516,19 @@
                         </a>
                         <a href="{{ route('admin.word-ai.create') }}" class="sub-link {{ request()->routeIs('admin.word-ai.create') ? 'active' : '' }}">
                             <i class="bi bi-robot sub-icon"></i> Buat Dokumen AI
+                        </a>
+                    </div>
+                </div>
+                <div class="nav-item {{ request()->routeIs('admin.database.*') ? 'open' : '' }}">
+                    <a class="nav-link {{ request()->routeIs('admin.database.*') ? 'active' : '' }}" data-toggle="submenu">
+                        <i class="bi bi-database-fill-gear icon"></i> <span>Database & Cloud</span> <i class="bi bi-chevron-right arrow"></i>
+                    </a>
+                    <div class="submenu">
+                        <a href="{{ route('admin.database.index') }}" class="sub-link {{ request()->routeIs('admin.database.index') || request()->routeIs('admin.database.show') ? 'active' : '' }}">
+                            <i class="bi bi-database sub-icon"></i> Inspeksi Database
+                        </a>
+                        <a href="{{ route('admin.database.cloud') }}" class="sub-link {{ request()->routeIs('admin.database.cloud*') ? 'active' : '' }}">
+                            <i class="bi bi-cloud-fill sub-icon"></i> Cloud Drive
                         </a>
                     </div>
                 </div>

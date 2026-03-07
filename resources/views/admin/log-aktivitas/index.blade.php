@@ -5,13 +5,27 @@
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
     <div>
         <h5 class="fw-bold mb-1"><i class="bi bi-clock-history text-primary me-2"></i>Log Aktivitas Sistem</h5>
-        <p class="text-muted mb-0" style="font-size:.82rem;">Riwayat semua aktivitas pengguna di sistem administrasi</p>
+        <p class="text-muted mb-0" style="font-size:.82rem;">Riwayat semua aktivitas pengguna — deteksi perubahan, penghapusan, dan anomali</p>
     </div>
 </div>
+
+{{-- Peringatan Anomali --}}
+@if(!empty($anomali))
+@foreach($anomali as $a)
+<div class="alert alert-{{ $a['level'] }} border-0 shadow-sm d-flex align-items-center gap-2 mb-3" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <div>{{ $a['pesan'] }}</div>
+</div>
+@endforeach
+@endif
 
 <div class="card border-0 shadow-sm mb-3">
     <div class="card-body py-3">
         <form method="GET" class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small fw-bold">Pencarian</label>
+                <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari deskripsi, modul, IP, atau nama..." value="{{ request('search') }}">
+            </div>
             <div class="col-md-2">
                 <label class="form-label small fw-bold">Modul</label>
                 <select name="modul" class="form-select form-select-sm">

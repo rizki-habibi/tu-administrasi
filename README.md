@@ -81,10 +81,16 @@ Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan pre
 - **Responsive Design** — Full responsive untuk mobile/tablet/desktop
 - **Dark Mode** — Toggle tema gelap melalui Settings Drawer
 
+### Database & Cloud Storage
+- **Database Inspector** — Admin bisa melihat semua tabel database, jumlah record, ukuran, struktur kolom, 10 data terbaru
+- **Cloud Drive Management** — Setiap peran punya cloud drive sendiri (Google Drive, OneDrive, TeraBox, Custom)
+- **Admin Cloud Oversight** — Admin bisa melihat & mengelola semua cloud drive dari semua peran
+- **Data Protection** — Data cloud drive dari peran non-admin terkunci, hanya admin bisa hapus
+
 ### Manajemen & Monitoring
 - **Resolusi** — Keputusan Kepala Sekolah
 - **Panduan** — Manajemen panduan/manual dengan upload Google Drive & cetak/unduh
-- **Log Aktivitas** — Audit log aktivitas pengguna
+- **Log Aktivitas** — Audit log + pencarian + deteksi anomali otomatis (hapus massal, login gagal)
 - **Pusat Ekspor** — Ekspor terpusat (pegawai, kehadiran, dokumen)
 - **Akreditasi** — Dokumen akreditasi & EDS (Evaluasi Diri Sekolah)
 - **Laporan** — Manajemen laporan per peran
@@ -93,8 +99,9 @@ Middleware `MiddlewarePeran` mengatur akses berbasis peran. Staf menggunakan pre
 ### Pengaturan & Backup
 - **Profil & Pengaturan** — Profil pengguna, password, preferensi tampilan, pengaturan notifikasi
 - **Google Drive Backup** — Backup otomatis ke Google Drive (database + uploads → zip → upload)
+- **Cloud Drive Links** — Setiap peran bisa simpan link ke berbagai cloud storage
 - **Pengaturan Notifikasi** — Toggle push/email/popup per kategori
-- **Dev System Scan** — Diagnostik sistem (lokal saja)
+- **Konfigurasi AI Multi-Provider** — Admin kelola API key Gemini/OpenAI/Anthropic/Custom
 
 ## Struktur Rute
 

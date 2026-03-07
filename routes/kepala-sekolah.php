@@ -212,3 +212,14 @@ Route::get('/panduan', [Kepsek\PanduanController::class, 'index'])->name('pandua
 Route::get('/panduan/{panduan}', [Kepsek\PanduanController::class, 'show'])->name('panduan.show');
 Route::get('/panduan/{panduan}/download', [Kepsek\PanduanController::class, 'download'])->name('panduan.download');
 Route::post('/panduan/{panduan}/google-drive', [Kepsek\PanduanController::class, 'uploadDrive'])->name('panduan.upload-drive');
+
+/*
+|--------------------------------------------------------------------------
+| Cloud Drive
+|--------------------------------------------------------------------------
+*/
+Route::prefix('cloud-drive')->name('cloud-drive.')->group(function () {
+    Route::get('/', [Kepsek\PenyimpananCloudController::class, 'index'])->name('index');
+    Route::post('/', [Kepsek\PenyimpananCloudController::class, 'store'])->name('store');
+    Route::put('/{cloud}', [Kepsek\PenyimpananCloudController::class, 'update'])->name('update');
+});

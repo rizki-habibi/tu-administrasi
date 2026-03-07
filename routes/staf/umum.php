@@ -187,6 +187,17 @@ Route::post('/panduan/{panduan}/google-drive', [Staff\PanduanController::class, 
 
 /*
 |--------------------------------------------------------------------------
+| Cloud Drive (Semua Staff)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('cloud-drive')->name('cloud-drive.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Staf\PenyimpananCloudController::class, 'index'])->name('index');
+    Route::post('/', [\App\Http\Controllers\Staf\PenyimpananCloudController::class, 'store'])->name('store');
+    Route::put('/{cloud}', [\App\Http\Controllers\Staf\PenyimpananCloudController::class, 'update'])->name('update');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Evaluasi (Semua Staff)
 |--------------------------------------------------------------------------
 */
