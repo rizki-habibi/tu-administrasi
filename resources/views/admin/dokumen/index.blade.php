@@ -48,13 +48,13 @@
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
-                    <th width="40">#</th>
+                    <th width="40">No</th>
                     <th>Dokumen</th>
                     <th>Kategori</th>
                     <th>Ukuran</th>
                     <th>Diupload</th>
                     <th>Tanggal</th>
-                    <th width="140">Aksi</th>
+                    <th width="140" class="text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,12 +78,14 @@
                     <td><small>{{ $doc->uploader->nama ?? '-' }}</small></td>
                     <td><small>{{ $doc->created_at->format('d/m/Y') }}</small></td>
                     <td>
-                        <a href="{{ asset('storage/' . $doc->path_file) }}" class="btn btn-sm btn-outline-success" target="_blank" title="Download"><i class="bi bi-download"></i></a>
-                        <a href="{{ route('admin.dokumen.edit', $doc) }}" class="btn btn-sm btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
-                        <form action="{{ route('admin.dokumen.destroy', $doc) }}" method="POST" class="d-inline">
-                            @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus dokumen ini?"><i class="bi bi-trash"></i></button>
-                        </form>
+                        <div class="d-flex gap-1 justify-content-center">
+                            <a href="{{ asset('storage/' . $doc->path_file) }}" class="btn btn-sm btn-outline-success" target="_blank" title="Download"><i class="bi bi-download"></i></a>
+                            <a href="{{ route('admin.dokumen.edit', $doc) }}" class="btn btn-sm btn-outline-warning" title="Ubah"><i class="bi bi-pencil"></i></a>
+                            <form action="{{ route('admin.dokumen.destroy', $doc) }}" method="POST" class="d-inline">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-sm btn-outline-danger" data-confirm="Hapus dokumen ini?"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty

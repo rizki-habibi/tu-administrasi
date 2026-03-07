@@ -81,7 +81,7 @@
         <table class="table table-hover align-middle mb-0" style="font-size:.85rem;" id="tableList">
             <thead class="table-light">
                 <tr>
-                    <th style="width:40px">#</th>
+                    <th style="width:40px">No</th>
                     <th>Nama Tabel</th>
                     <th class="text-end">Record</th>
                     <th class="text-end">Ukuran Data</th>

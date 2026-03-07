@@ -101,7 +101,7 @@
         <table class="table table-hover align-middle mb-0" style="font-size:.85rem;">
             <thead class="table-light">
                 <tr>
-                    <th style="width:40px">#</th>
+                    <th style="width:40px">No</th>
                     <th>Nama</th>
                     <th>Pemilik</th>
                     <th>Drive</th>

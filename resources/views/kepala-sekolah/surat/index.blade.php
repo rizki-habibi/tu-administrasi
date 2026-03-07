@@ -34,7 +34,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Nomor Surat</th><th>Jenis</th><th>Perihal</th><th>Tujuan/Asal</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Nomor Surat</th><th>Jenis</th><th>Perihal</th><th>Tujuan/Asal</th><th>Tanggal</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($surats as $i => $surat)

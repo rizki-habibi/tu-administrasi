@@ -29,7 +29,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Judul</th><th>Kategori</th><th>Deskripsi</th><th>Pengunggah</th><th>Ukuran</th><th>Tanggal</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Judul</th><th>Kategori</th><th>Deskripsi</th><th>Pengunggah</th><th>Ukuran</th><th>Tanggal</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($evidences as $i => $ev)

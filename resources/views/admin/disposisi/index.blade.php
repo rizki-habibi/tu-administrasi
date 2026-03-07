@@ -70,7 +70,7 @@
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
-                    <th style="width:40px;">#</th>
+                    <th style="width:40px;">No</th>
                     <th>Surat</th>
                     <th>Ditujukan Kepada</th>
                     <th>Instruksi</th>

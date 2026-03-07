@@ -489,7 +489,25 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('[data-toggle="nav-group"]').forEach(label => {
-            label.addEventListener('click', function() { this.closest('.nav-group').classList.toggle('open'); });
+            label.addEventListener('click', function() {
+                const group = this.closest('.nav-group');
+                const isOpening = !group.classList.contains('open');
+
+                if (isOpening) {
+                    group.classList.add('open');
+                    const items = group.querySelector('.nav-group-items');
+                    if (items) items.style.maxHeight = items.scrollHeight + 'px';
+                } else {
+                    group.querySelectorAll('.nav-item.open').forEach(ni => {
+                        ni.classList.remove('open');
+                        const sub = ni.querySelector('.submenu');
+                        if (sub) sub.style.maxHeight = '';
+                    });
+                    group.classList.remove('open');
+                    const items = group.querySelector('.nav-group-items');
+                    if (items) items.style.maxHeight = '';
+                }
+            });
         });
     });
     </script>

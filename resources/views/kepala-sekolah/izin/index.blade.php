@@ -34,7 +34,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Pegawai</th><th>Jenis</th><th>Tanggal</th><th>Durasi</th><th>Alasan</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Pegawai</th><th>Jenis</th><th>Tanggal</th><th>Durasi</th><th>Alasan</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($leaveRequests as $i => $lr)

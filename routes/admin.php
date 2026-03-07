@@ -109,6 +109,15 @@ Route::resource('agenda', Admin\AgendaController::class)->parameters(['agenda' =
 
 /*
 |--------------------------------------------------------------------------
+| Notule Kegiatan (Header Date Popup)
+|--------------------------------------------------------------------------
+*/
+Route::get('/notule', [Admin\NotuleController::class, 'index'])->name('notule.index');
+Route::post('/notule', [Admin\NotuleController::class, 'store'])->name('notule.store');
+Route::delete('/notule/{notule}', [Admin\NotuleController::class, 'destroy'])->name('notule.destroy');
+
+/*
+|--------------------------------------------------------------------------
 | Notifikasi
 |--------------------------------------------------------------------------
 */

@@ -36,15 +36,33 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation();
             const navItem = this.closest('.nav-item');
             if (!navItem) return;
-            // Don't close parent when toggling child
+
+            const isOpening = !navItem.classList.contains('open');
             navItem.classList.toggle('open');
-            // Recalculate parent max-heights for nested submenus
-            let parent = navItem.parentElement;
-            while (parent) {
-                if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
-                    parent.style.maxHeight = parent.scrollHeight + 500 + 'px';
+
+            if (isOpening) {
+                // Recalculate parent max-heights for nested submenus
+                let parent = navItem.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                        parent.style.maxHeight = parent.scrollHeight + 500 + 'px';
+                    }
+                    parent = parent.parentElement;
                 }
-                parent = parent.parentElement;
+            } else {
+                // When closing, remove inline maxHeight on the submenu itself
+                const sub = navItem.querySelector('.submenu');
+                if (sub) sub.style.maxHeight = '';
+                // Recalculate parent max-heights after closing
+                setTimeout(() => {
+                    let parent = navItem.parentElement;
+                    while (parent) {
+                        if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                            parent.style.maxHeight = parent.scrollHeight + 'px';
+                        }
+                        parent = parent.parentElement;
+                    }
+                }, 50);
             }
         });
     });

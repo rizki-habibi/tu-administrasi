@@ -25,7 +25,7 @@
             <table class="table table-hover align-middle" style="font-size:.82rem;">
                 <thead style="background:#f1f5f9;">
                     <tr>
-                        <th style="font-weight:600;color:#475569;">#</th>
+                        <th style="font-weight:600;color:#475569;">No</th>
                         <th style="font-weight:600;color:#475569;">Judul</th>
                         <th style="font-weight:600;color:#475569;">Kategori</th>
                         <th style="font-weight:600;color:#475569;">Nama File</th>

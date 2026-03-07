@@ -112,6 +112,7 @@
         .header-title { font-size: .9rem; font-weight: 600; color: #1f2937; }
         .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
         .header-date { font-size: .78rem; color: #6b7280; display: flex; align-items: center; gap: 6px; }
+        .header-date:hover { background: #ede9fe; color: var(--primary); border-color: #c4b5fd; }
         .header-tool-btn, .header-toggle-btn { position: relative; background: #f3f4f6; border: 1px solid #e5e7eb; width: 38px; height: 38px; border-radius: 10px; font-size: 1.1rem; color: #4b5563; cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; }
         .header-tool-btn:hover, .header-toggle-btn:hover { background: #ede9fe; color: var(--primary); border-color: #c4b5fd; }
         .header-toggle-btn.active { background: #ede9fe; color: var(--primary); border-color: #c4b5fd; }
@@ -554,7 +555,23 @@
         // ── Nav Group Toggle ──
         document.querySelectorAll('[data-toggle="nav-group"]').forEach(label => {
             label.addEventListener('click', function() {
-                this.closest('.nav-group').classList.toggle('open');
+                const group = this.closest('.nav-group');
+                const items = group.querySelector('.nav-group-items');
+                const isOpening = !group.classList.contains('open');
+
+                if (isOpening) {
+                    group.classList.add('open');
+                    if (items) items.style.maxHeight = items.scrollHeight + 'px';
+                } else {
+                    // Close all open submenus inside this group first
+                    group.querySelectorAll('.nav-item.open').forEach(ni => {
+                        ni.classList.remove('open');
+                        const sub = ni.querySelector('.submenu');
+                        if (sub) sub.style.maxHeight = '';
+                    });
+                    group.classList.remove('open');
+                    if (items) items.style.maxHeight = '';
+                }
             });
         });
     });

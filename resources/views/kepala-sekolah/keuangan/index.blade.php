@@ -80,7 +80,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Kode</th><th>Jenis</th><th>Kategori</th><th>Uraian</th><th>Jumlah</th><th>Tanggal</th></tr>
+                    <tr><th>No</th><th>Kode</th><th>Jenis</th><th>Kategori</th><th>Uraian</th><th>Jumlah</th><th>Tanggal</th></tr>
                 </thead>
                 <tbody>
                 @forelse($records as $i => $rec)

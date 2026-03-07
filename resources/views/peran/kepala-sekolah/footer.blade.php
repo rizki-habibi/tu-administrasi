@@ -36,13 +36,29 @@ document.addEventListener('DOMContentLoaded', function () {
             e.stopPropagation();
             const navItem = this.closest('.nav-item');
             if (!navItem) return;
+            const isOpening = !navItem.classList.contains('open');
             navItem.classList.toggle('open');
-            let parent = navItem.parentElement;
-            while (parent) {
-                if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
-                    parent.style.maxHeight = parent.scrollHeight + 500 + 'px';
+
+            if (isOpening) {
+                let parent = navItem.parentElement;
+                while (parent) {
+                    if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                        parent.style.maxHeight = parent.scrollHeight + 500 + 'px';
+                    }
+                    parent = parent.parentElement;
                 }
-                parent = parent.parentElement;
+            } else {
+                const sub = navItem.querySelector('.submenu');
+                if (sub) sub.style.maxHeight = '';
+                setTimeout(() => {
+                    let parent = navItem.parentElement;
+                    while (parent) {
+                        if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                            parent.style.maxHeight = parent.scrollHeight + 'px';
+                        }
+                        parent = parent.parentElement;
+                    }
+                }, 50);
             }
         });
     });

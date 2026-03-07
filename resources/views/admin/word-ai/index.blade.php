@@ -123,7 +123,7 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr class="bg-light">
-                        <th style="width:5%;" class="ps-3">#</th>
+                        <th style="width:5%;" class="ps-3">No</th>
                         <th style="width:30%;">Judul</th>
                         <th style="width:12%;">Kategori</th>
                         <th style="width:12%;">Pembuat</th>

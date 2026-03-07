@@ -28,7 +28,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Pegawai</th><th>Peran</th><th>Periode</th><th>Sasaran Kinerja</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Pegawai</th><th>Peran</th><th>Periode</th><th>Sasaran Kinerja</th><th>Nilai</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($skps as $i => $skp)

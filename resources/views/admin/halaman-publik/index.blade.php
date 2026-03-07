@@ -64,7 +64,7 @@
         <table class="table table-hover align-middle mb-0" style="font-size:.82rem;">
             <thead style="background:#f8fafc;">
                 <tr>
-                    <th style="width:40px;">#</th>
+                    <th style="width:40px;">No</th>
                     <th>Konten</th>
                     <th style="width:110px;">Kategori</th>
                     <th style="width:100px;">Bagian</th>

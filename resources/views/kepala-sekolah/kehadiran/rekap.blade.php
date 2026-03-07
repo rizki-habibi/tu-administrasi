@@ -67,7 +67,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Tanggal</th><th>Pegawai</th><th>Masuk</th><th>Keluar</th><th>Status</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Tanggal</th><th>Pegawai</th><th>Masuk</th><th>Keluar</th><th>Status</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @forelse($attendances as $i => $att)

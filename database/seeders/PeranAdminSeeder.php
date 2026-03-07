@@ -15,6 +15,8 @@ use App\Models\AnalisisStar;
 use App\Models\UcapanUlangTahun;
 use App\Models\Pengguna;
 use App\Models\DokumenWord;
+use App\Models\CatatanHarian;
+use App\Models\PengaturanPengguna;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -371,6 +373,65 @@ class PeranAdminSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
+        | 14. CATATAN HARIAN / NOTULE KEGIATAN
+        |--------------------------------------------------------------------------
+        */
+        $notuleData = [
+            [
+                'tanggal'       => $today->copy()->subDays(2)->toDateString(),
+                'kegiatan'      => 'Rapat koordinasi staf TU membahas jadwal piket dan pembagian tugas semester genap.',
+                'hasil'         => 'Jadwal piket baru disepakati, berlaku mulai minggu depan.',
+                'kendala'       => 'Beberapa staf belum bisa hadir karena izin sakit.',
+                'rencana_besok' => 'Sosialisasi jadwal piket ke seluruh staf.',
+                'status'        => 'final',
+            ],
+            [
+                'tanggal'       => $today->copy()->subDays(1)->toDateString(),
+                'kegiatan'      => 'Verifikasi data kehadiran bulan Februari dan input laporan BOS triwulan I.',
+                'hasil'         => 'Data kehadiran Februari sudah direkap. Laporan BOS 60% selesai.',
+                'kendala'       => 'Data keuangan belum lengkap dari bagian keuangan.',
+                'rencana_besok' => 'Follow up data keuangan dan finalisasi laporan BOS.',
+                'status'        => 'final',
+            ],
+            [
+                'tanggal'       => $today->toDateString(),
+                'kegiatan'      => 'Persiapan dokumen akreditasi dan pengecekan kelengkapan bukti fisik standar proses.',
+                'hasil'         => 'Dokumen standar proses sudah 85% lengkap.',
+                'kendala'       => null,
+                'rencana_besok' => 'Melengkapi dokumen standar penilaian.',
+                'status'        => 'draft',
+            ],
+        ];
+
+        foreach ($notuleData as $n) {
+            CatatanHarian::updateOrCreate(
+                ['pengguna_id' => $admin->id, 'tanggal' => $n['tanggal']],
+                array_merge($n, ['pengguna_id' => $admin->id])
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 15. PENGATURAN PENGGUNA (Profil & Tampilan)
+        |--------------------------------------------------------------------------
+        */
+        $pengaturanDefaults = [
+            'tema'              => 'terang',
+            'ukuran_font'       => 'normal',
+            'sidebar_mini'      => 'false',
+            'warna_aksen'       => '#6366f1',
+            'notifikasi_suara'  => 'true',
+            'notifikasi_push'   => 'true',
+            'notifikasi_email'  => 'false',
+            'notifikasi_popup'  => 'true',
+        ];
+
+        foreach ($pengaturanDefaults as $key => $val) {
+            PengaturanPengguna::atur($admin->id, $key, $val);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
         | OUTPUT
         |--------------------------------------------------------------------------
         */
@@ -381,6 +442,7 @@ class PeranAdminSeeder extends Seeder
         $this->command->info('  Fitur  : Pengaturan kehadiran, 7 event, 4 catatan beranda,');
         $this->command->info('           3 STAR analysis, 6 EDS, 13 akreditasi, 6 bukti fisik,');
         $this->command->info('           10 template dokumen, 2 word AI, 5 pengingat,');
-        $this->command->info('           ucapan ultah, 5 notifikasi');
+        $this->command->info('           ucapan ultah, 5 notifikasi, 3 notule kegiatan,');
+        $this->command->info('           8 pengaturan pengguna');
     }
 }

@@ -332,7 +332,23 @@
         // ── Nav Group Toggle ──
         document.querySelectorAll('[data-toggle="nav-group"]').forEach(label => {
             label.addEventListener('click', function() {
-                this.closest('.nav-group').classList.toggle('open');
+                const group = this.closest('.nav-group');
+                const isOpening = !group.classList.contains('open');
+
+                if (isOpening) {
+                    group.classList.add('open');
+                    const items = group.querySelector('.nav-group-items');
+                    if (items) items.style.maxHeight = items.scrollHeight + 'px';
+                } else {
+                    group.querySelectorAll('.nav-item.open').forEach(ni => {
+                        ni.classList.remove('open');
+                        const sub = ni.querySelector('.submenu');
+                        if (sub) sub.style.maxHeight = '';
+                    });
+                    group.classList.remove('open');
+                    const items = group.querySelector('.nav-group-items');
+                    if (items) items.style.maxHeight = '';
+                }
             });
         });
 
@@ -340,7 +356,31 @@
         document.querySelectorAll('[data-toggle="submenu"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                this.closest('.nav-item').classList.toggle('open');
+                const navItem = this.closest('.nav-item');
+                const isOpening = !navItem.classList.contains('open');
+                navItem.classList.toggle('open');
+
+                if (isOpening) {
+                    let parent = navItem.parentElement;
+                    while (parent) {
+                        if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                            parent.style.maxHeight = parent.scrollHeight + 500 + 'px';
+                        }
+                        parent = parent.parentElement;
+                    }
+                } else {
+                    const sub = navItem.querySelector('.submenu');
+                    if (sub) sub.style.maxHeight = '';
+                    setTimeout(() => {
+                        let parent = navItem.parentElement;
+                        while (parent) {
+                            if (parent.classList.contains('submenu') || parent.classList.contains('nav-group-items')) {
+                                parent.style.maxHeight = parent.scrollHeight + 'px';
+                            }
+                            parent = parent.parentElement;
+                        }
+                    }, 50);
+                }
             });
         });
 

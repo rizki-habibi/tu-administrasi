@@ -61,7 +61,7 @@
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr><th>#</th><th>Pegawai</th><th>Masuk</th><th>Keluar</th><th>Status</th><th>Catatan</th><th>Aksi</th></tr>
+                    <tr><th>No</th><th>Pegawai</th><th>Masuk</th><th>Keluar</th><th>Status</th><th>Catatan</th><th>Aksi</th></tr>
                 </thead>
                 <tbody>
                 @php $no = 1; @endphp

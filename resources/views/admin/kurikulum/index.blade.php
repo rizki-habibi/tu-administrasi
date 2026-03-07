@@ -75,7 +75,7 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th style="width:40px;">#</th>
+                        <th style="width:40px;">No</th>
                         <th>Judul Dokumen</th>
                         <th>Jenis</th>
                         <th>Mata Pelajaran</th>

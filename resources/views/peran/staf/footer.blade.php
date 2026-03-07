@@ -31,21 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // ── Submenu Toggle (Accordion) ──────────────────────────────────
-    document.querySelectorAll('[data-toggle="submenu"]').forEach(el => {
-        el.addEventListener('click', e => {
-            e.preventDefault();
-            const item   = el.closest('.nav-item');
-            const isOpen = item.classList.contains('open');
-
-            // Close all open submenus first
-            document.querySelectorAll('.nav-item.open').forEach(i => i.classList.remove('open'));
-
-            // If it was closed, open it
-            if (!isOpen) item.classList.add('open');
-        });
-    });
-
     // ── SweetAlert Confirm (data-confirm) ───────────────────────────
     document.addEventListener('click', function (e) {
         const btn = e.target.closest('[data-confirm]');

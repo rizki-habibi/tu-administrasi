@@ -105,7 +105,7 @@
         <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
                 <tr>
-                    <th style="width:50px;">#</th>
+                    <th style="width:50px;">No</th>
                     <th>Nomor Surat</th>
                     <th>Jenis</th>
                     <th>Perihal</th>

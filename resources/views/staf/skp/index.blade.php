@@ -40,7 +40,7 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Periode</th>
                         <th>Tahun</th>
                         <th>Sasaran Kinerja</th>
