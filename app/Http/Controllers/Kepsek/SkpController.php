@@ -36,11 +36,13 @@ class SkpController extends Controller
     {
         $request->validate([
             'predikat' => 'required|in:sangat_baik,baik,cukup,kurang,sangat_kurang',
+            'catatan' => 'nullable|string|max:1000',
         ]);
 
         $skp->update([
-            'status' => 'dinilai',
+            'status' => 'disetujui',
             'predikat' => $request->predikat,
+            'catatan' => $request->catatan,
             'disetujui_oleh' => auth()->id(),
             'disetujui_pada' => now(),
         ]);
@@ -48,25 +50,54 @@ class SkpController extends Controller
         // Notify staff
         Notifikasi::create([
             'pengguna_id' => $skp->pengguna_id,
-            'judul' => 'SKP Telah Dinilai',
-            'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} telah dinilai dengan predikat " . ucfirst(str_replace('_', ' ', $request->predikat)),
+            'judul' => 'SKP Disetujui',
+            'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} telah disetujui dengan predikat " . ucfirst(str_replace('_', ' ', $request->predikat)) . ".",
             'jenis' => 'success',
         ]);
 
-        return redirect()->route('kepala-sekolah.skp.index')->with('success', 'SKP berhasil dinilai.');
+        return redirect()->route('kepala-sekolah.skp.index')->with('success', 'SKP berhasil disetujui.');
     }
 
     public function reject(Request $request, Skp $skp)
     {
+        $request->validate([
+            'catatan_revisi' => 'nullable|string|max:1000',
+        ]);
+
+        $skp->update([
+            'status' => 'ditolak',
+            'catatan_revisi' => $request->catatan_revisi,
+            'disetujui_oleh' => auth()->id(),
+            'ditolak_pada' => now(),
+        ]);
+
+        Notifikasi::create([
+            'pengguna_id' => $skp->pengguna_id,
+            'judul' => 'SKP Ditolak',
+            'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} ditolak. " . ($request->catatan_revisi ?? ''),
+            'jenis' => 'danger',
+        ]);
+
+        return redirect()->route('kepala-sekolah.skp.index')->with('success', 'SKP ditolak.');
+    }
+
+    public function revisi(Request $request, Skp $skp)
+    {
+        $request->validate([
+            'catatan_revisi' => 'required|string|max:1000',
+        ]);
+
         $skp->update([
             'status' => 'revisi',
+            'catatan_revisi' => $request->catatan_revisi,
             'disetujui_oleh' => auth()->id(),
+            'direvisi_pada' => now(),
         ]);
 
         Notifikasi::create([
             'pengguna_id' => $skp->pengguna_id,
             'judul' => 'SKP Perlu Revisi',
-            'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} perlu direvisi. " . ($request->input('catatan', '')),
+            'pesan' => "SKP periode {$skp->periode} tahun {$skp->tahun} perlu direvisi: " . $request->catatan_revisi,
             'jenis' => 'warning',
         ]);
 

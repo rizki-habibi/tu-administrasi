@@ -26,10 +26,10 @@ class HalamanUtamaController extends Controller
 
         // Statistik pengunjung
         $statistikPengunjung = [
-            'hari_ini'        => $pengunjungTersedia ? Pengunjung::hariIni() : 0,
-            'bulan_ini'       => $pengunjungTersedia ? Pengunjung::bulanIni() : 0,
-            'total_unik'      => $pengunjungTersedia ? Pengunjung::totalUnik() : 0,
-            'total_kunjungan' => $pengunjungTersedia ? Pengunjung::totalKunjungan() : 0,
+            'hari_ini'   => $pengunjungTersedia ? Pengunjung::hariIni() : 0,
+            'bulan_ini'  => $pengunjungTersedia ? Pengunjung::bulanIni() : 0,
+            'total_unik' => $pengunjungTersedia ? Pengunjung::totalUnik() : 0,
+            'total'      => $pengunjungTersedia ? Pengunjung::totalKunjungan() : 0,
         ];
 
         // Statistik layanan sekolah (publik — hanya angka umum)
@@ -43,11 +43,11 @@ class HalamanUtamaController extends Controller
 
         // Data pengunjung terakhir (untuk peta — hanya yang punya koordinat)
         $lokasiPengunjung = $pengunjungTersedia
-            ? Pengunjung::whereNotNull('latitude')
-                ->whereNotNull('longitude')
-                ->latest()
-                ->take(50)
-                ->get(['latitude', 'longitude', 'kota', 'created_at'])
+            ? Pengunjung::selectRaw("COALESCE(negara, kota, 'Tidak diketahui') as negara, COALESCE(kota, '') as kota, COUNT(*) as total")
+                ->groupByRaw("COALESCE(negara, kota, 'Tidak diketahui'), COALESCE(kota, '')")
+                ->orderByDesc('total')
+                ->take(10)
+                ->get()
             : collect();
 
         // Berita terbaru untuk halaman utama

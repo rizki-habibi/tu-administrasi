@@ -26,12 +26,14 @@ Route::get('/pegawai/{pegawai}', [Kepsek\PegawaiController::class, 'show'])->nam
 
 /*
 |--------------------------------------------------------------------------
-| Kehadiran (Read-Only + Laporan)
+| Kehadiran (Monitor + Absensi Pribadi)
 |--------------------------------------------------------------------------
 */
 Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
     Route::get('/', [Kepsek\KehadiranController::class, 'index'])->name('index');
     Route::get('/laporan', [Kepsek\KehadiranController::class, 'report'])->name('laporan');
+    Route::post('/masuk', [Kepsek\KehadiranController::class, 'clockIn'])->name('masuk');
+    Route::post('/pulang', [Kepsek\KehadiranController::class, 'clockOut'])->name('pulang');
     Route::get('/{kehadiran}', [Kepsek\KehadiranController::class, 'show'])->name('show');
 });
 
@@ -57,6 +59,7 @@ Route::prefix('skp')->name('skp.')->group(function () {
     Route::get('/{skp}', [Kepsek\SkpController::class, 'show'])->name('show');
     Route::patch('/{skp}/setujui', [Kepsek\SkpController::class, 'approve'])->name('setujui');
     Route::patch('/{skp}/tolak', [Kepsek\SkpController::class, 'reject'])->name('tolak');
+    Route::patch('/{skp}/revisi', [Kepsek\SkpController::class, 'revisi'])->name('revisi');
 });
 
 /*

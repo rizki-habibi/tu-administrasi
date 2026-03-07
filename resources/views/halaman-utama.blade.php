@@ -971,10 +971,12 @@
                 </div>
                 <p>Platform digital terpadu untuk pengelolaan administrasi tata usaha SMA Negeri 2 Jember. Modern, efisien, dan terintegrasi.</p>
                 <div class="footer-socials mt-3">
-                    <a href="#"><i class="bi bi-globe2"></i></a>
-                    <a href="#"><i class="bi bi-envelope-fill"></i></a>
-                    <a href="#"><i class="bi bi-telephone-fill"></i></a>
-                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.youtube.com/@sman2jember878/featured" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="bi bi-youtube"></i></a>
+                    <a href="https://maps.app.goo.gl/eyfqRqGeS6xYWC318" target="_blank" rel="noopener noreferrer" title="Google Maps"><i class="bi bi-geo-alt-fill"></i></a>
+                    <a href="https://www.instagram.com/sman2jember.official/" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@sman2jemberofficial_" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="bi bi-tiktok"></i></a>
+                    <a href="https://www.linkedin.com/school/sma-negeri-2-jember/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://sekolah.data.kemendikdasmen.go.id/profil-sekolah/57D32944-DF14-40BD-8868-C70A092F3496" target="_blank" rel="noopener noreferrer" title="Data Sekolah"><i class="bi bi-database-fill"></i></a>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -988,9 +990,27 @@
                 </ul>
             </div>
             <div class="col-lg-4 col-md-12">
-                <h5><i class="bi bi-map-fill me-2" style="color:var(--amber-light);"></i>Lokasi Sekolah</h5>
-                <div class="footer-map-mini">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.225!2d113.704!3d-8.173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d6!2sSMA+Negeri+2+Jember!5e0!3m2!1sid!2sid!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi SMA Negeri 2 Jember"></iframe>
+                <h5><i class="bi bi-globe2 me-2" style="color:var(--amber-light);"></i>Pengunjung</h5>
+                <div class="d-flex flex-column gap-2">
+                    @if(isset($lokasiPengunjung) && count($lokasiPengunjung) > 0)
+                        @foreach($lokasiPengunjung->take(6) as $lokasi)
+                        <div class="d-flex align-items-center justify-content-between" style="padding:6px 12px;background:rgba(255,255,255,.04);border-radius:8px;">
+                            <span style="font-size:.78rem;color:var(--gray-light);">
+                                <i class="bi bi-geo-alt me-1" style="color:var(--emerald-light);"></i>{{ $lokasi->negara ?? $lokasi->kota ?? 'Tidak diketahui' }}
+                            </span>
+                            <span class="badge" style="background:rgba(99,102,241,.2);color:var(--indigo-light);font-size:.68rem;">{{ $lokasi->total }} kunjungan</span>
+                        </div>
+                        @endforeach
+                    @else
+                        <div class="d-flex align-items-center justify-content-between" style="padding:6px 12px;background:rgba(255,255,255,.04);border-radius:8px;">
+                            <span style="font-size:.78rem;color:var(--gray-light);"><i class="bi bi-geo-alt me-1" style="color:var(--emerald-light);"></i>Indonesia</span>
+                            <span class="badge" style="background:rgba(99,102,241,.2);color:var(--indigo-light);font-size:.68rem;">{{ $statistikPengunjung['total'] ?? 0 }} kunjungan</span>
+                        </div>
+                    @endif
+                </div>
+                <div class="mt-3 d-flex align-items-center gap-3" style="font-size:.72rem;color:var(--gray);">
+                    <span><i class="bi bi-people-fill me-1" style="color:var(--indigo-light);"></i>Total: {{ number_format($statistikPengunjung['total'] ?? 0) }}</span>
+                    <span><i class="bi bi-calendar-check me-1" style="color:var(--emerald-light);"></i>Hari Ini: {{ $statistikPengunjung['hari_ini'] ?? 0 }}</span>
                 </div>
             </div>
         </div>

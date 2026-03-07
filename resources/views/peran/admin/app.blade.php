@@ -280,9 +280,9 @@
         .sd-stat-card .sd-stat-label { font-size: .65rem; color: #6b7280; margin-top: 2px; }
         .sd-stat-card i { font-size: 1.3rem; margin-bottom: 4px; }
 
-        /* ── AI Chat Popup (Bottom-Left) ── */
+        /* ── AI Chat Popup (Bottom-Right) ── */
         .ai-popup {
-            position: fixed; bottom: 20px; left: 20px; width: 400px; height: 560px;
+            position: fixed; bottom: 20px; right: 20px; width: 400px; height: 560px;
             border-radius: 20px; z-index: 1060; display: none; flex-direction: column;
             box-shadow: 0 20px 60px rgba(0,0,0,.25); overflow: hidden;
             background: linear-gradient(180deg, #0f0a2e 0%, #1e1b4b 50%, #312e81 100%);
@@ -376,7 +376,7 @@
 
         /* ── Floating AI FAB (3D) ── */
         .fab-ai {
-            position: fixed; bottom: 20px; left: 20px; width: 54px; height: 54px;
+            position: fixed; bottom: 20px; right: 20px; width: 54px; height: 54px;
             border-radius: 16px; border: none; cursor: pointer; z-index: 1055;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.4rem; transition: all .3s;
@@ -397,9 +397,9 @@
         .fab-ai.hidden { display: none; }
 
         @media (max-width: 767px) {
-            .ai-popup { width: calc(100vw - 24px); left: 12px !important; bottom: 12px; height: 70vh; }
+            .ai-popup { width: calc(100vw - 24px); right: 12px !important; bottom: 12px; height: 70vh; }
             .settings-drawer { width: 100vw; }
-            .fab-ai { left: 12px; bottom: 12px; width: 48px; height: 48px; border-radius: 14px; }
+            .fab-ai { right: 12px; bottom: 12px; width: 48px; height: 48px; border-radius: 14px; }
         }
 
         /* ── Print ── */

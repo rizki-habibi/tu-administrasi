@@ -470,7 +470,7 @@
         </div>
 
         {{-- ▸ Sistem — Pengingat, panduan, tools AI, ekspor & pengaturan --}}
-        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') ? 'open' : '' }}">
+        <div class="nav-group {{ request()->routeIs('admin.pengingat.*') || request()->routeIs('admin.panduan.*') || request()->routeIs('admin.word-ai.*') || request()->routeIs('admin.ekspor.*') || request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'open' : '' }}">
             <div class="nav-group-label" data-toggle="nav-group">
                 <span>Sistem</span>
                 @if($overdueReminders > 0)<span class="group-badge bg-warning text-dark">{{ $overdueReminders }}</span>@endif
@@ -529,13 +529,16 @@
                         </a>
                     </div>
                 </div>
-                <div class="nav-item {{ request()->routeIs('admin.pengaturan.*') ? 'open' : '' }}">
-                    <a class="nav-link {{ request()->routeIs('admin.pengaturan.*') ? 'active' : '' }}" data-toggle="submenu">
+                <div class="nav-item {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'open' : '' }}">
+                    <a class="nav-link {{ request()->routeIs('admin.pengaturan.*') || request()->routeIs('admin.pengaturan-ai.*') ? 'active' : '' }}" data-toggle="submenu">
                         <i class="bi bi-gear-fill icon"></i> <span>Pengaturan</span> <i class="bi bi-chevron-right arrow"></i>
                     </a>
                     <div class="submenu">
                         <a href="{{ route('admin.pengaturan.index') }}" class="sub-link {{ request()->routeIs('admin.pengaturan.index') ? 'active' : '' }}">
                             <i class="bi bi-sliders sub-icon"></i> Umum
+                        </a>
+                        <a href="{{ route('admin.pengaturan-ai.index') }}" class="sub-link {{ request()->routeIs('admin.pengaturan-ai.*') ? 'active' : '' }}">
+                            <i class="bi bi-cpu sub-icon"></i> Konfigurasi AI
                         </a>
                     </div>
                 </div>

@@ -11,21 +11,42 @@ use App\Models\Dokumen;
 use App\Models\Surat;
 use App\Models\CatatanKeuangan;
 use App\Models\Anggaran;
+use App\Models\PengaturanAi;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 
 class LayananGeminiAi
 {
     protected string $apiKey;
     protected string $model;
     protected string $baseUrl;
+    protected string $provider;
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.api_key', '');
-        $this->model = config('services.gemini.model', 'gemini-2.0-flash');
-        $this->baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
+        // Try DB config first, fallback to .env
+        $dbConfig = null;
+        try {
+            if (Schema::hasTable('pengaturan_ai')) {
+                $dbConfig = PengaturanAi::getActive();
+            }
+        } catch (\Exception $e) {
+            // Table may not exist yet
+        }
+
+        if ($dbConfig) {
+            $this->apiKey = $dbConfig->api_key;
+            $this->model = $dbConfig->model;
+            $this->baseUrl = $dbConfig->base_url ?: 'https://generativelanguage.googleapis.com/v1beta';
+            $this->provider = $dbConfig->provider;
+        } else {
+            $this->apiKey = config('services.gemini.api_key', '');
+            $this->model = config('services.gemini.model', 'gemini-2.0-flash');
+            $this->baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
+            $this->provider = 'gemini';
+        }
     }
 
     /**
@@ -37,16 +58,23 @@ class LayananGeminiAi
     }
 
     /**
-     * Panggil Gemini API
+     * Panggil AI API (multi-provider)
      */
     protected function callApi(string $prompt, float $temperature = 0.7, int $maxTokens = 4096): ?string
     {
         if (!$this->isConfigured()) {
-            Log::warning('Gemini AI: API key belum dikonfigurasi');
+            Log::warning('AI: API key belum dikonfigurasi');
             return null;
         }
 
         try {
+            if ($this->provider === 'openai' || $this->provider === 'custom') {
+                return $this->callOpenAiCompatible($prompt, $temperature, $maxTokens);
+            } elseif ($this->provider === 'anthropic') {
+                return $this->callAnthropic($prompt, $temperature, $maxTokens);
+            }
+
+            // Default: Gemini
             $response = Http::timeout(60)->post(
                 "{$this->baseUrl}/models/{$this->model}:generateContent?key={$this->apiKey}",
                 [
@@ -81,9 +109,59 @@ class LayananGeminiAi
             ]);
             return null;
         } catch (\Exception $e) {
-            Log::error('Gemini AI: ' . $e->getMessage());
+            Log::error('AI: ' . $e->getMessage());
             return null;
         }
+    }
+
+    /**
+     * OpenAI-compatible API call (for OpenAI & custom providers)
+     */
+    protected function callOpenAiCompatible(string $prompt, float $temperature, int $maxTokens): ?string
+    {
+        $url = rtrim($this->baseUrl, '/') . '/chat/completions';
+
+        $response = Http::timeout(60)->withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Content-Type' => 'application/json',
+        ])->post($url, [
+            'model' => $this->model,
+            'messages' => [['role' => 'user', 'content' => $prompt]],
+            'temperature' => $temperature,
+            'max_tokens' => $maxTokens,
+        ]);
+
+        if ($response->successful()) {
+            return $response->json('choices.0.message.content');
+        }
+
+        Log::error('OpenAI API error', ['status' => $response->status(), 'body' => $response->body()]);
+        return null;
+    }
+
+    /**
+     * Anthropic Claude API call
+     */
+    protected function callAnthropic(string $prompt, float $temperature, int $maxTokens): ?string
+    {
+        $response = Http::timeout(60)->withHeaders([
+            'x-api-key' => $this->apiKey,
+            'anthropic-version' => '2023-06-01',
+            'Content-Type' => 'application/json',
+        ])->post('https://api.anthropic.com/v1/messages', [
+            'model' => $this->model,
+            'max_tokens' => $maxTokens,
+            'messages' => [['role' => 'user', 'content' => $prompt]],
+            'temperature' => $temperature,
+        ]);
+
+        if ($response->successful()) {
+            $content = $response->json('content');
+            return collect($content)->where('type', 'text')->pluck('text')->implode('');
+        }
+
+        Log::error('Anthropic API error', ['status' => $response->status(), 'body' => $response->body()]);
+        return null;
     }
 
     /**

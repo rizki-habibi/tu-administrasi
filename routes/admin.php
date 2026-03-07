@@ -76,6 +76,8 @@ Route::get('/kehadiran', [Admin\KehadiranController::class, 'index'])->name('keh
 Route::get('/kehadiran/laporan', [Admin\KehadiranController::class, 'report'])->name('kehadiran.laporan');
 Route::get('/kehadiran/pengaturan', [Admin\KehadiranController::class, 'settings'])->name('kehadiran.pengaturan');
 Route::put('/kehadiran/pengaturan', [Admin\KehadiranController::class, 'updateSettings'])->name('kehadiran.pengaturan.update');
+Route::post('/kehadiran/masuk', [Admin\KehadiranController::class, 'clockIn'])->name('kehadiran.masuk');
+Route::post('/kehadiran/pulang', [Admin\KehadiranController::class, 'clockOut'])->name('kehadiran.pulang');
 Route::get('/kehadiran-ekspor', [Admin\KehadiranController::class, 'export'])->name('kehadiran.ekspor');
 Route::get('/kehadiran/{attendance}', [Admin\KehadiranController::class, 'show'])->name('kehadiran.show');
 
@@ -355,6 +357,20 @@ Route::get('/log-aktivitas', [Admin\LogAktivitasController::class, 'index'])->na
 Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {
     Route::get('/', [Admin\SiatuAiController::class, 'index'])->name('index');
     Route::post('/kirim', [Admin\SiatuAiController::class, 'kirim'])->name('kirim');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Konfigurasi AI (Hanya Admin)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('pengaturan-ai')->name('pengaturan-ai.')->group(function () {
+    Route::get('/', [Admin\PengaturanAiController::class, 'index'])->name('index');
+    Route::post('/', [Admin\PengaturanAiController::class, 'store'])->name('store');
+    Route::put('/{pengaturanAi}', [Admin\PengaturanAiController::class, 'update'])->name('update');
+    Route::patch('/{pengaturanAi}/activate', [Admin\PengaturanAiController::class, 'activate'])->name('activate');
+    Route::delete('/{pengaturanAi}', [Admin\PengaturanAiController::class, 'destroy'])->name('destroy');
+    Route::post('/test', [Admin\PengaturanAiController::class, 'testConnection'])->name('test');
 });
 
 /*

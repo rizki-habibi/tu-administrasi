@@ -15,13 +15,16 @@ class Skp extends Model
         'pengguna_id', 'periode', 'tahun', 'sasaran_kinerja', 'indikator_kinerja',
         'target_kuantitas', 'realisasi_kuantitas', 'target_kualitas', 'realisasi_kualitas',
         'target_waktu', 'realisasi_waktu', 'nilai_capaian', 'predikat',
-        'catatan', 'status', 'disetujui_oleh', 'disetujui_pada',
+        'catatan', 'catatan_revisi', 'status', 'disetujui_oleh', 'disetujui_pada',
+        'ditolak_pada', 'direvisi_pada',
     ];
 
     protected function casts(): array
     {
         return [
             'disetujui_pada' => 'datetime',
+            'ditolak_pada' => 'datetime',
+            'direvisi_pada' => 'datetime',
             'target_kuantitas' => 'decimal:2',
             'realisasi_kuantitas' => 'decimal:2',
             'target_kualitas' => 'decimal:2',
@@ -70,10 +73,41 @@ class Skp extends Model
     {
         return match ($this->status) {
             'draft' => 'secondary',
-            'diajukan' => 'warning',
+            'diajukan' => 'info',
+            'menunggu' => 'warning',
             'disetujui' => 'success',
+            'dinilai' => 'success',
+            'revisi' => 'warning',
             'ditolak' => 'danger',
             default => 'light',
+        };
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'draft' => 'Draft',
+            'diajukan' => 'Diajukan',
+            'menunggu' => 'Menunggu Review',
+            'disetujui' => 'Disetujui',
+            'dinilai' => 'Dinilai',
+            'revisi' => 'Perlu Revisi',
+            'ditolak' => 'Ditolak',
+            default => $this->status,
+        };
+    }
+
+    public function getStatusIconAttribute(): string
+    {
+        return match ($this->status) {
+            'draft' => 'bi-pencil',
+            'diajukan' => 'bi-send',
+            'menunggu' => 'bi-hourglass-split',
+            'disetujui' => 'bi-check-circle-fill',
+            'dinilai' => 'bi-check2-all',
+            'revisi' => 'bi-arrow-repeat',
+            'ditolak' => 'bi-x-circle-fill',
+            default => 'bi-circle',
         };
     }
 
