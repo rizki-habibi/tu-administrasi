@@ -32,6 +32,7 @@ class Pengguna extends Authenticatable
     const ROLE_INVENTARIS = 'inventaris';
     const ROLE_KESISWAAN_KURIKULUM = 'kesiswaan_kurikulum';
     const ROLE_STAFF = 'staff';
+    const ROLE_MAGANG = 'magang';
 
     const ROLES = [
         self::ROLE_ADMIN => 'Administrator',
@@ -44,6 +45,7 @@ class Pengguna extends Authenticatable
         self::ROLE_INVENTARIS => 'Inventaris/Sarpras',
         self::ROLE_KESISWAAN_KURIKULUM => 'Kesiswaan/Kurikulum',
         self::ROLE_STAFF => 'Staff',
+        self::ROLE_MAGANG => 'Staff Magang',
     ];
 
     // Staff-level roles (roles that share the staff layout)
@@ -73,6 +75,11 @@ class Pengguna extends Authenticatable
         return $this->peran === self::ROLE_KEPALA_SEKOLAH;
     }
 
+    public function isMagang(): bool
+    {
+        return $this->peran === self::ROLE_MAGANG;
+    }
+
     public function isStaff(): bool
     {
         return in_array($this->peran, self::STAFF_ROLES) || $this->peran === self::ROLE_STAFF;
@@ -96,6 +103,7 @@ class Pengguna extends Authenticatable
         return match ($this->peran) {
             self::ROLE_ADMIN => 'admin.beranda',
             self::ROLE_KEPALA_SEKOLAH => 'kepala-sekolah.beranda',
+            self::ROLE_MAGANG => 'magang.beranda',
             default => 'staf.beranda',
         };
     }
@@ -108,6 +116,7 @@ class Pengguna extends Authenticatable
         return match ($this->peran) {
             self::ROLE_ADMIN => 'admin',
             self::ROLE_KEPALA_SEKOLAH => 'kepala-sekolah',
+            self::ROLE_MAGANG => 'magang',
             default => 'staf',
         };
     }

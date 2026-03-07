@@ -25,6 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->prefix('kepala-sekolah')
                 ->name('kepala-sekolah.')
                 ->group(base_path('routes/kepala-sekolah.php'));
+
+            Route::middleware(['web', 'auth', 'role:magang'])
+                ->prefix('magang')
+                ->name('magang.')
+                ->group(base_path('routes/magang.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {

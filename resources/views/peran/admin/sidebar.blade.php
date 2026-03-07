@@ -314,7 +314,6 @@
                     </a>
                     <div class="submenu">
                         <a href="{{ route('admin.pengaturan.index') }}" class="sub-link {{ request()->routeIs('admin.pengaturan.index') ? 'active' : '' }}">Umum</a>
-                        <a href="{{ route('admin.pengaturan.pengguna') }}" class="sub-link {{ request()->routeIs('admin.pengaturan.pengguna') ? 'active' : '' }}">Manajemen Pengguna</a>
                     </div>
                 </div>
             </div>

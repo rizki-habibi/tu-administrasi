@@ -53,6 +53,8 @@ class DatabaseSeeder extends Seeder
 
             // 10. Seed data audit fitur publik & modul baru
             FiturAuditSeeder::class,
+            // 11. Staff Magang
+            PeranMagangSeeder::class,
         ]);
     }
 }
