@@ -105,7 +105,7 @@
                         </td>
                         <td>{{ $s->nis }}</td>
                         <td>{{ $s->nisn ?? '-' }}</td>
-                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ $s->kelas }}</span></td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info">{{ $s->class }}</span></td>
                         <td>{{ $s->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                         <td>
                             @if($s->status == 'aktif')<span class="badge bg-success">Aktif</span>

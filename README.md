@@ -1,90 +1,80 @@
-# Templating-laravel
-...existing code...
-# Laravel App
+# TU Administrasi - SMA Negeri 2 Jember
 
-Berikut adalah langkah-langkah untuk membuat project Laravel dari awal dan cara melakukan clone dengan git.
+Aplikasi Laravel untuk manajemen administrasi Tata Usaha dengan multi-peran:
+`admin`, `kepala_sekolah`, dan seluruh role staf (`kepegawaian`, `pramu_bakti`, `keuangan`, `persuratan`, `perpustakaan`, `inventaris`, `kesiswaan_kurikulum`, `staff`).
 
-## Membuat Project Laravel dari 0
+## Menjalankan Proyek
 
-1. **Pastikan Composer sudah terinstall**
-	- Download dan install Composer dari https://getcomposer.org/
+1. Clone repo dan masuk folder proyek.
+2. Install dependency:
+```bash
+composer install
+npm install
+```
+3. Salin file environment:
+```bash
+cp .env.example .env
+```
+4. Atur koneksi database di `.env`.
+5. Generate key dan jalankan migrasi + seeder:
+```bash
+php artisan key:generate
+php artisan migrate --seed
+```
+6. Jalankan server:
+```bash
+php artisan serve
+```
 
-2. **Buat Project Laravel Baru**
-	```bash
-	composer create-project laravel/laravel nama_project
-	```
+## Seeder Data
 
-3. **Masuk ke Folder Project**
-	```bash
-	cd nama_project
-	```
+Seeder utama ada di `database/seeders/DatabaseSeeder.php` dan menjalankan seeder berbasis peran.
 
-4. **Copy file .env**
-	```bash
-	cp .env.example .env
-	```
+Seeder penting:
+- `PeranAdminSeeder`
+- `PeranKepalaSekolahSeeder`
+- `PeranKepegawaianSeeder`
+- `PeranPramuBaktiSeeder`
+- `PeranKeuanganSeeder`
+- `PeranPersuratanSeeder`
+- `PeranPerpustakaanSeeder`
+- `PeranInventarisSeeder`
+- `PeranKesiswaanKurikulumSeeder`
+- `KontenPublikSeeder`
 
-5. **Generate Application Key**
-	```bash
-	php artisan key:generate
-	```
+## Workflow GitHub (Deteksi Error)
 
-6. **Atur Konfigurasi Database di file .env**
-	- Edit file `.env` dan sesuaikan DB_DATABASE, DB_USERNAME, DB_PASSWORD
+Tersedia dua workflow di `.github/workflows`:
 
-7. **Jalankan Migrasi Database**
-	```bash
-	php artisan migrate
-	```
+1. `laravel-error-check.yml`
+- Syntax check PHP (`php -l`)
+- Compile check Blade
+- Route list check
+- Migrasi database testing
+- Menjalankan test Laravel
+- Upload artifact diagnostik log
 
-8. **Jalankan Server Lokal**
-	```bash
-	php artisan serve
-	```
-	- Akses aplikasi di http://localhost:8000
+2. `github-ai-codeql.yml`
+- Analisis keamanan berbasis CodeQL untuk PHP
+- Membantu deteksi potensi bug/kerentanan di pull request dan push
 
-## Langkah-langkah Git Clone
+## Pembaruan Terbaru (2026-03-06)
 
-1. **Clone Repository**
-	```bash
-	git clone <url-repo-git>
-	```
+- Perbaikan error cache view terkait referensi model event (`optimize:clear`).
+- Penambahan modul `Kinerja` khusus staf dengan layout dashboard (`header`, `sidebar`, `footer`):
+  - `GET /staf/kinerja`
+  - `GET /staf/kinerja/{kinerja}`
+  - `GET /staf/kinerja/{kinerja}/unduh`
+- Akses staf untuk modul kinerja bersifat baca dan unduh (tanpa edit/hapus).
+- Admin tetap mengelola konten melalui CRUD `admin/halaman-publik`.
+- Penambahan `KontenPublikSeeder` agar data awal halaman kinerja tersedia.
+- Penguatan CI GitHub untuk audit error dan analisis CodeQL.
 
-2. **Masuk ke Folder Project**
-	```bash
-	cd nama_project
-	```
+## Catatan
 
-3. **Install Dependency**
-	```bash
-	composer install
-	npm install
-	```
-
-4. **Copy file .env**
-	```bash
-	cp .env.example .env
-	```
-
-5. **Generate Application Key**
-	```bash
-	php artisan key:generate
-	```
-
-6. **Atur Konfigurasi Database di file .env**
-	- Edit file `.env` dan sesuaikan DB_DATABASE, DB_USERNAME, DB_PASSWORD
-
-7. **Jalankan Migrasi Database**
-	```bash
-	php artisan migrate
-	```
-
-8. **Jalankan Server Lokal**
-	```bash
-	php artisan serve
-	```
-	- Akses aplikasi di http://localhost:8000
-
----
-
-Silakan sesuaikan langkah-langkah di atas sesuai kebutuhan project Anda.
+Untuk pengembangan lokal, jalankan:
+```bash
+php artisan optimize:clear
+php artisan route:list
+php artisan test
+```

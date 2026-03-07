@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
             // 1. Admin / KaTU (HARUS pertama — peran lain referensi admin)
             PeranAdminSeeder::class,
 
+            // 1b. Konten halaman publik (landing/kinerja)
+            KontenPublikSeeder::class,
+
             // 2. Kepala Sekolah
             PeranKepalaSekolahSeeder::class,
 
@@ -47,6 +50,9 @@ class DatabaseSeeder extends Seeder
 
             // 9. IKI 7 — Kesiswaan & Kurikulum
             PeranKesiswaanKurikulumSeeder::class,
+
+            // 10. Seed data audit fitur publik & modul baru
+            FiturAuditSeeder::class,
         ]);
     }
 }

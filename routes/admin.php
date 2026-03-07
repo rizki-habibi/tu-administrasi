@@ -188,6 +188,14 @@ Route::delete('/pengingat/{reminder}', [Admin\PengingatController::class, 'destr
 |--------------------------------------------------------------------------
 */
 Route::get('/panduan', [Admin\PanduanController::class, 'index'])->name('panduan.index');
+Route::get('/panduan/tambah', [Admin\PanduanController::class, 'create'])->name('panduan.create');
+Route::post('/panduan', [Admin\PanduanController::class, 'store'])->name('panduan.store');
+Route::get('/panduan/{panduan}', [Admin\PanduanController::class, 'show'])->name('panduan.show');
+Route::get('/panduan/{panduan}/download', [Admin\PanduanController::class, 'download'])->name('panduan.download');
+Route::post('/panduan/{panduan}/google-drive', [Admin\PanduanController::class, 'uploadDrive'])->name('panduan.upload-drive');
+Route::get('/panduan/{panduan}/edit', [Admin\PanduanController::class, 'edit'])->name('panduan.edit');
+Route::put('/panduan/{panduan}', [Admin\PanduanController::class, 'update'])->name('panduan.update');
+Route::delete('/panduan/{panduan}', [Admin\PanduanController::class, 'destroy'])->name('panduan.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -256,6 +264,56 @@ Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
     Route::put('/profil', [Admin\PengaturanController::class, 'updateProfil'])->name('profil');
     Route::put('/password', [Admin\PengaturanController::class, 'updatePassword'])->name('password');
     Route::post('/tampilan', [Admin\PengaturanController::class, 'updateTampilan'])->name('tampilan');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Kelola Halaman Publik (Landing Page & Kinerja)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('halaman-publik')->name('halaman-publik.')->group(function () {
+    Route::get('/', [Admin\KelolaHalamanController::class, 'index'])->name('index');
+    Route::get('/buat', [Admin\KelolaHalamanController::class, 'create'])->name('create');
+    Route::post('/', [Admin\KelolaHalamanController::class, 'store'])->name('store');
+    Route::get('/statistik', [Admin\KelolaHalamanController::class, 'statistikPengunjung'])->name('statistik');
+    Route::get('/saran', [Admin\KelolaHalamanController::class, 'saranIndex'])->name('saran');
+    Route::patch('/saran/{saranPengunjung}/tanggapi', [Admin\KelolaHalamanController::class, 'saranTanggapi'])->name('saran.tanggapi');
+    Route::delete('/saran/{saranPengunjung}', [Admin\KelolaHalamanController::class, 'saranDestroy'])->name('saran.destroy');
+    Route::get('/{kontenPublik}', [Admin\KelolaHalamanController::class, 'show'])->name('show');
+    Route::get('/{kontenPublik}/edit', [Admin\KelolaHalamanController::class, 'edit'])->name('edit');
+    Route::put('/{kontenPublik}', [Admin\KelolaHalamanController::class, 'update'])->name('update');
+    Route::patch('/{kontenPublik}/toggle-aktif', [Admin\KelolaHalamanController::class, 'toggleAktif'])->name('toggle-aktif');
+    Route::delete('/{kontenPublik}', [Admin\KelolaHalamanController::class, 'destroy'])->name('destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Disposisi Surat
+|--------------------------------------------------------------------------
+*/
+Route::prefix('disposisi')->name('disposisi.')->group(function () {
+    Route::get('/', [Admin\DisposisiController::class, 'index'])->name('index');
+    Route::get('/buat', [Admin\DisposisiController::class, 'create'])->name('create');
+    Route::post('/', [Admin\DisposisiController::class, 'store'])->name('store');
+    Route::get('/{disposisi}', [Admin\DisposisiController::class, 'show'])->name('show');
+    Route::delete('/{disposisi}', [Admin\DisposisiController::class, 'destroy'])->name('destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Log Aktivitas
+|--------------------------------------------------------------------------
+*/
+Route::get('/log-aktivitas', [Admin\LogAktivitasController::class, 'index'])->name('log-aktivitas.index');
+
+/*
+|--------------------------------------------------------------------------
+| AI Chatbot SIATU-AI
+|--------------------------------------------------------------------------
+*/
+Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {
+    Route::get('/', [Admin\SiatuAiController::class, 'index'])->name('index');
+    Route::post('/kirim', [Admin\SiatuAiController::class, 'kirim'])->name('kirim');
 });
 
 /*

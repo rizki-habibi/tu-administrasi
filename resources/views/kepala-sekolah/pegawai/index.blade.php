@@ -15,7 +15,7 @@
             <input type="text" name="search" class="form-control form-control-sm" style="width:220px;" placeholder="Cari nama / NIP..." value="{{ request('search') }}">
             <select name="peran" class="form-select form-select-sm" style="width:auto;">
                 <option value="">Semua Peran</option>
-                @foreach(\App\Models\User::ROLES as $key => $label)
+                @foreach(\App\Models\Pengguna::ROLES as $key => $label)
                     <option value="{{ $key }}" {{ request('peran') == $key ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach
             </select>

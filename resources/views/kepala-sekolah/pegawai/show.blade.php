@@ -56,9 +56,9 @@
                     <table class="table table-hover mb-0">
                         <thead><tr><th>Tanggal</th><th>Masuk</th><th>Keluar</th><th>Status</th><th>Catatan</th></tr></thead>
                         <tbody>
-                        @forelse($staff->attendances->sortByDesc('tanggal')->take(30) as $att)
+                        @forelse($staff->attendances->sortByDesc('date')->take(30) as $att)
                             <tr>
-                                <td>{{ $att->tanggal->translatedFormat('d M Y') }}</td>
+                                <td>{{ $att->date->translatedFormat('d M Y') }}</td>
                                 <td>{{ $att->jam_masuk ?? '-' }}</td>
                                 <td>{{ $att->jam_pulang ?? '-' }}</td>
                                 <td><span class="badge bg-{{ $att->status_badge }} bg-opacity-10 text-{{ $att->status_badge }}">{{ ucfirst($att->status) }}</span></td>

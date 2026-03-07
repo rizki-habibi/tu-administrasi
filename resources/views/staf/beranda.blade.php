@@ -11,7 +11,7 @@
     $izin = $monthAttendances->whereIn('status', ['izin','sakit','cuti'])->count();
     $alpha = $monthAttendances->where('status', 'alpha')->count();
     $pendingLeave = $user->leaveRequests()->where('status', 'pending')->count();
-    $upcomingEvents = \App\Models\Event::where('tanggal_acara', '>=', today())->where('status', 'upcoming')->take(4)->get();
+    $upcomingEvents = \App\Models\Acara::where('tanggal_acara', '>=', today())->where('status', 'upcoming')->take(4)->get();
     $notifications = $user->notifications()->where('sudah_dibaca', false)->latest()->take(5)->get();
 @endphp
 

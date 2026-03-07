@@ -83,26 +83,29 @@
         /* ── Main Content ── */
         .main-content { margin-left: var(--sidebar-w); transition: margin .3s cubic-bezier(.4,0,.2,1); min-height: 100vh; overflow-x: hidden; max-width: 100vw; }
 
-        /* ── Top Header ── */
+        /* ── Top Header (Dark Unified) ── */
         .top-header {
             position: sticky; top: 0; z-index: 1030; height: var(--header-h);
-            background: #fff; border-bottom: 1px solid #e7e5e4;
+            background: linear-gradient(90deg, #1c1917, #292524);
             display: flex; align-items: center; padding: 0 24px; gap: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
         }
-        .sidebar-toggle { background: none; border: none; font-size: 1.3rem; color: #57534e; cursor: pointer; padding: 6px; border-radius: 8px; transition: .2s; }
-        .sidebar-toggle:hover { background: #fef3c7; color: var(--primary); }
-        .header-title { font-size: .9rem; font-weight: 600; color: #1c1917; }
+        .sidebar-toggle { background: none; border: none; font-size: 1.3rem; color: #d6d3d1; cursor: pointer; padding: 6px; border-radius: 8px; transition: .2s; }
+        .sidebar-toggle:hover { background: rgba(217,119,6,.2); color: #fff; }
+        .header-title { font-size: .9rem; font-weight: 600; color: #fef3c7; }
         .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-        .header-date { font-size: .78rem; color: #57534e; }
-        .notif-btn { position: relative; background: #fef3c7; border: none; width: 38px; height: 38px; border-radius: 10px; font-size: 1.1rem; color: #92400e; cursor: pointer; transition: .2s; }
-        .notif-btn:hover { background: #fde68a; color: var(--primary-dark); }
+        .header-date { font-size: .78rem; color: #a8a29e; }
+        .header-tool-btn { position: relative; background: rgba(217,119,6,.2); border: none; width: 38px; height: 38px; border-radius: 10px; font-size: 1.1rem; color: #fbbf24; cursor: pointer; transition: .2s; display: flex; align-items: center; justify-content: center; }
+        .header-tool-btn:hover { background: rgba(217,119,6,.35); color: #fff; }
+        .notif-btn { position: relative; background: rgba(217,119,6,.2); border: none; width: 38px; height: 38px; border-radius: 10px; font-size: 1.1rem; color: #fbbf24; cursor: pointer; transition: .2s; }
+        .notif-btn:hover { background: rgba(217,119,6,.35); color: #fff; }
         .notif-badge { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; }
         .header-profile { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px 10px; border-radius: 10px; transition: .2s; border: none; background: none; }
-        .header-profile:hover { background: #fef3c7; }
+        .header-profile:hover { background: rgba(217,119,6,.2); }
         .header-profile .avatar-sm { width: 34px; height: 34px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: .75rem; overflow: hidden; }
         .header-profile .avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
-        .header-profile .name { font-size: .8rem; font-weight: 500; color: #1c1917; }
+        .header-profile .name { font-size: .8rem; font-weight: 500; color: #fef3c7; }
+        .header-profile .role-tag { font-size: .6rem; color: #fbbf24; display: block; font-weight: 400; }
 
         /* ── Page Content ── */
         .page-content { padding: 24px; overflow-x: hidden; }
@@ -178,12 +181,97 @@
             .page-content { padding: 0 !important; }
         }
 
+        /* ── Sidebar Search ── */
+        .sidebar-search { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.08); position: relative; }
+        .sidebar-search i { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); color: #78716c; font-size: .82rem; pointer-events: none; }
+        .sidebar-search input {
+            width: 100%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px; padding: 8px 12px 8px 34px; color: #fef3c7;
+            font-size: .78rem; outline: none; transition: all .2s; font-family: inherit;
+        }
+        .sidebar-search input::placeholder { color: #78716c; }
+        .sidebar-search input:focus { background: rgba(255,255,255,.12); border-color: rgba(217,119,6,.4); }
+
+        /* ── Nav Groups (Collapsible) ── */
+        .nav-group { border-bottom: 1px solid rgba(255,255,255,.04); }
+        .nav-group-label {
+            display: flex; align-items: center; padding: 10px 20px 6px; cursor: pointer; user-select: none;
+        }
+        .nav-group-label span { font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: #d97706; }
+        .nav-group-label i { font-size: .6rem; color: #d97706; margin-left: auto; transition: transform .25s; }
+        .nav-group.open > .nav-group-label i { transform: rotate(180deg); }
+        .nav-group-items { max-height: 0; overflow: hidden; transition: max-height .35s cubic-bezier(.4,0,.2,1); }
+        .nav-group.open > .nav-group-items { max-height: 2000px; }
+        .nav-group.search-match > .nav-group-items { max-height: 2000px; }
+
+        /* ── Right Panel ── */
+        .right-panel {
+            position: fixed; top: 0; right: 0; width: 300px; height: 100vh;
+            background: linear-gradient(180deg, #1c1917 0%, #292524 100%);
+            z-index: 1050; transform: translateX(100%);
+            transition: transform .3s cubic-bezier(.4,0,.2,1);
+            display: flex; flex-direction: column;
+            box-shadow: -4px 0 20px rgba(0,0,0,.2);
+        }
+        .right-panel.open { transform: translateX(0); }
+        .right-panel-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.4);
+            z-index: 1049; opacity: 0; pointer-events: none; transition: opacity .3s;
+        }
+        .right-panel-overlay.open { opacity: 1; pointer-events: auto; }
+        .right-panel-header {
+            padding: 20px; border-bottom: 1px solid rgba(255,255,255,.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .right-panel-header h6 { color: #fff; font-size: .9rem; margin: 0; font-weight: 600; }
+        .right-panel-close { background: none; border: none; color: #fbbf24; font-size: 1.1rem; cursor: pointer; padding: 4px; }
+        .right-panel-close:hover { color: #fff; }
+        .right-panel-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+        .rp-section-label { font-size: .65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #d97706; margin-bottom: 8px; margin-top: 16px; padding: 0 14px; }
+        .rp-section-label:first-child { margin-top: 0; }
+        .rp-item {
+            display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+            border-radius: 10px; color: #d6d3d1; text-decoration: none;
+            font-size: .82rem; transition: all .2s; margin-bottom: 4px;
+        }
+        .rp-item:hover { background: rgba(217,119,6,.15); color: #fff; }
+        .rp-item i { font-size: 1.1rem; width: 22px; text-align: center; }
+
         @stack('styles')
     </style>
 </head>
 <body>
     {{-- Sidebar --}}
     @include('peran.kepala-sekolah.sidebar')
+
+    {{-- Right Panel (Fitur Khusus) --}}
+    <div class="right-panel-overlay" id="rightPanelOverlay"></div>
+    <div class="right-panel" id="rightPanel">
+        <div class="right-panel-header">
+            <h6><i class="bi bi-tools me-2"></i>Alat & Fitur Khusus</h6>
+            <button class="right-panel-close" id="closeRightPanel"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="right-panel-body">
+            <div class="rp-section-label">Fitur Khusus Kepsek</div>
+            <a href="{{ route('kepala-sekolah.resolusi.index') }}" class="rp-item">
+                <i class="bi bi-stamp"></i> <span>Resolusi</span>
+            </a>
+            <a href="{{ route('kepala-sekolah.rekap-eksekutif.index') }}" class="rp-item">
+                <i class="bi bi-bar-chart-line-fill"></i> <span>Rekap Eksekutif</span>
+            </a>
+            <a href="{{ route('kepala-sekolah.siatu-ai.index') }}" class="rp-item">
+                <i class="bi bi-robot"></i> <span>SIATU-AI</span>
+            </a>
+
+            <div class="rp-section-label">Pengaturan</div>
+            <a href="{{ route('kepala-sekolah.profil.edit') }}" class="rp-item">
+                <i class="bi bi-person-fill"></i> <span>Edit Profil</span>
+            </a>
+            <a href="{{ route('kepala-sekolah.pengaturan.index') }}" class="rp-item">
+                <i class="bi bi-gear-fill"></i> <span>Pengaturan</span>
+            </a>
+        </div>
+    </div>
 
     {{-- Main Content --}}
     <div class="main-content" id="mainContent">
@@ -216,6 +304,81 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ── Sidebar Toggle ──
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', function() {
+                if (window.innerWidth > 991) {
+                    document.body.classList.toggle('sidebar-collapsed');
+                } else {
+                    document.body.classList.toggle('sidebar-open');
+                }
+            });
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 991 && document.body.classList.contains('sidebar-open')) {
+                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                        document.body.classList.remove('sidebar-open');
+                    }
+                }
+            });
+        }
+
+        // ── Nav Group Toggle ──
+        document.querySelectorAll('[data-toggle="nav-group"]').forEach(label => {
+            label.addEventListener('click', function() {
+                this.closest('.nav-group').classList.toggle('open');
+            });
+        });
+
+        // ── Submenu Toggle ──
+        document.querySelectorAll('[data-toggle="submenu"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.closest('.nav-item').classList.toggle('open');
+            });
+        });
+
+        // ── Sidebar Search ──
+        const searchInput = document.getElementById('sidebarSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                const groups = document.querySelectorAll('.nav-group');
+                groups.forEach(group => {
+                    const items = group.querySelectorAll('.nav-item');
+                    let groupMatch = false;
+                    items.forEach(item => {
+                        const text = item.textContent.toLowerCase();
+                        const match = !query || text.includes(query);
+                        item.style.display = match ? '' : 'none';
+                        if (match) groupMatch = true;
+                    });
+                    group.style.display = groupMatch || !query ? '' : 'none';
+                    if (query && groupMatch) {
+                        group.classList.add('search-match');
+                    } else {
+                        group.classList.remove('search-match');
+                    }
+                });
+            });
+        }
+
+        // ── Right Panel Toggle ──
+        const rpToggle = document.getElementById('rightPanelToggle');
+        const rpPanel = document.getElementById('rightPanel');
+        const rpOverlay = document.getElementById('rightPanelOverlay');
+        const rpClose = document.getElementById('closeRightPanel');
+        function openRightPanel() { rpPanel.classList.add('open'); rpOverlay.classList.add('open'); }
+        function closeRightPanel() { rpPanel.classList.remove('open'); rpOverlay.classList.remove('open'); }
+        if (rpToggle) rpToggle.addEventListener('click', openRightPanel);
+        if (rpClose) rpClose.addEventListener('click', closeRightPanel);
+        if (rpOverlay) rpOverlay.addEventListener('click', closeRightPanel);
+    });
+    </script>
     @stack('scripts')
 </body>
 </html>

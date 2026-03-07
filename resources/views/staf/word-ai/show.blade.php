@@ -50,7 +50,7 @@
             <div class="card-body">
                 <table class="table table-borderless table-sm mb-0">
                     <tr><td class="text-muted" style="width:35%;">Judul</td><td class="fw-semibold">{{ $word->judul }}</td></tr>
-                    <tr><td class="text-muted">Kategori</td><td><span class="badge bg-primary-subtle text-primary">{{ App\Models\WordDocument::categories()[$word->kategori] ?? $word->kategori }}</span></td></tr>
+                    <tr><td class="text-muted">Kategori</td><td><span class="badge bg-primary-subtle text-primary">{{ App\Models\DokumenWord::categories()[$word->kategori] ?? $word->kategori }}</span></td></tr>
                     <tr><td class="text-muted">Status</td><td>
                         @if($word->status=='draft')<span class="badge bg-warning-subtle text-warning">Draf</span>
                         @elseif($word->status=='final')<span class="badge bg-success-subtle text-success">Final</span>
@@ -61,7 +61,7 @@
                     <tr><td class="text-muted">Dibuat</td><td>{{ $word->created_at->format('d/m/Y H:i') }}</td></tr>
                     <tr><td class="text-muted">Diubah</td><td>{{ $word->updated_at->format('d/m/Y H:i') }}</td></tr>
                     @if($word->templat)
-                    <tr><td class="text-muted">Template</td><td>{{ App\Models\WordDocument::templates()[$word->templat]['nama'] ?? $word->templat }}</td></tr>
+                    <tr><td class="text-muted">Template</td><td>{{ App\Models\DokumenWord::templates()[$word->templat]['nama'] ?? $word->templat }}</td></tr>
                     @endif
                     @if($word->prompt_ai)
                     <tr><td class="text-muted">AI Prompt</td><td><small>{{ $word->prompt_ai }}</small></td></tr>

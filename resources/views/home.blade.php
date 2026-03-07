@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('peran.admin.app')
 
 @section('konten')
 <div class="container">

@@ -1,6 +1,6 @@
 {{-- Top Header Bar for Staff --}}
 @php
-    $unreadNotif = \App\Models\Notification::where('pengguna_id', auth()->id())->where('sudah_dibaca', false)->count();
+    $unreadNotif = \App\Models\Notifikasi::where('pengguna_id', auth()->id())->where('sudah_dibaca', false)->count();
 @endphp
 
 <header class="top-header">

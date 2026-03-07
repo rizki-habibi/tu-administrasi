@@ -27,7 +27,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-3">
                 <i class="bi bi-pencil-square fs-4 text-warning"></i>
-                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\WordDocument::where('status','draft')->count() }}</h4>
+                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\DokumenWord::where('status','draft')->count() }}</h4>
                 <small class="text-muted">Draf</small>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-3">
                 <i class="bi bi-check-circle fs-4 text-success"></i>
-                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\WordDocument::where('status','final')->count() }}</h4>
+                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\DokumenWord::where('status','final')->count() }}</h4>
                 <small class="text-muted">Final</small>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body text-center py-3">
                 <i class="bi bi-share fs-4 text-info"></i>
-                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\WordDocument::where('dibagikan', true)->count() }}</h4>
+                <h4 class="fw-bold mb-0 mt-1">{{ App\Models\DokumenWord::where('dibagikan', true)->count() }}</h4>
                 <small class="text-muted">Dibagikan</small>
             </div>
         </div>
@@ -97,7 +97,7 @@
     </div>
     <div class="card-body pt-0">
         <div class="row g-2">
-            @foreach(App\Models\WordDocument::templates() as $key => $tpl)
+            @foreach(App\Models\DokumenWord::templates() as $key => $tpl)
                 @if($key !== 'kosong')
                 <div class="col-6 col-md-4 col-lg-3">
                     <a href="{{ route('admin.word-ai.create', ['templat' => $key]) }}" class="card border h-100 text-decoration-none hover-shadow" style="transition:box-shadow .2s;">

@@ -59,7 +59,7 @@
                     </tr>
                     <tr>
                         <td class="text-muted">Kategori</td>
-                        <td><span class="badge bg-primary-subtle text-primary">{{ App\Models\WordDocument::categories()[$word->kategori] ?? $word->kategori }}</span></td>
+                        <td><span class="badge bg-primary-subtle text-primary">{{ App\Models\DokumenWord::categories()[$word->kategori] ?? $word->kategori }}</span></td>
                     </tr>
                     <tr>
                         <td class="text-muted">Status</td>
@@ -92,7 +92,7 @@
                     @if($word->templat)
                     <tr>
                         <td class="text-muted">Template</td>
-                        <td>{{ App\Models\WordDocument::templates()[$word->templat]['nama'] ?? $word->templat }}</td>
+                        <td>{{ App\Models\DokumenWord::templates()[$word->templat]['nama'] ?? $word->templat }}</td>
                     </tr>
                     @endif
                     @if($word->prompt_ai)

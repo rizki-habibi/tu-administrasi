@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaUtamaController;
+use App\Http\Controllers\HalamanUtamaController;
+use App\Http\Controllers\KinerjaController;
+use App\Http\Controllers\DokumenPublikController;
 use App\Http\Controllers\Auth;
 
 /*
@@ -16,9 +19,21 @@ use App\Http\Controllers\Auth;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return redirect()->route('login');
+Route::get('/', [HalamanUtamaController::class, 'index'])->name('halaman-utama');
+
+// Dokumen & Kinerja (portal publik dengan sidebar kiri)
+Route::prefix('dokumen')->name('dokumen.')->group(function () {
+    Route::get('/', [DokumenPublikController::class, 'beranda'])->name('beranda');
+    Route::get('/arsip', [DokumenPublikController::class, 'arsip'])->name('arsip');
+    Route::get('/saran', [DokumenPublikController::class, 'saran'])->name('saran');
+    Route::post('/saran', [DokumenPublikController::class, 'storeSaran'])->name('saran.store');
+    Route::get('/detail/{kontenPublik}', [DokumenPublikController::class, 'show'])->name('show');
+    Route::get('/{kategori}', [DokumenPublikController::class, 'kategori'])->name('kategori');
 });
+
+// Backward compatibility: redirect /kinerja ke /dokumen
+Route::get('/kinerja', fn() => redirect()->route('dokumen.beranda'))->name('kinerja');
+Route::post('/saran', [DokumenPublikController::class, 'storeSaran'])->name('saran.store');
 
 // Auth Routes (manual — pengganti Auth::routes karena controller sudah di-rename)
 Route::get('login', [Auth\MasukController::class, 'showLoginForm'])->name('login');

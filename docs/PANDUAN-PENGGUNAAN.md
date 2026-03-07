@@ -1,6 +1,6 @@
 # Panduan Penggunaan — Sistem TU Administrasi
 
-> **Versi:** 1.0  
+> **Versi:** 0.1  
 > **Terakhir diperbarui:** 3 Maret 2026  
 > **Aplikasi:** Sistem Administrasi Tata Usaha — SMA Negeri 2 Jember
 
@@ -33,12 +33,20 @@
 
 ## 1. Pendahuluan
 
-Sistem **TU Administrasi** adalah aplikasi berbasis web yang dirancang untuk membantu pengelolaan administrasi Tata Usaha di SMA Negeri 2 Jember. Sistem ini memiliki **2 peran utama**:
+Sistem **TU Administrasi** adalah aplikasi berbasis web yang dirancang untuk membantu pengelolaan administrasi Tata Usaha di SMA Negeri 2 Jember. Sistem ini memiliki **10 peran pengguna**:
 
 | Peran | Akses |
 |-------|-------|
-| **Admin** | Akses penuh ke semua modul: kelola staff, kehadiran, surat, dokumen, keuangan, evaluasi, akreditasi, dll. |
-| **Staff** | Akses terbatas: absensi, pengajuan izin, buat surat, lihat dokumen, evaluasi sendiri, dll. |
+| **Admin (Kepala TU)** | Akses penuh ke seluruh modul: kelola staff, kehadiran, surat, dokumen, keuangan, evaluasi, akreditasi, dll. |
+| **Kepala Sekolah** | Supervisor, read-only + approve izin/SKP |
+| **Staf Kepegawaian (IKI 1)** | Urusan kepegawaian, SKP, evaluasi guru |
+| **Pramu Bakti (IKI 2)** | Laporan kerja, kerusakan & perbaikan |
+| **Staf Keuangan (IKI 3)** | Laporan & dokumen keuangan |
+| **Staf Persuratan (IKI 4)** | Surat masuk/keluar, arsip dokumen |
+| **Staf Perpustakaan (IKI 5)** | Koleksi & dokumen perpustakaan |
+| **Staf Inventaris (IKI 6)** | Barang inventaris, kerusakan, laporan |
+| **Staf Kesiswaan & Kurikulum (IKI 7)** | Data siswa, kurikulum, evaluasi P5 |
+| **Staf Umum** | Akses dasar (fallback) |
 
 ### Kebutuhan Sistem
 - Browser modern (Chrome, Firefox, Edge)

@@ -18,7 +18,7 @@
         <thead><tr><th>No</th><th>Nama</th><th>Tanggal</th><th>Masuk</th><th>Pulang</th><th>Status</th><th>Keterangan</th></tr></thead>
         <tbody>
             @foreach($attendances as $i => $a)
-            <tr><td>{{ $i+1 }}</td><td>{{ $a->user->nama ?? '-' }}</td><td>{{ $a->tanggal->format('d/m/Y') }}</td><td>{{ $a->jam_masuk ?? '-' }}</td><td>{{ $a->jam_pulang ?? '-' }}</td><td>{{ ucfirst($a->status) }}</td><td>{{ $a->catatan ?? '-' }}</td></tr>
+            <tr><td>{{ $i+1 }}</td><td>{{ $a->user->nama ?? '-' }}</td><td>{{ $a->date->format('d/m/Y') }}</td><td>{{ $a->jam_masuk ?? '-' }}</td><td>{{ $a->jam_pulang ?? '-' }}</td><td>{{ ucfirst($a->status) }}</td><td>{{ $a->catatan ?? '-' }}</td></tr>
             @endforeach
         </tbody>
     </table>

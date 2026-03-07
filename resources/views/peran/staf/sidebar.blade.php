@@ -2,7 +2,7 @@
 @php
     $user = Auth::user();
     $userRole = $user->peran;
-    $unreadCount = \App\Models\Notification::where('pengguna_id', $user->id)->where('sudah_dibaca', false)->count();
+    $unreadCount = \App\Models\Notifikasi::where('pengguna_id', $user->id)->where('sudah_dibaca', false)->count();
 @endphp
 
 <aside class="sidebar" id="sidebar">
@@ -107,26 +107,18 @@
         ═══════════════════════════════════════════ --}}
         <div class="nav-label">Kinerja</div>
 
-        @if(!in_array($userRole, ['kepegawaian']))
-        {{-- SKP --}}
-        <div class="nav-item {{ request()->routeIs('staf.skp.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.skp.*') ? 'active' : '' }}" data-toggle="submenu">
-                <i class="bi bi-file-earmark-bar-graph-fill icon"></i> <span>SKP</span> <i class="bi bi-chevron-right arrow"></i>
+        <div class="nav-item {{ request()->routeIs('staf.kinerja.*') || request()->routeIs('staf.skp.*') || request()->routeIs('staf.evaluasi.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.kinerja.*') || request()->routeIs('staf.skp.*') || request()->routeIs('staf.evaluasi.*') ? 'active' : '' }}" data-toggle="submenu">
+                <i class="bi bi-clipboard2-pulse-fill icon"></i> <span>Manajemen Kinerja</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
-                <a href="{{ route('staf.skp.index') }}" class="sub-link {{ request()->routeIs('staf.skp.index') ? 'active' : '' }}">Daftar SKP</a>
-                <a href="{{ route('staf.skp.create') }}" class="sub-link {{ request()->routeIs('staf.skp.create') ? 'active' : '' }}">Buat SKP</a>
-            </div>
-        </div>
-        @endif
+                <a href="{{ route('staf.kinerja.index') }}" class="sub-link {{ request()->routeIs('staf.kinerja.*') ? 'active' : '' }}">Dashboard Kinerja</a>
 
-        @if(!in_array($userRole, ['kepegawaian', 'kesiswaan_kurikulum']))
-        {{-- Evaluasi --}}
-        <div class="nav-item {{ request()->routeIs('staf.evaluasi.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.evaluasi.*') ? 'active' : '' }}" data-toggle="submenu">
-                <i class="bi bi-clipboard2-data-fill icon"></i> <span>Evaluasi</span> <i class="bi bi-chevron-right arrow"></i>
-            </a>
-            <div class="submenu">
+                @if(!in_array($userRole, ['kepegawaian']))
+                    <a href="{{ route('staf.skp.index') }}" class="sub-link {{ request()->routeIs('staf.skp.index') ? 'active' : '' }}">Daftar SKP</a>
+                    <a href="{{ route('staf.skp.create') }}" class="sub-link {{ request()->routeIs('staf.skp.create') ? 'active' : '' }}">Buat SKP</a>
+                @endif
+
                 <a href="{{ route('staf.evaluasi.pkg') }}" class="sub-link {{ request()->routeIs('staf.evaluasi.pkg*') ? 'active' : '' }}">PKG / BKD</a>
                 <a href="{{ route('staf.evaluasi.p5') }}" class="sub-link {{ request()->routeIs('staf.evaluasi.p5*') ? 'active' : '' }}">Asesmen P5</a>
                 <a href="{{ route('staf.evaluasi.star') }}" class="sub-link {{ request()->routeIs('staf.evaluasi.star*') ? 'active' : '' }}">Analisis STAR</a>
@@ -134,7 +126,6 @@
                 <a href="{{ route('staf.evaluasi.pembelajaran') }}" class="sub-link {{ request()->routeIs('staf.evaluasi.pembelajaran*') ? 'active' : '' }}">Metode Pembelajaran</a>
             </div>
         </div>
-        @endif
 
         {{-- ═══════════════════════════════════════════
              Lainnya
@@ -195,6 +186,33 @@
         <div class="nav-item">
             <a href="{{ route('staf.ulang-tahun.index') }}" class="nav-link {{ request()->routeIs('staf.ulang-tahun.*') ? 'active' : '' }}">
                 <i class="bi bi-gift-fill icon"></i> <span>Ulang Tahun</span>
+            </a>
+        </div>
+
+        {{-- ═══════════════════════════════════════════
+             Fitur Khusus Staf
+        ═══════════════════════════════════════════ --}}
+        <div class="nav-label">Fitur Khusus Staf</div>
+
+        {{-- Catatan Harian --}}
+        <div class="nav-item">
+            <a href="{{ route('staf.catatan-harian.index') }}" class="nav-link {{ request()->routeIs('staf.catatan-harian.*') ? 'active' : '' }}">
+                <i class="bi bi-journal-text icon"></i> <span>Catatan Harian</span>
+            </a>
+        </div>
+
+        {{-- Disposisi Masuk --}}
+        <div class="nav-item">
+            <a href="{{ route('staf.disposisi.index') }}" class="nav-link {{ request()->routeIs('staf.disposisi.*') ? 'active' : '' }}">
+                <i class="bi bi-envelope-open-fill icon"></i> <span>Disposisi Masuk</span>
+            </a>
+        </div>
+
+        {{-- SIATU-AI --}}
+        <div class="nav-item">
+            <a href="{{ route('staf.siatu-ai.index') }}" class="nav-link {{ request()->routeIs('staf.siatu-ai.*') ? 'active' : '' }}">
+                <i class="bi bi-robot icon"></i> <span>SIATU-AI</span>
+                <span class="badge bg-success" style="font-size:.55rem;">AI</span>
             </a>
         </div>
 

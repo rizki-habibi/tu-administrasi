@@ -148,6 +148,33 @@ Route::middleware('throttle:10,1')->prefix('ai')->name('ai.')->group(function ()
 
 /*
 |--------------------------------------------------------------------------
+| Resolusi / Keputusan Kepala Sekolah
+|--------------------------------------------------------------------------
+*/
+Route::resource('resolusi', Kepsek\ResolusiController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Rekap Eksekutif
+|--------------------------------------------------------------------------
+*/
+Route::prefix('rekap-eksekutif')->name('rekap-eksekutif.')->group(function () {
+    Route::get('/', [Kepsek\RekapEksekutifController::class, 'index'])->name('index');
+    Route::get('/ai-analisis', [Kepsek\RekapEksekutifController::class, 'aiAnalisis'])->name('ai-analisis');
+});
+
+/*
+|--------------------------------------------------------------------------
+| AI Chatbot SIATU-AI
+|--------------------------------------------------------------------------
+*/
+Route::prefix('siatu-ai')->name('siatu-ai.')->group(function () {
+    Route::get('/', [Kepsek\SiatuAiController::class, 'index'])->name('index');
+    Route::post('/kirim', [Kepsek\SiatuAiController::class, 'kirim'])->name('kirim');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Chat / Pesan
 |--------------------------------------------------------------------------
 */
@@ -179,3 +206,6 @@ Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/panduan', [Kepsek\PanduanController::class, 'index'])->name('panduan.index');
+Route::get('/panduan/{panduan}', [Kepsek\PanduanController::class, 'show'])->name('panduan.show');
+Route::get('/panduan/{panduan}/download', [Kepsek\PanduanController::class, 'download'])->name('panduan.download');
+Route::post('/panduan/{panduan}/google-drive', [Kepsek\PanduanController::class, 'uploadDrive'])->name('panduan.upload-drive');

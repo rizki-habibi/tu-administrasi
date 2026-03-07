@@ -1,160 +1,86 @@
 @extends('peran.staf.app')
 
-@section('judul', 'Panduan Penggunaan')
+@section('judul', 'Pusat Panduan')
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown-light.min.css">
 <style>
-    .markdown-body {
-        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-        font-size: .88rem;
-        line-height: 1.7;
-        max-width: 100%;
-        padding: 28px 32px;
-    }
-    .markdown-body h1 { font-size: 1.6rem; font-weight: 700; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; }
-    .markdown-body h2 { font-size: 1.25rem; font-weight: 600; color: #0f766e; margin-top: 2rem; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
-    .markdown-body h3 { font-size: 1.05rem; font-weight: 600; color: #059669; margin-top: 1.5rem; }
-    .markdown-body table { font-size: .82rem; border-collapse: collapse; width: 100%; margin: 12px 0; }
-    .markdown-body table th { background: #f0fdf4; font-weight: 600; color: #475569; padding: 10px 14px; text-align: left; border: 1px solid #e2e8f0; }
-    .markdown-body table td { padding: 8px 14px; border: 1px solid #e2e8f0; }
-    .markdown-body table tr:nth-child(even) { background: #f8fafc; }
-    .markdown-body code { background: #f1f5f9; color: #059669; padding: 2px 6px; border-radius: 4px; font-size: .82rem; }
-    .markdown-body pre { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 10px; overflow-x: auto; }
-    .markdown-body pre code { background: transparent; color: inherit; padding: 0; }
-    .markdown-body blockquote { border-left: 4px solid #10b981; background: #f0fdf4; padding: 12px 16px; border-radius: 0 8px 8px 0; color: #065f46; }
-    .markdown-body hr { border-color: #e2e8f0; margin: 2rem 0; }
-    .markdown-body ol, .markdown-body ul { padding-left: 1.5rem; }
-    .markdown-body li { margin-bottom: 4px; }
-    .markdown-body a { color: #059669; text-decoration: none; }
-    .markdown-body a:hover { text-decoration: underline; }
-    .markdown-body strong { color: #1e293b; }
+    .panduan-hub-header { background: linear-gradient(135deg, #065f46 0%, #10b981 100%); color: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; }
+    .panduan-hub-header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .panduan-hub-header p { margin: 6px 0 0; opacity: .85; font-size: .85rem; }
 
-    .panduan-header { background: linear-gradient(135deg, #065f46 0%, #10b981 100%); color: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; }
-    .panduan-header h1 { margin: 0; font-size: 1.4rem; font-weight: 700; }
-    .panduan-header p { margin: 6px 0 0; opacity: .85; font-size: .85rem; }
+    .search-filter-bar { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; }
+    .filter-input { border: 1px solid #e2e8f0; border-radius: 8px; font-size: .82rem; padding: 8px 12px; }
+    .filter-input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,.12); outline: none; }
 
-    .toc-sidebar { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; padding-right: 8px; }
-    .toc-sidebar::-webkit-scrollbar { width: 3px; }
-    .toc-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-    .toc-link { display: block; padding: 5px 12px; font-size: .78rem; color: #64748b; text-decoration: none; border-left: 2px solid transparent; transition: all .2s; }
-    .toc-link:hover, .toc-link.active { color: #059669; border-left-color: #10b981; background: #f0fdf4; }
-    .toc-link.toc-h3 { padding-left: 24px; font-size: .74rem; }
-
-    .search-panduan { border: 1px solid #e2e8f0; border-radius: 10px; padding: 9px 14px; font-size: .82rem; width: 100%; }
-    .search-panduan:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,.12); }
-
-    @media print {
-        .panduan-header, .toc-sidebar, .search-panduan, .btn { display: none !important; }
-        .markdown-body { padding: 0; }
-    }
+    .doc-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; transition: all .2s; cursor: pointer; height: 100%; position: relative; overflow: hidden; background: #fff; }
+    .doc-card:hover { border-color: #10b981; box-shadow: 0 4px 20px rgba(16,185,129,.12); transform: translateY(-2px); }
+    .doc-card .doc-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; margin-bottom: 12px; }
+    .doc-card .doc-logo { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; margin-bottom: 12px; }
+    .doc-card .doc-title { font-size: .92rem; font-weight: 600; color: #1e293b; margin-bottom: 4px; }
+    .doc-card .doc-desc { font-size: .78rem; color: #64748b; line-height: 1.5; margin-bottom: 12px; }
+    .doc-card .doc-meta { font-size: .72rem; color: #94a3b8; display: flex; gap: 12px; align-items: center; }
+    .doc-card .doc-badge { position: absolute; top: 12px; right: 12px; font-size: .65rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
 </style>
 @endpush
 
 @section('konten')
-<div class="panduan-header">
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <div>
-            <h1><i class="bi bi-book me-2"></i>Panduan Penggunaan</h1>
-            <p>Dokumentasi lengkap cara menggunakan Sistem TU Administrasi</p>
-        </div>
-        <div class="d-flex gap-2">
-            <button onclick="window.print()" class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);">
-                <i class="bi bi-printer me-1"></i> Cetak
-            </button>
-        </div>
-    </div>
+<div class="panduan-hub-header">
+    <h1><i class="bi bi-book me-2"></i>Pusat Panduan</h1>
+    <p>Dokumentasi lengkap & panduan penggunaan Sistem TU Administrasi</p>
 </div>
 
-<div class="row">
-    {{-- Table of Contents --}}
-    <div class="col-lg-3 d-none d-lg-block">
-        <div class="card">
-            <div class="card-body p-3">
-                <h6 class="fw-bold mb-3" style="font-size:.82rem; color:#475569;">
-                    <i class="bi bi-list-ul me-1"></i> Daftar Isi
-                </h6>
-                <input type="text" class="search-panduan mb-3" placeholder="Cari di panduan..." id="searchPanduan">
-                <div class="toc-sidebar" id="tocContainer">
-                    {{-- TOC akan digenerate oleh JS --}}
-                </div>
+{{-- Search & Filter --}}
+<div class="search-filter-bar">
+    <form method="GET" action="{{ route('staf.panduan.index') }}" class="row g-2 align-items-end">
+        <div class="col-md-6">
+            <input type="text" name="cari" class="form-control filter-input" placeholder="Cari panduan..." value="{{ request('cari') }}">
+        </div>
+        <div class="col-md-3">
+            <select name="kategori" class="form-select filter-input">
+                <option value="">Semua Kategori</option>
+                @foreach(['panduan'=>'Panduan','dokumentasi'=>'Dokumentasi','changelog'=>'Changelog','referensi'=>'Referensi'] as $val => $label)
+                    <option value="{{ $val }}" {{ request('kategori') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-sm text-white flex-fill" style="background:#10b981;"><i class="bi bi-search me-1"></i> Cari</button>
+            <a href="{{ route('staf.panduan.index') }}" class="btn btn-sm btn-outline-secondary">Reset</a>
+        </div>
+    </form>
+</div>
+
+{{-- Document Cards --}}
+<div class="row g-3">
+    @forelse($panduan as $p)
+    <div class="col-md-6 col-xl-4">
+        <div class="doc-card">
+            <a href="{{ route('staf.panduan.show', $p) }}" class="stretched-link" style="text-decoration:none;color:inherit;"></a>
+            @if($p->versi)<span class="doc-badge" style="background:{{ $p->warna ?? '#10b981' }}20;color:{{ $p->warna ?? '#10b981' }};">{{ $p->versi }}</span>@endif
+            @if($p->logo)
+                <img src="{{ $p->logo_url }}" alt="{{ $p->judul }}" class="doc-logo">
+            @else
+                <div class="doc-icon" style="background:{{ $p->warna ?? '#10b981' }};"><i class="bi {{ $p->ikon }}"></i></div>
+            @endif
+            <div class="doc-title">{{ $p->judul }}</div>
+            <div class="doc-desc">{{ Str::limit($p->deskripsi, 100) }}</div>
+            <div class="doc-meta">
+                <span><i class="bi bi-calendar3 me-1"></i>{{ $p->created_at->translatedFormat('d M Y') }}</span>
+                <span><i class="bi bi-tag me-1"></i>{{ ucfirst($p->kategori) }}</span>
             </div>
         </div>
     </div>
-
-    {{-- Main Content --}}
-    <div class="col-lg-9">
-        <div class="card">
-            <div class="card-body p-0">
-                <div class="markdown-body" id="markdownContent">
-                    {!! \Illuminate\Support\Str::markdown($content) !!}
-                </div>
-            </div>
+    @empty
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="bi bi-journal-x" style="font-size:3rem;color:#cbd5e1;"></i>
+            <p class="text-muted mt-2">Belum ada panduan tersedia.</p>
         </div>
     </div>
+    @endforelse
 </div>
+
+@if($panduan->hasPages())
+<div class="mt-4">{{ $panduan->withQueryString()->links() }}</div>
+@endif
 @endsection
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Generate TOC from headings
-    const content = document.getElementById('markdownContent');
-    const tocContainer = document.getElementById('tocContainer');
-    const headings = content.querySelectorAll('h2, h3');
-    let tocHTML = '';
-
-    headings.forEach((h, i) => {
-        const id = 'section-' + i;
-        h.id = id;
-        const level = h.tagName === 'H3' ? ' toc-h3' : '';
-        tocHTML += `<a href="#${id}" class="toc-link${level}">${h.textContent}</a>`;
-    });
-    tocContainer.innerHTML = tocHTML;
-
-    // Highlight active TOC on scroll
-    const tocLinks = document.querySelectorAll('.toc-link');
-    window.addEventListener('scroll', () => {
-        let current = '';
-        headings.forEach(h => {
-            if (window.scrollY >= h.offsetTop - 120) current = h.id;
-        });
-        tocLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-        });
-    });
-
-    // Search functionality
-    const searchInput = document.getElementById('searchPanduan');
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        tocLinks.forEach(link => {
-            const text = link.textContent.toLowerCase();
-            link.style.display = text.includes(query) || query === '' ? '' : 'none';
-        });
-
-        if (query.length >= 2) {
-            const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null, false);
-            const matches = [];
-            while (walker.nextNode()) {
-                if (walker.currentNode.textContent.toLowerCase().includes(query)) {
-                    matches.push(walker.currentNode);
-                }
-            }
-            if (matches.length > 0) {
-                matches[0].parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-    });
-
-    // Smooth scroll for TOC links
-    tocLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-});
-</script>
-@endpush

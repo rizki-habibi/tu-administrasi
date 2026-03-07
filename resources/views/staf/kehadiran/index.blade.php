@@ -19,6 +19,7 @@
     .stat-mini { background: #fff; border-radius: 12px; padding: 14px 18px; border: 1px solid #e2e8f0; text-align: center; }
     .stat-mini .num { font-size: 1.4rem; font-weight: 700; color: #1e293b; }
     .stat-mini .lbl { font-size: .72rem; color: #64748b; }
+    .leaflet-container { width: 100%; height: 100%; }
 </style>
 @endpush
 
@@ -26,7 +27,7 @@
 
 @php
     $statusColors = ['hadir'=>'success','terlambat'=>'warning','izin'=>'info','sakit'=>'primary','alpha'=>'danger','cuti'=>'secondary'];
-    $monthStats = \App\Models\Attendance::where('pengguna_id', auth()->id())
+    $monthStats = \App\Models\Kehadiran::where('pengguna_id', auth()->id())
         ->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)
         ->selectRaw('status, COUNT(*) as total')->groupBy('status')->pluck('total','status');
     $officeLat = $setting->lat_kantor ?? -8.1740;
@@ -150,7 +151,7 @@
             </div>
             <form id="clockInForm" action="{{ route('staf.kehadiran.masuk') }}" method="POST">
                 @csrf
-                <input type="hidden" name="photo" id="photoIn">
+                <input type="hidden" name="foto" id="fotoIn">
                 <input type="hidden" name="latitude" id="latIn">
                 <input type="hidden" name="longitude" id="lngIn">
                 <input type="hidden" name="alamat" id="addrIn">
@@ -210,7 +211,7 @@
             </div>
             <form id="clockOutForm" action="{{ route('staf.kehadiran.pulang') }}" method="POST">
                 @csrf
-                <input type="hidden" name="photo" id="photoOut">
+                <input type="hidden" name="foto" id="fotoOut">
                 <input type="hidden" name="latitude" id="latOut">
                 <input type="hidden" name="longitude" id="lngOut">
                 <input type="hidden" name="alamat" id="addrOut">
@@ -399,21 +400,50 @@ const iconUser   = L.divIcon({ html:'<div style="background:#10b981;width:14px;h
 const iconOutM   = L.divIcon({ html:'<div style="background:#f59e0b;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,.5);"></div>', className:'', iconSize:[14,14], iconAnchor:[7,7] });
 const iconOffice = L.divIcon({ html:'<div style="background:#ef4444;width:22px;height:22px;border-radius:6px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:12px;">??</div>', className:'', iconSize:[22,22], iconAnchor:[11,11] });
 
-let maps = {}, streams = {};
+let maps = {}, streams = {}, trackers = {};
+const mapState = {
+    in: { marker: null, officeMarker: null, routeLine: null, lastGeocodeAt: 0, lastGeocodeLat: null, lastGeocodeLng: null },
+    out: { marker: null, officeMarker: null, routeLine: null, lastGeocodeAt: 0, lastGeocodeLat: null, lastGeocodeLng: null }
+};
 
-function initMap(id, lat, lng, userIcon) {
-    if (maps[id]) { maps[id].remove(); }
-    const m = L.map(id, { zoomControl:true, attributionControl:false }).setView([lat, lng], 17);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(m);
-    if (HAS_OFFICE) {
-        L.marker([OFFICE_LAT, OFFICE_LNG], { icon: iconOffice }).addTo(m).bindPopup('<b>?? SMA Negeri 2 Jember</b>');
-        L.polyline([[OFFICE_LAT,OFFICE_LNG],[lat,lng]], { color:'#6366f1', weight:2, dashArray:'6,4', opacity:.7 }).addTo(m);
-        // Fit bounds to show both markers
-        m.fitBounds([[OFFICE_LAT,OFFICE_LNG],[lat,lng]], { padding:[30,30] });
+function invalidateMapSize(id) {
+    if (!maps[id]) return;
+    setTimeout(() => maps[id]?.invalidateSize(), 120);
+    setTimeout(() => maps[id]?.invalidateSize(), 320);
+}
+
+function initLiveMap(type, lat, lng, userIcon) {
+    const S = type === 'in' ? 'In' : 'Out';
+    const id = 'map' + S;
+    const state = mapState[type];
+
+    if (!maps[id]) {
+        maps[id] = L.map(id, { zoomControl: true, attributionControl: false }).setView([lat, lng], 17);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(maps[id]);
     }
-    L.marker([lat, lng], { icon: userIcon }).addTo(m).bindPopup('<b>?? Posisi Anda</b>').openPopup();
-    maps[id] = m;
-    return m;
+
+    const m = maps[id];
+    if (!state.marker) {
+        state.marker = L.marker([lat, lng], { icon: userIcon }).addTo(m).bindPopup('<b>Posisi Anda (Realtime)</b>');
+    } else {
+        state.marker.setLatLng([lat, lng]);
+    }
+
+    if (HAS_OFFICE) {
+        if (!state.officeMarker) {
+            state.officeMarker = L.marker([OFFICE_LAT, OFFICE_LNG], { icon: iconOffice }).addTo(m).bindPopup('<b>Lokasi Sekolah</b>');
+        }
+        if (!state.routeLine) {
+            state.routeLine = L.polyline([[OFFICE_LAT, OFFICE_LNG], [lat, lng]], { color: '#6366f1', weight: 2, dashArray: '6,4', opacity: .7 }).addTo(m);
+        } else {
+            state.routeLine.setLatLngs([[OFFICE_LAT, OFFICE_LNG], [lat, lng]]);
+        }
+        m.fitBounds([[OFFICE_LAT, OFFICE_LNG], [lat, lng]], { padding: [32, 32], maxZoom: 18 });
+    } else {
+        m.setView([lat, lng], 17);
+    }
+
+    invalidateMapSize(id);
 }
 
 function haversine(lat1, lng1, lat2, lng2) {
@@ -424,40 +454,81 @@ function haversine(lat1, lng1, lat2, lng2) {
 
 async function reverseGeocode(lat, lng) {
     try {
-        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1&zoom=18&accept-language=id`);
+        if (!r.ok) return null;
         const d = await r.json();
-        return d.display_name || null;
+        return d || null;
     } catch { return null; }
+}
+
+function formatPlaceName(geoData) {
+    if (!geoData) return null;
+    const a = geoData.address || {};
+    const primary = a.amenity || a.building || a.school || a.office || a.tourism || a.shop || a.road || a.hamlet || a.village || a.suburb;
+    const city = a.city || a.town || a.municipality || a.county;
+    const region = a.state_district || a.state;
+    const parts = [primary, city, region].filter(Boolean);
+    return parts.length ? parts.join(', ') : (geoData.display_name || null);
+}
+
+function shouldRefreshAddress(type, lat, lng) {
+    const state = mapState[type];
+    const nowMs = Date.now();
+    if (!state.lastGeocodeAt || state.lastGeocodeLat === null || state.lastGeocodeLng === null) return true;
+    const moved = haversine(lat, lng, state.lastGeocodeLat, state.lastGeocodeLng);
+    return moved >= 35 || (nowMs - state.lastGeocodeAt) >= 45000;
+}
+
+function setAddress(type, geoData) {
+    const S = type === 'in' ? 'In' : 'Out';
+    const addrEl = document.getElementById('address' + S);
+    const addrInput = document.getElementById('addr' + S);
+    if (!addrEl || !geoData) return;
+
+    const shortName = formatPlaceName(geoData);
+    const fullAddress = geoData.display_name || shortName || '';
+
+    addrEl.innerHTML = `<i class="bi bi-geo-fill text-success me-1"></i><strong>${shortName || 'Lokasi terdeteksi'}</strong><br><small class="text-muted">${fullAddress}</small>`;
+    addrEl.classList.remove('d-none');
+    if (addrInput) addrInput.value = fullAddress;
+}
+
+function stopTracker(type) {
+    if (trackers[type] !== undefined && trackers[type] !== null) {
+        navigator.geolocation.clearWatch(trackers[type]);
+        trackers[type] = null;
+    }
 }
 
 function getLocation(type) {
     const S = type === 'in' ? 'In' : 'Out';
     const locEl  = document.getElementById('locInfo' + S);
-    const addrEl = document.getElementById('alamat' + S);
     const distEl = document.getElementById('distance' + S);
     const latEl  = document.getElementById('lat' + S);
     const lngEl  = document.getElementById('lng' + S);
-    const mapId  = 'map' + S;
     const icon   = type === 'in' ? iconUser : iconOutM;
 
     if (!navigator.geolocation) {
         locEl.innerHTML = '<i class="bi bi-exclamation-triangle text-danger me-1"></i>GPS tidak didukung browser ini.';
         return;
     }
-    navigator.geolocation.getCurrentPosition(async pos => {
+    stopTracker(type);
+
+    const onPosition = async (pos) => {
         const lat = pos.coords.latitude, lng = pos.coords.longitude, acc = Math.round(pos.coords.accuracy);
         latEl.value = lat; lngEl.value = lng;
-        locEl.innerHTML = `<i class="bi bi-geo-alt-fill text-success me-1"></i><strong>${lat.toFixed(5)}, ${lng.toFixed(5)}</strong> <span class="text-muted">(akurasi �${acc}m)</span>`;
+        locEl.innerHTML = `<i class="bi bi-geo-alt-fill text-success me-1"></i><strong>${lat.toFixed(5)}, ${lng.toFixed(5)}</strong> <span class="text-muted">(akurasi ${acc}m • realtime)</span>`;
 
-        initMap(mapId, lat, lng, icon);
+        initLiveMap(type, lat, lng, icon);
 
-        const addr = await reverseGeocode(lat, lng);
-        if (addr) {
-            addrEl.innerHTML = `<i class="bi bi-house-fill text-success me-1"></i>${addr}`;
-            addrEl.classList.remove('d-none');
-            // Save address to hidden field
-            const addrInput = document.getElementById('addr' + S);
-            if (addrInput) addrInput.value = addr;
+        if (shouldRefreshAddress(type, lat, lng)) {
+            const geoData = await reverseGeocode(lat, lng);
+            if (geoData) {
+                setAddress(type, geoData);
+                mapState[type].lastGeocodeAt = Date.now();
+                mapState[type].lastGeocodeLat = lat;
+                mapState[type].lastGeocodeLng = lng;
+            }
         }
 
         if (HAS_OFFICE) {
@@ -471,10 +542,18 @@ function getLocation(type) {
             distEl.innerHTML = `<span class="distance-badge distance-unknown"><i class="bi bi-info-circle"></i> Koordinat sekolah belum diatur admin</span>`;
         }
         checkReady(type);
-    }, err => {
+    };
+
+    const onError = (err) => {
         const msg = { 1:'Izin GPS ditolak. Aktifkan izin lokasi.', 2:'GPS tidak tersedia.', 3:'Timeout GPS. Coba lagi.' };
         locEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>${msg[err.code]||'Gagal ambil GPS.'}`;
-    }, { enableHighAccuracy:true, timeout:15000, maximumAge:0 });
+    };
+
+    trackers[type] = navigator.geolocation.watchPosition(onPosition, onError, {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 3000
+    });
 }
 
 function startCamera(type) {
@@ -492,10 +571,38 @@ function stopCamera(type) {
     if (streams[type]) { streams[type].getTracks().forEach(t=>t.stop()); streams[type]=null; }
 }
 
-document.getElementById('clockInModal').addEventListener('shown.bs.modal', () => { startCamera('in'); getLocation('in'); });
-document.getElementById('clockInModal').addEventListener('hidden.bs.modal', () => { stopCamera('in'); if(maps['mapIn']){maps['mapIn'].remove();delete maps['mapIn'];} });
-document.getElementById('clockOutModal').addEventListener('shown.bs.modal', () => { startCamera('out'); getLocation('out'); });
-document.getElementById('clockOutModal').addEventListener('hidden.bs.modal', () => { stopCamera('out'); if(maps['mapOut']){maps['mapOut'].remove();delete maps['mapOut'];} });
+document.getElementById('clockInModal').addEventListener('shown.bs.modal', () => {
+    startCamera('in');
+    getLocation('in');
+    invalidateMapSize('mapIn');
+});
+document.getElementById('clockInModal').addEventListener('hidden.bs.modal', () => {
+    stopCamera('in');
+    stopTracker('in');
+    if (maps['mapIn']) { maps['mapIn'].remove(); delete maps['mapIn']; }
+    mapState.in.marker = null;
+    mapState.in.officeMarker = null;
+    mapState.in.routeLine = null;
+    mapState.in.lastGeocodeAt = 0;
+    mapState.in.lastGeocodeLat = null;
+    mapState.in.lastGeocodeLng = null;
+});
+document.getElementById('clockOutModal').addEventListener('shown.bs.modal', () => {
+    startCamera('out');
+    getLocation('out');
+    invalidateMapSize('mapOut');
+});
+document.getElementById('clockOutModal').addEventListener('hidden.bs.modal', () => {
+    stopCamera('out');
+    stopTracker('out');
+    if (maps['mapOut']) { maps['mapOut'].remove(); delete maps['mapOut']; }
+    mapState.out.marker = null;
+    mapState.out.officeMarker = null;
+    mapState.out.routeLine = null;
+    mapState.out.lastGeocodeAt = 0;
+    mapState.out.lastGeocodeLat = null;
+    mapState.out.lastGeocodeLng = null;
+});
 
 document.querySelectorAll('.captureBtn').forEach(btn => {
     btn.addEventListener('click', function() {

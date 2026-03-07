@@ -34,7 +34,7 @@
                             <div class="col-md-4">
                                 <select id="aiTemplate" class="form-select form-select-sm">
                                     <option value="">-- Auto Deteksi --</option>
-                                    @foreach(App\Models\WordDocument::templates() as $key => $tpl)
+                                    @foreach(App\Models\DokumenWord::templates() as $key => $tpl)
                                         <option value="{{ $key }}">{{ $tpl['nama'] }}</option>
                                     @endforeach
                                 </select>

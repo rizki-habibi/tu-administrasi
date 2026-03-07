@@ -1,6 +1,6 @@
 {{-- Top Header Bar for Admin --}}
 @php
-    $unreadNotif = \App\Models\Notification::where('sudah_dibaca', false)->count();
+    $unreadNotif = \App\Models\Notifikasi::where('sudah_dibaca', false)->count();
 @endphp
 
 <header class="top-header">
