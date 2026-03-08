@@ -17,12 +17,16 @@ class PengaturanAi extends Model
         'base_url',
         'aktif',
         'opsi',
+        'kapabilitas',
+        'ikon',
+        'warna_tema',
         'diperbarui_oleh',
     ];
 
     protected $casts = [
         'aktif' => 'boolean',
         'opsi' => 'array',
+        'kapabilitas' => 'array',
     ];
 
     // Encrypt API key on set
@@ -75,11 +79,51 @@ class PengaturanAi extends Model
                 'models' => ['claude-sonnet-4-20250514', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
                 'base_url' => 'https://api.anthropic.com/v1',
             ],
+            'groq' => [
+                'nama' => 'Groq',
+                'models' => ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768', 'gemma2-9b-it'],
+                'base_url' => 'https://api.groq.com/openai/v1',
+            ],
+            'openrouter' => [
+                'nama' => 'OpenRouter',
+                'models' => ['google/gemini-2.0-flash-exp:free', 'meta-llama/llama-3.3-70b-instruct:free', 'deepseek/deepseek-chat-v3-0324:free', 'qwen/qwen-2.5-72b-instruct:free'],
+                'base_url' => 'https://openrouter.ai/api/v1',
+            ],
+            'deepseek' => [
+                'nama' => 'DeepSeek',
+                'models' => ['deepseek-chat', 'deepseek-reasoner'],
+                'base_url' => 'https://api.deepseek.com/v1',
+            ],
+            'mistral' => [
+                'nama' => 'Mistral AI',
+                'models' => ['mistral-large-latest', 'mistral-medium-latest', 'mistral-small-latest', 'open-mistral-nemo'],
+                'base_url' => 'https://api.mistral.ai/v1',
+            ],
+            'cohere' => [
+                'nama' => 'Cohere',
+                'models' => ['command-r-plus', 'command-r', 'command-light'],
+                'base_url' => 'https://api.cohere.ai/v1',
+            ],
             'custom' => [
                 'nama' => 'Custom / Lainnya',
                 'models' => [],
                 'base_url' => '',
             ],
+        ];
+    }
+
+    /**
+     * Default capabilities list
+     */
+    public static function daftarKapabilitas(): array
+    {
+        return [
+            'teks' => 'Baca & Generasi Teks',
+            'gambar' => 'Analisis Gambar / Vision',
+            'dokumen' => 'Generasi Dokumen',
+            'ringkasan' => 'Ringkasan & Analisis',
+            'terjemahan' => 'Terjemahan Bahasa',
+            'kode' => 'Bantuan Coding',
         ];
     }
 

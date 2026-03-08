@@ -68,7 +68,7 @@ class LayananGeminiAi
         }
 
         try {
-            if ($this->provider === 'openai' || $this->provider === 'custom') {
+            if (in_array($this->provider, ['openai', 'groq', 'openrouter', 'deepseek', 'mistral', 'cohere', 'custom'])) {
                 return $this->callOpenAiCompatible($prompt, $temperature, $maxTokens);
             } elseif ($this->provider === 'anthropic') {
                 return $this->callAnthropic($prompt, $temperature, $maxTokens);
@@ -179,21 +179,23 @@ class LayananGeminiAi
     /**
      * AI Assistant — Jawab pertanyaan admin tentang data sekolah
      */
-    public function assistantChat(string $question, ?string $context = null): ?string
+    public function assistantChat(string $question, ?string $systemPrompt = null): ?string
     {
-        $dataContext = $context ?? $this->gatherSchoolData();
+        $dataContext = $this->gatherSchoolData();
 
-        $prompt = "Kamu adalah Asisten AI Administrasi SMA Negeri 2 Jember. "
+        $basePrompt = $systemPrompt ?? ("Kamu adalah Asisten AI Administrasi SMA Negeri 2 Jember. "
             . "Jawab pertanyaan pengguna berdasarkan data sekolah yang tersedia. "
             . "Gunakan Bahasa Indonesia yang sopan dan profesional. "
             . "Jika data tidak tersedia, sampaikan dengan jujur. "
-            . "Berikan jawaban yang ringkas, informatif, dan langsung ke intinya. "
+            . "Berikan jawaban yang ringkas, informatif, dan langsung ke intinya.");
+
+        $prompt = $basePrompt . "\n"
             . "Format menggunakan HTML sederhana (gunakan <strong>, <ul>, <li>, <p>, <br>). "
             . "JANGAN gunakan markdown. Langsung tulis HTML saja.\n\n"
             . "DATA SEKOLAH SAAT INI:\n" . $dataContext . "\n\n"
             . "PERTANYAAN: " . $question;
 
-        return $this->callApi($prompt, 0.5, 2048);
+        return $this->callApi($prompt, 0.5, 4096);
     }
 
     /**

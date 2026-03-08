@@ -80,3 +80,10 @@ Route::prefix('profil')->name('profil.')->group(function () {
     Route::put('/', [Magang\ProfilController::class, 'update'])->name('update');
     Route::put('/password', [Magang\ProfilController::class, 'changePassword'])->name('password');
 });
+
+/*
+|--------------------------------------------------------------------------
+| AI Chatbot SIMPEG-AI
+|--------------------------------------------------------------------------
+*/
+Route::post('/siatu-ai/kirim', [Magang\SiatuAiController::class, 'kirim'])->name('siatu-ai.kirim');

@@ -422,6 +422,7 @@
     });
     </script>
     @include('komponen.notifikasi-popup')
+    @include('komponen.ai-widget')
     @stack('scripts')
 </body>
 </html>

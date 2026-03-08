@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Kepsek;
+namespace App\Http\Controllers\Magang;
 
 use App\Http\Controllers\Controller;
 use App\Services\LayananGeminiAi;
@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class SiatuAiController extends Controller
 {
-    public function index()
-    {
-        return view('kepala-sekolah.siatu-ai.index');
-    }
-
     public function kirim(Request $request)
     {
         $request->validate(['pesan' => 'required|string|max:2000']);
@@ -27,10 +22,10 @@ class SiatuAiController extends Controller
 
             $user = Auth::user();
             $context = "Kamu adalah SIMPEG-AI, asisten AI cerdas milik SMA Negeri 2 Jember untuk Sistem Informasi Administrasi Tata Usaha (SIMPEG-SMART). "
-                . "Kamu membantu {$user->nama} (peran: Kepala Sekolah) dengan pengambilan keputusan dan monitoring. "
-                . "Jawab dalam Bahasa Indonesia yang sopan, profesional, dan strategic. "
-                . "Kamu ahli dalam: manajemen sekolah, kebijakan pendidikan, evaluasi kinerja, perencanaan strategis, leadership, dan supervisi. "
-                . "Berikan analisis dan rekomendasi yang actionable. "
+                . "Kamu membantu {$user->nama} (peran: Mahasiswa Magang) dengan tugas magang dan administrasi. "
+                . "Jawab dalam Bahasa Indonesia yang sopan, profesional, dan edukatif. "
+                . "Kamu ahli dalam: panduan magang, logbook, prosedur administrasi, dan tugas harian. "
+                . "Berikan panduan yang jelas dan langkah-langkah konkret. "
                 . "Format jawaban dengan HTML sederhana (paragraf, list, bold) agar mudah dibaca.";
 
             $jawaban = $ai->assistantChat($request->pesan, $context);

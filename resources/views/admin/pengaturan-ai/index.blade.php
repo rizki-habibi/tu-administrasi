@@ -19,8 +19,8 @@
     <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--card-radius);">
         <div class="card-body p-4">
             <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:linear-gradient(135deg,#6366f1,#818cf8);">
-                    <i class="bi bi-robot text-white" style="font-size:1.4rem;"></i>
+                <div class="rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:{{ $active->warna_tema ?? '#6366f1' }};">
+                    <i class="bi {{ $active->ikon ?? 'bi-robot' }} text-white" style="font-size:1.4rem;"></i>
                 </div>
                 <div>
                     <h6 class="mb-0 fw-bold">Provider Aktif: {{ $active->nama_tampilan }}</h6>
@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="bg-light rounded-3 p-3 text-center">
-                        <div class="text-muted" style="font-size:.72rem;">Temperature</div>
-                        <div class="fw-bold">{{ $active->opsi['temperature'] ?? 0.7 }}</div>
+                        <div class="text-muted" style="font-size:.72rem;">Kapabilitas</div>
+                        <div class="fw-bold">{{ count($active->kapabilitas ?? ['teks']) }}</div>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -109,7 +109,7 @@
                                             <button class="btn btn-outline-success rounded-start-2" title="Aktifkan"><i class="bi bi-check-circle"></i></button>
                                         </form>
                                         @endif
-                                        <button class="btn btn-outline-primary" title="Edit" onclick="editConfig({{ $config->id }}, '{{ $config->provider }}', '{{ $config->model }}', '{{ $config->nama_tampilan }}', '{{ $config->base_url }}')"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-outline-primary" title="Edit" onclick="editConfig({{ $config->id }}, {{ Js::from($config->only(['provider','model','nama_tampilan','base_url','ikon','warna_tema','kapabilitas'])) }})"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-outline-info" title="Test koneksi" onclick="testConfig({{ $config->id }}, '{{ $config->provider }}', '{{ $config->model }}')"><i class="bi bi-wifi"></i></button>
                                         <form action="{{ route('admin.pengaturan-ai.destroy', $config) }}" method="POST" class="d-inline">
                                             @csrf @method('DELETE')
@@ -168,6 +168,37 @@
                         <label class="form-label fw-semibold" style="font-size:.82rem;">Base URL (Custom)</label>
                         <input type="url" name="base_url" id="addBaseUrl" class="form-control" placeholder="https://api.example.com/v1">
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Ikon Widget</label>
+                        <select name="ikon" id="addIkon" class="form-select">
+                            <option value="bi-robot">🤖 Robot (default)</option>
+                            <option value="bi-stars">✨ Bintang</option>
+                            <option value="bi-lightning-charge-fill">⚡ Petir</option>
+                            <option value="bi-cpu">🔲 CPU</option>
+                            <option value="bi-chat-dots-fill">💬 Chat</option>
+                            <option value="bi-magic">🪄 Magic</option>
+                            <option value="bi-braces">{ } Kode</option>
+                            <option value="bi-mortarboard-fill">🎓 Akademik</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Warna Tema</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="color" name="warna_tema" id="addWarnaTema" value="#6366f1" class="form-control form-control-color" style="width:50px;height:38px;">
+                            <span id="addWarnaLabel" class="text-muted" style="font-size:.78rem;">#6366f1</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Kapabilitas AI</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach($kapabilitas as $key => $label)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="kapabilitas[]" value="{{ $key }}" id="addKap_{{ $key }}" {{ $key === 'teks' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="addKap_{{ $key }}" style="font-size:.82rem;">{{ $label }}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <button type="button" class="btn btn-outline-info btn-sm rounded-3" onclick="testFromModal('add')">
@@ -223,6 +254,37 @@
                         <label class="form-label fw-semibold" style="font-size:.82rem;">Base URL</label>
                         <input type="url" name="base_url" id="editBaseUrl" class="form-control">
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Ikon Widget</label>
+                        <select name="ikon" id="editIkon" class="form-select">
+                            <option value="bi-robot">🤖 Robot (default)</option>
+                            <option value="bi-stars">✨ Bintang</option>
+                            <option value="bi-lightning-charge-fill">⚡ Petir</option>
+                            <option value="bi-cpu">🔲 CPU</option>
+                            <option value="bi-chat-dots-fill">💬 Chat</option>
+                            <option value="bi-magic">🪄 Magic</option>
+                            <option value="bi-braces">{ } Kode</option>
+                            <option value="bi-mortarboard-fill">🎓 Akademik</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Warna Tema</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="color" name="warna_tema" id="editWarnaTema" value="#6366f1" class="form-control form-control-color" style="width:50px;height:38px;">
+                            <span id="editWarnaLabel" class="text-muted" style="font-size:.78rem;">#6366f1</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold" style="font-size:.82rem;">Kapabilitas AI</label>
+                        <div class="d-flex flex-wrap gap-2" id="editKapContainer">
+                            @foreach($kapabilitas as $key => $label)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="kapabilitas[]" value="{{ $key }}" id="editKap_{{ $key }}">
+                                <label class="form-check-label" for="editKap_{{ $key }}" style="font-size:.82rem;">{{ $label }}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer border-0">
@@ -237,13 +299,17 @@
 @push('scripts')
 <script>
 const providerData = @json($providers);
+const needsBaseUrl = ['custom', 'openrouter', 'deepseek', 'mistral', 'cohere', 'groq'];
 
 function onProviderChange(select, prefix) {
     const provider = select.value;
     const modelSelect = document.getElementById(prefix + 'Model');
     const baseUrlGroup = document.getElementById(prefix + 'BaseUrlGroup');
+    const customInput = modelSelect.closest('.col-md-6').querySelector('input[name="model"]');
 
+    if (customInput) customInput.remove();
     modelSelect.innerHTML = '';
+    modelSelect.style.display = '';
 
     if (provider && providerData[provider]) {
         const models = providerData[provider].models;
@@ -254,19 +320,14 @@ function onProviderChange(select, prefix) {
                 modelSelect.appendChild(opt);
             });
         } else {
-            const opt = document.createElement('option');
-            opt.value = ''; opt.textContent = '— Ketik nama model —';
-            modelSelect.appendChild(opt);
-            // Allow custom input
-            modelSelect.setAttribute('contenteditable', 'true');
+            modelSelect.style.display = 'none';
             const input = document.createElement('input');
-            input.type = 'text'; input.name = 'model'; input.className = 'form-control mt-2';
+            input.type = 'text'; input.name = 'model'; input.className = 'form-control';
             input.placeholder = 'Nama model custom...'; input.required = true;
             modelSelect.closest('.col-md-6').appendChild(input);
-            modelSelect.style.display = 'none';
         }
 
-        baseUrlGroup.style.display = provider === 'custom' ? '' : 'none';
+        baseUrlGroup.style.display = needsBaseUrl.includes(provider) ? '' : 'none';
     }
 }
 
@@ -277,16 +338,36 @@ function togglePassword(id, btn) {
     else { input.type = 'password'; icon.className = 'bi bi-eye'; }
 }
 
-function editConfig(id, provider, model, nama, baseUrl) {
+function editConfig(id, data) {
     document.getElementById('editForm').action = '{{ url("admin/pengaturan-ai") }}/' + id;
-    document.getElementById('editProvider').value = provider;
-    document.getElementById('editNama').value = nama;
+    document.getElementById('editProvider').value = data.provider;
+    document.getElementById('editNama').value = data.nama_tampilan || '';
     onProviderChange(document.getElementById('editProvider'), 'edit');
-    setTimeout(() => { document.getElementById('editModel').value = model; }, 100);
-    document.getElementById('editBaseUrl').value = baseUrl || '';
-    document.getElementById('editBaseUrlGroup').style.display = provider === 'custom' ? '' : 'none';
+    setTimeout(() => { document.getElementById('editModel').value = data.model; }, 100);
+    document.getElementById('editBaseUrl').value = data.base_url || '';
+    document.getElementById('editBaseUrlGroup').style.display = needsBaseUrl.includes(data.provider) ? '' : 'none';
+
+    // Icon & color
+    document.getElementById('editIkon').value = data.ikon || 'bi-robot';
+    document.getElementById('editWarnaTema').value = data.warna_tema || '#6366f1';
+    document.getElementById('editWarnaLabel').textContent = data.warna_tema || '#6366f1';
+
+    // Capabilities
+    document.querySelectorAll('#editKapContainer input[type="checkbox"]').forEach(cb => {
+        cb.checked = (data.kapabilitas || ['teks']).includes(cb.value);
+    });
+
     new bootstrap.Modal(document.getElementById('modalEdit')).show();
 }
+
+// Color label sync
+['add', 'edit'].forEach(prefix => {
+    const colorInput = document.getElementById(prefix + 'WarnaTema');
+    const label = document.getElementById(prefix + 'WarnaLabel');
+    if (colorInput && label) {
+        colorInput.addEventListener('input', () => { label.textContent = colorInput.value; });
+    }
+});
 
 function testFromModal(prefix) {
     const provider = document.getElementById(prefix + 'Provider').value;
@@ -326,16 +407,6 @@ function testFromModal(prefix) {
 }
 
 function testConfig(id, provider, model) {
-    Swal.fire({
-        title: 'Test Koneksi',
-        text: 'Menguji koneksi ke ' + provider + '...',
-        icon: 'info',
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        didOpen: () => Swal.showLoading()
-    });
-
-    // Need the actual API key from server — redirect to test via form
     Swal.fire({
         title: 'Test Koneksi',
         html: 'Gunakan tombol <strong>Test Koneksi</strong> di modal Edit untuk menguji API key.',

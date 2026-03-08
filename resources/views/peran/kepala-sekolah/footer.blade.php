@@ -113,19 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ═══ AI CHAT POPUP ═══
-    const fabAi   = document.getElementById('fabAi');
-    const aiPopup = document.getElementById('aiPopup');
-    const closeAi = document.getElementById('closeAi');
-    const headerAiBtn = document.getElementById('headerAiBtn');
-
-    function showAi() { if (aiPopup) { aiPopup.classList.add('show'); if (fabAi) fabAi.classList.add('hidden'); } }
-    function hideAi() { if (aiPopup) { aiPopup.classList.remove('show'); if (fabAi) fabAi.classList.remove('hidden'); } }
-
-    if (fabAi)       fabAi.addEventListener('click', showAi);
-    if (closeAi)     closeAi.addEventListener('click', hideAi);
-    if (headerAiBtn) headerAiBtn.addEventListener('click', function() { aiPopup && aiPopup.classList.contains('show') ? hideAi() : showAi(); });
-
     // ── SweetAlert Confirm ──
     document.addEventListener('click', function (e) {
         const btn = e.target.closest('[data-confirm]');
@@ -173,143 +160,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(() => {});
     }, 30000);
 
-    // ═══ AI CHAT — Knowledge Base ═══
-    const aiMessages    = document.getElementById('aiMessages');
-    const aiInput       = document.getElementById('aiInput');
-    const aiSend        = document.getElementById('aiSend');
-    const aiVoice       = document.getElementById('aiVoice');
-    const aiQuickActions = document.getElementById('aiQuickActions');
-
-    function addAiMessage(text, isUser) {
-        const div = document.createElement('div');
-        div.className = 'ai-msg ' + (isUser ? 'user' : 'bot');
-        div.innerHTML = isUser
-            ? '<div class="ai-msg-bubble">' + escapeHtml(text) + '</div>'
-            : '<div class="ai-msg-avatar"><div class="ai-3d-icon"><i class="bi bi-robot"></i></div></div><div class="ai-msg-bubble">' + text + '</div>';
-        aiMessages.appendChild(div);
-        aiMessages.scrollTop = aiMessages.scrollHeight;
-    }
-
-    function escapeHtml(str) {
-        const d = document.createElement('div');
-        d.textContent = str;
-        return d.innerHTML;
-    }
-
-    function simulateAiResponse(userText) {
-        const lower = userText.toLowerCase();
-        let response = '';
-
-        if (lower.includes('surat') && (lower.includes('alur') || lower.includes('proses'))) {
-            response = 'Alur surat di SIMPEG-SMART:<br><br><strong>Status:</strong> Draft → Diproses → Dikirim → Diterima → Diarsipkan<br><br>Sebagai Kepala Sekolah, Anda dapat melihat semua surat di menu <strong>Surat Menyurat</strong>.';
-        } else if (lower.includes('kehadiran') || lower.includes('absen')) {
-            response = 'Fitur <strong>Kehadiran</strong> untuk Kepala Sekolah:<br><br>📊 <strong>Lihat Absensi:</strong> Sidebar → Kehadiran → Absensi Hari Ini<br>📋 <strong>Rekap:</strong> Sidebar → Kehadiran → Rekap Kehadiran<br><br>Anda dapat memonitor kehadiran seluruh staff.';
-        } else if (lower.includes('izin') || lower.includes('cuti')) {
-            response = 'Fitur <strong>Pengajuan Izin</strong>:<br><br>✅ <strong>Approve/Reject:</strong> Sidebar → Pengajuan Izin → Menunggu Persetujuan<br>📋 <strong>Semua Pengajuan:</strong> Sidebar → Pengajuan Izin → Semua<br><br>Staff akan mendapat notifikasi saat izin disetujui/ditolak.';
-        } else if (lower.includes('skp') || lower.includes('kinerja') || lower.includes('evaluasi')) {
-            response = 'Modul <strong>Kinerja Pegawai</strong>:<br><br>📋 <strong>SKP:</strong> Sidebar → SKP → Menunggu Penilaian<br>• Status: Menunggu → Disetujui / Revisi / Ditolak<br>• Anda dapat memberikan stamp persetujuan<br><br>⭐ <strong>Evaluasi:</strong> PKG/BKD, Metode STAR, Bukti Fisik<br><br>Buka menu <strong>Kinerja Pegawai</strong> untuk detail.';
-        } else if (lower.includes('resolusi') || lower.includes('keputusan')) {
-            response = 'Fitur <strong>Resolusi</strong> khusus Kepala Sekolah:<br><br>📜 <strong>Buat Resolusi:</strong> Sidebar → Resolusi → Tambah Baru<br>• Keputusan penting & kebijakan sekolah<br>• Lengkap dengan timestamp dan status';
-        } else if (lower.includes('rekap') || lower.includes('eksekutif') || lower.includes('laporan')) {
-            response = 'Fitur <strong>Rekap Eksekutif</strong>:<br><br>📊 <strong>Dashboard:</strong> Ringkasan data sekolah<br>🤖 <strong>AI Analisis:</strong> Analisis otomatis data kinerja<br><br>Buka: Sidebar → Rekap Eksekutif';
-        } else if (lower.includes('fitur') || lower.includes('sistem') || lower.includes('apa saja')) {
-            response = 'Fitur <strong>SIMPEG-SMART</strong> untuk Kepala Sekolah:<br><br>' +
-                '👥 <strong>Monitoring Staff:</strong> Data Pegawai, Kehadiran, Izin<br>' +
-                '📋 <strong>Kinerja:</strong> SKP (approve/reject), Evaluasi PKG/STAR<br>' +
-                '📧 <strong>Administrasi:</strong> Surat, Laporan, Keuangan<br>' +
-                '📊 <strong>Khusus:</strong> Resolusi, Rekap Eksekutif, AI Assistant<br>' +
-                '📅 <strong>Lainnya:</strong> Agenda, Chat, Notifikasi, Panduan';
-        } else if (lower.includes('panduan') || lower.includes('bantuan') || lower.includes('cara')) {
-            response = 'Saya bisa membantu tentang:<br><br>' +
-                '• <strong>Kehadiran</strong> — monitoring absensi staff<br>' +
-                '• <strong>Izin/Cuti</strong> — approve/reject pengajuan<br>' +
-                '• <strong>SKP</strong> — penilaian & persetujuan kinerja<br>' +
-                '• <strong>Evaluasi</strong> — PKG, STAR, Bukti Fisik<br>' +
-                '• <strong>Surat</strong> — monitoring surat masuk/keluar<br>' +
-                '• <strong>Resolusi</strong> — keputusan kepala sekolah<br><br>' +
-                'Ketik topik spesifik untuk jawaban detail!';
-        } else {
-            response = 'Terima kasih atas pertanyaan Anda: <em>"' + escapeHtml(userText) + '"</em><br><br>' +
-                'Saya bisa menjelaskan tentang:<br>' +
-                '• <strong>Kehadiran</strong>, <strong>SKP</strong>, <strong>Izin</strong><br>' +
-                '• <strong>Evaluasi</strong>, <strong>Surat</strong>, <strong>Laporan</strong><br>' +
-                '• <strong>Resolusi</strong>, <strong>Rekap Eksekutif</strong><br><br>' +
-                'Ketik kata kunci untuk jawaban detail!';
-        }
-
-        setTimeout(() => addAiMessage(response, false), 800 + Math.random() * 500);
-    }
-
-    function handleAiSend() {
-        if (!aiInput) return;
-        const text = aiInput.value.trim();
-        if (!text) return;
-        addAiMessage(text, true);
-        aiInput.value = '';
-        aiInput.style.height = 'auto';
-
-        const typing = document.createElement('div');
-        typing.className = 'ai-msg bot';
-        typing.id = 'aiTyping';
-        typing.innerHTML = '<div class="ai-msg-avatar"><div class="ai-3d-icon"><i class="bi bi-robot"></i></div></div><div class="ai-msg-bubble"><em style="opacity:.6;">Mengetik...</em></div>';
-        aiMessages.appendChild(typing);
-        aiMessages.scrollTop = aiMessages.scrollHeight;
-
-        setTimeout(() => {
-            const t = document.getElementById('aiTyping');
-            if (t) t.remove();
-            simulateAiResponse(text);
-        }, 600);
-    }
-
-    if (aiSend) aiSend.addEventListener('click', handleAiSend);
-    if (aiInput) {
-        aiInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleAiSend(); }
-        });
-        aiInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-        });
-    }
-
-    if (aiQuickActions) {
-        aiQuickActions.querySelectorAll('.ai-quick-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const prompt = this.dataset.prompt;
-                if (prompt && aiInput) { aiInput.value = prompt; handleAiSend(); }
-            });
-        });
-    }
-
-    // ── Voice Input ──
-    if (aiVoice && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'id-ID';
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        let isRecording = false;
-
-        aiVoice.addEventListener('click', function() {
-            if (isRecording) { recognition.stop(); }
-            else { recognition.start(); this.classList.add('recording'); isRecording = true; }
-        });
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            if (aiInput) { aiInput.value = transcript; handleAiSend(); }
-        };
-        recognition.onend = function() { aiVoice.classList.remove('recording'); isRecording = false; };
-        recognition.onerror = function() { aiVoice.classList.remove('recording'); isRecording = false; };
-    } else if (aiVoice) {
-        aiVoice.title = 'Speech recognition tidak didukung browser ini';
-        aiVoice.style.opacity = '.4';
-        aiVoice.style.cursor = 'not-allowed';
-    }
-
     // ── Close on Escape ──
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') { hideAi(); closeDrawer(); }
+        if (e.key === 'Escape') { closeDrawer(); }
     });
 
 });
