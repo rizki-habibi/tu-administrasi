@@ -1,6 +1,27 @@
 {{-- Menu Khusus: Kepegawaian --}}
+<div class="nav-group {{ request()->routeIs('staf.dok-kepegawaian.*') ? 'open' : '' }}">
+    <div class="nav-group-label" data-toggle="nav-group"><span>Dokumen Kepegawaian</span><i class="bi bi-chevron-down"></i></div>
+    <div class="nav-group-items">
+        <div class="nav-item">
+            <a class="nav-link {{ request()->routeIs('staf.dok-kepegawaian.index') ? 'active' : '' }}" href="{{ route('staf.dok-kepegawaian.index') }}">
+                <i class="bi bi-folder2-open icon"></i> <span>Daftar Dokumen</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link {{ request()->routeIs('staf.dok-kepegawaian.create') ? 'active' : '' }}" href="{{ route('staf.dok-kepegawaian.create') }}">
+                <i class="bi bi-plus-circle icon"></i> <span>Tambah Dokumen</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link {{ request()->routeIs('staf.dok-kepegawaian.ekspor') ? 'active' : '' }}" href="{{ route('staf.dok-kepegawaian.ekspor') }}">
+                <i class="bi bi-download icon"></i> <span>Ekspor CSV</span>
+            </a>
+        </div>
+    </div>
+</div>
+
 <div class="nav-group {{ request()->routeIs('staf.skp.*') || request()->routeIs('staf.evaluasi.*') ? 'open' : '' }}">
-    <div class="nav-group-label" data-toggle="nav-group"><span>Kepegawaian</span><i class="bi bi-chevron-down"></i></div>
+    <div class="nav-group-label" data-toggle="nav-group"><span>SKP & Evaluasi</span><i class="bi bi-chevron-down"></i></div>
     <div class="nav-group-items">
         <div class="nav-item {{ request()->routeIs('staf.skp.*') ? 'open' : '' }}">
             <a class="nav-link {{ request()->routeIs('staf.skp.*') ? 'active' : '' }}" data-toggle="submenu">

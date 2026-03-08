@@ -9,27 +9,18 @@ use Illuminate\Support\Facades\Route;
 | Prefix: /staf
 | Name: staf.*
 | Middleware: auth, role:all_staff
-|
-| Struktur file route staff dipisah per role:
-|   routes/staf/umum.php              → Fitur umum semua staff
-|   routes/staf/inventaris.php        → Fitur khusus inventaris/sarpras
-|
-| Role yang termasuk:
-| - kepegawaian, pramu_bakti, keuangan, persuratan,
-|   perpustakaan, inventaris, kesiswaan_kurikulum, staff
 |--------------------------------------------------------------------------
 */
 
-/*
-|--------------------------------------------------------------------------
-| 1. Routes Umum (Semua Staff)
-|--------------------------------------------------------------------------
-*/
+// 1. Routes Umum (Semua Staff)
 require __DIR__.'/staf/umum.php';
 
-/*
-|--------------------------------------------------------------------------
-| 2. Routes Khusus Per Role
-|--------------------------------------------------------------------------
-*/
+// 2. Routes Khusus Per Role
 require __DIR__.'/staf/inventaris.php';
+require __DIR__.'/staf/inventaris-peminjaman.php';
+require __DIR__.'/staf/keuangan.php';
+require __DIR__.'/staf/persuratan.php';
+require __DIR__.'/staf/perpustakaan.php';
+require __DIR__.'/staf/kesiswaan-kurikulum.php';
+require __DIR__.'/staf/kepegawaian.php';
+require __DIR__.'/staf/pramubakti.php';

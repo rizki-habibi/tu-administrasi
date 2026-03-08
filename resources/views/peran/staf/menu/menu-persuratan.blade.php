@@ -1,9 +1,9 @@
 {{-- Menu Khusus: Persuratan --}}
-<div class="nav-group {{ request()->routeIs('staf.surat.*') || request()->routeIs('staf.dokumen.*') ? 'open' : '' }}">
+<div class="nav-group {{ request()->routeIs('staf.surat.*') || request()->routeIs('staf.surat-kelola.*') || request()->routeIs('staf.dokumen.*') ? 'open' : '' }}">
     <div class="nav-group-label" data-toggle="nav-group"><span>Persuratan</span><i class="bi bi-chevron-down"></i></div>
     <div class="nav-group-items">
-        <div class="nav-item {{ request()->routeIs('staf.surat.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.surat.*') ? 'active' : '' }}" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('staf.surat.*') || request()->routeIs('staf.surat-kelola.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.surat.*') || request()->routeIs('staf.surat-kelola.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-envelope-paper-fill icon"></i> <span>Surat Menyurat</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
@@ -11,6 +11,7 @@
                 <a href="{{ route('staf.surat.index', ['jenis' => 'masuk']) }}" class="sub-link {{ request('jenis') == 'masuk' ? 'active' : '' }}">Surat Masuk</a>
                 <a href="{{ route('staf.surat.index', ['jenis' => 'keluar']) }}" class="sub-link {{ request('jenis') == 'keluar' ? 'active' : '' }}">Surat Keluar</a>
                 <a href="{{ route('staf.surat.create') }}" class="sub-link {{ request()->routeIs('staf.surat.create') ? 'active' : '' }}">Buat Surat</a>
+                <a href="{{ route('staf.surat-kelola.ekspor') }}" class="sub-link {{ request()->routeIs('staf.surat-kelola.ekspor') ? 'active' : '' }}">Ekspor Surat</a>
             </div>
         </div>
         <div class="nav-item {{ request()->routeIs('staf.dokumen.*') ? 'open' : '' }}">

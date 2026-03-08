@@ -1,27 +1,48 @@
 {{-- Menu Khusus: Kesiswaan & Kurikulum --}}
-<div class="nav-group {{ request()->routeIs('staf.kesiswaan.*') ? 'open' : '' }}">
+<div class="nav-group {{ request()->routeIs('staf.kesiswaan.*') || request()->routeIs('staf.kesiswaan-kelola.*') || request()->routeIs('staf.pelanggaran.*') || request()->routeIs('staf.prestasi.*') ? 'open' : '' }}">
     <div class="nav-group-label" data-toggle="nav-group"><span>Kesiswaan</span><i class="bi bi-chevron-down"></i></div>
     <div class="nav-group-items">
-        <div class="nav-item {{ request()->routeIs('staf.kesiswaan.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.kesiswaan.*') ? 'active' : '' }}" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('staf.kesiswaan.*') || request()->routeIs('staf.kesiswaan-kelola.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.kesiswaan.*') || request()->routeIs('staf.kesiswaan-kelola.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-mortarboard-fill icon"></i> <span>Data Siswa</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
                 <a href="{{ route('staf.kesiswaan.index') }}" class="sub-link {{ request()->routeIs('staf.kesiswaan.index') ? 'active' : '' }}">Daftar Siswa</a>
+                <a href="{{ route('staf.kesiswaan-kelola.create') }}" class="sub-link {{ request()->routeIs('staf.kesiswaan-kelola.create') ? 'active' : '' }}">Tambah Siswa</a>
+                <a href="{{ route('staf.kesiswaan-kelola.ekspor') }}" class="sub-link {{ request()->routeIs('staf.kesiswaan-kelola.ekspor') ? 'active' : '' }}">Ekspor CSV</a>
+            </div>
+        </div>
+        <div class="nav-item {{ request()->routeIs('staf.pelanggaran.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.pelanggaran.*') ? 'active' : '' }}" data-toggle="submenu">
+                <i class="bi bi-exclamation-triangle-fill icon"></i> <span>Pelanggaran</span> <i class="bi bi-chevron-right arrow"></i>
+            </a>
+            <div class="submenu">
+                <a href="{{ route('staf.pelanggaran.index') }}" class="sub-link {{ request()->routeIs('staf.pelanggaran.index') ? 'active' : '' }}">Daftar Pelanggaran</a>
+                <a href="{{ route('staf.pelanggaran.create') }}" class="sub-link {{ request()->routeIs('staf.pelanggaran.create') ? 'active' : '' }}">Catat Pelanggaran</a>
+            </div>
+        </div>
+        <div class="nav-item {{ request()->routeIs('staf.prestasi.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.prestasi.*') ? 'active' : '' }}" data-toggle="submenu">
+                <i class="bi bi-trophy-fill icon"></i> <span>Prestasi</span> <i class="bi bi-chevron-right arrow"></i>
+            </a>
+            <div class="submenu">
+                <a href="{{ route('staf.prestasi.index') }}" class="sub-link {{ request()->routeIs('staf.prestasi.index') ? 'active' : '' }}">Daftar Prestasi</a>
+                <a href="{{ route('staf.prestasi.create') }}" class="sub-link {{ request()->routeIs('staf.prestasi.create') ? 'active' : '' }}">Catat Prestasi</a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="nav-group {{ request()->routeIs('staf.kurikulum.*') || request()->routeIs('staf.evaluasi.*') || request()->routeIs('staf.laporan.*') ? 'open' : '' }}">
+<div class="nav-group {{ request()->routeIs('staf.kurikulum.*') || request()->routeIs('staf.kurikulum-kelola.*') || request()->routeIs('staf.evaluasi.*') || request()->routeIs('staf.laporan.*') ? 'open' : '' }}">
     <div class="nav-group-label" data-toggle="nav-group"><span>Kurikulum</span><i class="bi bi-chevron-down"></i></div>
     <div class="nav-group-items">
-        <div class="nav-item {{ request()->routeIs('staf.kurikulum.*') ? 'open' : '' }}">
-            <a class="nav-link {{ request()->routeIs('staf.kurikulum.*') ? 'active' : '' }}" data-toggle="submenu">
+        <div class="nav-item {{ request()->routeIs('staf.kurikulum.*') || request()->routeIs('staf.kurikulum-kelola.*') ? 'open' : '' }}">
+            <a class="nav-link {{ request()->routeIs('staf.kurikulum.*') || request()->routeIs('staf.kurikulum-kelola.*') ? 'active' : '' }}" data-toggle="submenu">
                 <i class="bi bi-book-half icon"></i> <span>Dokumen Kurikulum</span> <i class="bi bi-chevron-right arrow"></i>
             </a>
             <div class="submenu">
                 <a href="{{ route('staf.kurikulum.index') }}" class="sub-link {{ request()->routeIs('staf.kurikulum.index') ? 'active' : '' }}">Daftar Kurikulum</a>
+                <a href="{{ route('staf.kurikulum-kelola.create') }}" class="sub-link {{ request()->routeIs('staf.kurikulum-kelola.create') ? 'active' : '' }}">Unggah Dokumen</a>
             </div>
         </div>
         <div class="nav-item {{ request()->routeIs('staf.evaluasi.*') ? 'open' : '' }}">
